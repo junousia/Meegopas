@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/MainPage.qml</file>
+        <file>qml/ResultPage.qml</file>
+        <file>qml/reittiopas.js</file>
+        <file>qml/UIConstants.js</file>
+        <file>qml/LocationEntry.qml</file>
+        <file>images/metro.svg</file>
+        <file>images/bus.svg</file>
+        <file>images/train.svg</file>
+        <file>images/tram.svg</file>
+        <file>images/walk.svg</file>
+        <file>qml/RouteView.qml</file>
+    </qresource>
+</RCC>
