@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.meego 1.0
+import com.nokia.meego 1.0
 
 PageStackWindow {
     id: appWindow
@@ -12,6 +12,7 @@ PageStackWindow {
     }
 
     MainPage{id: mainPage}
+    AboutDialog { id: about }
 
     ToolBarLayout {
         id: commonTools
@@ -27,8 +28,8 @@ PageStackWindow {
         id: myMenu
         visualParent: pageStack
         MenuLayout {
-            MenuItem { text: "About" }
+            MenuItem { text: "About"; onClicked: about.open() }
+            MenuItem { text: "Settings"; onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
         }
     }
-
 }

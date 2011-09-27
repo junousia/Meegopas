@@ -1,7 +1,8 @@
 import QtQuick 1.1
-import com.meego 1.0
+import com.nokia.meego 1.0
 import com.nokia.extras 1.0
-import "UIConstants.js" as UI
+import "UIConstants.js" as UIConstants
+import "ExtrasConstants.js" as ExtrasConstants
 import "reittiopas.js" as Reittiopas
 
 Page {
@@ -18,71 +19,78 @@ Page {
 
     Component {
         id: routeDelegate
-        Rectangle {
+        Item {
             width: parent.width
-            height: 100
-            color: "transparent"
-            Row {
-                spacing: UI.MARGIN_DEFAULT
-                height: 100
+            height: 125
+
+            BorderImage {
+                anchors.fill: parent
+                visible: mouseArea.pressed
+                source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+            }
+            Item {
+                height: parent.height
                 width: parent.width
                 Column {
+                    anchors.verticalCenter: parent.verticalCenter
                     Text {
                         text: Qt.formatTime(start, "hh:mm")
-                        font.pixelSize: UI.FONT_DEFAULT
-                        font.family: UI.FONT_FAMILY
-                        color: !theme.inverted ?
-                                   UI.COLOR_FOREGROUND :
-                        UI.COLOR_INVERTED_FOREGROUND
+                        width: 75
+                        font.pixelSize: UIConstants.FONT_DEFAULT
+                        font.family: UIConstants.FONT_FAMILY
+                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     }
                 }
-                Repeater {
-                    model: legs
-                    Column {
-                        width: 50
-                        Image {
-                            id: transportIcon
-                            source: "../images/" + type + ".svg"
-                            smooth: true
-                            height: 50
-                            width: 50
-                        }
-                        Text {
-                            text: type == "walk"? "" : code
-                            font.pixelSize: UI.FONT_LSMALL
-                            font.family: UI.FONT_FAMILY
-                            color: !theme.inverted ?
-                                       UI.COLOR_FOREGROUND :
-                            UI.COLOR_INVERTED_FOREGROUND
-                            anchors.horizontalCenter: transportIcon.horizontalCenter
+                Flow {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Repeater {
+                        model: legs
+                        Column {
+                            width: 55
+                            Image {
+                                id: transportIcon
+                                source: "../images/" + type + ".png"
+                                visible: (type == "walk")? false : true
+                                smooth: true
+                                height: 60
+                                width: 60
+                            }
+                            Text {
+                                text: type == "walk"? "" : code
+                                font.pixelSize: UIConstants.FONT_LSMALL
+                                font.family: UIConstants.FONT_FAMILY
+                                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                                anchors.horizontalCenter: transportIcon.horizontalCenter
+                            }
                         }
                     }
                 }
                 Column {
                     anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+
                     Text {
                         text: Qt.formatTime(finish, "hh:mm")
-                        font.pixelSize: UI.FONT_DEFAULT
-                        font.family: UI.FONT_FAMILY
-                        color: !theme.inverted ?
-                                   UI.COLOR_FOREGROUND :
-                        UI.COLOR_INVERTED_FOREGROUND
+                        font.pixelSize: UIConstants.FONT_DEFAULT
+                        font.family: UIConstants.FONT_FAMILY
+                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     }
                 }
             }
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
                 onClicked: {
                     routeView.model.clear()
-
-                    for (var legindex in list.currentIndex.legs) {
-                        var legdata = list.currentIndex.legs[legindex]
-                        console.log(legdata + " " + routeView.model.count)
-                        routeView.model.append(legdata)
-                    }
+                    Reittiopas.dump_legs(index,routeView.model)
+                    routeView.fromLoc = from
+                    routeView.toLoc = to
                     pageStack.push(routeView)
                 }
             }
+
         }
     }
     ListView {
@@ -90,17 +98,17 @@ Page {
         anchors.fill: parent
         model: routeModel
         delegate: routeDelegate
-        anchors.topMargin: appWindow.inPortrait?
-                               UI.HEADER_DEFAULT_TOP_SPACING_PORTRAIT :
-                               UI.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
-        onCountChanged: busyIndicator.visible = false
+        header: Header {
+            text: from + " - " + to
+        }
+        anchors.topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
     }
 
-        BusyIndicator {
-            id: busyIndicator
-            visible: true
-            running: true
-            platformStyle: BusyIndicatorStyle { size: 'large' }
-            anchors.centerIn: parent
-        }
+    BusyIndicator {
+        id: busyIndicator
+        visible: !(routeModel.count > 0)
+        running: true
+        platformStyle: BusyIndicatorStyle { size: 'large' }
+        anchors.centerIn: parent
     }
+}

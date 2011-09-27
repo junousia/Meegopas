@@ -6,11 +6,19 @@
         <file>qml/reittiopas.js</file>
         <file>qml/UIConstants.js</file>
         <file>qml/LocationEntry.qml</file>
-        <file>images/metro.svg</file>
-        <file>images/bus.svg</file>
-        <file>images/train.svg</file>
-        <file>images/tram.svg</file>
-        <file>images/walk.svg</file>
         <file>qml/RouteView.qml</file>
+        <file>qml/Header.qml</file>
+        <file>qml/AppHeader.qml</file>
+        <file>qml/StopsPage.qml</file>
+        <file>qml/AboutDialog.qml</file>
+        <file>qml/SettingsPage.qml</file>
+        <file>qml/SuggestionDelegate.qml</file>
+        <file>images/metro.png</file>
+        <file>images/bus.png</file>
+        <file>images/train.png</file>
+        <file>images/tram.png</file>
+        <file>images/walk.png</file>
+        <file>qml/ExtrasConstants.js</file>
+        <file>qml/storage.js</file>
     </qresource>
 </RCC>

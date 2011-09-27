@@ -42,7 +42,14 @@ OTHER_FILES += \
     qml/reittiopas.js \
     qml/UIConstants.js \
     qml/RouteView.qml \
-    qml/AboutDialog.qml
+    qml/AboutDialog.qml \
+    qml/Header.qml \
+    qml/SettingsPage.qml \
+    qml/storage.js \
+    qml/SuggestionDelegate.qml \
+    qml/AppHeader.qml \
+    qml/ExtrasConstants.js \
+    qml/StopsPage.qml
 
 RESOURCES += \
     res.qrc
@@ -55,3 +62,9 @@ qtcAddDeployment()
 CONFIG += qdeclarative-boostable
 QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
 QMAKE_LFLAGS += -pie -rdynamic
+
+
+
+
+
+
