@@ -2,6 +2,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import "UIConstants.js" as UIConstants
+import "ExtrasConstants.js" as ExtrasConstants
 
 Component {
     id: suggestionDelegate
@@ -39,20 +40,20 @@ Component {
 
         Text {
             id: locName
-            width: parent.width - locType.width
             elide: Text.ElideRight
             color: delegateItem.selected ? root.platformStyle.itemSelectedTextColor : root.platformStyle.itemTextColor
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.left: parent.left
+            anchors.right: locType.left
             anchors.leftMargin: UIConstants.MARGIN_DEFAULT
             anchors.rightMargin: UIConstants.MARGIN_DEFAULT
             text: displayname
-            font.family: UIConstants.FONT_FAMILY
+            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_LARGE
         }
         Text {
             id: locType
-            width: 150
+            width: 100
             elide: Text.ElideRight
             color: UIConstants.COLOR_BUTTON_SECONDARY_FOREGROUND
             horizontalAlignment: Text.AlignRight
@@ -61,9 +62,8 @@ Component {
             anchors.leftMargin: UIConstants.MARGIN_DEFAULT
             anchors.rightMargin: UIConstants.MARGIN_DEFAULT
             text: city
-            font.family: UIConstants.FONT_FAMILY
+            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_LSMALL
-            font.italic: true
         }
     }
 }

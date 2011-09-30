@@ -7,6 +7,12 @@ import "reittiopas.js" as Reittiopas
 
 Page {
     property alias model: stopModel
+    property string code
+
+    //anchors.margins: UIConstants.DEFAULT_MARGIN
+
+    // lock to portrait
+    orientationLock: PageOrientation.LockPortrait
 
     tools: commonTools
 
@@ -17,10 +23,8 @@ Page {
     Component {
         id: stopDelegate
         Row {
-            height: 100
+            height: UIConstants.LIST_ITEM_HEIGHT_SMALL
             width: parent.width
-            anchors.leftMargin: ExtrasConstants.LIST_ITEM_MARGIN
-            anchors.rightMargin: ExtrasConstants.LIST_ITEM_MARGIN
 
             Column {
                 anchors.left: parent.left
@@ -29,7 +33,7 @@ Page {
                     text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                     width: parent.width
                     elide: Text.ElideRight
-                    font.pixelSize: UIConstants.FONT_LARGE
+                    font.pixelSize: UIConstants.FONT_XLARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
 
@@ -43,9 +47,9 @@ Page {
                     width: parent.width
                     horizontalAlignment: Qt.AlignRight
                     elide: Text.ElideRight
-                    font.pixelSize: UIConstants.FONT_LARGE
+                    font.pixelSize: UIConstants.FONT_XLARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
 
                 }
             }
@@ -55,10 +59,19 @@ Page {
     ListView {
         id: routeList
         anchors.fill: parent
+        anchors.topMargin: appWindow.inPortrait?UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
         model: stopModel
         delegate: stopDelegate
+        header: Header {
+            text: "Stops for line " + code
+        }
 
-        anchors.topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
+    }
+
+    ScrollDecorator {
+        id: scrolldecorator
+        flickableItem: routeList
+        platformStyle: ScrollDecoratorStyle
     }
 
     BusyIndicator {

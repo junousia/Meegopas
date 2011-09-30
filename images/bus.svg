@@ -14,7 +14,7 @@
    id="svg1901"
    sodipodi:version="0.32"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="bussi.svg"
+   sodipodi:docname="bus.svg"
    version="1.1">
   <defs
      id="defs1903" />
@@ -26,12 +26,12 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.5"
-     inkscape:cx="-842.13517"
+     inkscape:cx="-528"
      inkscape:cy="128.71265"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1920"
-     inkscape:window-height="1176"
+     inkscape:window-width="1400"
+     inkscape:window-height="1026"
      inkscape:window-x="0"
      inkscape:window-y="24"
      showgrid="false"
@@ -60,7 +60,7 @@
      id="layer1"
      transform="translate(-149.5,-195.875)">
     <path
-       style="fill:#08a7cc;fill-opacity:1;fill-rule:evenodd;stroke:#dddddd;stroke-width:5;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#08a7cc;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:5;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
        d="M 242.09375,225.375 C 220.98635,225.375 204,242.36135 204,263.46875 L 204,588.25 c 0,21.1074 16.98635,38.125 38.09375,38.125 l 25.9375,0 c -0.0124,0.33189 -0.0312,0.66496 -0.0312,1 l 0,24 c 0,14.404 11.596,26 26,26 14.404,0 26,-11.596 26,-26 l 0,-24 c 0,-0.33504 -0.0188,-0.66811 -0.0312,-1 l 174.0625,0 c -0.0124,0.33189 -0.0312,0.66496 -0.0312,1 l 0,24 c 0,14.404 11.596,26 26,26 14.404,0 26,-11.596 26,-26 l 0,-24 c 0,-0.33504 -0.0188,-0.66811 -0.0312,-1 l 22.9375,0 C 590.01365,626.375 607,609.3574 607,588.25 l 0,-324.78125 C 607,242.36135 590.01365,225.375 568.90625,225.375 l -326.8125,0 z m 13.71875,34 299.375,0 c 9.31333,0 16.8125,7.49917 16.8125,16.8125 l 0,206.375 c 0,9.31333 -7.49917,16.8125 -16.8125,16.8125 l -299.375,0 C 246.49917,499.375 239,491.87583 239,482.5625 l 0,-206.375 c 0,-9.31333 7.49917,-16.8125 16.8125,-16.8125 z M 294,538.875 c 14.08326,0 25.5,10.74517 25.5,24 0,13.25483 -11.41674,24 -25.5,24 -14.08326,0 -25.5,-10.74517 -25.5,-24 0,-13.25483 11.41674,-24 25.5,-24 z m 226,0 c 14.08326,0 25.5,10.74517 25.5,24 0,13.25483 -11.41674,24 -25.5,24 -14.08326,0 -25.5,-10.74517 -25.5,-24 0,-13.25483 11.41674,-24 25.5,-24 z"
        id="rect3016"
        inkscape:connector-curvature="0" />

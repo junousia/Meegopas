@@ -1,11 +1,14 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
+import QtMobility.location 1.1
 import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
+import "MyConstants.js" as MyConstants
+
 import "reittiopas.js" as Reittiopas
 
-Item {
+Column {
     property string type : ""
     property variant destCoords : ''
     property bool destValid : (suggestionModel.count > 0)
@@ -13,15 +16,37 @@ Item {
     property alias text : textfield.text
     property alias label : label.text
 
-    height: textfield.height + label.height
+    height: textfield.height + labelContainer.height
     width: parent.width
-
-    anchors.topMargin: UIConstants.DEFAULT_MARGIN
-    anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
+    spacing: UIConstants.DEFAULT_MARGIN
 
     function clear() {
+        suggestionModel.clear()
         textfield.text = ''
         destCoords = ''
+    }
+
+    Timer {
+        id: updateTimer
+        repeat: false
+        interval: 100
+        onTriggered: {
+            if(suggestionModel.count == 1 && !suggestionModel.updating) {
+                textfield.auto_update = true
+                textfield.text = suggestionModel.get(0).name
+                destCoords = suggestionModel.get(0).coords
+            }
+        }
+    }
+
+    ListView {
+        id:dummyview
+        visible: false
+        delegate: Component {
+            Text { text: "dummy" }
+        }
+        model: suggestionModel
+        onCountChanged: { updateTimer.start() }
     }
 
     function getCoords() {
@@ -34,6 +59,33 @@ Item {
         else
             console.log("no acceptable input")
     }
+    PositionSource {
+        id: positionSource
+        updateInterval: 5000
+        active: true
+    }
+
+    ListModel {
+        id: suggestionModel
+        property bool updating : false
+    }
+
+    SelectionDialog {
+        id: query
+        model: suggestionModel
+        delegate: SuggestionDelegate {}
+        titleText: type
+        onAccepted: {
+            textfield.auto_update = true
+            textfield.text = suggestionModel.get(selectedIndex).name
+            destCoords = suggestionModel.get(selectedIndex).coords
+            suggestionModel.clear()
+        }
+        onRejected: {
+            destCoords = ''
+        }
+    }
+
     Timer {
         id: suggestionTimer
         interval: 1000
@@ -41,38 +93,73 @@ Item {
         triggeredOnStart: false
         onTriggered: {
             if(textfield.acceptableInput)
+                suggestionModel.clear()
                 Reittiopas.address_to_location(textfield.text,suggestionModel)
         }
     }
-    Label {
-        id: label
-        font.pixelSize: UIConstants.FONT_XLARGE
-        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-        anchors.left: parent.left
+
+    Item {
+        id: labelContainer
         anchors.top: parent.top
-        anchors.topMargin: UIConstants.DEFAULT_MARGIN
-        text: type
+        height: 60
+        width: label.width + count.width
+        BorderImage {
+            anchors.fill: parent
+            visible: labelMouseArea.pressed
+            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+        }
+        Label {
+            id: label
+            font.pixelSize: MyConstants.FONT_XXLARGE
+            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.topMargin: UIConstants.DEFAULT_MARGIN
+            text: type
+        }
+        CountBubble {
+            id: count
+            largeSized: true
+            value: suggestionModel.count
+            visible: (suggestionModel.count > 1 && (destCoords === ''))
+            anchors.left: label.right
+            anchors.bottom: label.bottom
+        }
+
+        MouseArea {
+            id: labelMouseArea
+            anchors.fill: parent
+            onClicked: {
+                if(suggestionModel.count > 1) {
+                    query.open()
+                    textfield.platformCloseSoftwareInputPanel()
+                }
+            }
+        }
     }
     Row {
         width: parent.width
         spacing: UIConstants.BUTTON_SPACING
-        anchors.rightMargin: UIConstants.DEFAULT_MARGIN
-        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
-        anchors.top: label.bottom
+        anchors.top: labelContainer.bottom
 
         TextField {
             id: textfield
+            property bool auto_update : false
             anchors.left: parent.left
-            width: parent.width - 70
+            anchors.right: locationPicker.left
             text: ""
             placeholderText: type
             validator: RegExpValidator { regExp: /^.{3,50}$/ }
             inputMethodHints: Qt.ImhNoPredictiveText
 
             onTextChanged: {
-                suggestionModel.clear()
-                if(acceptableInput)
-                    suggestionTimer.restart()
+                if(auto_update)
+                    auto_update = false
+                else {
+                    suggestionModel.clear()
+                    if(acceptableInput)
+                        suggestionTimer.restart()
+                }
             }
 
             Image {
@@ -94,44 +181,18 @@ Item {
         Button {
             id: locationPicker
             anchors.right: parent.right
-            height:parent.height
-            width: height
-            enabled: (suggestionModel.count > 1)
+            width: 50
+            enabled: true
             Image {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: 'image://theme/icon-m-calendar-location-picker'
             }
-            CountBubble {
-                largeSized: true
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                value: suggestionModel.count
-                visible: (suggestionModel.count && (destCoords === ''))
-            }
             onClicked: {
-                if(suggestionModel.count) {
-                    query.open()
-                    textfield.platformCloseSoftwareInputPanel()
-                }
+                clear()
+                Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
+                                               positionSource.position.coordinate.longitude.toString(),suggestionModel)
             }
-        }
-    }
-
-    ListModel { id: suggestionModel }
-
-    SelectionDialog {
-        id: query
-        model: suggestionModel
-        delegate: SuggestionDelegate {}
-        titleText: type
-        onAccepted: {
-            textfield.text = suggestionModel.get(selectedIndex).name
-            destCoords = suggestionModel.get(selectedIndex).coords
-            suggestionModel.clear()
-        }
-        onRejected: {
-            destCoords = ''
         }
     }
 }

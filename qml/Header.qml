@@ -24,17 +24,14 @@ import "ExtrasConstants.js" as ExtrasConstants
 
 Item {
     property alias text: headerText.text
-    property string tagline
     property alias showDivider: headerDivider.visible
 
-    anchors { left: parent.left; right: parent.right }
     anchors {
-        leftMargin: UIConstants.DEFAULT_MARGIN
-        rightMargin: UIConstants.DEFAULT_MARGIN
+        left: parent.left
+        right: parent.right
     }
 
     height: headerText.height +
-            (subheaderText.visible ? subheaderText.height : 0) +
             (headerDivider.visible ? headerDivider.height + UIConstants.DEFAULT_MARGIN : 0)
 
     Text {
@@ -46,22 +43,10 @@ Item {
         wrapMode: Text.WordWrap
     }
 
-    Text {
-        id: subheaderText
-        anchors.top: headerText.bottom
-        anchors.topMargin: UIConstants.DEFAULT_MARGIN
-        font.pixelSize: UIConstants.FONT_DEFAULT
-        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-        text: '<i>' + tagline + '</i>'
-        wrapMode: Text.WordWrap
-        visible: tagline
-    }
-
     Rectangle {
         id: headerDivider
         anchors {
-            top: subheaderText.visible ? subheaderText.bottom : headerText.bottom
+            top: headerText.bottom
             left: parent.left
             right: parent.right
         }

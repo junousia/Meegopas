@@ -62,9 +62,6 @@ function convTime(hslTime){
 function dump_stops(index, model) {
     var route = last_result[last_route_index][0]
 
-    // save used route index for dumping stops
-    last_route_index = index
-
     var legdata = route.legs[index]
 
     for (var locindex in legdata.locs) {
@@ -134,9 +131,10 @@ function route_handler(routes,model) {
             output.legs[leg].to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
             output.legs[leg].to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
 
-            if(leg == 1) {
+            if(leg == 0) {
                 output.start = convTime(legdata.locs[0].depTime)
-            } else if(leg == route.legs.length - 1) {
+            }
+            if(leg == (route.legs.length - 1)) {
                 output.finish = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
             }
 
@@ -150,19 +148,24 @@ function route_handler(routes,model) {
 }
 
 function suggestion_handler(suggestions,model) {
+    model.updating = true
     for (var index in suggestions) {
         var output = {}
         var suggestion = suggestions[index];
-        output.name = suggestion.matchedName
+        output.name = suggestion.name.split(',', 1).toString()
         output.displayname = suggestion.matchedName
         output.city = suggestion.city
         output.type = suggestion.locType
         output.coords = suggestion.coords
-        model.append(output)
+
+        // add only finnish place names
+        if(suggestion.lang == "fi")
+            model.append(output)
     }
+    model.updating = false
 }
 
-function api_request(parameters, result_handler, model, result_callback) {
+function api_request(parameters, result_handler, model) {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
         if (req.readyState == XMLHttpRequest.DONE) {
@@ -179,7 +182,8 @@ function api_request(parameters, result_handler, model, result_callback) {
 
     parameters.user = USER;
     parameters.pass = PASS;
-
+    parameters.epsg_in = "wgs84"
+    parameters.epsg_out = "wgs84"
     var query = [];
     for(var p in parameters) {
         query.push(p + "=" + parameters[p]);
@@ -190,13 +194,11 @@ function api_request(parameters, result_handler, model, result_callback) {
 }
 
 
-function location_to_address(latitude, longitude, result_handler) {
+function location_to_address(latitude, longitude, model) {
     var parameters = {};
     parameters.request = 'reverse_geocode';
     parameters.coordinate = longitude + ',' + latitude;
-    api_request(parameters, function(json) {
-                    result_handler(json);
-                } );
+    api_request(parameters, suggestion_handler, model);
 }
 
 function address_to_location(term, model) {
@@ -219,6 +221,5 @@ function route(from, to, date, time, timetype, walk_speed, model) {
     parameters.walk_speed = walk_speed
     parameters.timetype = timetype
     parameters.lang = "fi"
-    //parameters.detail = "limited"
     api_request(parameters, route_handler, model);
 }

@@ -7,7 +7,7 @@ PageStackWindow {
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
-        background: 'image://theme/meegotouch-video-background'
+        background: theme.inverted?'image://theme/meegotouch-video-background':''
         backgroundFillMode: Image.Stretch
     }
 
@@ -16,7 +16,7 @@ PageStackWindow {
 
     ToolBarLayout {
         id: commonTools
-        visible: true
+        visible: false
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right

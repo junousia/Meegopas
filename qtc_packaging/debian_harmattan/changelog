@@ -1,5 +1,10 @@
-meegopas (0.0.1) unstable; urgency=low
+meegopas (0.3.0) stable; urgency=low
+  * Basic functionality done
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  pe, 30 syyskuuta 2011 20:22:36 +0300
+
+meegopas (0.1.0) stable; urgency=low
 
   * Initial Release.
 
- -- jukka <jukka@unknown>  Mon, 29 Aug 2011 19:40:21 +0300
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  Mon, 29 Aug 2011 19:40:21 +0300

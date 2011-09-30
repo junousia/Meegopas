@@ -7,28 +7,20 @@ import "storage.js" as Storage
 
 Page {
     tools: commonTools
+
+    anchors.margins: UIConstants.DEFAULT_MARGIN
+
     Flickable {
         id: settingsContent
         anchors.fill: parent
         anchors {
-            topMargin: appWindow.inPortrait?
-                           UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT :
-            UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            leftMargin: UIConstants.DEFAULT_MARGIN
-            rightMargin: UIConstants.DEFAULT_MARGIN
+            topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
+            margins: UIConstants.DEFAULT_MARGIN
         }
         width: parent.width
         flickableDirection: Flickable.VerticalFlick
-        Row {
-            id: optimizeRow
+        Column {
             spacing: UIConstants.DEFAULT_MARGIN
-            width: parent.width
-            Text {
-                text: "Optimize"
-                font.pixelSize: UIConstants.FONT_DEFAULT
-                font.family: UIConstants.FONT_FAMILY
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-            }
             ButtonColumn {
                 id: optimize
                 anchors.right: parent.right
@@ -49,56 +41,44 @@ Page {
                     text: "Least walking"
                 }
             }
-        }
-        Row {
-            id: typeRow
-            spacing: UIConstants.DEFAULT_MARGIN
-            width: parent.width
-            anchors.top: optimizeRow.bottom
-            anchors.right: parent.right
-            Text {
-                text: "Types"
-                font.pixelSize: UIConstants.FONT_DEFAULT
-                font.family: UIConstants.FONT_FAMILY
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-            }
-            ButtonColumn {
+            ButtonRow {
                 id: types
-
+                exclusive: false
                 Button {
                     id: bus
                     text: "Bus"
+                    checkable: true
                 }
                 Button {
                     id: train
                     text: "Train"
+                    checkable: true
                 }
                 Button {
                     id: metro
                     text: "Metro"
+                    checkable: true
                 }
                 Button {
                     id: tram
                     text: "Tram"
+                    checkable: true
                 }
             }
-        }
-        Row {
-            id: walkingRow
-            spacing: UIConstants.DEFAULT_MARGIN
-            width: parent.width
-            anchors.top: typeRow.bottom
-            anchors.right: parent.right
-            Text {
-                text: "Walking speed"
-                font.pixelSize: UIConstants.FONT_DEFAULT
-                font.family: UIConstants.FONT_FAMILY
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-            }
-            Slider {
-                platformStyle: SliderStyle
-                minimumValue: 70
-                maximumValue: 300
+            ButtonRow {
+                id: speedrow
+                Button {
+                    id: slow
+                    text: "slow"
+                }
+                Button {
+                    id: fast
+                    text: "fast"
+                }
+                Button {
+                    id: vfast
+                    text: "very fast"
+                }
             }
         }
     }

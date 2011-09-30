@@ -20,5 +20,6 @@
         <file>images/walk.png</file>
         <file>qml/ExtrasConstants.js</file>
         <file>qml/storage.js</file>
+        <file>qml/MyConstants.js</file>
     </qresource>
 </RCC>

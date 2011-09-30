@@ -11,6 +11,11 @@ Page {
     property string toLoc : ''
     property alias model : routeModel
 
+    //anchors.margins: UIConstants.DEFAULT_MARGIN
+
+    // lock to portrait
+    orientationLock: PageOrientation.LockPortrait
+
     ListModel {
         id: routeModel
     }
@@ -24,6 +29,8 @@ Page {
             width: parent.width
             anchors.leftMargin: ExtrasConstants.LIST_ITEM_MARGIN
             anchors.rightMargin: ExtrasConstants.LIST_ITEM_MARGIN
+            // do not show if from and to times or names match
+            enabled: !(from.name == to.name || from.time == to.time)
 
             BorderImage {
                 anchors.fill: parent
@@ -32,60 +39,58 @@ Page {
             }
             Column {
                 anchors.left: parent.left
-                width: parent.width/3
+                anchors.right: transportColumn.left
                 Text {
                     text: (index === 0)? fromLoc : from.name
                     width: parent.width
                     elide: Text.ElideRight
                     font.pixelSize: UIConstants.FONT_DEFAULT
-                    font.family: UIConstants.FONT_FAMILY
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
 
                 }
                 Text {
                     text: Qt.formatTime(from.time, "hh:mm")
-                    font.pixelSize: UIConstants.FONT_DEFAULT
-                    font.family: UIConstants.FONT_FAMILY
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-
                 }
             }
             Column {
+                id: transportColumn
                 anchors.horizontalCenter: parent.horizontalCenter
                 Image {
-                    id: transportIcon
+                    anchors.horizontalCenter: parent.horizontalCenter
                     source: "../images/" + type + ".png"
                     smooth: true
-                    height: 50
-                    width: 50
+                    height: 60
+                    width: 60
                 }
                 Text {
                     text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                     font.pixelSize: UIConstants.FONT_DEFAULT
-                    font.family: UIConstants.FONT_FAMILY
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                    anchors.horizontalCenter: transportIcon.horizontalCenter
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
             Column {
                 anchors.right: parent.right
-                width: parent.width/3
                 Text {
                     text: index === routeModel.count - 1? toLoc : to.name
-                    width: parent.width
                     horizontalAlignment: Text.AlignRight
                     elide: Text.ElideRight
                     font.pixelSize: UIConstants.FONT_DEFAULT
-                    font.family: UIConstants.FONT_FAMILY
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                 }
 
                 Text {
                     text: Qt.formatTime(to.time, "hh:mm")
                     anchors.right: parent.right
-                    font.pixelSize: UIConstants.FONT_DEFAULT
-                    font.family: UIConstants.FONT_FAMILY
+                    horizontalAlignment: Qt.AlignRight
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 }
             }
@@ -96,6 +101,7 @@ Page {
                 onClicked: {
                     stopsPage.model.clear()
                     Reittiopas.dump_stops(index, stopsPage.model)
+                    stopsPage.code = code
                     pageStack.push(stopsPage)
                 }
             }
@@ -110,17 +116,19 @@ Page {
         header: Header {
             text: fromLoc + " - " + toLoc
         }
-
-        anchors.topMargin: appWindow.inPortrait?
-                               UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT :
-        UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
+        anchors.topMargin: appWindow.inPortrait?UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
     }
 
-        BusyIndicator {
-            id: busyIndicator
-            visible: !(routeModel.count)
-            running: true
-            platformStyle: BusyIndicatorStyle { size: 'large' }
-            anchors.centerIn: parent
-        }
+    ScrollDecorator {
+        id: scrolldecorator
+        flickableItem: routeList
+        platformStyle: ScrollDecoratorStyle
     }
+    BusyIndicator {
+        id: busyIndicator
+        visible: !(routeModel.count)
+        running: true
+        platformStyle: BusyIndicatorStyle { size: 'large' }
+        anchors.centerIn: parent
+    }
+}

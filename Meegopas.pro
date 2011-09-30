@@ -18,8 +18,8 @@ symbian:TARGET.CAPABILITY += NetworkServices
 
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
-# CONFIG += mobility
-# MOBILITY +=
+CONFIG += mobility
+MOBILITY += location
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp
@@ -49,7 +49,8 @@ OTHER_FILES += \
     qml/SuggestionDelegate.qml \
     qml/AppHeader.qml \
     qml/ExtrasConstants.js \
-    qml/StopsPage.qml
+    qml/StopsPage.qml \
+    qml/MyConstants.js
 
 RESOURCES += \
     res.qrc
@@ -68,3 +69,60 @@ QMAKE_LFLAGS += -pie -rdynamic
 
 
 
+
+
+contains(MEEGO_EDITION,harmattan) {
+    icon.files = Meegopas.png
+    icon.path = /usr/share/icons/hicolor/80x80/apps
+    INSTALLS += icon
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Meegopas/bin
+    INSTALLS += target
+}

@@ -3,6 +3,7 @@ import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
+import "MyConstants.js" as MyConstants
 import "reittiopas.js" as Reittiopas
 
 Page {
@@ -10,6 +11,11 @@ Page {
     property alias routeModel : routeModel
     property string from : ""
     property string to : ""
+
+    //anchors.margins: UIConstants.DEFAULT_MARGIN
+
+    // lock to portrait
+    orientationLock: PageOrientation.LockPortrait
 
     RouteView { id: routeView }
 
@@ -21,7 +27,7 @@ Page {
         id: routeDelegate
         Item {
             width: parent.width
-            height: 125
+            height: 100
 
             BorderImage {
                 anchors.fill: parent
@@ -29,53 +35,73 @@ Page {
                 source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
             }
             Item {
-                height: parent.height
-                width: parent.width
-                Column {
-                    anchors.verticalCenter: parent.verticalCenter
-                    Text {
-                        text: Qt.formatTime(start, "hh:mm")
-                        width: 75
-                        font.pixelSize: UIConstants.FONT_DEFAULT
-                        font.family: UIConstants.FONT_FAMILY
-                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                    }
-                }
-                Flow {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                anchors.fill: parent
 
-                    Repeater {
-                        model: legs
-                        Column {
-                            width: 55
-                            Image {
-                                id: transportIcon
-                                source: "../images/" + type + ".png"
-                                visible: (type == "walk")? false : true
-                                smooth: true
-                                height: 60
-                                width: 60
-                            }
-                            Text {
-                                text: type == "walk"? "" : code
-                                font.pixelSize: UIConstants.FONT_LSMALL
-                                font.family: UIConstants.FONT_FAMILY
-                                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                                anchors.horizontalCenter: transportIcon.horizontalCenter
+                Row {
+                    width: parent.width
+
+                    Column {
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Text {
+                            text: Qt.formatTime(start, "hh:mm")
+                            width: 75
+                            font.pixelSize: UIConstants.FONT_XLARGE
+                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                            color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                        }
+
+                        Text {
+                            text: duration + " min"
+                            color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                            font.pixelSize: UIConstants.FONT_LSMALL
+                        }
+                    }
+                    Flow {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        Repeater {
+                            id: repeater
+                            model: legs
+                            Column {
+                                width: 55
+                                visible: repeater.count == 1? true : (type == "walk")? false : true
+                                Image {
+                                    id: transportIcon
+                                    source: "../images/" + type + ".png"
+                                    smooth: true
+                                    height: 60
+                                    width: 60
+                                }
+                                Text {
+                                    text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
+                                    font.pixelSize: UIConstants.FONT_LSMALL
+                                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                                    anchors.horizontalCenter: transportIcon.horizontalCenter
+                                }
                             }
                         }
                     }
-                }
-                Column {
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    Text {
-                        text: Qt.formatTime(finish, "hh:mm")
-                        font.pixelSize: UIConstants.FONT_DEFAULT
-                        font.family: UIConstants.FONT_FAMILY
-                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    Column {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        Text {
+                            text: Qt.formatTime(finish, "hh:mm")
+                            anchors.right: parent.right
+                            font.pixelSize: UIConstants.FONT_XLARGE
+                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                            color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                        }
+                        Text {
+                            text: "Walk: " + Math.floor(walk/100)/10 + ' km'
+                            horizontalAlignment: Qt.AlignRight
+                            color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                            font.pixelSize: UIConstants.FONT_LSMALL
+                        }
                     }
                 }
             }
@@ -98,10 +124,17 @@ Page {
         anchors.fill: parent
         model: routeModel
         delegate: routeDelegate
+        anchors.margins: UIConstants.DEFAULT_MARGIN
         header: Header {
             text: from + " - " + to
         }
         anchors.topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
+    }
+
+    ScrollDecorator {
+        id: scrolldecorator
+        flickableItem: list
+        platformStyle: ScrollDecoratorStyle {}
     }
 
     BusyIndicator {
