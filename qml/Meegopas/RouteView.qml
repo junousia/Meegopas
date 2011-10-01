@@ -61,7 +61,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Image {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    source: "../images/" + type + ".png"
+                    source: "../../images/" + type + ".png"
                     smooth: true
                     height: 60
                     width: 60

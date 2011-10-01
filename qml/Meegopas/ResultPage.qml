@@ -70,7 +70,7 @@ Page {
                                 visible: repeater.count == 1? true : (type == "walk")? false : true
                                 Image {
                                     id: transportIcon
-                                    source: "../images/" + type + ".png"
+                                    source: "../../images/" + type + ".png"
                                     smooth: true
                                     height: 60
                                     width: 60
