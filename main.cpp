@@ -1,11 +1,14 @@
 #include <QtGui/QApplication>
-#include <QtDeclarative>
+#include "qmlapplicationviewer.h"
 
-int main(int argc, char *argv[])
+Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QDeclarativeView view;
-    view.setSource(QUrl("qrc:/qml/main.qml"));
-    view.showFullScreen();
-    return app.exec();
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
+    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
+
+    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer->setMainQmlFile(QLatin1String("qml/Meegopas/main.qml"));
+    viewer->showExpanded();
+
+    return app->exec();
 }

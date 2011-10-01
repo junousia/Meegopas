@@ -1,10 +1,12 @@
 # Add more folders to ship with the application, here
+folder_01.source = qml/Meegopas
+folder_01.target = qml
+DEPLOYMENTFOLDERS = folder_01
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT+= declarative
-symbian:TARGET.UID3 = 0xE7EDC131
+symbian:TARGET.UID3 = 0xE0253CFB
 
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
@@ -21,108 +23,24 @@ symbian:TARGET.CAPABILITY += NetworkServices
 CONFIG += mobility
 MOBILITY += location
 
+# Speed up launching on MeeGo/Harmattan when using applauncherd daemon
+CONFIG += qdeclarative-boostable
+
+# Add dependency to Symbian components
+# CONFIG += qt-components
+
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp
 
+# Please do not modify the following two lines. Required for deployment.
+include(qmlapplicationviewer/qmlapplicationviewer.pri)
+qtcAddDeployment()
 
 OTHER_FILES += \
-    qml/MainPage.qml \
-    qml/ResultPage.qml \
-    qml/main.qml \
-    qml/LocationEntry.qml \
-    Meegopas.desktop \
-    Meegopas.svg \
-    Meegopas.png \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
+    qtc_packaging/debian_harmattan/manifest.aegis \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog \
-    qml/reittiopas.js \
-    qml/UIConstants.js \
-    qml/RouteView.qml \
-    qml/AboutDialog.qml \
-    qml/Header.qml \
-    qml/SettingsPage.qml \
-    qml/storage.js \
-    qml/SuggestionDelegate.qml \
-    qml/AppHeader.qml \
-    qml/ExtrasConstants.js \
-    qml/StopsPage.qml \
-    qml/MyConstants.js
-
-RESOURCES += \
-    res.qrc
-
-# Please do not modify the following two lines. Required for deployment.
-include(deployment.pri)
-qtcAddDeployment()
-
-# enable booster
-CONFIG += qdeclarative-boostable
-QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
-QMAKE_LFLAGS += -pie -rdynamic
-
-
-
-
-
-
-
-
-contains(MEEGO_EDITION,harmattan) {
-    icon.files = Meegopas.png
-    icon.path = /usr/share/icons/hicolor/80x80/apps
-    INSTALLS += icon
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/Meegopas/bin
-    INSTALLS += target
-}
+    qtc_packaging/debian_harmattan/changelog
