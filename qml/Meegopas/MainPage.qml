@@ -25,6 +25,8 @@ Page {
 
     ToolBarLayout {
         id: mainTools
+        x: 0
+        y: 0
         ToolButtonRow {
             ToolButton {
                 text: "Search"
@@ -35,7 +37,7 @@ Page {
                                      to.getCoords().coords,
                                      Qt.formatDate(myDate, "yyyyMMdd"),
                                      Qt.formatTime(myTime, "hhmm"),
-                                     timeType.checked? "departure" : "arrival",
+                                     timeType.checked? "arrival" : "departure",
                                      70,resu.routeModel)
 
                     resu.from = from.getCoords().name
@@ -58,7 +60,6 @@ Page {
         acceptButtonText: "Accept"
         rejectButtonText: "Reject"
     }
-
     TimePickerDialog {
         id: timePicker
         onAccepted: {
@@ -82,33 +83,34 @@ Page {
         switchOn: customswitch.switchOff
     }
     Item {
-        anchors.right: timeContainer.left
-        anchors.top: timeContainer.top
+        anchors.right: parent.right
+        anchors.top: to.bottom
+        anchors.margins: UIConstants.DEFAULT_MARGIN*3
+
         width: 150
         height: 100
         Switch {
             id: timeType
             platformStyle: customswitch
+            anchors.horizontalCenter: parent.horizontalCenter
         }
         Text {
             id: timeTypeText
             anchors.top: timeType.bottom
             anchors.horizontalCenter: timeType.horizontalCenter
-            font.pixelSize: UIConstants.FONT_LARGE
+            font.pixelSize: UIConstants.FONT_DEFAULT_SIZE
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-            text: timeType.checked? "departure" : "arrival"
+            text: timeType.checked? "arrival" : "departure"
         }
     }
-
     Item {
         id: timeContainer
         height: timeButton.height
         width: timeButton.width
         anchors.top: to.bottom
-        anchors.topMargin: UIConstants.DEFAULT_MARGIN*3
-        anchors.right: dateContainer.right
-
+        anchors.left: parent.left
+        anchors.margins: UIConstants.DEFAULT_MARGIN*3
         BorderImage {
             anchors.fill: parent
             visible: timeMouseArea.pressed
@@ -117,7 +119,6 @@ Page {
 
         Text {
             id: timeButton
-            height: ExtrasConstants.SIZE_BUTTON
             font.pixelSize: MyConstants.FONT_XXXXLARGE
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
@@ -138,7 +139,6 @@ Page {
         id: dateContainer
         width: dateButton.width
         height: dateButton.height
-        anchors.topMargin: UIConstants.DEFAULT_MARGIN*2
         anchors.top: timeContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
 

@@ -76,9 +76,11 @@ Page {
             }
             Column {
                 anchors.right: parent.right
+                anchors.left: transportColumn.right
                 Text {
                     text: index === routeModel.count - 1? toLoc : to.name
                     horizontalAlignment: Text.AlignRight
+                    width: parent.width
                     elide: Text.ElideRight
                     font.pixelSize: UIConstants.FONT_DEFAULT
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
@@ -122,8 +124,8 @@ Page {
     ScrollDecorator {
         id: scrolldecorator
         flickableItem: routeList
-        platformStyle: ScrollDecoratorStyle
     }
+
     BusyIndicator {
         id: busyIndicator
         visible: !(routeModel.count)

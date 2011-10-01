@@ -5,7 +5,6 @@ import QtMobility.location 1.1
 import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
 import "MyConstants.js" as MyConstants
-
 import "reittiopas.js" as Reittiopas
 
 Column {

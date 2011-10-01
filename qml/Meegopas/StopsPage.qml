@@ -71,7 +71,6 @@ Page {
     ScrollDecorator {
         id: scrolldecorator
         flickableItem: routeList
-        platformStyle: ScrollDecoratorStyle
     }
 
     BusyIndicator {

@@ -79,7 +79,7 @@ Page {
                                     text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                                     font.pixelSize: UIConstants.FONT_LSMALL
                                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                                     anchors.horizontalCenter: transportIcon.horizontalCenter
                                 }
                             }

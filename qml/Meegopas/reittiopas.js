@@ -33,6 +33,11 @@ function busCode(code) {
     return code
 }
 
+function tramCode(code) {
+    code = code.slice(3,5).trim()
+    return code
+}
+
 function trainCode(code) {
     return code[4]
 }
@@ -44,13 +49,14 @@ function translate_typecode(type, code) {
         return { type:transType[type], code:busCode(code) }
     else if(transType[type] == "train")
         return { type:transType[type], code:trainCode(code) }
+    else if(transType[type] == "tram")
+        return { type:transType[type], code:tramCode(code) }
     else
         return { type:transType[type], code:code }
 }
 
 function convTime(hslTime){
     var time = hslTime;
-    //console.log(time.slice(0,4) + " " + parseInt(time.slice(4,6), 10) + " " + parseInt(time.slice(6,8), 10) + " " + time.slice(8,10) + " " + time.slice(10,12))
     return new Date(time.slice(0,4),
                     parseInt(time.slice(4,6), 10),
                     parseInt(time.slice(6,8), 10) - 1,
