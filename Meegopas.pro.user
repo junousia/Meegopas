@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.3.1, 2011-10-01T18:08:38. -->
+<!-- Written by Qt Creator 2.3.1, 2011-10-02T18:45:51. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -713,15 +713,19 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">MaemoUploadAndInstallDpkgPackageStep</value>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedFiles">
        <value type="QString">/home/jukka/workspace/Harmattan/testi/Meegopas-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/meegopas_0.4.0_armel.deb</value>
+       <value type="QString">/home/jukka/workspace/Harmattan/testi/Meegopas-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/meegopas_0.4.0_armel.deb</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedHosts">
+       <value type="QString">192.168.11.144</value>
        <value type="QString">192.168.2.15</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedRemotePaths">
        <value type="QString"></value>
+       <value type="QString"></value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedTimes">
-       <value type="QDateTime">2011-10-01T16:58:55</value>
+       <value type="QDateTime">2011-10-02T18:45:27</value>
+       <value type="QDateTime">2011-10-02T10:25:12</value>
       </valuelist>
      </valuemap>
      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">3</value>

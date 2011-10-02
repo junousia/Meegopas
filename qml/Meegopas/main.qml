@@ -29,7 +29,7 @@ PageStackWindow {
         visualParent: pageStack
         MenuLayout {
             MenuItem { text: "About"; onClicked: about.open() }
-            MenuItem { text: "Settings"; onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
+            //MenuItem { text: "Settings"; onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
         }
     }
 }

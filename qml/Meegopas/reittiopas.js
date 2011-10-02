@@ -27,9 +27,10 @@ transType[25] = "bus"
 
 var last_result = []
 var last_route_index
+var last_route_coordinates = []
 
 function busCode(code) {
-    code = code.slice(1,5)
+    code = code.slice(1,5).trim()
     return code
 }
 

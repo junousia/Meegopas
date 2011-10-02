@@ -50,7 +50,6 @@ Page {
                     font.pixelSize: UIConstants.FONT_XLARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-
                 }
             }
         }
@@ -65,7 +64,6 @@ Page {
         header: Header {
             text: "Stops for line " + code
         }
-
     }
 
     ScrollDecorator {

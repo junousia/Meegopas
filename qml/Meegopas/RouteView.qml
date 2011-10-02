@@ -6,7 +6,7 @@ import "ExtrasConstants.js" as ExtrasConstants
 import "reittiopas.js" as Reittiopas
 
 Page {
-    tools: commonTools
+    tools: routeTools
     property string fromLoc : ''
     property string toLoc : ''
     property alias model : routeModel
@@ -15,6 +15,17 @@ Page {
 
     // lock to portrait
     orientationLock: PageOrientation.LockPortrait
+
+    ToolBarLayout {
+        id: routeTools
+        visible: false
+        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolIcon { iconId: "icon-m-content-poi-inverse"; onClicked: { pageStack.push(Qt.resolvedUrl("RouteMapPage.qml")) } }
+        ToolIcon { platformIconId: "toolbar-view-menu";
+             anchors.right: parent===undefined ? undefined : parent.right
+             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+        }
+    }
 
     ListModel {
         id: routeModel
@@ -40,6 +51,14 @@ Page {
             Column {
                 anchors.left: parent.left
                 anchors.right: transportColumn.left
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    text: Qt.formatTime(from.time, "hh:mm")
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                }
                 Text {
                     text: (index === 0)? fromLoc : from.name
                     width: parent.width
@@ -48,12 +67,6 @@ Page {
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
 
-                }
-                Text {
-                    text: Qt.formatTime(from.time, "hh:mm")
-                    font.pixelSize: UIConstants.FONT_XLARGE
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 }
             }
             Column {
@@ -68,15 +81,24 @@ Page {
                 }
                 Text {
                     text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
-                    font.pixelSize: UIConstants.FONT_DEFAULT
+                    font.pixelSize: UIConstants.FONT_LSMALL
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
             Column {
                 anchors.right: parent.right
                 anchors.left: transportColumn.right
+                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    text: Qt.formatTime(to.time, "hh:mm")
+                    anchors.right: parent.right
+                    horizontalAlignment: Qt.AlignRight
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                }
                 Text {
                     text: index === routeModel.count - 1? toLoc : to.name
                     horizontalAlignment: Text.AlignRight
@@ -85,15 +107,6 @@ Page {
                     font.pixelSize: UIConstants.FONT_DEFAULT
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                }
-
-                Text {
-                    text: Qt.formatTime(to.time, "hh:mm")
-                    anchors.right: parent.right
-                    horizontalAlignment: Qt.AlignRight
-                    font.pixelSize: UIConstants.FONT_XLARGE
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 }
             }
             MouseArea {

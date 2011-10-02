@@ -66,20 +66,17 @@ Page {
                             id: repeater
                             model: legs
                             Column {
-                                width: 55
                                 visible: repeater.count == 1? true : (type == "walk")? false : true
                                 Image {
                                     id: transportIcon
                                     source: "../../images/" + type + ".png"
                                     smooth: true
-                                    height: 60
-                                    width: 60
                                 }
                                 Text {
                                     text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                                     font.pixelSize: UIConstants.FONT_LSMALL
                                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                                     anchors.horizontalCenter: transportIcon.horizontalCenter
                                 }
                             }

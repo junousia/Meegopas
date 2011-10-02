@@ -1,22 +1,3 @@
-/**************************************************************************
- *    Butaca
- *    Copyright (C) 2011 Simon Pena <spena@igalia.com>
- *
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- **************************************************************************/
-
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
@@ -24,15 +5,11 @@ import "ExtrasConstants.js" as ExtrasConstants
 
 Item {
     property alias text: headerText.text
-    property alias showDivider: headerDivider.visible
 
-    anchors {
-        left: parent.left
-        right: parent.right
-    }
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-    height: headerText.height +
-            (headerDivider.visible ? headerDivider.height + UIConstants.DEFAULT_MARGIN : 0)
+    height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN
 
     Text {
         id: headerText
@@ -45,11 +22,9 @@ Item {
 
     Rectangle {
         id: headerDivider
-        anchors {
-            top: headerText.bottom
-            left: parent.left
-            right: parent.right
-        }
+        anchors.top: headerText.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.topMargin: UIConstants.DEFAULT_MARGIN
         height: 1
         color: theme.inverted ? ExtrasConstants.LIST_SUBTITLE_COLOR_INVERTED : ExtrasConstants.LIST_SUBTITLE_COLOR

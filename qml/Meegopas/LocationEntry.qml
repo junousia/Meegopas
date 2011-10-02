@@ -181,7 +181,7 @@ Column {
             id: locationPicker
             anchors.right: parent.right
             width: 50
-            enabled: true
+            enabled: (positionSource.position.latitudeValid && positionSource.position.longitudeValid)
             Image {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
