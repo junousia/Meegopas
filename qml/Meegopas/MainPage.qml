@@ -52,7 +52,7 @@ Page {
     DatePickerDialog {
         id: datePicker
         onAccepted: {
-            myDate = new Date(datePicker.year, datePicker.month, datePicker.day, 0)
+            myDate = new Date(datePicker.year, datePicker.month-1, datePicker.day, 0)
             dateButton.text = Qt.formatDate(myDate, "dd. MMMM yyyy")
         }
         minimumYear: 2011

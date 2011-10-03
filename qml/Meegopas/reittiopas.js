@@ -66,6 +66,38 @@ function convTime(hslTime){
                     00, 00);
 }
 
+function dump_leg_endpoints(target) {
+    var route = last_result[last_route_index][0]
+    for (var legindex in route.legs) {
+        var legdata = route.legs[legindex]
+        var output = {}
+
+        if(legindex == 0) {
+            var output2 = {}
+            output2.latitude = legdata.locs[0].coord.y
+            output2.longitude = legdata.locs[0].coord.x
+            target.push(output2)
+        }
+
+        output.latitude = legdata.locs[legdata.locs.length - 1].coord.y
+        output.longitude = legdata.locs[legdata.locs.length - 1].coord.x
+        target.push(output)
+    }
+}
+
+function dump_route_coords(target) {
+    var route = last_result[last_route_index][0]
+    for (var legindex in route.legs) {
+        var legdata = route.legs[legindex]
+        for (var locindex in legdata.locs) {
+            var output = {}
+            output.latitude = legdata.locs[locindex].coord.y
+            output.longitude = legdata.locs[locindex].coord.x
+            target.push(output)
+        }
+    }
+}
+
 function dump_stops(index, model) {
     var route = last_result[last_route_index][0]
 
@@ -132,11 +164,16 @@ function route_handler(routes,model) {
                 "length":legdata.length,
                 "duration":Math.round(legdata.duration/60),
                 "from":{},
-                "to":{}}
+                "to":{},
+                "locs":[]}
             output.legs[leg].from.name = legdata.locs[0].name?legdata.locs[0].name:''
             output.legs[leg].from.time = convTime(legdata.locs[0].depTime)
             output.legs[leg].to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
             output.legs[leg].to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
+
+            for (var locindex in legdata.locs) {
+                output.legs[leg].locs.push(legdata.locs[locindex])
+            }
 
             if(leg == 0) {
                 output.start = convTime(legdata.locs[0].depTime)

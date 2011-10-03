@@ -5,23 +5,71 @@ import QtWebKit 1.0
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import QtMobility.location 1.2
+import "reittiopas.js" as Reittiopas
 
 Page {
     id: page
     tools: commonTools
     anchors.fill: parent
 
+    Component {
+        id: route
+        MapPolyline {}
+    }
+
+    Component {
+        id: stop
+        MapCircle {}
+    }
+
+    function initialize() {
+        var leg_endpoints = []
+        var route_coords = []
+        Reittiopas.dump_leg_endpoints(leg_endpoints)
+        Reittiopas.dump_route_coords(route_coords)
+
+        // draw stop/stations
+        for (var index in leg_endpoints) {
+            var endpointdata = leg_endpoints[index]
+            var circleObj = stop.createObject(null);
+            circleObj.center = Qt.createQmlObject('import QtMobility.location 1.1; Coordinate{latitude:' + endpointdata.latitude + ';longitude:' + endpointdata.longitude + ';}', stop, "coord");
+            circleObj.visible = true
+            circleObj.border.color = "red"
+            circleObj.radius = 15
+            circleObj.border.width = 5
+            map.addMapObject(circleObj)
+            if(index == 0) {
+                map.center = Qt.createQmlObject('import QtMobility.location 1.1; Coordinate{latitude:' + endpointdata.latitude + ';longitude:' + endpointdata.longitude + ';}', stop, "coord");
+            }
+            circleObj.center = Qt.createQmlObject('import QtMobility.location 1.1; Coordinate{latitude:' + endpointdata.latitude + ';longitude:' + endpointdata.longitude + ';}', stop, "coord");
+        }
+
+        // draw route
+        var lineObj = route.createObject(null);
+
+        lineObj.border.width = 3
+        lineObj.border.color = "blue"
+
+        for (var routeindex in route_coords) {
+            var coorddata = route_coords[routeindex]
+            lineObj.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.1; Coordinate{latitude:' + coorddata.latitude + ';longitude:' + coorddata.longitude + ';}', stop, "coord"));
+        }
+        map.addMapObject(lineObj);
+    }
+
+    Component.onCompleted: {
+        initialize()
+    }
+
     Map {
         id: map
-
         anchors.fill: parent
-        zoomLevel: pinchmap.defaultZoomLevel
         plugin: Plugin { name: "nokia" }
         mapType: Map.StreetMap
-
+        zoomLevel: 15
         center: Coordinate {
-            latitude: 60.2
-            longitude: 24.8
+            latitude: 60.2183967313
+            longitude: 24.8043979003
         }
     }
 
