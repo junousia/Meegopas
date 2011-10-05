@@ -11,7 +11,7 @@ Page {
     property string toLoc : ''
     property alias model : routeModel
 
-    //anchors.margins: UIConstants.DEFAULT_MARGIN
+    anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
     orientationLock: PageOrientation.LockPortrait
@@ -29,6 +29,7 @@ Page {
 
     ListModel {
         id: routeModel
+        property bool updating : false
     }
 
     StopsPage { id: stopsPage }
@@ -141,7 +142,7 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        visible: !(routeModel.count)
+        visible: (routeModel.updating)
         running: true
         platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent

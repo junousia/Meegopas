@@ -12,7 +12,7 @@ Page {
     property string from : ""
     property string to : ""
 
-    //anchors.margins: UIConstants.DEFAULT_MARGIN
+    anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
     orientationLock: PageOrientation.LockPortrait
@@ -21,6 +21,7 @@ Page {
 
     ListModel {
         id: routeModel
+        property bool updating : false
     }
 
     Component {
@@ -93,7 +94,7 @@ Page {
                             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         }
                         Text {
-                            text: "Walk: " + Math.floor(walk/100)/10 + ' km'
+                            text: qsTr("Walk: ") + Math.floor(walk/100)/10 + ' km'
                             horizontalAlignment: Qt.AlignRight
                             color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
@@ -121,7 +122,6 @@ Page {
         anchors.fill: parent
         model: routeModel
         delegate: routeDelegate
-        anchors.margins: UIConstants.DEFAULT_MARGIN
         header: Header {
             text: from + " - " + to
         }
@@ -136,7 +136,7 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        visible: !(routeModel.count > 0)
+        visible: (routeModel.updating)
         running: true
         platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent

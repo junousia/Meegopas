@@ -9,7 +9,7 @@ Item {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN
+    height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN * 2
 
     Text {
         id: headerText
@@ -26,6 +26,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: UIConstants.DEFAULT_MARGIN
+        anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
         height: 1
         color: theme.inverted ? ExtrasConstants.LIST_SUBTITLE_COLOR_INVERTED : ExtrasConstants.LIST_SUBTITLE_COLOR
     }

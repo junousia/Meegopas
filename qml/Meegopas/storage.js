@@ -3,7 +3,7 @@
 //storage.js
 // First, let's create a short helper function to get the database connection
 function getDatabase() {
-     return openDatabaseSync("Meegopas", "0.0.1", "StorageDatabase", 100000);
+     return openDatabaseSync("Meegopas", "0.0.4", "StorageDatabase", 100000);
 }
 
 // At the start of the application, we can initialize the tables we need if they haven't been created yet

@@ -125,6 +125,15 @@ Column {
             anchors.bottom: label.bottom
         }
 
+        BusyIndicator {
+            id: busyIndicator
+            visible: suggestionModel.updating
+            running: suggestionModel.updating
+            anchors.left: label.right
+            anchors.verticalCenter: label.verticalCenter
+            platformStyle: BusyIndicatorStyle { size: 'medium' }
+        }
+
         MouseArea {
             id: labelMouseArea
             anchors.fill: parent
@@ -166,7 +175,7 @@ Column {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 source: 'image://theme/icon-m-input-clear'
-                visible: (textfield.activeFocus)
+                visible: ((textfield.activeFocus) && !busyIndicator.running)
                 opacity: 0.5
                 MouseArea {
                     id: locationInputMouseArea

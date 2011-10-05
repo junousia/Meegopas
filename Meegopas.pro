@@ -28,7 +28,7 @@ MOBILITY += location
 CONFIG += qdeclarative-boostable
 
 # Add dependency to Symbian components
-# CONFIG += qt-components
+CONFIG += qt-components
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp
@@ -46,4 +46,4 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog
 
-
+TRANSLATIONS += meegopas_fi.ts

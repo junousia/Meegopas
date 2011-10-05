@@ -113,6 +113,7 @@ function dump_stops(index, model) {
         }
         model.append(output)
     }
+    model.updating = false
 }
 
 function dump_legs(index, model) {
@@ -145,6 +146,7 @@ function dump_legs(index, model) {
         }
         model.append(output)
     }
+    model.updating = false
 }
 
 function route_handler(routes,model) {
@@ -189,10 +191,10 @@ function route_handler(routes,model) {
         last_result.push(output)
         model.append(output)
     }
+    model.updating = false
 }
 
 function suggestion_handler(suggestions,model) {
-    model.updating = true
     for (var index in suggestions) {
         var output = {}
         var suggestion = suggestions[index];
@@ -211,10 +213,12 @@ function suggestion_handler(suggestions,model) {
 
 function api_request(parameters, result_handler, model) {
     var req = new XMLHttpRequest();
+    model.updating = true
     req.onreadystatechange = function() {
         if (req.readyState == XMLHttpRequest.DONE) {
             if (req.status != 200 && req.status != 304) {
                 console.log('HTTP error ' + req.status);
+                model.updating = false
                 return;
             } else {
                 var json = eval(req.responseText);

@@ -9,7 +9,7 @@ Page {
     property alias model: stopModel
     property string code
 
-    //anchors.margins: UIConstants.DEFAULT_MARGIN
+    anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
     orientationLock: PageOrientation.LockPortrait
@@ -18,6 +18,7 @@ Page {
 
     ListModel {
         id: stopModel
+        property bool updating : false
     }
 
     Component {
@@ -62,7 +63,7 @@ Page {
         model: stopModel
         delegate: stopDelegate
         header: Header {
-            text: "Stops for line " + code
+            text: qsTr("Stops for line ") + code
         }
     }
 
@@ -73,7 +74,7 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        visible: !(stopModel.count)
+        visible: (stopModel.updating)
         running: true
         platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent

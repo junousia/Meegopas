@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.nokia.extras 1.0
 
 PageStackWindow {
     id: appWindow
@@ -13,6 +14,11 @@ PageStackWindow {
 
     MainPage{id: mainPage}
     AboutDialog { id: about }
+
+    InfoBanner {
+        id: info
+        text: qsTr("Problem with the internet connection")
+    }
 
     ToolBarLayout {
         id: commonTools

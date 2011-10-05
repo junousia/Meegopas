@@ -57,8 +57,8 @@ Page {
         }
         minimumYear: 2011
 
-        acceptButtonText: "Accept"
-        rejectButtonText: "Reject"
+        acceptButtonText: qsTr("Accept")
+        rejectButtonText: qsTr("Reject")
     }
     TimePickerDialog {
         id: timePicker
@@ -69,14 +69,14 @@ Page {
         hour: Qt.formatTime(myDate, "hh")
         minute: Qt.formatTime(myDate, "mm")
         fields: DateTime.Hours | DateTime.Minutes
-        acceptButtonText: "Accept"
-        rejectButtonText: "Reject"
+        acceptButtonText: qsTr("Accept")
+        rejectButtonText: qsTr("Reject")
     }
 
     ResultPage { id: resu }
 
-    LocationEntry { id: from; type: "From"; anchors.top: parent.top }
-    LocationEntry { id: to; type: "To"; anchors.top: from.bottom; anchors.topMargin: UIConstants.DEFAULT_MARGIN }
+    LocationEntry { id: from; type: qsTr("From"); anchors.top: parent.top }
+    LocationEntry { id: to; type: qsTr("To"); anchors.top: from.bottom; anchors.topMargin: UIConstants.DEFAULT_MARGIN }
 
     SwitchStyle {
         id: customswitch
@@ -101,7 +101,7 @@ Page {
             font.pixelSize: UIConstants.FONT_DEFAULT_SIZE
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-            text: timeType.checked? "arrival" : "departure"
+            text: timeType.checked? qsTr("arrival") : qsTr("departure")
         }
     }
     Item {
