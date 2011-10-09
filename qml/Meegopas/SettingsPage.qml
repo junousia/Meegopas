@@ -19,65 +19,68 @@ Page {
         }
         width: parent.width
         flickableDirection: Flickable.VerticalFlick
+
+        Component.onCompleted: {
+            Storage.initialize()
+            optimize.set_value(Storage.getSetting("optimize"))
+            speed.initialize_value(parseInt(Storage.getSetting("walking_speed")))
+            console.log(parseInt(Storage.getSetting("walking_speed")))
+        }
+
         Column {
             spacing: UIConstants.DEFAULT_MARGIN
             ButtonColumn {
                 id: optimize
+                function set_value(value) {
+                    if(value == "default")
+                        def.checked = true
+                    else if(value == "fastest")
+                        fastest.checked = true
+                    else if(value == "least_transfers")
+                        transfers.checked = true
+                    else if(value == "least_walking")
+                        walking.checked = true
+                    else
+                        console.log("optimize value not set")
+                }
+
                 anchors.right: parent.right
                 Button {
                     id: def
                     text: "default"
+                    onClicked: Storage.setSetting('optimize', 'default')
                 }
                 Button {
                     id: fastest
                     text: "fastest"
+                    onClicked: Storage.setSetting('optimize', 'fastest')
                 }
                 Button {
                     id: transfers
                     text: "Least transfers"
+                    onClicked: Storage.setSetting('optimize', 'least_transfers')
                 }
                 Button {
                     id: walking
                     text: "Least walking"
+                    onClicked: Storage.setSetting('optimize', 'least_walking')
                 }
             }
-            ButtonRow {
-                id: types
-                exclusive: false
-                Button {
-                    id: bus
-                    text: "Bus"
-                    checkable: true
+            Slider {
+                id: speed
+
+                function initialize_value(value) {
+                    speed.value = value
                 }
-                Button {
-                    id: train
-                    text: "Train"
-                    checkable: true
-                }
-                Button {
-                    id: metro
-                    text: "Metro"
-                    checkable: true
-                }
-                Button {
-                    id: tram
-                    text: "Tram"
-                    checkable: true
-                }
-            }
-            ButtonRow {
-                id: speedrow
-                Button {
-                    id: slow
-                    text: "slow"
-                }
-                Button {
-                    id: fast
-                    text: "fast"
-                }
-                Button {
-                    id: vfast
-                    text: "very fast"
+
+                stepSize: 30
+                minimumValue: 70
+                maximumValue: 500
+                valueIndicatorVisible: true
+                valueIndicatorText: qsTr("Walking speed")
+                onValueChanged: {
+                    console.log("setting speed " + speed.value.toString())
+                    Storage.setSetting('walking_speed', speed.value.toString())
                 }
             }
         }

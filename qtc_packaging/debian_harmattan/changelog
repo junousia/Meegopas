@@ -1,3 +1,8 @@
+meegopas (0.0.5) unstable; urgency=low
+  * Added a "spinner" for location selector, indicates better an ongoing request
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  pe, 07 lokakuuta 2011 08:00:26 +0300
+
 meegopas (0.0.4) unstable; urgency=low
 
   * Initial Release.
