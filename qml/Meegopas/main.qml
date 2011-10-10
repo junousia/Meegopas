@@ -7,7 +7,7 @@ PageStackWindow {
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
-        background: theme.inverted?'image://theme/meegotouch-video-background':''
+        background: theme.inverted?'image://theme/meegotouch-video-background':null
         backgroundFillMode: Image.Stretch
     }
 
@@ -28,8 +28,8 @@ PageStackWindow {
         id: myMenu
         visualParent: pageStack
         MenuLayout {
-            MenuItem { text: "About"; onClicked: about.open() }
-            //MenuItem { text: "Settings"; onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
+            MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
+            MenuItem { text: qsTr("About"); onClicked: about.open() }
         }
     }
 }

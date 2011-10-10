@@ -2,7 +2,8 @@
 folder_01.source = qml/Meegopas
 folder_01.target = qml
 folder_02.source = images
-DEPLOYMENTFOLDERS += folder_01 folder_02
+folder_03.source = i18n
+DEPLOYMENTFOLDERS += folder_01 folder_02 folder_03
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -22,7 +23,7 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
 CONFIG += mobility
-MOBILITY += location
+MOBILITY += location systeminfo
 
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 CONFIG += qdeclarative-boostable
@@ -46,4 +47,5 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog
 
-TRANSLATIONS += meegopas_fi.ts
+TRANSLATIONS += meegopas_fi_FI.ts
+

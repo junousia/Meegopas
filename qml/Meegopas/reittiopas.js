@@ -11,7 +11,7 @@ transType[3] = "bus"
 transType[4] = "bus"
 transType[5] = "bus"
 transType[6] = "metro"
-transType[7] = "ferry"
+transType[7] = "boat"
 transType[8] = "bus"
 transType[9] = "bus"
 transType[10] = "bus"
@@ -30,7 +30,7 @@ var last_route_index
 var last_route_coordinates = []
 
 function busCode(code) {
-    code = code.slice(1,5).trim()
+    code = code.slice(1,5).trim().replace(/^[0]+/g,"")
     return code
 }
 
@@ -52,6 +52,10 @@ function translate_typecode(type, code) {
         return { type:transType[type], code:trainCode(code) }
     else if(transType[type] == "tram")
         return { type:transType[type], code:tramCode(code) }
+    else if(transType[type] == "boat")
+        return { type:transType[type], code:"" }
+    else if(transType[type] == "metro")
+        return { type:transType[type], code:"metro" }
     else
         return { type:transType[type], code:code }
 }
@@ -199,13 +203,18 @@ function suggestion_handler(suggestions,model) {
         var output = {}
         var suggestion = suggestions[index];
         output.name = suggestion.name.split(',', 1).toString()
+
+        if(typeof suggestion.details.houseNumber != 'undefined') {
+            output.housenum = suggestion.details.houseNumber
+        }
+
         output.displayname = suggestion.matchedName
         output.city = suggestion.city
         output.type = suggestion.locType
         output.coords = suggestion.coords
 
-        // add only finnish place names
-        if(suggestion.lang == "fi")
+//        // add only finnish place names
+//        if(suggestion.lang == "fi")
             model.append(output)
     }
     model.updating = false
@@ -257,7 +266,7 @@ function address_to_location(term, model) {
     api_request(parameters, suggestion_handler, model);
 }
 
-function route(from, to, date, time, timetype, walk_speed, model) {
+function route(from, to, date, time, timetype, walk_speed, optimize, model) {
     var parameters = {};
     parameters.request = 'route';
     parameters.from = from;
@@ -268,6 +277,7 @@ function route(from, to, date, time, timetype, walk_speed, model) {
     parameters.show = 5;
     parameters.walk_speed = walk_speed
     parameters.timetype = timetype
+    parameters.optimize = optimize
     parameters.lang = "fi"
     api_request(parameters, route_handler, model);
 }

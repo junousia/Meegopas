@@ -9,8 +9,15 @@ import "reittiopas.js" as Reittiopas
 
 Page {
     id: page
-    tools: commonTools
+    tools: mapTools
     anchors.fill: parent
+
+    ToolBarLayout {
+        id: mapTools
+        x: 0
+        y: 0
+        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+    }
 
     Component {
         id: route

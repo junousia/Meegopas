@@ -23,7 +23,7 @@ Page {
 
     Component {
         id: stopDelegate
-        Row {
+        Item {
             height: UIConstants.LIST_ITEM_HEIGHT_SMALL
             width: parent.width
 

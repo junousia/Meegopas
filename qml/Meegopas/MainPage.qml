@@ -5,6 +5,7 @@ import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
 import "MyConstants.js" as MyConstants
 import "reittiopas.js" as Reittiopas
+import "storage.js" as Storage
 
 Page {
     id: mainPage
@@ -29,7 +30,7 @@ Page {
         y: 0
         ToolButtonRow {
             ToolButton {
-                text: "Search"
+                text: qsTr("Search")
                 enabled: ((from.destCoords != '' || from.destValid) && (to.destCoords != '' || to.destValid))
                 onClicked: {
                     resu.routeModel.clear()
@@ -38,7 +39,9 @@ Page {
                                      Qt.formatDate(myDate, "yyyyMMdd"),
                                      Qt.formatTime(myTime, "hhmm"),
                                      timeType.checked? "arrival" : "departure",
-                                     70,resu.routeModel)
+                                     Storage.getSetting("walking_speed"),
+                                     Storage.getSetting("optimize"),
+                                     resu.routeModel)
 
                     resu.from = from.getCoords().name
                     resu.to = to.getCoords().name
@@ -68,6 +71,7 @@ Page {
         }
         hour: Qt.formatTime(myDate, "hh")
         minute: Qt.formatTime(myDate, "mm")
+
         fields: DateTime.Hours | DateTime.Minutes
         acceptButtonText: qsTr("Accept")
         rejectButtonText: qsTr("Reject")
@@ -76,6 +80,68 @@ Page {
     ResultPage { id: resu }
 
     LocationEntry { id: from; type: qsTr("From"); anchors.top: parent.top }
+
+    Item {
+        id: locationSwitch
+        state: "normal"
+        anchors.right: parent.right
+        anchors.top: from.bottom
+        anchors.topMargin: 8
+        width: 60
+        height: 60
+        //enabled: (to.text && from.text)
+
+        BorderImage {
+            anchors.fill: parent
+            visible: locationSwitchMouseArea.pressed
+            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+        }
+
+        Image {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: !theme.inverted?'image://theme/icon-m-toolbar-refresh':'image://theme/icon-m-toolbar-refresh-selected'
+            opacity: locationSwitch.enabled ? 0.8 : 0.3
+        }
+        MouseArea {
+            id: locationSwitchMouseArea
+            anchors.fill: parent
+
+            onClicked: {
+                var templo = from.text
+                var tempcoord = from.destCoords
+
+                if(from.destCoords != '') {
+                    to.auto_update = true
+                }
+                if(to.destCoords != '') {
+                    from.auto_update = true
+                }
+                from.model.clear()
+                from.destCoords = to.destCoords
+                from.text = to.text
+
+                to.model.clear()
+                to.destCoords = tempcoord
+                to.text = templo
+                locationSwitch.state = locationSwitch.state == "normal" ? "rotated" : "normal"
+            }
+        }
+        states: [
+            State {
+                name: "rotated"
+                PropertyChanges { target: locationSwitch; rotation: 180 }
+            },
+            State {
+                name: "normal"
+                PropertyChanges { target: locationSwitch; rotation: 0 }
+            }
+        ]
+        transitions: Transition {
+            RotationAnimation { duration: 300; direction: RotationAnimation.Counterclockwise }
+        }
+    }
+
     LocationEntry { id: to; type: qsTr("To"); anchors.top: from.bottom; anchors.topMargin: UIConstants.DEFAULT_MARGIN }
 
     SwitchStyle {
@@ -98,10 +164,15 @@ Page {
             id: timeTypeText
             anchors.top: timeType.bottom
             anchors.horizontalCenter: timeType.horizontalCenter
-            font.pixelSize: UIConstants.FONT_DEFAULT_SIZE
+            font.pixelSize: UIConstants.FONT_LARGE
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             text: timeType.checked? qsTr("arrival") : qsTr("departure")
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: timeType.clicked()
+            }
         }
     }
     Item {
@@ -141,6 +212,7 @@ Page {
         height: dateButton.height
         anchors.top: timeContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: UIConstants.DEFAULT_MARGIN
 
         BorderImage {
             anchors.fill: parent

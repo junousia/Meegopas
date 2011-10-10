@@ -14,7 +14,7 @@ Page {
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
-    orientationLock: PageOrientation.LockPortrait
+    //orientationLock: PageOrientation.LockPortrait
 
     ToolBarLayout {
         id: routeTools
@@ -53,6 +53,7 @@ Page {
                 anchors.left: parent.left
                 anchors.right: transportColumn.left
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.rightMargin: UIConstants.DEFAULT_MARGIN
 
                 Text {
                     text: Qt.formatTime(from.time, "hh:mm")
@@ -67,18 +68,16 @@ Page {
                     font.pixelSize: UIConstants.FONT_DEFAULT
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-
                 }
             }
             Column {
                 id: transportColumn
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenter: parent.horizontalCenter                
+                anchors.verticalCenter: parent.verticalCenter
+
                 Image {
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "../../images/" + type + ".png"
-                    smooth: true
-                    height: 60
-                    width: 60
                 }
                 Text {
                     text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
@@ -92,6 +91,7 @@ Page {
                 anchors.right: parent.right
                 anchors.left: transportColumn.right
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: UIConstants.DEFAULT_MARGIN
                 Text {
                     text: Qt.formatTime(to.time, "hh:mm")
                     anchors.right: parent.right

@@ -1,3 +1,12 @@
+meegopas (0.0.6) unstable; urgency=low
+  * Added translation to finnish
+  * Settings for route optimization and walking speed, more to come
+  * Added support for ferries
+  * Button to switch "from" and "to"
+  * New GPS icon
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  la, 08 lokakuuta 2011 10:27:56 +0300
+
 meegopas (0.0.5) unstable; urgency=low
   * Added a "spinner" for location selector, indicates better an ongoing request
 

@@ -6,9 +6,14 @@ import "ExtrasConstants.js" as ExtrasConstants
 import "storage.js" as Storage
 
 Page {
-    tools: commonTools
+    tools: settingsTools
 
-    anchors.margins: UIConstants.DEFAULT_MARGIN
+    ToolBarLayout {
+        id: settingsTools
+        x: 0
+        y: 0
+        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+    }
 
     Flickable {
         id: settingsContent
@@ -23,12 +28,23 @@ Page {
         Component.onCompleted: {
             Storage.initialize()
             optimize.set_value(Storage.getSetting("optimize"))
-            speed.initialize_value(parseInt(Storage.getSetting("walking_speed")))
-            console.log(parseInt(Storage.getSetting("walking_speed")))
+            walking_speed.set_value(Storage.getSetting("walking_speed"))
         }
 
         Column {
             spacing: UIConstants.DEFAULT_MARGIN
+            width: parent.width
+            Header {
+                text: qsTr("Settings")
+            }
+
+            Label {
+                text: qsTr("Optimize route by")
+                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                font.pixelSize: UIConstants.FONT_LARGE
+                anchors.left: parent.left
+            }
+
             ButtonColumn {
                 id: optimize
                 function set_value(value) {
@@ -39,7 +55,7 @@ Page {
                     else if(value == "least_transfers")
                         transfers.checked = true
                     else if(value == "least_walking")
-                        walking.checked = true
+                        lwalking.checked = true
                     else
                         console.log("optimize value not set")
                 }
@@ -47,40 +63,67 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: def
-                    text: "default"
+                    text: qsTr("Default")
                     onClicked: Storage.setSetting('optimize', 'default')
                 }
                 Button {
                     id: fastest
-                    text: "fastest"
+                    text: qsTr("Fastest")
                     onClicked: Storage.setSetting('optimize', 'fastest')
                 }
                 Button {
                     id: transfers
-                    text: "Least transfers"
+                    text: qsTr("Least transfers")
                     onClicked: Storage.setSetting('optimize', 'least_transfers')
                 }
                 Button {
-                    id: walking
-                    text: "Least walking"
+                    id: lwalking
+                    text: qsTr("Least walking")
                     onClicked: Storage.setSetting('optimize', 'least_walking')
                 }
             }
-            Slider {
-                id: speed
 
-                function initialize_value(value) {
-                    speed.value = value
+            Label {
+                text: qsTr("Walking speed")
+                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                font.pixelSize: UIConstants.FONT_LARGE
+                anchors.left: parent.left
+            }
+            ButtonColumn {
+                id: walking_speed
+                function set_value(value) {
+                    if(value == "70")
+                        walking.checked = true
+                    else if(value == "100")
+                        fwalking.checked = true
+                    else if(value == "120")
+                        vfwalking.checked = true
+                    else if(value == "150")
+                        running.checked = true
+                    else
+                        console.log("optimize value not set")
                 }
 
-                stepSize: 30
-                minimumValue: 70
-                maximumValue: 500
-                valueIndicatorVisible: true
-                valueIndicatorText: qsTr("Walking speed")
-                onValueChanged: {
-                    console.log("setting speed " + speed.value.toString())
-                    Storage.setSetting('walking_speed', speed.value.toString())
+                anchors.right: parent.right
+                Button {
+                    id: walking
+                    text: qsTr("Walking")
+                    onClicked: Storage.setSetting('walking_speed', '70')
+                }
+                Button {
+                    id: fwalking
+                    text: qsTr("Fast walking")
+                    onClicked: Storage.setSetting('walking_speed', '100')
+                }
+                Button {
+                    id: vfwalking
+                    text: qsTr("Very fast walking")
+                    onClicked: Storage.setSetting('walking_speed', '120')
+                }
+                Button {
+                    id: running
+                    text: qsTr("Running")
+                    onClicked: Storage.setSetting('walking_speed', '150')
                 }
             }
         }

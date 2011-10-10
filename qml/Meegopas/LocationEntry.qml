@@ -13,11 +13,10 @@ Column {
     property bool destValid : (suggestionModel.count > 0)
     property alias model: suggestionModel
     property alias text : textfield.text
-    property alias label : label.text
+    property alias auto_update : textfield.auto_update
 
     height: textfield.height + labelContainer.height
     width: parent.width
-    spacing: UIConstants.DEFAULT_MARGIN
 
     function clear() {
         suggestionModel.clear()
@@ -73,7 +72,7 @@ Column {
         id: query
         model: suggestionModel
         delegate: SuggestionDelegate {}
-        titleText: type
+        titleText: qsTr("Choose location")
         onAccepted: {
             textfield.auto_update = true
             textfield.text = suggestionModel.get(selectedIndex).name
@@ -147,8 +146,6 @@ Column {
     }
     Row {
         width: parent.width
-        spacing: UIConstants.BUTTON_SPACING
-        anchors.top: labelContainer.bottom
 
         TextField {
             id: textfield
@@ -156,7 +153,7 @@ Column {
             anchors.left: parent.left
             anchors.right: locationPicker.left
             text: ""
-            placeholderText: type
+            placeholderText: qsTr("Type a location")
             validator: RegExpValidator { regExp: /^.{3,50}$/ }
             inputMethodHints: Qt.ImhNoPredictiveText
 
@@ -185,16 +182,22 @@ Column {
                     }
                 }
             }
+
+            Keys.onReturnPressed: {
+                textfield.platformCloseSoftwareInputPanel()
+            }
         }
         Button {
             id: locationPicker
             anchors.right: parent.right
+            anchors.margins: UIConstants.BUTTON_SPACING
             width: 50
             enabled: (positionSource.position.latitudeValid && positionSource.position.longitudeValid)
             Image {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                source: 'image://theme/icon-m-calendar-location-picker'
+                source: !theme.inverted?'../../images/gps-icon.png':'../../images/gps-icon-inverted.png'
+                opacity: locationPicker.enabled? 0.8 : 0.3
             }
             onClicked: {
                 clear()

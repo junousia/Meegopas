@@ -15,7 +15,7 @@ Page {
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
-    orientationLock: PageOrientation.LockPortrait
+    //orientationLock: PageOrientation.LockPortrait
 
     RouteView { id: routeView }
 
@@ -35,72 +35,65 @@ Page {
                 visible: mouseArea.pressed
                 source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
             }
-            Item {
-                anchors.fill: parent
+            Column {
+                anchors.verticalCenter: parent.verticalCenter
 
-                Row {
-                    width: parent.width
+                Text {
+                    text: Qt.formatTime(start, "hh:mm")
+                    width: 75
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                }
 
+                Text {
+                    text: duration + " min"
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: UIConstants.FONT_LSMALL
+                }
+            }
+            Flow {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Repeater {
+                    id: repeater
+                    model: legs
                     Column {
-                        anchors.verticalCenter: parent.verticalCenter
-
+                        visible: repeater.count == 1? true : (type == "walk")? false : true
+                        Image {
+                            id: transportIcon
+                            source: "../../images/" + type + ".png"
+                            smooth: true
+                        }
                         Text {
-                            text: Qt.formatTime(start, "hh:mm")
-                            width: 75
-                            font.pixelSize: UIConstants.FONT_XLARGE
+                            text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
+                            visible: true
+                            font.pixelSize: UIConstants.FONT_LSMALL
                             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                        }
-
-                        Text {
-                            text: duration + " min"
-                            color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                            font.pixelSize: UIConstants.FONT_LSMALL
+                            anchors.horizontalCenter: transportIcon.horizontalCenter
                         }
                     }
-                    Flow {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        Repeater {
-                            id: repeater
-                            model: legs
-                            Column {
-                                visible: repeater.count == 1? true : (type == "walk")? false : true
-                                Image {
-                                    id: transportIcon
-                                    source: "../../images/" + type + ".png"
-                                    smooth: true
-                                }
-                                Text {
-                                    text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
-                                    font.pixelSize: UIConstants.FONT_LSMALL
-                                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                                    anchors.horizontalCenter: transportIcon.horizontalCenter
-                                }
-                            }
-                        }
-                    }
-                    Column {
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        Text {
-                            text: Qt.formatTime(finish, "hh:mm")
-                            anchors.right: parent.right
-                            font.pixelSize: UIConstants.FONT_XLARGE
-                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                            color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                        }
-                        Text {
-                            text: qsTr("Walk: ") + Math.floor(walk/100)/10 + ' km'
-                            horizontalAlignment: Qt.AlignRight
-                            color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                            font.pixelSize: UIConstants.FONT_LSMALL
-                        }
-                    }
+                }
+            }
+            Column {
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    text: Qt.formatTime(finish, "hh:mm")
+                    anchors.right: parent.right
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                }
+                Text {
+                    text: qsTr("Walk ") + Math.floor(walk/100)/10 + ' km'
+                    horizontalAlignment: Qt.AlignRight
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: UIConstants.FONT_LSMALL
                 }
             }
             MouseArea {
@@ -114,7 +107,6 @@ Page {
                     pageStack.push(routeView)
                 }
             }
-
         }
     }
     ListView {
