@@ -17,12 +17,12 @@
 <context>
     <name>LocationEntry</name>
     <message>
-        <location filename="../qml/Meegopas/LocationEntry.qml" line="77"/>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="75"/>
         <source>Choose location</source>
         <translation>Valitse sijainti</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/LocationEntry.qml" line="160"/>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="156"/>
         <source>Type a location</source>
         <translation>Kirjoita osoite</translation>
     </message>
@@ -52,17 +52,17 @@
         <translation>Mistä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="129"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="145"/>
         <source>To</source>
         <translation>Mihin</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="154"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="170"/>
         <source>arrival</source>
         <translation>perillä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="154"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="170"/>
         <source>departure</source>
         <translation>lähtöaika</translation>
     </message>
@@ -74,9 +74,17 @@
         <translation type="obsolete">Kävelyä: </translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/ResultPage.qml" line="98"/>
+        <location filename="../qml/Meegopas/ResultPage.qml" line="92"/>
         <source>Walk </source>
         <translation>Kävelyä </translation>
+    </message>
+</context>
+<context>
+    <name>RouteView</name>
+    <message>
+        <location filename="../qml/Meegopas/RouteView.qml" line="24"/>
+        <source>Map</source>
+        <translation>Kartta</translation>
     </message>
 </context>
 <context>
@@ -148,12 +156,12 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/Meegopas/main.qml" line="31"/>
+        <location filename="../qml/Meegopas/main.qml" line="32"/>
         <source>About</source>
         <translation>Tietoja</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/main.qml" line="32"/>
+        <location filename="../qml/Meegopas/main.qml" line="31"/>
         <source>Settings</source>
         <translation>Asetukset</translation>
     </message>

@@ -104,7 +104,6 @@ function dump_route_coords(target) {
 
 function dump_stops(index, model) {
     var route = last_result[last_route_index][0]
-
     var legdata = route.legs[index]
 
     for (var locindex in legdata.locs) {
@@ -199,6 +198,7 @@ function route_handler(routes,model) {
 }
 
 function suggestion_handler(suggestions,model) {
+    model.clear()
     for (var index in suggestions) {
         var output = {}
         var suggestion = suggestions[index];
@@ -206,6 +206,7 @@ function suggestion_handler(suggestions,model) {
 
         if(typeof suggestion.details.houseNumber != 'undefined') {
             output.housenum = suggestion.details.houseNumber
+            output.name += " " + suggestion.details.houseNumber
         }
 
         output.displayname = suggestion.matchedName
@@ -219,6 +220,22 @@ function suggestion_handler(suggestions,model) {
     }
     model.updating = false
 }
+
+function positioning_handler(suggestions,model) {                                                                           
+    for (var index in suggestions) {                                                                                       
+        var output = {}                                                                                                    
+        var suggestion = suggestions[index];                                                                               
+        output.name = suggestion.name.split(',', 1).toString()                                                             
+                                                                                                                           
+        output.displayname = suggestion.matchedName                                                                        
+        output.city = suggestion.city                                                                                      
+        output.type = suggestion.locType                                                                                   
+        output.coords = suggestion.coords                                                                                  
+                                                                                                                           
+        model.append(output)                                                                                           
+    }                                                                                                                      
+    model.updating = false                                                                                                 
+} 
 
 function api_request(parameters, result_handler, model) {
     var req = new XMLHttpRequest();
@@ -255,7 +272,7 @@ function location_to_address(latitude, longitude, model) {
     var parameters = {};
     parameters.request = 'reverse_geocode';
     parameters.coordinate = longitude + ',' + latitude;
-    api_request(parameters, suggestion_handler, model);
+    api_request(parameters, positioning_handler, model);
 }
 
 function address_to_location(term, model) {

@@ -47,7 +47,7 @@ Component {
             anchors.right: locType.left
             anchors.leftMargin: UIConstants.MARGIN_DEFAULT
             anchors.rightMargin: UIConstants.MARGIN_DEFAULT
-            text: displayname
+            text: name
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_LARGE
         }

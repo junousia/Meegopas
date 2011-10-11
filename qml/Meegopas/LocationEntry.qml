@@ -28,6 +28,7 @@ Column {
         id: updateTimer
         repeat: false
         interval: 100
+        triggeredOnStart: false
         onTriggered: {
             if(suggestionModel.count == 1 && !suggestionModel.updating) {
                 textfield.auto_update = true
@@ -86,7 +87,7 @@ Column {
 
     Timer {
         id: suggestionTimer
-        interval: 1000
+        interval: 1500
         repeat: false
         triggeredOnStart: false
         onTriggered: {
@@ -185,6 +186,7 @@ Column {
 
             Keys.onReturnPressed: {
                 textfield.platformCloseSoftwareInputPanel()
+                parent.focus = true
             }
         }
         Button {

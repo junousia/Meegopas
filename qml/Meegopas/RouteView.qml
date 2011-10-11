@@ -20,7 +20,11 @@ Page {
         id: routeTools
         visible: false
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
-        ToolIcon { iconId: "icon-m-content-poi-inverse"; onClicked: { pageStack.push(Qt.resolvedUrl("RouteMapPage.qml")) } }
+        ToolButton {
+            text: qsTr("Map")
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: { pageStack.push(Qt.resolvedUrl("RouteMapPage.qml")) }
+        }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
              onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()

@@ -22,6 +22,7 @@ Page {
         theme.inverted = true
         myDate = new Date()
         myTime = new Date()
+        Storage.initialize()
     }
 
     ToolBarLayout {
@@ -34,13 +35,15 @@ Page {
                 enabled: ((from.destCoords != '' || from.destValid) && (to.destCoords != '' || to.destValid))
                 onClicked: {
                     resu.routeModel.clear()
+                    var walking_speed = Storage.getSetting("walking_speed")
+                    var optimize = Storage.getSetting("optimize")
                     Reittiopas.route(from.getCoords().coords,
                                      to.getCoords().coords,
                                      Qt.formatDate(myDate, "yyyyMMdd"),
                                      Qt.formatTime(myTime, "hhmm"),
                                      timeType.checked? "arrival" : "departure",
-                                     Storage.getSetting("walking_speed"),
-                                     Storage.getSetting("optimize"),
+                                     walking_speed == "Unknown"?"70":walking_speed,
+                                     optimize == "Unknown"?"default":optimize,
                                      resu.routeModel)
 
                     resu.from = from.getCoords().name
@@ -171,7 +174,7 @@ Page {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: timeType.clicked()
+                onClicked: timeType.checked = timeType.checked? false : true
             }
         }
     }
