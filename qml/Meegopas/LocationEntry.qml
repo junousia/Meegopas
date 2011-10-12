@@ -60,8 +60,8 @@ Column {
     }
     PositionSource {
         id: positionSource
-        updateInterval: 5000
-        active: true
+        updateInterval: 1000
+        active: platformWindow.active
     }
 
     ListModel {
@@ -120,7 +120,7 @@ Column {
             id: count
             largeSized: true
             value: suggestionModel.count
-            visible: (suggestionModel.count > 1 && (destCoords === ''))
+            visible: (suggestionModel.count > 1)
             anchors.left: label.right
             anchors.bottom: label.bottom
         }
@@ -137,6 +137,7 @@ Column {
         MouseArea {
             id: labelMouseArea
             anchors.fill: parent
+            enabled: (suggestionModel.count > 1)
             onClicked: {
                 if(suggestionModel.count > 1) {
                     query.open()
