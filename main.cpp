@@ -2,6 +2,7 @@
 #include <QtDebug>
 #include <QTranslator>
 #include <QLocale>
+#include <MLocale>
 #include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -11,10 +12,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QTranslator translator;
 
-    qDebug() << "Current locale: " << QLocale::system().name();
-    translator.load("/opt/Meegopas/i18n/meegopas_" + QLocale::system().name() + ".qm");
-    app.data()->installTranslator(&translator);
+    MLocale locale;
+    qDebug() << "Current locale: " << locale.name();
 
+    translator.load("/opt/Meegopas/i18n/meegopas_" + locale.name() + ".qm");
+    app.data()->installTranslator(&translator);
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setMainQmlFile(QLatin1String("qml/Meegopas/main.qml"));
     viewer->showExpanded();

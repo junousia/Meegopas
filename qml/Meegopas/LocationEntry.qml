@@ -58,6 +58,7 @@ Column {
         else
             console.log("no acceptable input")
     }
+
     PositionSource {
         id: positionSource
         updateInterval: 1000
@@ -87,13 +88,13 @@ Column {
 
     Timer {
         id: suggestionTimer
-        interval: 1500
+        interval: 1200
         repeat: false
         triggeredOnStart: false
         onTriggered: {
-            if(textfield.acceptableInput)
-                suggestionModel.clear()
+            if(textfield.acceptableInput) {
                 Reittiopas.address_to_location(textfield.text,suggestionModel)
+            }
         }
     }
 
@@ -154,7 +155,6 @@ Column {
             property bool auto_update : false
             anchors.left: parent.left
             anchors.right: locationPicker.left
-            text: ""
             placeholderText: qsTr("Type a location")
             validator: RegExpValidator { regExp: /^.{3,50}$/ }
             inputMethodHints: Qt.ImhNoPredictiveText
@@ -166,6 +166,8 @@ Column {
                     suggestionModel.clear()
                     if(acceptableInput)
                         suggestionTimer.restart()
+                    else
+                        suggestionTimer.stop()
                 }
             }
 
