@@ -4,12 +4,12 @@ import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
 
 Item {
-    property alias text: headerText.text
-
+    property string text
+    property string subtext
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN * 2
+    height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN * 2 + (subheaderText.visible ? subheaderText.height : 0)
 
     Text {
         id: headerText
@@ -18,11 +18,22 @@ Item {
         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
         width: parent.width
         wrapMode: Text.WordWrap
+        text: parent.text
     }
-
+    Text {
+        id: subheaderText
+        anchors.top: headerText.bottom
+        width: parent.width
+        font.pixelSize: UIConstants.FONT_DEFAULT
+        font.family: "Nokia Pure Text Light"
+        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+        text: '<i>' + subtext + '</i>'
+        wrapMode: Text.WordWrap
+        visible: parent.subtext
+    }
     Rectangle {
         id: headerDivider
-        anchors.top: headerText.bottom
+        anchors.top: subheaderText.visible ? subheaderText.bottom : headerText.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: UIConstants.DEFAULT_MARGIN

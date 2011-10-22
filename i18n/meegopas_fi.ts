@@ -15,56 +15,153 @@
     </message>
 </context>
 <context>
-    <name>LocationEntry</name>
+    <name>FavoritesPage</name>
     <message>
-        <location filename="../qml/Meegopas/LocationEntry.qml" line="75"/>
+        <source>Confirm delete?</source>
+        <translation type="obsolete">Vahvista poisto?</translation>
+    </message>
+    <message>
+        <source>Confirm delete</source>
+        <translation type="obsolete">Vahvista poisto</translation>
+    </message>
+    <message>
+        <source>delete</source>
+        <translation type="obsolete">poista</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="41"/>
+        <source>Delete favorite?</source>
+        <translation>Poista suosikki?</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="obsolete">peruuta</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="44"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="119"/>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="45"/>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="73"/>
         <source>Choose location</source>
         <translation>Valitse sijainti</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/LocationEntry.qml" line="156"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="118"/>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="131"/>
+        <source>Enter name</source>
+        <translation>Anna nimi</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="348"/>
+        <source>Favorites</source>
+        <translation>Suosikit</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="obsolete">Nimi</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="189"/>
+        <source>Manage favorites</source>
+        <translation>Hallitse suosikkeja</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="209"/>
+        <source>Add favorite</source>
+        <translation>Lisää suosikki</translation>
+    </message>
+    <message>
+        <source>Optimize route by</source>
+        <translation type="obsolete">Reitin optimointi</translation>
+    </message>
+    <message>
+        <source>Search location</source>
+        <translation type="obsolete">Etsi sijaintia</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="251"/>
         <source>Type a location</source>
         <translation>Kirjoita osoite</translation>
+    </message>
+    <message>
+        <source>Current Favorites</source>
+        <translation type="obsolete">Nykyiset suosikit</translation>
+    </message>
+</context>
+<context>
+    <name>LocationEntry</name>
+    <message>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="87"/>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="101"/>
+        <source>Choose location</source>
+        <translation>Valitse sijainti</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="190"/>
+        <source>Type a location</source>
+        <translation>Kirjoita osoite</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="278"/>
+        <source>Current location</source>
+        <translation>Nykyinen sijainti</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="33"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="34"/>
         <source>Search</source>
         <translation>Etsi</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="63"/>
-        <location filename="../qml/Meegopas/MainPage.qml" line="76"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="70"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="84"/>
         <source>Accept</source>
         <translation>Hyväksy</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="64"/>
-        <location filename="../qml/Meegopas/MainPage.qml" line="77"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="71"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="85"/>
         <source>Reject</source>
         <translation>Hylkää</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="82"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="104"/>
         <source>From</source>
         <translation>Mistä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="145"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="170"/>
         <source>To</source>
         <translation>Mihin</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="170"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="225"/>
         <source>arrival</source>
         <translation>perillä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="170"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="225"/>
         <source>departure</source>
         <translation>lähtöaika</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/MainPage.qml" line="268"/>
+        <source>Now</source>
+        <translation>Nyt</translation>
     </message>
 </context>
 <context>
@@ -74,15 +171,19 @@
         <translation type="obsolete">Kävelyä: </translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/ResultPage.qml" line="92"/>
+        <location filename="../qml/Meegopas/ResultPage.qml" line="107"/>
         <source>Walk </source>
         <translation>Kävelyä </translation>
+    </message>
+    <message>
+        <source>Route total duration</source>
+        <translation type="obsolete">Reitin kesto</translation>
     </message>
 </context>
 <context>
     <name>RouteView</name>
     <message>
-        <location filename="../qml/Meegopas/RouteView.qml" line="24"/>
+        <location filename="../qml/Meegopas/RouteView.qml" line="25"/>
         <source>Map</source>
         <translation>Kartta</translation>
     </message>
@@ -90,59 +191,64 @@
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="38"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="41"/>
         <source>Settings</source>
         <translation>Asetukset</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="42"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="85"/>
         <source>Optimize route by</source>
         <translation>Reitin optimointi</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="66"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="109"/>
         <source>Default</source>
         <translation>Oletus</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="71"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="114"/>
         <source>Fastest</source>
         <translation>Nopein</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="76"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="119"/>
         <source>Least transfers</source>
         <translation>Vähiten vaihtoja</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="81"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="124"/>
         <source>Least walking</source>
         <translation>Vähiten kävelyä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="87"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="132"/>
         <source>Walking speed</source>
         <translation>Kävelynopeus</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="110"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="155"/>
         <source>Walking</source>
         <translation>Kävely</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="115"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="160"/>
         <source>Fast walking</source>
         <translation>Nopea kävely</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="120"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="165"/>
         <source>Very fast walking</source>
         <translation>Erittäin nopea kävely</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/SettingsPage.qml" line="125"/>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="170"/>
         <source>Running</source>
         <translation>Juoksu</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/SettingsPage.qml" line="45"/>
+        <source>Change margin</source>
+        <translation>Vaihtomarginaali</translation>
     </message>
 </context>
 <context>
@@ -157,6 +263,11 @@
     <name>main</name>
     <message>
         <location filename="../qml/Meegopas/main.qml" line="32"/>
+        <source>Manage favorites</source>
+        <translation>Hallitse suosikkeja</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/main.qml" line="33"/>
         <source>About</source>
         <translation>Tietoja</translation>
     </message>

@@ -24,7 +24,7 @@ Page {
     Component {
         id: stopDelegate
         Item {
-            height: UIConstants.LIST_ITEM_HEIGHT_SMALL
+            height: 50
             width: parent.width
 
             Column {
@@ -37,7 +37,6 @@ Page {
                     font.pixelSize: UIConstants.FONT_XLARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-
                 }
             }
             Column {

@@ -52,3 +52,4 @@ OTHER_FILES += \
 
 TRANSLATIONS += meegopas_fi.ts
 
+

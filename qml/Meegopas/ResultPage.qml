@@ -5,6 +5,7 @@ import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
 import "MyConstants.js" as MyConstants
 import "reittiopas.js" as Reittiopas
+import "storage.js" as Storage
 
 Page {
     tools: commonTools
@@ -15,7 +16,7 @@ Page {
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
-    //orientationLock: PageOrientation.LockPortrait
+    orientationLock: PageOrientation.LockPortrait
 
     RouteView { id: routeView }
 
@@ -39,7 +40,14 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
-                    text: Qt.formatTime(start, "hh:mm")
+                    text: "(" + Qt.formatTime(start, "hh:mm") + ")"
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: UIConstants.FONT_LSMALL
+                }
+
+                Text {
+                    text: first_transport ? Qt.formatTime(first_transport, "hh:mm") : Qt.formatTime(start, "hh:mm")
                     width: 75
                     font.pixelSize: UIConstants.FONT_XLARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
@@ -82,7 +90,14 @@ Page {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 Text {
-                    text: Qt.formatTime(finish, "hh:mm")
+                    text: "(" + Qt.formatTime(finish, "hh:mm") + ")"
+                    anchors.right: parent.right
+                    color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: UIConstants.FONT_LSMALL
+                }
+                Text {
+                    text: last_transport ? Qt.formatTime(last_transport, "hh:mm") : Qt.formatTime(finish, "hh:mm")
                     anchors.right: parent.right
                     font.pixelSize: UIConstants.FONT_XLARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
@@ -104,6 +119,8 @@ Page {
                     Reittiopas.dump_legs(index,routeView.model)
                     routeView.fromLoc = from
                     routeView.toLoc = to
+                    routeView.header = from + " - " + to
+                    //routeView.subheader = qsTr("Route total duration") + " " + duration + " min"
                     pageStack.push(routeView)
                 }
             }

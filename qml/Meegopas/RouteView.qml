@@ -10,11 +10,12 @@ Page {
     property string fromLoc : ''
     property string toLoc : ''
     property alias model : routeModel
-
+    property string header
+    property string subheader
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
     // lock to portrait
-    //orientationLock: PageOrientation.LockPortrait
+    orientationLock: PageOrientation.LockPortrait
 
     ToolBarLayout {
         id: routeTools
@@ -127,14 +128,14 @@ Page {
             }
         }
     }
-
     ListView {
         id: routeList
         anchors.fill: parent
         model: routeModel
         delegate: routeDelegate
         header: Header {
-            text: fromLoc + " - " + toLoc
+            text: header
+            subtext: subheader
         }
         anchors.topMargin: appWindow.inPortrait?UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
     }

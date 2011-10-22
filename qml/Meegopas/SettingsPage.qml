@@ -8,6 +8,9 @@ import "storage.js" as Storage
 Page {
     tools: settingsTools
 
+    // lock to portrait
+    orientationLock: PageOrientation.LockPortrait
+
     ToolBarLayout {
         id: settingsTools
         x: 0
@@ -18,25 +21,65 @@ Page {
     Flickable {
         id: settingsContent
         anchors.fill: parent
-        anchors {
-            topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN
-        }
-        width: parent.width
+        anchors.margins: UIConstants.DEFAULT_MARGIN
+
+        contentHeight: content_column.height + 2 * UIConstants.DEFAULT_MARGIN
         flickableDirection: Flickable.VerticalFlick
 
         Component.onCompleted: {
             Storage.initialize()
             optimize.set_value(Storage.getSetting("optimize"))
             walking_speed.set_value(Storage.getSetting("walking_speed"))
+            change_margin.set_value(Storage.getSetting("change_margin"))
         }
 
         Column {
+            id: content_column
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
             Header {
                 text: qsTr("Settings")
             }
+
+            Label {
+                text: qsTr("Change margin") + " (min)"
+                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                font.pixelSize: UIConstants.FONT_LARGE
+                anchors.left: parent.left
+            }
+            Row {
+                Label {
+                    text: "0"
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: UIConstants.FONT_LARGE
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Slider {
+                    id: change_margin
+                    maximumValue: 10
+                    minimumValue: 0
+                    stepSize: 1
+                    valueIndicatorVisible: true
+
+                    function set_value(value) {
+                        if(value != "Unknown")
+                            change_margin.value = value
+                        else
+                            change_margin.value = 3
+                    }
+                    onValueChanged: {
+                        Storage.setSetting("change_margin", change_margin.value)
+                    }
+                }
+                Label {
+                    text: "10"
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: UIConstants.FONT_LARGE
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Separator {}
 
             Label {
                 text: qsTr("Optimize route by")
@@ -83,6 +126,8 @@ Page {
                 }
             }
 
+            Separator {}
+
             Label {
                 text: qsTr("Walking speed")
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
@@ -101,7 +146,7 @@ Page {
                     else if(value == "150")
                         running.checked = true
                     else
-                        console.log("optimize value not set")
+                        console.log("walking_speed value not set")
                 }
 
                 anchors.right: parent.right

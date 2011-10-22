@@ -29,6 +29,7 @@ PageStackWindow {
         visualParent: pageStack
         MenuLayout {
             MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
+            MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
             MenuItem { text: qsTr("About"); onClicked: about.open() }
         }
     }

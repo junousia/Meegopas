@@ -35,7 +35,7 @@ function busCode(code) {
 }
 
 function tramCode(code) {
-    code = code.slice(3,5).trim()
+    code = code.slice(2,5).trim().replace(/^[0]+/g,"")
     return code
 }
 
@@ -160,6 +160,8 @@ function route_handler(routes,model) {
         output.duration = Math.round(route.duration/60)
         output.start = 0
         output.finish = 0
+        output.first_transport = 0
+        output.last_transport = 0
         output.walk = 0
         output.legs = []
         for (var leg in route.legs) {
@@ -186,6 +188,11 @@ function route_handler(routes,model) {
             if(leg == (route.legs.length - 1)) {
                 output.finish = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
             }
+
+            if(!output.first_transport && legdata.type != "walk")
+                output.first_transport = convTime(legdata.locs[0].depTime)
+            if(legdata.type != "walk")
+                output.last_transport = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
 
             // amount of walk in the route
             if(legdata.type == "walk")
@@ -283,7 +290,7 @@ function address_to_location(term, model) {
     api_request(parameters, suggestion_handler, model);
 }
 
-function route(from, to, date, time, timetype, walk_speed, optimize, model) {
+function route(from, to, date, time, timetype, walk_speed, optimize, change_margin, model) {
     var parameters = {};
     parameters.request = 'route';
     parameters.from = from;
@@ -296,5 +303,6 @@ function route(from, to, date, time, timetype, walk_speed, optimize, model) {
     parameters.timetype = timetype
     parameters.optimize = optimize
     parameters.lang = "fi"
+    parameters.change_margin = change_margin
     api_request(parameters, route_handler, model);
 }
