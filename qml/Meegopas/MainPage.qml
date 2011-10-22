@@ -92,6 +92,7 @@ Page {
             margins: UIConstants.DEFAULT_MARGIN
         }
         width: parent.width
+        interactive: false
         flickableDirection: Flickable.VerticalFlick
         Column {
             spacing: UIConstants.DEFAULT_MARGIN
@@ -267,8 +268,10 @@ Page {
                 id: timedate_now
                 text: qsTr("Now")
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                font.pixelSize: UIConstants.FONT_SMALL
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
+                height: 40
                 onClicked: {
                     root.myTime = root.myDate = new Date()
                     timeButton.text = Qt.formatTime(root.myTime, "hh:mm")

@@ -120,11 +120,11 @@ Page {
 
         property alias text : sheetTextfield.text
 
-        content: Flickable {
+        content: Item {
              anchors.fill: parent
-             flickableDirection: Flickable.VerticalFlick
+             anchors.margins: UIConstants.DEFAULT_MARGIN
+
              Column {
-                 anchors.top: parent.top
                  width: parent.width
 
                  Label {
@@ -172,82 +172,80 @@ Page {
     }
 
     Flickable {
-        anchors.fill: parent
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
             margins: UIConstants.DEFAULT_MARGIN
+            fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
+        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN
 
         Component.onCompleted: {
             Favorites.initialize()
         }
 
         Column {
+            id: content_column
             width: parent.width
+            spacing: UIConstants.DEFAULT_MARGIN
             Header {
                 text: qsTr("Manage favorites")
             }
-
-            Item {
-                id: labelContainer
-                height: 60
+            Column {
                 width: parent.width
+                Item {
+                    id: labelContainer
+                    height: 50
+                    width: parent.width
 
-                BorderImage {
-                    anchors.fill: parent
-                    visible: labelMouseArea.pressed
-                    source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
-                }
-                Label {
-                    id: label
-                    font.pixelSize: MyConstants.FONT_XXLARGE
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.topMargin: UIConstants.DEFAULT_MARGIN
-                    text: qsTr("Add favorite")
-                }
-                CountBubble {
-                    id: count
-                    largeSized: true
-                    value: suggestionModel.count
-                    visible: (suggestionModel.count > 1)
-                    anchors.left: label.right
-                    anchors.bottom: label.bottom
-                }
+                    BorderImage {
+                        anchors.fill: parent
+                        visible: labelMouseArea.pressed
+                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+                    }
+                    Label {
+                        id: label
+                        font.pixelSize: MyConstants.FONT_XXLARGE
+                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                        anchors.left: parent.left
+                        anchors.bottom: parent.bottom
+                        text: qsTr("Add favorite")
+                    }
+                    CountBubble {
+                        id: count
+                        largeSized: true
+                        value: suggestionModel.count
+                        visible: (suggestionModel.count > 1)
+                        anchors.left: label.right
+                        anchors.bottom: label.bottom
+                    }
 
-                BusyIndicator {
-                    id: busyIndicator
-                    visible: suggestionModel.updating
-                    running: suggestionModel.updating
-                    anchors.left: label.right
-                    anchors.verticalCenter: label.verticalCenter
-                    platformStyle: BusyIndicatorStyle { size: 'medium' }
-                }
+                    BusyIndicator {
+                        id: busyIndicator
+                        visible: suggestionModel.updating
+                        running: suggestionModel.updating
+                        anchors.left: label.right
+                        anchors.verticalCenter: label.verticalCenter
+                        platformStyle: BusyIndicatorStyle { size: 'medium' }
+                    }
 
-                MouseArea {
-                    id: labelMouseArea
-                    anchors.fill: parent
-                    enabled: (suggestionModel.count > 1)
-                    onClicked: {
-                        if(suggestionModel.count > 1) {
-                            query.open()
-                            textfield.platformCloseSoftwareInputPanel()
+                    MouseArea {
+                        id: labelMouseArea
+                        anchors.fill: parent
+                        enabled: (suggestionModel.count > 1)
+                        onClicked: {
+                            if(suggestionModel.count > 1) {
+                                query.open()
+                                textfield.platformCloseSoftwareInputPanel()
+                            }
                         }
                     }
                 }
-            }
-            Row {
-                id: textrow
-                width: parent.width
-                height: textfield.height + UIConstants.DEFAULT_MARGIN
-
                 TextField {
                     id: textfield
                     property bool auto_update : false
-                    anchors.left: parent.left
-                    anchors.right: addButton.left
+                    width: parent.width
+                    height: 50
                     placeholderText: qsTr("Type a location")
                     validator: RegExpValidator { regExp: /^.{3,50}$/ }
                     inputMethodHints: Qt.ImhNoPredictiveText
@@ -325,77 +323,54 @@ Page {
                         parent.focus = true
                     }
                 }
+            }
 
-                MyButton {
-                    id: addButton
-                    source: !theme.inverted?'image://theme/icon-s-common-add':'image://theme/icon-s-common-add-inverse'
-                    anchors.right: parent.right
-                    enabled: destCoords != ''
-                    mouseArea.onClicked: {
-                        sheet.text = textfield.text
-                        sheet.open()
-                    }
+            Button {
+                id: addButton
+                text: qsTr("Add")
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                font.pixelSize: UIConstants.FONT_SMALL
+                width: 150
+                height: 40
+                enabled: destCoords != ''
+                onClicked: {
+                    sheet.text = textfield.text
+                    sheet.open()
                 }
             }
 
             Separator {}
 
-            Label {
-                id: favoritesLabel
-                anchors.left: parent.left
-                anchors.top: textrow.bottom
-                anchors.topMargin: UIConstants.DEFAULT_MARGIN
-                text: qsTr("Favorites")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pixelSize: MyConstants.FONT_XXLARGE
-            }
-
             Component {
                 id: favoritesManageDelegate
                 Item {
                     width: parent.width
-                    height: 50
+                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL
 
-                    Column {
+                    Text {
+                        text: name
                         anchors.left: parent.left
+                        anchors.right: remove_button.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                        font.pixelSize: UIConstants.FONT_XLARGE
+                        elide: Text.ElideRight
+                    }
+                    Button {
+                        id: remove_button
+                        text: qsTr("Remove")
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        Text {
-                            text: name
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                            font.pixelSize: UIConstants.FONT_XLARGE
-                        }
-                        Item {
-                            id: removeIcon
-                            width: 50
-                            height: 50
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            BorderImage {
-                                anchors.fill: parent
-                                visible: mouseArea.pressed
-                                source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
-                            }
-
-                            MouseArea {
-                                id: mouseArea
-                                anchors.fill: parent
-                                onClicked: {
-                                    list.currentIndex = index
-                                    deleteQuery.name = name
-                                    deleteQuery.open()
-                                }
-                            }
-
-                            Image {
-                                source: !theme.inverted?'image://theme/icon-s-common-remove':'image://theme/icon-s-common-remove-inverse'
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
+                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                        font.pixelSize: UIConstants.FONT_SMALL
+                        width: 150
+                        height: 40
+                        onClicked: {
+                            list.currentIndex = index
+                            deleteQuery.name = name
+                            deleteQuery.open()
                         }
                     }
                 }
@@ -404,9 +379,14 @@ Page {
             ListView {
                 id: list
                 width: parent.width
-                height: parent.height
-                anchors.top: favoritesLabel.bottom
+                height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
                 interactive: false
+                header: Label {
+                    id: favoritesLabel
+                    text: qsTr("Favorites")
+                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                    font.pixelSize: MyConstants.FONT_XXLARGE
+                }
                 model: favoritesModel
                 delegate: favoritesManageDelegate
             }

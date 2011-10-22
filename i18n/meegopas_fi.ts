@@ -59,26 +59,40 @@
         <translation>Tallenna</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/FavoritesPage.qml" line="131"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="132"/>
         <source>Enter name</source>
         <translation>Anna nimi</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/FavoritesPage.qml" line="348"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="330"/>
+        <source>Add</source>
+        <translation>Lisää</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="349"/>
         <source>Favorites</source>
         <translation>Suosikit</translation>
+    </message>
+    <message>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="373"/>
+        <source>Remove</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>remove</source>
+        <translation type="obsolete">poista</translation>
     </message>
     <message>
         <source>Name</source>
         <translation type="obsolete">Nimi</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/FavoritesPage.qml" line="189"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="190"/>
         <source>Manage favorites</source>
         <translation>Hallitse suosikkeja</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/FavoritesPage.qml" line="209"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="212"/>
         <source>Add favorite</source>
         <translation>Lisää suosikki</translation>
     </message>
@@ -91,7 +105,7 @@
         <translation type="obsolete">Etsi sijaintia</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/FavoritesPage.qml" line="251"/>
+        <location filename="../qml/Meegopas/FavoritesPage.qml" line="249"/>
         <source>Type a location</source>
         <translation>Kirjoita osoite</translation>
     </message>
@@ -114,7 +128,7 @@
         <translation>Kirjoita osoite</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/LocationEntry.qml" line="278"/>
+        <location filename="../qml/Meegopas/LocationEntry.qml" line="280"/>
         <source>Current location</source>
         <translation>Nykyinen sijainti</translation>
     </message>
@@ -139,27 +153,27 @@
         <translation>Hylkää</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="104"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="105"/>
         <source>From</source>
         <translation>Mistä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="170"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="171"/>
         <source>To</source>
         <translation>Mihin</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="225"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="226"/>
         <source>arrival</source>
         <translation>perillä</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="225"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="226"/>
         <source>departure</source>
         <translation>lähtöaika</translation>
     </message>
     <message>
-        <location filename="../qml/Meegopas/MainPage.qml" line="268"/>
+        <location filename="../qml/Meegopas/MainPage.qml" line="269"/>
         <source>Now</source>
         <translation>Nyt</translation>
     </message>
@@ -254,7 +268,7 @@
 <context>
     <name>StopsPage</name>
     <message>
-        <location filename="../qml/Meegopas/StopsPage.qml" line="66"/>
+        <location filename="../qml/Meegopas/StopsPage.qml" line="65"/>
         <source>Stops for line </source>
         <translation>Pysäkit linjalle </translation>
     </message>
