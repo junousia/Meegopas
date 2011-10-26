@@ -1,38 +1,58 @@
 # Add more folders to ship with the application, here
-folder_01.source = qml/Meegopas
-folder_01.target = qml
-folder_02.source = images
-folder_03.source = i18n
-DEPLOYMENTFOLDERS += folder_01 folder_02 folder_03
+harmattan_qml.source = qml/harmattan/
+harmattan_qml.target = qml/
+common_qml.source = qml/common/
+common_qml.target = qml/
+images.source = images
+loc.source = i18n
+javascript.source = js
+DEPLOYMENTFOLDERS += common_qml images loc javascript
 
 # Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH = js qml/common qml/harmattan
 
-symbian:TARGET.UID3 = 0xE0253CFB
+symbian {
+    TARGET.UID3 = 0xE0253CFB
+    DEPLOYMENTFOLDERS += symbian_qml
+    # Smart Installer package's UID
+    # This UID is from the protected range and therefore the package will
+    # fail to install if self-signed. By default qmake uses the unprotected
+    # range value if unprotected UID is defined for the application and
+    # 0x2002CCCF value if protected UID is given to the application
+    #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
 
-# Smart Installer package's UID
-# This UID is from the protected range and therefore the package will
-# fail to install if self-signed. By default qmake uses the unprotected
-# range value if unprotected UID is defined for the application and
-# 0x2002CCCF value if protected UID is given to the application
-#symbian:DEPLOYMENT.installer_header = 0x2002CCCF
+    # Allow network access on Symbian
+    TARGET.CAPABILITY += NetworkServices
+}
+contains(MEEGO_EDITION, harmattan) {
+    # add harmattan specific qml
+    DEPLOYMENTFOLDERS += harmattan_qml
 
-# Allow network access on Symbian
-symbian:TARGET.CAPABILITY += NetworkServices
+    # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
+    CONFIG += qdeclarative-boostable
+
+    # for MLocale
+    CONFIG += meegotouch
+
+    OTHER_FILES += \
+        qtc_packaging/debian_harmattan/rules \
+        qtc_packaging/debian_harmattan/README \
+        qtc_packaging/debian_harmattan/manifest.aegis \
+        qtc_packaging/debian_harmattan/copyright \
+        qtc_packaging/debian_harmattan/control \
+        qtc_packaging/debian_harmattan/compat \
+        qtc_packaging/debian_harmattan/changelog
+}
 
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
 CONFIG += mobility
 MOBILITY += location systeminfo
 
-# Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-CONFIG += qdeclarative-boostable
 
 # Add dependency to Symbian components
 CONFIG += qt-components
 
-# for MLocale
-CONFIG += meegotouch
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp
@@ -41,15 +61,9 @@ SOURCES += main.cpp
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
-OTHER_FILES += \
-    qtc_packaging/debian_harmattan/rules \
-    qtc_packaging/debian_harmattan/README \
-    qtc_packaging/debian_harmattan/manifest.aegis \
-    qtc_packaging/debian_harmattan/copyright \
-    qtc_packaging/debian_harmattan/control \
-    qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog
-
 TRANSLATIONS += meegopas_fi.ts
+
+
+
 
 

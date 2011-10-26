@@ -2,16 +2,17 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import QtMobility.location 1.1
-import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
-import "MyConstants.js" as MyConstants
-import "reittiopas.js" as Reittiopas
-import "favorites.js" as Favorites
+import "../common"
+import "../common/UIConstants.js" as UIConstants
+import "../common/ExtrasConstants.js" as ExtrasConstants
+import "../common/MyConstants.js" as MyConstants
+import "../common/reittiopas.js" as Reittiopas
+import "../common/favorites.js" as Favorites
 
 Column {
     property string type : ""
-    property variant destCoords : ''
-    property bool destValid : (suggestionModel.count > 0)
+    property variant destination_coords : ''
+    property bool destination_valid : (suggestionModel.count > 0)
     property alias model: suggestionModel
     property alias text : textfield.text
     property alias auto_update : textfield.auto_update
@@ -27,7 +28,7 @@ Column {
     function clear() {
         suggestionModel.clear()
         textfield.text = ''
-        destCoords = ''
+        destination_coords = ''
     }
 
     Timer {
@@ -39,7 +40,7 @@ Column {
             if(suggestionModel.count == 1 && !suggestionModel.updating) {
                 textfield.auto_update = true
                 textfield.text = suggestionModel.get(0).name
-                destCoords = suggestionModel.get(0).coords
+                destination_coords = suggestionModel.get(0).coords
             }
         }
     }
@@ -55,8 +56,8 @@ Column {
     }
 
     function getCoords() {
-        if(destCoords != '') {
-            return { "name":text, "coords":destCoords }
+        if(destination_coords != '') {
+            return { "name":text, "coords":destination_coords }
         }
         else if(textfield.acceptableInput) {
             return { "name":suggestionModel.get(0).displayname, "coords":suggestionModel.get(0).coords}
@@ -88,7 +89,7 @@ Column {
         onAccepted: {
             textfield.auto_update = true
             textfield.text = suggestionModel.get(selectedIndex).name
-            destCoords = suggestionModel.get(selectedIndex).coords
+            destination_coords = suggestionModel.get(selectedIndex).coords
             suggestionModel.clear()
         }
         onRejected: {}
@@ -109,7 +110,7 @@ Column {
             } else {
                 textfield.auto_update = true
                 textfield.text = favoritesModel.get(selectedIndex).name
-                destCoords = favoritesModel.get(selectedIndex).coord
+                destination_coords = favoritesModel.get(selectedIndex).coord
                 suggestionModel.clear()
             }
         }
@@ -133,7 +134,7 @@ Column {
         anchors.top: parent.top
         anchors.rightMargin: 5
         height: 60
-        width: label.width + count.width
+        width: label.width //+ count.width
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
@@ -200,7 +201,7 @@ Column {
                 else {
                     suggestionModel.clear()
                     selected_favorite = -1
-                    destCoords = ''
+                    destination_coords = ''
                     if(acceptableInput)
                         suggestionTimer.restart()
                     else
@@ -216,7 +217,7 @@ Column {
                 radius: 10
                 height: 20
                 width: 20
-                state: destCoords?"validated":suggestionModel.count > 0? "sufficient":"error"
+                state: destination_coords?"validated":suggestionModel.count > 0? "sufficient":"error"
                 opacity: 0.6
 
                 states: [

@@ -1,7 +1,4 @@
 import QtQuick 1.1
-import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
-import "MyConstants.js" as MyConstants
 
 Item {
     width: 45
@@ -12,7 +9,7 @@ Item {
     BorderImage {
         anchors.fill: parent
         visible: mouseArea.pressed
-        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
     }
 
     Image {

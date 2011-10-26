@@ -1,18 +1,17 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
-import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
-import "MyConstants.js" as MyConstants
-import "reittiopas.js" as Reittiopas
-import "storage.js" as Storage
+import "../common"
+import "../common/UIConstants.js" as UIConstants
+import "../common/ExtrasConstants.js" as ExtrasConstants
+import "../common/MyConstants.js" as MyConstants
+import "../common/reittiopas.js" as Reittiopas
+import "../common/storage.js" as Storage
+import "../common/helper.js" as Helper
 
 Page {
     id: root
     tools: mainTools
-
-    // lock to portrait
-    orientationLock: PageOrientation.LockPortrait
 
     property date myDate
     property date myTime
@@ -32,7 +31,7 @@ Page {
         ToolButtonRow {
             ToolButton {
                 text: qsTr("Search")
-                enabled: ((from.destCoords != '' || from.destValid) && (to.destCoords != '' || to.destValid))
+                enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
                 onClicked: {
                     resu.routeModel.clear()
                     var walking_speed = Storage.getSetting("walking_speed")
@@ -43,11 +42,10 @@ Page {
                                      Qt.formatDate(root.myDate, "yyyyMMdd"),
                                      Qt.formatTime(root.myTime, "hhmm"),
                                      timeType.checked? "arrival" : "departure",
-                                                                 walking_speed == "Unknown"?"70":walking_speed,
-                                                                                                optimize == "Unknown"?"default":optimize,
-                                                                                                                               change_margin == "Unknown"?"3":Math.floor(change_margin),
-                                                                                                                                                             resu.routeModel)
-
+                                     walking_speed == "Unknown"?"70":walking_speed,
+                                     optimize == "Unknown"?"default":optimize,
+                                     change_margin == "Unknown"?"3":Math.floor(change_margin),
+                                     resu.routeModel)
                     resu.from = from.getCoords().name
                     resu.to = to.getCoords().name
                     pageStack.push(resu)
@@ -92,9 +90,12 @@ Page {
             margins: UIConstants.DEFAULT_MARGIN
         }
         width: parent.width
-        interactive: false
+        interactive: true
         flickableDirection: Flickable.VerticalFlick
+        contentHeight: content_column.height
+
         Column {
+            id: content_column
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
@@ -116,7 +117,7 @@ Page {
                     BorderImage {
                         anchors.fill: parent
                         visible: locationSwitchMouseArea.pressed
-                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
                     }
 
                     Image {
@@ -130,26 +131,7 @@ Page {
                         anchors.fill: parent
 
                         onClicked: {
-                            var templo = from.text
-                            var tempcoord = from.destCoords
-                            var tempindex = from.selected_favorite
-
-                            if(from.destCoords != '') {
-                                to.auto_update = true
-                            }
-                            if(to.destCoords != '') {
-                                from.auto_update = true
-                            }
-                            from.model.clear()
-                            from.destCoords = to.destCoords
-                            from.text = to.text
-                            from.selected_favorite = to.selected_favorite
-
-                            to.model.clear()
-                            to.destCoords = tempcoord
-                            to.text = templo
-                            to.selected_favorite = tempindex
-
+                            Helper.switch_locations(from,to)
                             locationSwitch.state = locationSwitch.state == "normal" ? "rotated" : "normal"
                         }
                     }
@@ -183,7 +165,7 @@ Page {
                     BorderImage {
                         anchors.fill: parent
                         visible: timeMouseArea.pressed
-                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
                     }
 
                     Text {
@@ -241,7 +223,7 @@ Page {
                 BorderImage {
                     anchors.fill: parent
                     visible: dateMouseArea.pressed
-                    source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+                    source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
                 }
                 Text {
                     id: dateButton

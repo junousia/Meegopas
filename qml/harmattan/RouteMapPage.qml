@@ -3,9 +3,8 @@
 import QtQuick 1.1
 import QtWebKit 1.0
 import com.nokia.meego 1.0
-import com.nokia.extras 1.0
 import QtMobility.location 1.2
-import "reittiopas.js" as Reittiopas
+import "../common/reittiopas.js" as Reittiopas
 
 Page {
     id: page

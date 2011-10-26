@@ -1,17 +1,15 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
-import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
-import "MyConstants.js" as MyConstants
-import "reittiopas.js" as Reittiopas
-import "favorites.js" as Favorites
+import "../common"
+import "../common/UIConstants.js" as UIConstants
+import "../common/ExtrasConstants.js" as ExtrasConstants
+import "../common/MyConstants.js" as MyConstants
+import "../common/reittiopas.js" as Reittiopas
+import "../common/favorites.js" as Favorites
 
 Page {
     tools: favoritesTools
-
-    // lock to portrait
-    orientationLock: PageOrientation.LockPortrait
 
     ToolBarLayout {
         id: favoritesTools

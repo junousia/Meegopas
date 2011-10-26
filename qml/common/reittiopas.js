@@ -70,6 +70,26 @@ function convTime(hslTime){
                     00, 00);
 }
 
+function get_time_difference(earlierDate,laterDate)
+{
+       var nTotalDiff = laterDate.getTime() - earlierDate.getTime();
+       var oDiff = new Object();
+
+       oDiff.days = Math.floor(nTotalDiff/1000/60/60/24);
+       nTotalDiff -= oDiff.days*1000*60*60*24;
+
+       oDiff.hours = Math.floor(nTotalDiff/1000/60/60);
+       nTotalDiff -= oDiff.hours*1000*60*60;
+
+       oDiff.minutes = Math.floor(nTotalDiff/1000/60);
+       nTotalDiff -= oDiff.minutes*1000*60;
+
+       oDiff.seconds = Math.floor(nTotalDiff/1000);
+
+       return oDiff;
+
+}
+
 function dump_leg_endpoints(target) {
     var route = last_result[last_route_index][0]
     for (var legindex in route.legs) {
@@ -77,15 +97,14 @@ function dump_leg_endpoints(target) {
         var output = {}
 
         if(legindex == 0) {
-            var output2 = {}
-            output2.latitude = legdata.locs[0].coord.y
-            output2.longitude = legdata.locs[0].coord.x
-            target.push(output2)
+            output.latitude = legdata.locs[0].coord.y
+            output.longitude = legdata.locs[0].coord.x
+            target.push(output)
+        } else  {
+            output.latitude = legdata.locs[legdata.locs.length - 1].coord.y
+            output.longitude = legdata.locs[legdata.locs.length - 1].coord.x
+            target.push(output)
         }
-
-        output.latitude = legdata.locs[legdata.locs.length - 1].coord.y
-        output.longitude = legdata.locs[legdata.locs.length - 1].coord.x
-        target.push(output)
     }
 }
 
@@ -112,7 +131,8 @@ function dump_stops(index, model) {
             "name" : legdata.locs[locindex].name,
             "coords" : legdata.locs[locindex].coord.x + "," + legdata.locs[locindex].coord.y,
             "arrTime" : convTime(legdata.locs[locindex].arrTime),
-            "depTime" : convTime(legdata.locs[locindex].depTime)
+            "depTime" : convTime(legdata.locs[locindex].depTime),
+            "time_diff" : locindex == 0 ? 0 : get_time_difference(convTime(legdata.locs[locindex - 1].depTime), convTime(legdata.locs[locindex].arrTime)).minutes
         }
         model.append(output)
     }
@@ -221,9 +241,7 @@ function suggestion_handler(suggestions,model) {
         output.type = suggestion.locType
         output.coords = suggestion.coords
 
-//        // add only finnish place names
-//        if(suggestion.lang == "fi")
-            model.append(output)
+        model.append(output)
     }
     model.updating = false
 }
@@ -240,69 +258,69 @@ function positioning_handler(suggestions,model) {
         output.coords = suggestion.coords                                                                                  
                                                                                                                            
         model.append(output)                                                                                           
-    }                                                                                                                      
-    model.updating = false                                                                                                 
+    }
+    model.updating = false
 } 
 
 function api_request(parameters, result_handler, model) {
-    var req = new XMLHttpRequest();
+    var req = new XMLHttpRequest()
     model.updating = true
     req.onreadystatechange = function() {
         if (req.readyState == XMLHttpRequest.DONE) {
             if (req.status != 200 && req.status != 304) {
-                console.log('HTTP error ' + req.status);
+                console.log('HTTP error ' + req.status)
                 model.updating = false
-                return;
+                return
             } else {
-                var json = eval(req.responseText);
+                var json = eval(req.responseText)
                 last_result = json
-                result_handler(json, model);
+                result_handler(json, model)
             }
         }
     }
 
-    parameters.user = USER;
-    parameters.pass = PASS;
+    parameters.user = USER
+    parameters.pass = PASS
     parameters.epsg_in = "wgs84"
     parameters.epsg_out = "wgs84"
-    var query = [];
+    var query = []
     for(var p in parameters) {
-        query.push(p + "=" + parameters[p]);
+        query.push(p + "=" + parameters[p])
     }
-    console.log( API + '?' + query.join('&'));
-    req.open("GET", API + '?' + query.join('&'));
-    req.send();
+    console.log( API + '?' + query.join('&'))
+    req.open("GET", API + '?' + query.join('&'))
+    req.send()
 }
 
 
 function location_to_address(latitude, longitude, model) {
-    var parameters = {};
-    parameters.request = 'reverse_geocode';
-    parameters.coordinate = longitude + ',' + latitude;
-    api_request(parameters, positioning_handler, model);
+    var parameters = {}
+    parameters.request = 'reverse_geocode'
+    parameters.coordinate = longitude + ',' + latitude
+    api_request(parameters, positioning_handler, model)
 }
 
 function address_to_location(term, model) {
-    var parameters = {};
-    parameters.request = 'geocode';
-    parameters.key = term;
+    var parameters = {}
+    parameters.request = 'geocode'
+    parameters.key = term
     parameters.disable_unique_stop_names = 0
-    api_request(parameters, suggestion_handler, model);
+    api_request(parameters, suggestion_handler, model)
 }
 
 function route(from, to, date, time, timetype, walk_speed, optimize, change_margin, model) {
-    var parameters = {};
-    parameters.request = 'route';
-    parameters.from = from;
-    parameters.to = to;
+    var parameters = {}
+    parameters.request = 'route'
+    parameters.from = from
+    parameters.to = to
     parameters.time = time
     parameters.date = date
-    parameters.timetype = timetype;
-    parameters.show = 5;
+    parameters.timetype = timetype
+    parameters.show = 5
     parameters.walk_speed = walk_speed
     parameters.timetype = timetype
     parameters.optimize = optimize
     parameters.lang = "fi"
     parameters.change_margin = change_margin
-    api_request(parameters, route_handler, model);
+    api_request(parameters, route_handler, model)
 }

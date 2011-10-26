@@ -1,15 +1,11 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import com.nokia.extras 1.0
-import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
-import "storage.js" as Storage
+import "../common/UIConstants.js" as UIConstants
+import "../common/ExtrasConstants.js" as ExtrasConstants
+import "../common/storage.js" as Storage
 
 Page {
     tools: settingsTools
-
-    // lock to portrait
-    orientationLock: PageOrientation.LockPortrait
 
     ToolBarLayout {
         id: settingsTools

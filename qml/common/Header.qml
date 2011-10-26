@@ -1,5 +1,4 @@
 import QtQuick 1.1
-import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
 
@@ -8,7 +7,6 @@ Item {
     property string subtext
     anchors.left: parent.left
     anchors.right: parent.right
-
     height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN * 2 + (subheaderText.visible ? subheaderText.height : 0)
 
     Text {
@@ -31,14 +29,8 @@ Item {
         wrapMode: Text.WordWrap
         visible: parent.subtext
     }
-    Rectangle {
+    Separator {
         id: headerDivider
         anchors.top: subheaderText.visible ? subheaderText.bottom : headerText.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.topMargin: UIConstants.DEFAULT_MARGIN
-        anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
-        height: 1
-        color: theme.inverted ? ExtrasConstants.LIST_SUBTITLE_COLOR_INVERTED : ExtrasConstants.LIST_SUBTITLE_COLOR
     }
 }

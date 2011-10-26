@@ -1,12 +1,12 @@
+meegopas (0.0.9) unstable; urgency=low
+  * Fade in animations for items
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ma, 24 lokakuuta 2011 17:20:36 +0300
+
 meegopas (0.0.8) unstable; urgency=low
   * Added favorites
 
  -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  to, 20 lokakuuta 2011 21:28:19 +0300
-
-meegopas (0.0.7) unstable; urgency=low
-  * <Add change description here>
-
- -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ke, 12 lokakuuta 2011 22:08:33 +0300
 
 meegopas (0.0.6) unstable; urgency=low
   * Added translation to finnish

@@ -2,9 +2,9 @@ import QtQuick 1.1
 import "UIConstants.js" as UIConstants
 
 Rectangle {
-    width: parent.width - 2 * UIConstants.DEFAULT_MARGIN
+    width: parent.width
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.margins: UIConstants.DEFAULT_MARGIN
-    height: 1
+    height: 2
     color: "gray"
 }
