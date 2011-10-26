@@ -20,8 +20,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     MLocale locale;
     qDebug() << "Current locale: " << locale.name();
     translator.load("/opt/Meegopas/i18n/meegopas_" + locale.name() + ".qm");
-    viewer->setMainQmlFile(QLatin1String("qml/harmattan/main.qml"));
     app.data()->installTranslator(&translator);
+    viewer->setMainQmlFile(QLatin1String("qml/harmattan/main.qml"));
 #endif
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

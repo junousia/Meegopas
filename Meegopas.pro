@@ -61,7 +61,7 @@ SOURCES += main.cpp
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
-TRANSLATIONS += meegopas_fi.ts
+TRANSLATIONS += meegopas_fi_FI.ts
 
 
 
