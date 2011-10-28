@@ -1,8 +1,8 @@
 .pragma library
 
 var API = 'http://api.reittiopas.fi/hsl/beta/'
-var USER = 'junousia'
-var PASS = 'p3ndolino'
+var USER = ''
+var PASS = ''
 
 var transType = {}
 transType[1] = "bus"
