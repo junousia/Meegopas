@@ -134,7 +134,7 @@ Column {
         anchors.top: parent.top
         anchors.rightMargin: 5
         height: 60
-        width: label.width //+ count.width
+        width: label.width + count.width
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
