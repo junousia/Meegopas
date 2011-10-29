@@ -10,7 +10,7 @@ import "../common/reittiopas.js" as Reittiopas
 import "../common/favorites.js" as Favorites
 
 Column {
-    property string type : ""
+    property alias type : label.text
     property variant destination_coords : ''
     property bool destination_valid : (suggestionModel.count > 0)
     property alias model: suggestionModel
@@ -31,6 +31,12 @@ Column {
         destination_coords = ''
     }
 
+    function update_location(name, coords) {
+        textfield.auto_update = true
+        textfield.text = name
+        destination_coords = coords
+    }
+
     Timer {
         id: updateTimer
         repeat: false
@@ -38,9 +44,7 @@ Column {
         triggeredOnStart: false
         onTriggered: {
             if(suggestionModel.count == 1 && !suggestionModel.updating) {
-                textfield.auto_update = true
-                textfield.text = suggestionModel.get(0).name
-                destination_coords = suggestionModel.get(0).coords
+                update_location(suggestionModel.get(0).name,suggestionModel.get(0).coords)
             }
         }
     }
@@ -87,9 +91,7 @@ Column {
         delegate: SuggestionDelegate {}
         titleText: qsTr("Choose location")
         onAccepted: {
-            textfield.auto_update = true
-            textfield.text = suggestionModel.get(selectedIndex).name
-            destination_coords = suggestionModel.get(selectedIndex).coords
+            update_location(suggestionModel.get(selectedIndex).name,suggestionModel.get(selectedIndex).coords)
             suggestionModel.clear()
         }
         onRejected: {}
@@ -103,15 +105,10 @@ Column {
 
         onAccepted: {
             if(selectedIndex == 0) {
-                clear()
                 Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
                                                positionSource.position.coordinate.longitude.toString(),suggestionModel)
-
             } else {
-                textfield.auto_update = true
-                textfield.text = favoritesModel.get(selectedIndex).name
-                destination_coords = favoritesModel.get(selectedIndex).coord
-                suggestionModel.clear()
+                update_location(favoritesModel.get(selectedIndex).name, favoritesModel.get(selectedIndex).coord)
             }
         }
         onRejected: {}
@@ -147,7 +144,6 @@ Column {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.topMargin: UIConstants.DEFAULT_MARGIN
-            text: type
         }
         CountBubble {
             id: count
@@ -236,13 +232,7 @@ Column {
                 ]
                 transitions: [
                     Transition {
-                        ColorAnimation { to: "green"; duration: 100 }
-                    },
-                    Transition {
-                        ColorAnimation { to: "yellow"; duration: 100 }
-                    },
-                    Transition {
-                        ColorAnimation { to: "red"; duration: 100 }
+                        ColorAnimation { duration: 100 }
                     }
                 ]
             }

@@ -246,7 +246,8 @@ function suggestion_handler(suggestions,model) {
     model.updating = false
 }
 
-function positioning_handler(suggestions,model) {                                                                           
+function positioning_handler(suggestions,model) {
+    model.clear()
     for (var index in suggestions) {                                                                                       
         var output = {}                                                                                                    
         var suggestion = suggestions[index];                                                                               

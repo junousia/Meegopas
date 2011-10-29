@@ -27,10 +27,19 @@ Page {
         Favorites.getFavorites(favoritesModel)
     }
 
-    function clear() {
+    function clear_suggestion() {
         suggestionModel.clear()
+        query.selectedIndex = -1
         textfield.text = ''
         destCoords = ''
+    }
+
+    InfoBanner {
+        id: banner
+        property bool success : false
+        visible: true
+        iconSource: success ? 'image://theme/icon-m-toolbar-done-white-selected':'image://theme/icon-m-browser-stop'
+        z: 500
     }
 
     QueryDialog {
@@ -43,6 +52,9 @@ Page {
         acceptButtonText: qsTr("Delete")
         onAccepted: {
             Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
+            banner.success = true
+            banner.text = qsTr("Favorite removed")
+            banner.show()
         }
     }
 
@@ -157,12 +169,21 @@ Page {
              }
          }
          onAccepted: {
-             Favorites.addFavorite(sheetTextfield.text, destCoords)
-             console.log("added " + sheetTextfield.text + " " + destCoords + " to the favorites")
-             favoritesModel.clear()
-             Favorites.getFavorites(favoritesModel)
-             sheetTextfield.text = ''
-             clear()
+             if(("OK" == Favorites.addFavorite(sheetTextfield.text, destCoords))) {
+                 console.log("added " + sheetTextfield.text + " " + destCoords + " to the favorites")
+                 favoritesModel.clear()
+                 Favorites.getFavorites(favoritesModel)
+                 sheetTextfield.text = ''
+                 clear_suggestion()
+
+                 banner.success = true
+                 banner.text = qsTr("Location added to favorites")
+                 banner.show()
+             } else {
+                 banner.success = false
+                 banner.text = qsTr("Location already in the favorites")
+                 banner.show()
+             }
          }
          onRejected: {
              sheetTextfield.text = ''
@@ -311,7 +332,7 @@ Page {
                             id: locationInputMouseArea
                             anchors.fill: parent
                             onClicked: {
-                                clear()
+                                clear_suggestion()
                             }
                         }
                     }

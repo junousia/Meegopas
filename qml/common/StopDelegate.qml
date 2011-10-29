@@ -32,7 +32,7 @@ Component {
                 id: diff
                 anchors.right: time.right
                 horizontalAlignment: Qt.AlignRight
-                text: (index === 0)?'': "+" + time_diff + " min"
+                text: "+" + time_diff + " min"
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_SMALL
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT

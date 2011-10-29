@@ -19,18 +19,23 @@ function initialize() {
 
 // This function is used to write a setting into the database
 function addFavorite(name, coord) {
-   var db = getDatabase();
-   var res = "";
-   db.transaction(function(tx) {
-        var rs = tx.executeSql('INSERT INTO favorites VALUES (?,?);', [coord,name]);
-              console.log(rs.rowsAffected)
-              if (rs.rowsAffected > 0) {
-                res = "OK";
-              } else {
-                res = "Error";
-              }
-        }
-  );
+    var db = getDatabase();
+    var res = "";
+    db.transaction(function(tx) {
+                       var rs = tx.executeSql('SELECT coord,name FROM favorites WHERE coord = ?', coord);
+                       if (rs.rows.length > 0) {
+                           res = "Not exist"
+                       }
+                       else {
+                           rs = tx.executeSql('INSERT INTO favorites VALUES (?,?);', [coord,name]);
+                           console.log(rs.rowsAffected)
+                           if (rs.rowsAffected > 0) {
+                               res = "OK";
+                           } else {
+                               res = "Error";
+                           }
+                       }
+                   });
   // The function returns “OK” if it was successful, or “Error” if it wasn't
   return res;
 }
