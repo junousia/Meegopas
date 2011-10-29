@@ -67,7 +67,7 @@ Component {
                     Text {
                         text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                         visible: true
-                        font.pixelSize: UIConstants.FONT_LSMALL
+                        font.pixelSize: code == "metro" ? UIConstants.FONT_SMALL : UIConstants.FONT_LSMALL
                         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         anchors.horizontalCenter: transportIcon.horizontalCenter
@@ -109,7 +109,6 @@ Component {
                 routePage.fromLoc = from
                 routePage.toLoc = to
                 routePage.header = from + " - " + to
-                //routePage.subheader = qsTr("Route total duration") + " " + duration + " min"
                 pageStack.push(routePage)
             }
         }

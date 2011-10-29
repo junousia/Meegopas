@@ -11,7 +11,6 @@ Page {
     property string toLoc : ''
     property alias model : routeModel
     property string header
-    property string subheader
 
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
@@ -44,7 +43,6 @@ Page {
         delegate: RouteDelegate {}
         header: Header {
             text: header
-            subtext: subheader
         }
     }
 

@@ -17,6 +17,8 @@ Column {
     property alias text : textfield.text
     property alias auto_update : textfield.auto_update
     property alias selected_favorite : favoriteQuery.selectedIndex
+    property bool disable_favorites : false
+
 
     height: textfield.height + labelContainer.height
     width: parent.width
@@ -29,6 +31,7 @@ Column {
         suggestionModel.clear()
         textfield.text = ''
         destination_coords = ''
+        query.selectedIndex = -1
     }
 
     function update_location(name, coords) {
@@ -48,6 +51,8 @@ Column {
             }
         }
     }
+
+    FavoriteSheet { id: favorite_sheet }
 
     ListView {
         id:dummyview
@@ -135,7 +140,7 @@ Column {
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
-            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
+            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
         }
         Label {
             id: label
@@ -183,7 +188,7 @@ Column {
             id: textfield
             property bool auto_update : false
             anchors.left: parent.left
-            anchors.right: favoritePicker.left
+            anchors.right: disable_favorites ? parent.right : favoritePicker.left
             placeholderText: qsTr("Type a location")
             validator: RegExpValidator { regExp: /^.{3,50}$/ }
             inputMethodHints: Qt.ImhNoPredictiveText
@@ -260,6 +265,8 @@ Column {
 
         MyButton {
             id: favoritePicker
+            enabled: !disable_favorites
+            visible: !disable_favorites
             source: selected_favorite == -1?
                         !theme.inverted?'image://theme/icon-m-common-favorite-unmark':'image://theme/icon-m-common-favorite-unmark-inverse' :
                         !theme.inverted?'image://theme/icon-m-common-favorite-mark':'image://theme/icon-m-common-favorite-mark-inverse'
@@ -270,6 +277,13 @@ Column {
                 Favorites.getFavorites(favoritesModel)
                 favoritesModel.insert(0, {name: qsTr("Current location"),coord:"0,0"})
                 favoriteQuery.open()
+            }
+            mouseArea.onPressAndHold: {
+                if(destination_coords) {
+                    favorite_sheet.coords = destination_coords
+                    favorite_sheet.text = textfield.text
+                    favorite_sheet.open()
+                }
             }
         }
     }

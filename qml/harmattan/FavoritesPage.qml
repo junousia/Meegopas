@@ -17,9 +17,6 @@ Page {
         y: 0
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
     }
-    property alias auto_update : textfield.auto_update
-    property variant destCoords : ''
-    property bool destValid : (suggestionModel.count > 0)
 
     Component.onCompleted: {
         favoritesModel.clear()
@@ -27,19 +24,11 @@ Page {
         Favorites.getFavorites(favoritesModel)
     }
 
-    function clear_suggestion() {
-        suggestionModel.clear()
-        query.selectedIndex = -1
-        textfield.text = ''
-        destCoords = ''
-    }
+    FavoriteSheet { id: sheet }
 
-    InfoBanner {
-        id: banner
-        property bool success : false
-        visible: true
-        iconSource: success ? 'image://theme/icon-m-toolbar-done-white-selected':'image://theme/icon-m-browser-stop'
-        z: 500
+    ListModel {
+        id: favoritesModel
+        property bool updating : false
     }
 
     QueryDialog {
@@ -52,142 +41,10 @@ Page {
         acceptButtonText: qsTr("Delete")
         onAccepted: {
             Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
-            banner.success = true
-            banner.text = qsTr("Favorite removed")
-            banner.show()
+            appWindow.banner.success = true
+            appWindow.banner.text = qsTr("Favorite removed")
+            appWindow.banner.show()
         }
-    }
-
-    Timer {
-        id: updateTimer
-        repeat: false
-        interval: 100
-        triggeredOnStart: false
-        onTriggered: {
-            if(suggestionModel.count == 1 && !suggestionModel.updating) {
-                textfield.auto_update = true
-                textfield.text = suggestionModel.get(0).name
-                destCoords = suggestionModel.get(0).coords
-            }
-        }
-    }
-
-    ListModel {
-        id: favoritesModel
-    }
-
-    SelectionDialog {
-        id: query
-        model: suggestionModel
-        delegate: SuggestionDelegate {}
-        titleText: qsTr("Choose location")
-        onAccepted: {
-            textfield.auto_update = true
-            textfield.text = suggestionModel.get(selectedIndex).name
-            destCoords = suggestionModel.get(selectedIndex).coords
-            suggestionModel.clear()
-            favoritesModel.clear()
-            Favorites.getFavorites(favoritesModel)
-        }
-        onRejected: {
-            destCoords = ''
-        }
-    }
-
-    ListView {
-        id:dummyview
-        visible: false
-        delegate: Component {
-            Text { text: "dummy" }
-        }
-        model: suggestionModel
-        onCountChanged: { updateTimer.start() }
-    }
-
-    ListModel {
-        id: suggestionModel
-        property bool updating : false
-    }
-
-    Timer {
-        id: suggestionTimer
-        interval: 1200
-        repeat: false
-        triggeredOnStart: false
-        onTriggered: {
-            if(textfield.acceptableInput) {
-                Reittiopas.address_to_location(textfield.text,suggestionModel)
-            }
-        }
-    }
-
-    Sheet {
-        id: sheet
-        visualParent: pageStack
-
-        acceptButtonText: qsTr("Save")
-        rejectButtonText: qsTr("Cancel")
-
-        property alias text : sheetTextfield.text
-
-        content: Item {
-             anchors.fill: parent
-             anchors.margins: UIConstants.DEFAULT_MARGIN
-
-             Column {
-                 width: parent.width
-
-                 Label {
-                     text: qsTr("Enter name")
-                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                     font.pixelSize: MyConstants.FONT_XXLARGE
-                     anchors.left: parent.left
-                 }
-                 TextField {
-                     id: sheetTextfield
-                     width: parent.width
-
-                     Image {
-                         anchors.right: parent.right
-                         anchors.verticalCenter: parent.verticalCenter
-                         source: 'image://theme/icon-m-input-clear'
-                         visible: (sheetTextfield.activeFocus)
-                         opacity: 0.8
-                         MouseArea {
-                             anchors.fill: parent
-                             onClicked: {
-                                 sheetTextfield.text = ''
-                             }
-                         }
-                     }
-
-                     Keys.onReturnPressed: {
-                         textfield.platformCloseSoftwareInputPanel()
-                         parent.focus = true
-                     }
-                 }
-             }
-         }
-         onAccepted: {
-             if(("OK" == Favorites.addFavorite(sheetTextfield.text, destCoords))) {
-                 console.log("added " + sheetTextfield.text + " " + destCoords + " to the favorites")
-                 favoritesModel.clear()
-                 Favorites.getFavorites(favoritesModel)
-                 sheetTextfield.text = ''
-                 clear_suggestion()
-
-                 banner.success = true
-                 banner.text = qsTr("Location added to favorites")
-                 banner.show()
-             } else {
-                 banner.success = false
-                 banner.text = qsTr("Location already in the favorites")
-                 banner.show()
-             }
-         }
-         onRejected: {
-             sheetTextfield.text = ''
-         }
     }
 
     Flickable {
@@ -210,139 +67,8 @@ Page {
             Header {
                 text: qsTr("Manage favorites")
             }
-            Column {
-                width: parent.width
-                Item {
-                    id: labelContainer
-                    height: 50
-                    width: parent.width
 
-                    BorderImage {
-                        anchors.fill: parent
-                        visible: labelMouseArea.pressed
-                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-vertical-center': 'image://theme/meegotouch-list-background-pressed-vertical-center'
-                    }
-                    Label {
-                        id: label
-                        font.pixelSize: MyConstants.FONT_XXLARGE
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                        anchors.left: parent.left
-                        anchors.bottom: parent.bottom
-                        text: qsTr("Add favorite")
-                    }
-                    CountBubble {
-                        id: count
-                        largeSized: true
-                        value: suggestionModel.count
-                        visible: (suggestionModel.count > 1)
-                        anchors.left: label.right
-                        anchors.bottom: label.bottom
-                    }
-
-                    BusyIndicator {
-                        id: busyIndicator
-                        visible: suggestionModel.updating
-                        running: suggestionModel.updating
-                        anchors.left: label.right
-                        anchors.verticalCenter: label.verticalCenter
-                        platformStyle: BusyIndicatorStyle { size: 'medium' }
-                    }
-
-                    MouseArea {
-                        id: labelMouseArea
-                        anchors.fill: parent
-                        enabled: (suggestionModel.count > 1)
-                        onClicked: {
-                            if(suggestionModel.count > 1) {
-                                query.open()
-                                textfield.platformCloseSoftwareInputPanel()
-                            }
-                        }
-                    }
-                }
-                TextField {
-                    id: textfield
-                    property bool auto_update : false
-                    width: parent.width
-                    height: 50
-                    placeholderText: qsTr("Type a location")
-                    validator: RegExpValidator { regExp: /^.{3,50}$/ }
-                    inputMethodHints: Qt.ImhNoPredictiveText
-                    platformStyle: TextFieldStyle {
-                        paddingLeft: 45
-                    }
-
-                    onTextChanged: {
-                        if(auto_update)
-                            auto_update = false
-                        else {
-                            suggestionModel.clear()
-                            if(acceptableInput)
-                                suggestionTimer.restart()
-                            else
-                                suggestionTimer.stop()
-                        }
-                    }
-                    Rectangle {
-                        id: status
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
-                        smooth: true
-                        radius: 10
-                        height: 20
-                        width: 20
-                        state: destCoords?"validated":suggestionModel.count > 0? "sufficient":"error"
-                        opacity: 0.8
-
-                        states: [
-                            State {
-                                name: "error"
-                                PropertyChanges { target: status; color: "red" }
-                            },
-                            State {
-                                name: "sufficient"
-                                PropertyChanges { target: status; color: "yellow" }
-                            },
-                            State {
-                                name: "validated"
-                                PropertyChanges { target: status; color: "green" }
-                            }
-                        ]
-                        transitions: [
-                            Transition {
-                                ColorAnimation { to: "green"; duration: 100 }
-                            },
-                            Transition {
-                                ColorAnimation { to: "yellow"; duration: 100 }
-                            },
-                            Transition {
-                                ColorAnimation { to: "red"; duration: 100 }
-                            }
-                        ]
-                    }
-                    Image {
-                        id: clearLocation
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: 'image://theme/icon-m-input-clear'
-                        visible: ((textfield.activeFocus) && !busyIndicator.running)
-                        opacity: 0.8
-                        MouseArea {
-                            id: locationInputMouseArea
-                            anchors.fill: parent
-                            onClicked: {
-                                clear_suggestion()
-                            }
-                        }
-                    }
-
-                    Keys.onReturnPressed: {
-                        textfield.platformCloseSoftwareInputPanel()
-                        parent.focus = true
-                    }
-                }
-            }
+            LocationEntry { id: favorite; type: qsTr("Add favorite"); disable_favorites: true }
 
             Button {
                 id: addButton
@@ -352,9 +78,10 @@ Page {
                 font.pixelSize: UIConstants.FONT_SMALL
                 width: 150
                 height: 40
-                enabled: destCoords != ''
+                enabled: favorite.destination_coords != ''
                 onClicked: {
-                    sheet.text = textfield.text
+                    sheet.text = favorite.getCoords().name
+                    sheet.coords = favorite.getCoords().coords
                     sheet.open()
                 }
             }

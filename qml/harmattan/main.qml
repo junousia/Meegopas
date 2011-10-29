@@ -1,9 +1,11 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.nokia.extras 1.0
 
 PageStackWindow {
     id: appWindow
     initialPage: mainPage
+    property alias banner : banner
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
@@ -13,6 +15,15 @@ PageStackWindow {
 
     MainPage{id: mainPage}
     AboutDialog { id: about }
+
+    InfoBanner {
+        id: banner
+        property bool success : false
+        visible: true
+        iconSource: success ? 'image://theme/icon-m-toolbar-done-white-selected':'image://theme/icon-m-browser-stop'
+        z: 500
+        y: 40
+    }
 
     ToolBarLayout {
         id: commonTools
