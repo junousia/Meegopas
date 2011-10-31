@@ -8,7 +8,6 @@ import "../common/reittiopas.js" as Reittiopas
 import "../common/favorites.js" as Favorites
 
 Sheet {
-    id: sheet
     visualParent: pageStack
 
     acceptButtonText: qsTr("Save")
@@ -16,6 +15,7 @@ Sheet {
 
     property alias text : sheetTextfield.text
     property string coords
+    property bool is_add_favorites : false
 
     content: Item {
          anchors.fill: parent
@@ -23,9 +23,14 @@ Sheet {
 
          Column {
              width: parent.width
-             Header {
+             Label {
                  text: qsTr("Add to favorites")
+                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+                 font.pixelSize: MyConstants.FONT_XXLARGE
+                 anchors.left: parent.left
              }
+
+             Spacing {}
 
              Label {
                  text: qsTr("Enter name")
@@ -63,6 +68,9 @@ Sheet {
              favoritesModel.clear()
              Favorites.getFavorites(favoritesModel)
              sheetTextfield.text = ''
+
+             if(is_add_favorites)
+                 favorites_page.textfield.clear()
 
              appWindow.banner.success = true
              appWindow.banner.text = qsTr("Location added to favorites")

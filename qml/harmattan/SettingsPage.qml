@@ -45,6 +45,7 @@ Page {
                 anchors.left: parent.left
             }
             Row {
+                anchors.right: parent.right
                 Label {
                     text: "0"
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT

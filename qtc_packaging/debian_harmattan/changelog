@@ -1,5 +1,7 @@
 meegopas (0.0.9) unstable; urgency=low
   * Fade in animations for items
+  * Time difference between stops
+  * Infobanner for successful/unsuccessful favorite delete/add
 
  -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ma, 24 lokakuuta 2011 17:20:36 +0300
 

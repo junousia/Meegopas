@@ -42,7 +42,7 @@ Component {
                 id: time
                 text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE
+                font.pixelSize: UIConstants.FONT_LARGE
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }

@@ -9,6 +9,7 @@ import "../common/reittiopas.js" as Reittiopas
 import "../common/favorites.js" as Favorites
 
 Page {
+    id: favorites_page
     tools: favoritesTools
 
     ToolBarLayout {
@@ -17,6 +18,8 @@ Page {
         y: 0
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
     }
+
+    property alias textfield : favorite
 
     Component.onCompleted: {
         favoritesModel.clear()
@@ -80,6 +83,7 @@ Page {
                 height: 40
                 enabled: favorite.destination_coords != ''
                 onClicked: {
+                    sheet.is_add_favorites = true
                     sheet.text = favorite.getCoords().name
                     sheet.coords = favorite.getCoords().coords
                     sheet.open()

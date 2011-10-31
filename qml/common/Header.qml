@@ -7,7 +7,7 @@ Item {
     property string subtext
     anchors.left: parent.left
     anchors.right: parent.right
-    height: headerText.height + headerDivider.height + UIConstants.DEFAULT_MARGIN * 2 + (subheaderText.visible ? subheaderText.height : 0)
+    height: headerText.height + headerDivider.height + (subheaderText.visible ? subheaderText.height : 0) + UIConstants.DEFAULT_MARGIN
 
     Text {
         id: headerText

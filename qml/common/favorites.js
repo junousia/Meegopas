@@ -28,7 +28,6 @@ function addFavorite(name, coord) {
                        }
                        else {
                            rs = tx.executeSql('INSERT INTO favorites VALUES (?,?);', [coord,name]);
-                           console.log(rs.rowsAffected)
                            if (rs.rowsAffected > 0) {
                                res = "OK";
                            } else {
