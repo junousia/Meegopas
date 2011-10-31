@@ -110,8 +110,16 @@ Column {
 
         onAccepted: {
             if(selectedIndex == 0) {
-                Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
-                                               positionSource.position.coordinate.longitude.toString(),suggestionModel)
+                if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
+                    Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
+                                                   positionSource.position.coordinate.longitude.toString(),suggestionModel)
+                }
+                else {
+                    favoriteQuery.selectedIndex = -1
+                    appWindow.banner.success = false
+                    appWindow.banner.text = qsTr("Position not yet available")
+                    appWindow.banner.show()
+                }
             } else {
                 update_location(favoritesModel.get(selectedIndex).name, favoritesModel.get(selectedIndex).coord)
             }
@@ -275,7 +283,7 @@ Column {
             mouseArea.onClicked: {
                 favoritesModel.clear()
                 Favorites.getFavorites(favoritesModel)
-                favoritesModel.insert(0, {name: qsTr("Current location"),coord:"0,0"})
+                favoritesModel.insert(0, {name: qsTr("Current position"),coord:"0,0"})
                 favoriteQuery.open()
             }
             mouseArea.onPressAndHold: {

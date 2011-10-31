@@ -5,6 +5,6 @@ Rectangle {
     width: parent.width
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.margins: UIConstants.DEFAULT_MARGIN
-    height: 2
-    color: "gray"
+    height: 1
+    color: "dark gray"
 }

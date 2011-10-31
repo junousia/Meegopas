@@ -17,12 +17,12 @@
 <context>
     <name>FavoriteSheet</name>
     <message>
-        <location filename="../qml/harmattan/FavoriteSheet.qml" line="14"/>
+        <location filename="../qml/harmattan/FavoriteSheet.qml" line="13"/>
         <source>Save</source>
         <translation>Tallenna</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoriteSheet.qml" line="15"/>
+        <location filename="../qml/harmattan/FavoriteSheet.qml" line="14"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
@@ -32,17 +32,17 @@
         <translation>Lisää suosikkeihin</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoriteSheet.qml" line="31"/>
+        <location filename="../qml/harmattan/FavoriteSheet.qml" line="36"/>
         <source>Enter name</source>
         <translation>Anna nimi</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoriteSheet.qml" line="68"/>
+        <location filename="../qml/harmattan/FavoriteSheet.qml" line="76"/>
         <source>Location added to favorites</source>
         <translation>Sijainti lisätty suosikkeihin</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoriteSheet.qml" line="72"/>
+        <location filename="../qml/harmattan/FavoriteSheet.qml" line="80"/>
         <source>Location already in the favorites</source>
         <translation>Sijainti jo suosikeissa</translation>
     </message>
@@ -54,17 +54,17 @@
         <translation type="obsolete">Sijainti jo suosikeissa</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="37"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="40"/>
         <source>Delete favorite?</source>
         <translation>Poista suosikki?</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="40"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="43"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="41"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="44"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
@@ -85,7 +85,7 @@
         <translation type="obsolete">Sijainti lisätty suosikkeihin</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="45"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="48"/>
         <source>Favorite removed</source>
         <translation>Suosikki poistettu</translation>
     </message>
@@ -94,12 +94,12 @@
         <translation type="obsolete">Sijainti lisätty suosikkeihin</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="68"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="71"/>
         <source>Manage favorites</source>
         <translation>Hallitse suosikkeja</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="71"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="74"/>
         <source>Add favorite</source>
         <translation>Lisää suosikki</translation>
     </message>
@@ -108,17 +108,17 @@
         <translation type="obsolete">Kirjoita osoite</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="75"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="78"/>
         <source>Add</source>
         <translation>Lisää</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="109"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="113"/>
         <source>Remove</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="132"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="136"/>
         <source>Favorites</source>
         <translation>Suosikit</translation>
     </message>
@@ -132,14 +132,23 @@
         <translation>Valitse sijainti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/LocationEntry.qml" line="192"/>
+        <location filename="../qml/harmattan/LocationEntry.qml" line="120"/>
+        <source>Position not yet available</source>
+        <translation>Paikannus ei vielä valmis</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/LocationEntry.qml" line="286"/>
+        <source>Current position</source>
+        <translation>Nykyinen sijainti</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/LocationEntry.qml" line="200"/>
         <source>Type a location</source>
         <translation>Kirjoita osoite</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/LocationEntry.qml" line="278"/>
         <source>Current location</source>
-        <translation>Nykyinen sijainti</translation>
+        <translation type="obsolete">Nykyinen sijainti</translation>
     </message>
 </context>
 <context>
@@ -216,52 +225,52 @@
         <translation>Vaihtomarginaali</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="82"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="83"/>
         <source>Optimize route by</source>
         <translation>Reitin optimointi</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="106"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="107"/>
         <source>Default</source>
         <translation>Oletus</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="111"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="112"/>
         <source>Fastest</source>
         <translation>Nopein</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="116"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="117"/>
         <source>Least transfers</source>
         <translation>Vähiten vaihtoja</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="121"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="122"/>
         <source>Least walking</source>
         <translation>Vähiten kävelyä</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="129"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="130"/>
         <source>Walking speed</source>
         <translation>Kävelynopeus</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="152"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="153"/>
         <source>Walking</source>
         <translation>Kävely</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="157"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="158"/>
         <source>Fast walking</source>
         <translation>Nopea kävely</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="162"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="163"/>
         <source>Very fast walking</source>
         <translation>Erittäin nopea kävely</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="167"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="168"/>
         <source>Running</source>
         <translation>Juoksu</translation>
     </message>
