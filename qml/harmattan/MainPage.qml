@@ -123,7 +123,7 @@ Page {
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source: !theme.inverted?'image://theme/icon-m-toolbar-refresh':'image://theme/icon-m-toolbar-refresh-selected'
+                        source: !theme.inverted?'../../images/switch.png':'../../images/switch-inverse.png'
                         opacity: locationSwitch.enabled ? 0.8 : 0.3
                     }
                     MouseArea {
@@ -146,7 +146,7 @@ Page {
                         }
                     ]
                     transitions: Transition {
-                        RotationAnimation { duration: 300; direction: RotationAnimation.Counterclockwise }
+                        RotationAnimation { duration: 300; direction: RotationAnimation.Clockwise }
                     }
                 }
 

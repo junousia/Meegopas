@@ -253,7 +253,7 @@ Column {
                 id: clearLocation
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                source: 'image://theme/icon-m-input-clear'
+                source: '../../images/clear.png'
                 visible: ((textfield.activeFocus) && !busyIndicator.running)
                 opacity: 0.8
                 MouseArea {
@@ -276,8 +276,8 @@ Column {
             enabled: !disable_favorites
             visible: !disable_favorites
             source: selected_favorite == -1?
-                        !theme.inverted?'image://theme/icon-m-common-favorite-unmark':'image://theme/icon-m-common-favorite-unmark-inverse' :
-                        !theme.inverted?'image://theme/icon-m-common-favorite-mark':'image://theme/icon-m-common-favorite-mark-inverse'
+                        !theme.inverted?'../../images/favorite-unmark.png':'../../images/favorite-unmark-inverse.png' :
+                        !theme.inverted?'../../images/favorite-mark.png':'../../images/favorite-mark-inverse.png'
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             mouseArea.onClicked: {
