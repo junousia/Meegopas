@@ -78,7 +78,7 @@ Page {
                 text: qsTr("Add")
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pointSize: UIConstants.FONT_XXSMALL
+                font.pixelSize: UIConstants.FONT_SMALL
                 width: 150
                 height: 40
                 enabled: favorite.destination_coords != ''
@@ -105,7 +105,7 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                        font.pointSize: UIConstants.FONT_DEFAULT
+                        font.pixelSize: UIConstants.FONT_XLARGE
                         elide: Text.ElideRight
                     }
                     Button {
@@ -114,7 +114,7 @@ Page {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                        font.pointSize: UIConstants.FONT_XXSMALL
+                        font.pixelSize: UIConstants.FONT_SMALL
                         width: 150
                         height: 40
                         onClicked: {
@@ -135,7 +135,7 @@ Page {
                     id: favoritesLabel
                     text: qsTr("Favorites")
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                    font.pointSize: UIConstants.FONT_XLARGE
+                    font.pixelSize: MyConstants.FONT_XXLARGE
                 }
                 model: favoritesModel
                 delegate: favoritesManageDelegate

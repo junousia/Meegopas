@@ -26,7 +26,7 @@ Sheet {
              Label {
                  text: qsTr("Add to favorites")
                  font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                 font.pointSize: MyConstants.FONT_XXLARGE
+                 font.pixelSize: MyConstants.FONT_XXLARGE
                  anchors.left: parent.left
              }
 
@@ -35,7 +35,7 @@ Sheet {
              Label {
                  text: qsTr("Enter name")
                  font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                 font.pointSize: MyConstants.FONT_XXLARGE
+                 font.pixelSize: MyConstants.FONT_XXLARGE
                  anchors.left: parent.left
              }
              TextField {

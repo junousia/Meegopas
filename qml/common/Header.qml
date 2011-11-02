@@ -11,7 +11,7 @@ Item {
 
     Text {
         id: headerText
-        font.pointSize: UIConstants.FONT_DEFAULT
+        font.pixelSize: UIConstants.FONT_XLARGE
         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
         width: parent.width
@@ -22,7 +22,7 @@ Item {
         id: subheaderText
         anchors.top: headerText.bottom
         width: parent.width
-        font.pointSize: UIConstants.FONT_DEFAULT
+        font.pixelSize: UIConstants.FONT_DEFAULT
         font.family: "Nokia Pure Text Light"
         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
         text: '<i>' + subtext + '</i>'

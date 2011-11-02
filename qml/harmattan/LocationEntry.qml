@@ -152,7 +152,7 @@ Column {
         }
         Label {
             id: label
-            font.pointSize: UIConstants.FONT_XLARGE
+            font.pixelSize: MyConstants.FONT_XXLARGE
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             anchors.left: parent.left
             anchors.top: parent.top

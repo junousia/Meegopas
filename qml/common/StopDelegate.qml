@@ -34,7 +34,7 @@ Component {
                 horizontalAlignment: Qt.AlignRight
                 text: "+" + time_diff + " min"
                 elide: Text.ElideRight
-                font.pointSize: UIConstants.FONT_XSMALL
+                font.pixelSize: UIConstants.FONT_SMALL
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
@@ -42,7 +42,7 @@ Component {
                 id: time
                 text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                 elide: Text.ElideRight
-                font.pointSize: UIConstants.FONT_DEFAULT
+                font.pixelSize: UIConstants.FONT_LARGE
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
@@ -56,7 +56,7 @@ Component {
                 width: parent.width
                 horizontalAlignment: Qt.AlignRight
                 elide: Text.ElideRight
-                font.pointSize: UIConstants.FONT_LARGE
+                font.pixelSize: UIConstants.FONT_XLARGE
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
