@@ -32,13 +32,13 @@ Component {
                 text: "(" + Qt.formatTime(start, "hh:mm") + ")"
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pixelSize: UIConstants.FONT_LSMALL
+                font.pointSize: UIConstants.FONT_XSMALL
             }
 
             Text {
                 text: first_transport ? Qt.formatTime(first_transport, "hh:mm") : Qt.formatTime(start, "hh:mm")
                 width: 75
-                font.pixelSize: UIConstants.FONT_XLARGE
+                font.pointSize: UIConstants.FONT_DEFAULT
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
@@ -47,7 +47,7 @@ Component {
                 text: duration + " min"
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pixelSize: UIConstants.FONT_LSMALL
+                font.pointSize: UIConstants.FONT_XSMALL
             }
         }
         Flow {
@@ -67,7 +67,7 @@ Component {
                     Text {
                         text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                         visible: true
-                        font.pixelSize: code == "metro" ? UIConstants.FONT_SMALL : UIConstants.FONT_LSMALL
+                        font.pointSize: code == "metro" ? UIConstants.FONT_XXSMALL : UIConstants.FONT_XSMALL
                         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         anchors.horizontalCenter: transportIcon.horizontalCenter
@@ -83,12 +83,12 @@ Component {
                 anchors.right: parent.right
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pixelSize: UIConstants.FONT_LSMALL
+                font.pointSize: UIConstants.FONT_XSMALL
             }
             Text {
                 text: last_transport ? Qt.formatTime(last_transport, "hh:mm") : Qt.formatTime(finish, "hh:mm")
                 anchors.right: parent.right
-                font.pixelSize: UIConstants.FONT_XLARGE
+                font.pointSize: UIConstants.FONT_DEFAULT
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
@@ -97,7 +97,7 @@ Component {
                 horizontalAlignment: Qt.AlignRight
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pixelSize: UIConstants.FONT_LSMALL
+                font.pointSize: UIConstants.FONT_XSMALL
             }
         }
         MouseArea {

@@ -29,6 +29,7 @@ Page {
         x: 0
         y: 0
         ToolButtonRow {
+            ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { myMenu.close(); pageStack.pop(); } }
             ToolButton {
                 text: qsTr("Search")
                 enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
@@ -170,7 +171,7 @@ Page {
 
                     Text {
                         id: timeButton
-                        font.pixelSize: MyConstants.FONT_XXXXLARGE
+                        font.pointSize: MyConstants.FONT_XXXXLARGE
                         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         text: Qt.formatTime(root.myTime, "hh:mm")
@@ -193,6 +194,7 @@ Page {
                 Item {
                     width: 150
                     height: timeType.height + timeTypeText.height
+                    anchors.verticalCenter: parent.verticalCenter
                     Switch {
                         id: timeType
                         platformStyle: customswitch
@@ -202,7 +204,7 @@ Page {
                         id: timeTypeText
                         anchors.top: timeType.bottom
                         anchors.horizontalCenter: timeType.horizontalCenter
-                        font.pixelSize: UIConstants.FONT_LARGE
+                        font.pointSize: UIConstants.FONT_SMALL
                         font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                         text: timeType.checked? qsTr("arrival") : qsTr("departure")
@@ -228,7 +230,7 @@ Page {
                 Text {
                     id: dateButton
                     height: ExtrasConstants.SIZE_BUTTON
-                    font.pixelSize: MyConstants.FONT_XXLARGE
+                    font.pointSize: UIConstants.FONT_LARGE
                     font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                     text: Qt.formatDate(root.myDate, "dd. MMMM yyyy")
@@ -250,7 +252,7 @@ Page {
                 id: timedate_now
                 text: qsTr("Now")
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                font.pixelSize: UIConstants.FONT_SMALL
+                font.pointSize: UIConstants.FONT_XXSMALL
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
                 height: 40

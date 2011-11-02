@@ -53,7 +53,7 @@ Component {
             anchors.rightMargin: UIConstants.MARGIN_DEFAULT
             text: name
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-            font.pixelSize: UIConstants.FONT_LARGE
+            font.pointSize: UIConstants.FONT_DEFAULT
         }
     }
 }
