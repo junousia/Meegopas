@@ -70,7 +70,7 @@ Page {
         ]
         content:[
             Column {
-                height: 150
+                height: 125
                 width: parent.width
                 anchors.margins: UIConstants.DEFAULT_MARGIN
                 spacing: UIConstants.DEFAULT_MARGIN
@@ -84,7 +84,6 @@ Page {
                 TextField {
                     id: sheetTextfield
                     width: parent.width
-
                     Image {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter

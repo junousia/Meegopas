@@ -9,7 +9,7 @@ Component {
         id: delegateItem
         property bool selected: index == selectedIndex;
 
-        height: 50
+        height: 45
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN
@@ -31,7 +31,7 @@ Component {
             anchors.right: locType.left
             text: name
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
         }
         Text {
             id: locType
