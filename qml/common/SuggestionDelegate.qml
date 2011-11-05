@@ -9,9 +9,11 @@ Component {
         id: delegateItem
         property bool selected: index == selectedIndex;
 
-        height: root.platformStyle.itemHeight
+        height: 50
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
+        anchors.rightMargin: UIConstants.DEFAULT_MARGIN
 
         MouseArea {
             id: delegateMouseArea
@@ -20,47 +22,28 @@ Component {
             onClicked: accept();
         }
 
-        Rectangle {
-            id: backgroundRect
-            anchors.fill: parent
-            color: delegateItem.selected ? root.platformStyle.itemSelectedBackgroundColor : root.platformStyle.itemBackgroundColor
-        }
-
-        BorderImage {
-            id: background
-            anchors.fill: parent
-            border { left: UIConstants.CORNER_MARGINS; top: UIConstants.CORNER_MARGINS; right: UIConstants.CORNER_MARGINS; bottom: UIConstants.CORNER_MARGINS }
-            source: delegateMouseArea.pressed ? root.platformStyle.itemPressedBackground :
-                    delegateItem.selected ? root.platformStyle.itemSelectedBackground :
-                    root.platformStyle.itemBackground
-        }
-
         Text {
             id: locName
             elide: Text.ElideRight
-            color: delegateItem.selected ? root.platformStyle.itemSelectedTextColor : root.platformStyle.itemTextColor
+            color: UIConstants.COLOR_INVERTED_FOREGROUND
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.left: parent.left
             anchors.right: locType.left
-            anchors.leftMargin: UIConstants.MARGIN_DEFAULT
-            anchors.rightMargin: UIConstants.MARGIN_DEFAULT
             text: name
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-            font.pixelSize: UIConstants.FONT_LARGE
+            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
         }
         Text {
             id: locType
             width: 100
             elide: Text.ElideRight
-            color: UIConstants.COLOR_BUTTON_SECONDARY_FOREGROUND
+            color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.right: parent.right
-            anchors.leftMargin: UIConstants.MARGIN_DEFAULT
-            anchors.rightMargin: UIConstants.MARGIN_DEFAULT
             text: city
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-            font.pixelSize: UIConstants.FONT_LSMALL
+            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
         }
     }
 }

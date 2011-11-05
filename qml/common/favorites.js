@@ -70,7 +70,7 @@ function getFavorites(model) {
      if (rs.rows.length > 0) {
          for(var i = 0; i < rs.rows.length; i++) {
              var output = {}
-             output.name = rs.rows.item(i).name;
+             output.modelData = rs.rows.item(i).name;
              output.coord = rs.rows.item(i).coord;
              output.type = "favorite"
              model.append(output)

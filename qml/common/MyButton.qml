@@ -9,7 +9,7 @@ Item {
     BorderImage {
         anchors.fill: parent
         visible: mouseArea.pressed
-        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
+        source: theme.inverted ? '../../images/background.png': '../../images/background.png'
     }
 
     Image {

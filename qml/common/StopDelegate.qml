@@ -21,7 +21,7 @@ Component {
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
             visible: mouseArea.pressed
-            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
+            source: theme.inverted ? '../../images/background.png': '../../images/background.png'
         }
         Column {
             id: time_column
@@ -34,7 +34,7 @@ Component {
                 horizontalAlignment: Qt.AlignRight
                 text: "+" + time_diff + " min"
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_SMALL
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
@@ -42,7 +42,7 @@ Component {
                 id: time
                 text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_LARGE
+                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
@@ -56,7 +56,7 @@ Component {
                 width: parent.width
                 horizontalAlignment: Qt.AlignRight
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }

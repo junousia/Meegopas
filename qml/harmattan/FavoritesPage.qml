@@ -99,7 +99,7 @@ Page {
                     height: UIConstants.LIST_ITEM_HEIGHT_SMALL
 
                     Text {
-                        text: name
+                        text: modelData
                         anchors.left: parent.left
                         anchors.right: remove_button.left
                         anchors.verticalCenter: parent.verticalCenter

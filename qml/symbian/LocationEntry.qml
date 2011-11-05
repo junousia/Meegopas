@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import com.nokia.symbian 1.0
 import com.nokia.extras 1.0
 import QtMobility.location 1.1
 import "../common"
@@ -52,8 +52,6 @@ Column {
         }
     }
 
-    FavoriteSheet { id: favorite_sheet }
-
     ListView {
         id:dummyview
         visible: false
@@ -78,7 +76,7 @@ Column {
     PositionSource {
         id: positionSource
         updateInterval: 1000
-        active: platformWindow.active
+        active: true //platformWindow.active
     }
 
     ListModel {
@@ -105,21 +103,12 @@ Column {
     SelectionDialog {
         id: favoriteQuery
         model: favoritesModel
-        delegate: FavoritesDelegate {}
         titleText: qsTr("Choose location")
 
         onAccepted: {
             if(selectedIndex == 0) {
-                if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
-                    Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
-                                                   positionSource.position.coordinate.longitude.toString(),suggestionModel)
-                }
-                else {
-                    favoriteQuery.selectedIndex = -1
-                    appWindow.banner.success = false
-                    appWindow.banner.text = qsTr("Position not yet available")
-                    appWindow.banner.show()
-                }
+                Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
+                                               positionSource.position.coordinate.longitude.toString(),suggestionModel)
             } else {
                 update_location(favoritesModel.get(selectedIndex).modelData, favoritesModel.get(selectedIndex).coord)
             }
@@ -142,38 +131,35 @@ Column {
     Item {
         id: labelContainer
         anchors.top: parent.top
-        anchors.rightMargin: 5
+        anchors.rightMargin: UIConstants.DEFAULT_MARGIN
         height: label.height
         width: label.width + count.width
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
-            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
+            source: theme.inverted ? '../../images/background.png': '../../images/background.png'
         }
-        Label {
+        Text {
             id: label
-            font.pixelSize: MyConstants.FONT_XXLARGE
+            font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
+            color: "white"
             anchors.left: parent.left
             anchors.top: parent.top
         }
-
-        CountBubble {
+        Bubble {
             id: count
-            largeSized: true
-            value: suggestionModel.count
+            count: suggestionModel.count
             visible: (suggestionModel.count > 1)
             anchors.left: label.right
             anchors.bottom: label.bottom
         }
-
         BusyIndicator {
             id: busyIndicator
             visible: suggestionModel.updating
             running: suggestionModel.updating
             anchors.left: label.right
             anchors.verticalCenter: label.verticalCenter
-            platformStyle: BusyIndicatorStyle { size: 'medium' }
         }
 
         MouseArea {
@@ -194,15 +180,13 @@ Column {
         height: textfield.height
         TextField {
             id: textfield
+            platformLeftMargin: 30
             property bool auto_update : false
             anchors.left: parent.left
             anchors.right: disable_favorites ? parent.right : favoritePicker.left
             placeholderText: qsTr("Type a location")
             validator: RegExpValidator { regExp: /^.{3,50}$/ }
             inputMethodHints: Qt.ImhNoPredictiveText
-            platformStyle: TextFieldStyle {
-                paddingLeft: 45
-            }
 
             onTextChanged: {
                 if(auto_update)
@@ -283,15 +267,8 @@ Column {
             mouseArea.onClicked: {
                 favoritesModel.clear()
                 Favorites.getFavorites(favoritesModel)
-                favoritesModel.insert(0, {modelData: qsTr("Current position"),coord:"0,0"})
+                favoritesModel.insert(0, {modelData: qsTr("Current location"),coord:"0,0"})
                 favoriteQuery.open()
-            }
-            mouseArea.onPressAndHold: {
-                if(destination_coords) {
-                    favorite_sheet.coords = destination_coords
-                    favorite_sheet.text = textfield.text
-                    favorite_sheet.open()
-                }
             }
         }
     }

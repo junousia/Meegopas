@@ -1,7 +1,6 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
 import "ExtrasConstants.js" as ExtrasConstants
-
 Component {
     id: favoritesDelegate
 
@@ -51,9 +50,10 @@ Component {
             anchors.right: parent.right
             anchors.leftMargin: UIConstants.MARGIN_DEFAULT
             anchors.rightMargin: UIConstants.MARGIN_DEFAULT
-            text: modelData
+            text: name
             font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+            font.pointSize: UIConstants.FONT_DEFAULT
         }
     }
 }
+

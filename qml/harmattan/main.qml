@@ -6,6 +6,7 @@ PageStackWindow {
     id: appWindow
     initialPage: mainPage
     property alias banner : banner
+    property variant scaling_factor : 1
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
@@ -20,7 +21,7 @@ PageStackWindow {
         id: banner
         property bool success : false
         visible: true
-        iconSource: success ? 'image://theme/icon-m-toolbar-done-white-selected':'image://theme/icon-m-browser-stop'
+        iconSource: success ? '../../images/banner_green.png':'../../images/banner_red.png'
         z: 500
         y: 40
     }

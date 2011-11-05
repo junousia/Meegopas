@@ -2,8 +2,7 @@
 #include <QtDebug>
 #include <QTranslator>
 #include <QLocale>
-#ifdef Q_OS_SYMBIAN
-#else
+#ifdef Q_OS_LINUX
 #include <MLocale>
 #endif
 #include "qmlapplicationviewer.h"
@@ -14,7 +13,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
     QTranslator translator;
-#ifdef Q_OS_SYMBIAN
+#ifndef Q_OS_LINUX
+    qDebug() << "Current locale: " << QLocale::system().name();
+    translator.load("i18n/meegopas_" + QLocale::system().name() + ".qm");
     viewer->setMainQmlFile(QLatin1String("qml/symbian/main.qml"));
 #else
     MLocale locale;

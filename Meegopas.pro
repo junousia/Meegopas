@@ -1,15 +1,18 @@
 # Add more folders to ship with the application, here
-harmattan_qml.source = qml/harmattan/
-harmattan_qml.target = qml/
-common_qml.source = qml/common/
-common_qml.target = qml/
+harmattan_qml.source = qml/harmattan
+harmattan_qml.target = qml
+symbian_qml.source = qml/symbian
+symbian_qml.target = qml
+common_qml.source = qml/common
+common_qml.target = qml
 images.source = images
 loc.source = i18n
-javascript.source = js
-DEPLOYMENTFOLDERS += common_qml images loc javascript
+DEPLOYMENTFOLDERS = common_qml images loc
 
 # Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH = js qml/common qml/harmattan
+QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
+
+CONFIG += qt-components
 
 symbian {
     TARGET.UID3 = 0xE0253CFB
@@ -19,11 +22,14 @@ symbian {
     # fail to install if self-signed. By default qmake uses the unprotected
     # range value if unprotected UID is defined for the application and
     # 0x2002CCCF value if protected UID is given to the application
-    #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
+    # DEPLOYMENT.installer_header = 0x2002CCCF
 
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices
+
+    # Add dependency to Symbian components
 }
+
 contains(MEEGO_EDITION, harmattan) {
     # add harmattan specific qml
     DEPLOYMENTFOLDERS += harmattan_qml
@@ -44,15 +50,14 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/changelog
 }
 
+simulator {
+    DEPLOYMENTFOLDERS += symbian_qml
+}
+
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
 CONFIG += mobility
 MOBILITY += location systeminfo
-
-
-# Add dependency to Symbian components
-CONFIG += qt-components
-
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp
@@ -62,8 +67,4 @@ include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
 TRANSLATIONS += meegopas_fi_FI.ts
-
-
-
-
 

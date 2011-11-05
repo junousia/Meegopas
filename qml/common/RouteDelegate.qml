@@ -25,7 +25,7 @@ Component {
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
             visible: mouseArea.pressed
-            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
+            source: theme.inverted ? '../../images/background.png': '../../images/background.png'
         }
         Column {
             anchors.left: parent.left
@@ -35,7 +35,7 @@ Component {
 
             Text {
                 text: Qt.formatTime(from.time, "hh:mm")
-                font.pixelSize: UIConstants.FONT_XLARGE
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
@@ -43,7 +43,7 @@ Component {
                 text: (index === 0)? fromLoc : from.name
                 width: parent.width
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_DEFAULT
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
@@ -59,7 +59,7 @@ Component {
             }
             Text {
                 text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
-                font.pixelSize: UIConstants.FONT_LSMALL
+                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -74,7 +74,7 @@ Component {
                 text: Qt.formatTime(to.time, "hh:mm")
                 anchors.right: parent.right
                 horizontalAlignment: Qt.AlignRight
-                font.pixelSize: UIConstants.FONT_XLARGE
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
@@ -83,7 +83,7 @@ Component {
                 horizontalAlignment: Text.AlignRight
                 width: parent.width
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_DEFAULT
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
