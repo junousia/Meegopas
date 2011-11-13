@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
 
@@ -15,7 +15,6 @@ Component {
             anchors.right: remove_button.left
             anchors.verticalCenter: parent.verticalCenter
             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
             elide: Text.ElideRight
         }
@@ -24,7 +23,6 @@ Component {
             text: qsTr("Remove")
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
             width: 150 * appWindow.scaling_factor
             height: 40

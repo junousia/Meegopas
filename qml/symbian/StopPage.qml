@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -22,6 +22,7 @@ Page {
     ListView {
         id: routeList
         anchors.fill: parent
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: stopModel
         delegate: StopDelegate {}
         header: Header {
@@ -39,5 +40,7 @@ Page {
         visible: (stopModel.updating)
         running: true
         anchors.centerIn: parent
+        width: 75
+        height: 75
     }
 }

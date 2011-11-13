@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -12,8 +12,6 @@ Page {
     property string toLoc : ''
     property alias model : routeModel
     property string header
-
-    anchors.margins: UIConstants.DEFAULT_MARGIN
 
     ToolBarLayout {
         id: routeTools
@@ -36,6 +34,7 @@ Page {
     ListView {
         id: routeList
         anchors.fill: parent
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
         delegate: RouteDelegate {}
         header: Header {
@@ -53,5 +52,7 @@ Page {
         visible: (routeModel.updating)
         running: true
         anchors.centerIn: parent
+        width: 75
+        height: 75
     }
 }

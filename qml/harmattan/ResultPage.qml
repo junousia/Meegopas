@@ -8,6 +8,7 @@ import "../common/reittiopas.js" as Reittiopas
 import "../common/storage.js" as Storage
 
 Page {
+    id: data
     tools: commonTools
     property alias routeModel : routeModel
     property string from : ""

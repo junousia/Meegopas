@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -19,8 +19,7 @@ Page {
     Flickable {
         id: settingsContent
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN
-
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         contentHeight: content_column.height + 2 * UIConstants.DEFAULT_MARGIN
         flickableDirection: Flickable.VerticalFlick
 
@@ -44,7 +43,6 @@ Page {
 
             Text {
                 text: qsTr("Change margin") + " (min)"
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 anchors.left: parent.left
@@ -52,7 +50,6 @@ Page {
             Row {
                 Text {
                     text: "0"
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
@@ -76,7 +73,6 @@ Page {
                 }
                 Text {
                     text: "10"
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -88,7 +84,6 @@ Page {
 
             Text {
                 text: qsTr("Optimize route by")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
 
@@ -144,7 +139,6 @@ Page {
 
             Text {
                 text: qsTr("Walking speed")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
 

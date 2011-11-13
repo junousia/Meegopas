@@ -12,7 +12,6 @@ Item {
     Text {
         id: headerText
         font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
         width: parent.width
         wrapMode: Text.WordWrap
@@ -23,7 +22,6 @@ Item {
         anchors.top: headerText.bottom
         width: parent.width
         font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-        font.family: "Nokia Pure Text Light"
         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
         text: '<i>' + subtext + '</i>'
         wrapMode: Text.WordWrap

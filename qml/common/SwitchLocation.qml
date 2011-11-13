@@ -22,6 +22,9 @@ Item {
         anchors.centerIn: parent
         source: !theme.inverted?'../../images/switch.png':'../../images/switch-inverse.png'
         opacity: locationSwitch.enabled ? 0.8 : 0.3
+        smooth: true
+        height: 40 * appWindow.scaling_factor
+        width: height
     }
     MouseArea {
         id: locationSwitchMouseArea

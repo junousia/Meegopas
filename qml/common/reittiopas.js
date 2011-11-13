@@ -64,7 +64,7 @@ function convTime(hslTime){
     var time = hslTime;
     return new Date(time.slice(0,4),
                     parseInt(time.slice(4,6), 10),
-                    parseInt(time.slice(6,8), 10) - 1,
+                    parseInt(time.slice(6,8), 10),
                     time.slice(8,10),
                     time.slice(10,12),
                     00, 00);
@@ -97,14 +97,20 @@ function dump_leg_endpoints(target) {
         var output = {}
 
         if(legindex == 0) {
-            output.latitude = legdata.locs[0].coord.y
-            output.longitude = legdata.locs[0].coord.x
-            target.push(output)
-        } else  {
-            output.latitude = legdata.locs[legdata.locs.length - 1].coord.y
-            output.longitude = legdata.locs[legdata.locs.length - 1].coord.x
-            target.push(output)
+            var first = {}
+            first.latitude = legdata.locs[0].coord.y
+            first.longitude = legdata.locs[0].coord.x
+            first.name = legdata.locs[0].name
+            first.time = legdata.locs[0].time
+            target.push(first)
         }
+
+        output.latitude = legdata.locs[legdata.locs.length - 1].coord.y
+        output.longitude = legdata.locs[legdata.locs.length - 1].coord.x
+        output.name = legdata.locs[legdata.locs.length - 1].name
+        output.time = legdata.locs[legdata.locs.length - 1].time
+        target.push(output)
+
     }
 }
 

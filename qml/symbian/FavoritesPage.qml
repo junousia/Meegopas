@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -76,7 +76,6 @@ Page {
                 spacing: UIConstants.DEFAULT_MARGIN
                 Text {
                     text: qsTr("Enter name")
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.left: parent.left
@@ -126,7 +125,7 @@ Page {
     Flickable {
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN
+            margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
             fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
@@ -150,7 +149,6 @@ Page {
                 id: addButton
                 text: qsTr("Add")
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
                 width: 150 * appWindow.scaling_factor
                 height: 40
@@ -172,7 +170,6 @@ Page {
                 header: Text {
                     id: favoritesLabel
                     text: qsTr("Favorites")
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 }

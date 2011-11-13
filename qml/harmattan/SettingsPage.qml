@@ -40,7 +40,6 @@ Page {
 
             Label {
                 text: qsTr("Change margin") + " (min)"
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LARGE
                 anchors.left: parent.left
             }
@@ -48,7 +47,6 @@ Page {
                 anchors.right: parent.right
                 Label {
                     text: "0"
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: UIConstants.FONT_LARGE
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -71,7 +69,6 @@ Page {
                 }
                 Label {
                     text: "10"
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: UIConstants.FONT_LARGE
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -81,7 +78,6 @@ Page {
 
             Label {
                 text: qsTr("Optimize route by")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LARGE
                 anchors.left: parent.left
             }
@@ -128,7 +124,6 @@ Page {
 
             Label {
                 text: qsTr("Walking speed")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LARGE
                 anchors.left: parent.left
             }

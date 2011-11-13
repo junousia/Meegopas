@@ -9,7 +9,7 @@ Component {
         id: delegateItem
         property bool selected: index == selectedIndex;
 
-        height: 45
+        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN
@@ -30,19 +30,17 @@ Component {
             anchors.left: parent.left
             anchors.right: locType.left
             text: name
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
         }
         Text {
             id: locType
-            width: 100
+            width: 75
             elide: Text.ElideRight
             color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.right: parent.right
             text: city
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
         }
     }

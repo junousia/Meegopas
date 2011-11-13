@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
-import com.nokia.extras 1.0
+import com.nokia.symbian 1.1
+import com.nokia.extras 1.1
 import QtMobility.location 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
@@ -19,7 +19,6 @@ Column {
     property alias selected_favorite : favoriteQuery.selectedIndex
     property bool disable_favorites : false
 
-
     height: textfield.height + labelContainer.height
     width: parent.width
 
@@ -35,6 +34,7 @@ Column {
     }
 
     function update_location(name, coords) {
+        suggestionModel.clear()
         textfield.auto_update = true
         textfield.text = name
         destination_coords = coords
@@ -95,7 +95,6 @@ Column {
         titleText: qsTr("Choose location")
         onAccepted: {
             update_location(suggestionModel.get(selectedIndex).name,suggestionModel.get(selectedIndex).coords)
-            suggestionModel.clear()
         }
         onRejected: {}
     }
@@ -142,7 +141,6 @@ Column {
         Text {
             id: label
             font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             color: "white"
             anchors.left: parent.left
             anchors.top: parent.top
@@ -169,7 +167,6 @@ Column {
             onClicked: {
                 if(suggestionModel.count > 1) {
                     query.open()
-                    textfield.platformCloseSoftwareInputPanel()
                 }
             }
         }

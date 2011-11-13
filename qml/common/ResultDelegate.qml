@@ -31,7 +31,6 @@ Component {
             Text {
                 text: "(" + Qt.formatTime(start, "hh:mm") + ")"
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
             }
 
@@ -39,14 +38,12 @@ Component {
                 text: first_transport ? Qt.formatTime(first_transport, "hh:mm") : Qt.formatTime(start, "hh:mm")
                 width: 75
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
 
             Text {
                 text: duration + " min"
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
             }
         }
@@ -62,12 +59,14 @@ Component {
                     Image {
                         id: transportIcon
                         source: "../../images/" + type + ".png"
+                        smooth: true
+                        height: 50 * appWindow.scaling_factor
+                        width: height
                     }
                     Text {
                         text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                         visible: true
                         font.pixelSize: code == "metro" ? UIConstants.FONT_SMALL  * appWindow.scaling_factor : UIConstants.FONT_LSMALL * appWindow.scaling_factor
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         anchors.horizontalCenter: transportIcon.horizontalCenter
                     }
@@ -81,21 +80,18 @@ Component {
                 text: "(" + Qt.formatTime(finish, "hh:mm") + ")"
                 anchors.right: parent.right
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
             }
             Text {
                 text: last_transport ? Qt.formatTime(last_transport, "hh:mm") : Qt.formatTime(finish, "hh:mm")
                 anchors.right: parent.right
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
             Text {
                 text: qsTr("Walk ") + Math.floor(walk/100)/10 + ' km'
                 horizontalAlignment: Qt.AlignRight
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
             }
         }

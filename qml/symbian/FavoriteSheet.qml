@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -29,7 +29,6 @@ Sheet {
 
              Text {
                  text: qsTr("Enter name")
-                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                  font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
                  anchors.left: parent.left
              }

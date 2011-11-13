@@ -6,7 +6,7 @@ Component {
     id: stopDelegate
     Item {
         id: stop_item
-        height: UIConstants.LIST_ITEM_HEIGHT_SMALL
+        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
         width: parent.width
         opacity: 0.0
 
@@ -35,7 +35,6 @@ Component {
                 text: "+" + time_diff + " min"
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
             Text {
@@ -43,7 +42,6 @@ Component {
                 text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
         }
@@ -57,7 +55,6 @@ Component {
                 horizontalAlignment: Qt.AlignRight
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
         }

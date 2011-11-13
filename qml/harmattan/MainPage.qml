@@ -31,9 +31,9 @@ Page {
         ToolButtonRow {
             ToolButton {
                 text: qsTr("Search")
-                enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
+                enabled: ((from.item.destination_coords != '' || from.item.destination_valid) && (to.item.destination_coords != '' || to.item.destination_valid))
                 onClicked: {
-                    resu.routeModel.clear()
+                    result_page.item.routeModel.clear()
                     var walking_speed = Storage.getSetting("walking_speed")
                     var optimize = Storage.getSetting("optimize")
                     var change_margin = Storage.getSetting("change_margin")
@@ -45,22 +45,25 @@ Page {
                                      walking_speed == "Unknown"?"70":walking_speed,
                                      optimize == "Unknown"?"default":optimize,
                                      change_margin == "Unknown"?"3":Math.floor(change_margin),
-                                     resu.routeModel)
-                    resu.from = from.getCoords().name
-                    resu.to = to.getCoords().name
-                    pageStack.push(resu)
+                                     result_page.item.routeModel)
+                    result_page.item.from = from.getCoords().name
+                    result_page.item.to = to.getCoords().name
+                    pageStack.push(result_page.item)
                 }
             }
         }
         ToolIcon { iconId: "toolbar-view-menu" ; onClicked: myMenu.open(); }
     }
 
-    ResultPage { id: resu }
+    Loader {
+        id: result_page
+        source: "ResultPage.qml"
+    }
 
     DatePickerDialog {
         id: datePicker
         onAccepted: {
-            root.myDate = new Date(datePicker.year, datePicker.month-1, datePicker.day, 0)
+            root.myDate = new Date(datePicker.year, datePicker.month, datePicker.day, 0)
             dateButton.text = Qt.formatDate(root.myDate, "dd. MMMM yyyy")
         }
         minimumYear: 2011
@@ -106,7 +109,7 @@ Page {
                 height: from.height + to.height + location_spacing.height
 
                 LocationEntry { id: from; type: qsTr("From") }
-				
+
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2
                     from: from
@@ -130,13 +133,12 @@ Page {
                     BorderImage {
                         anchors.fill: parent
                         visible: timeMouseArea.pressed
-                        source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
+                        source: '../../images/background.png'
                     }
 
                     Text {
                         id: timeButton
                         font.pixelSize: MyConstants.FONT_XXXXLARGE
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                         text: Qt.formatTime(root.myTime, "hh:mm")
                     }
@@ -168,7 +170,6 @@ Page {
                         anchors.top: timeType.bottom
                         anchors.horizontalCenter: timeType.horizontalCenter
                         font.pixelSize: UIConstants.FONT_LARGE
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                         text: timeType.checked? qsTr("arrival") : qsTr("departure")
 
@@ -188,13 +189,12 @@ Page {
                 BorderImage {
                     anchors.fill: parent
                     visible: dateMouseArea.pressed
-                    source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
+                    source: '../../images/background.png'
                 }
                 Text {
                     id: dateButton
                     height: ExtrasConstants.SIZE_BUTTON
                     font.pixelSize: MyConstants.FONT_XXLARGE
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                     text: Qt.formatDate(root.myDate, "dd. MMMM yyyy")
                 }
@@ -214,7 +214,6 @@ Page {
             Button {
                 id: timedate_now
                 text: qsTr("Now")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_SMALL
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150

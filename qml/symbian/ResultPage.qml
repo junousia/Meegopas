@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -13,8 +13,6 @@ Page {
     property string from : ""
     property string to : ""
 
-    anchors.margins: UIConstants.DEFAULT_MARGIN
-
     RoutePage { id: routePage }
 
     ListModel {
@@ -25,6 +23,7 @@ Page {
     ListView {
         id: list
         anchors.fill: parent
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
         delegate: ResultDelegate {}
 
@@ -43,7 +42,7 @@ Page {
         visible: (routeModel.updating)
         running: true
         anchors.centerIn: parent
-        width: 100
-        height: 100
+        width: 75
+        height: 75
     }
 }

@@ -52,7 +52,6 @@ Component {
             anchors.leftMargin: UIConstants.MARGIN_DEFAULT
             anchors.rightMargin: UIConstants.MARGIN_DEFAULT
             text: modelData
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
         }
     }

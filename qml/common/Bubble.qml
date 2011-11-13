@@ -13,7 +13,6 @@ Rectangle {
         id: count_label
         text: count
         font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
         color: UIConstants.COLOR_INVERTED_FOREGROUND
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter

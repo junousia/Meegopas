@@ -4,7 +4,7 @@ import "UIConstants.js" as UIConstants
 Rectangle {
     width: parent.width
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.margins: UIConstants.DEFAULT_MARGIN
+    anchors.margins: UIConstants.DEFAULT_MARGIN/2
     height: 1
-    color: "dark gray"
+    color: "#999999"
 }

@@ -17,6 +17,9 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         opacity: parent.enabled ? 0.8 : 0.3
+        smooth: true
+        height: 40 * appWindow.scaling_factor
+        width: height
     }
     MouseArea {
         id: mouseArea

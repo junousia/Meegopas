@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.0
-import com.nokia.extras 1.0
+import com.nokia.symbian 1.1
+import com.nokia.extras 1.1
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -35,7 +35,7 @@ Page {
             text: qsTr("Search")
             enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
             onClicked: {
-                resu.routeModel.clear()
+                result_page.item.routeModel.clear()
                 var walking_speed = Storage.getSetting("walking_speed")
                 var optimize = Storage.getSetting("optimize")
                 var change_margin = Storage.getSetting("change_margin")
@@ -47,16 +47,19 @@ Page {
                                  walking_speed == "Unknown"?"70":walking_speed,
                                  optimize == "Unknown"?"default":optimize,
                                  change_margin == "Unknown"?"3":Math.floor(change_margin),
-                                 resu.routeModel)
-                resu.from = from.getCoords().name
-                resu.to = to.getCoords().name
-                pageStack.push(resu)
+                                 result_page.item.routeModel)
+                result_page.item.from = from.getCoords().name
+                result_page.item.to = to.getCoords().name
+                pageStack.push(result_page.item)
             }
         }
         ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }
     }
 
-    ResultPage { id: resu }
+    Loader {
+        id: result_page
+        source: "ResultPage.qml"
+    }
 
     DatePickerDialog {
         id: datePicker
@@ -88,7 +91,7 @@ Page {
         anchors.fill: parent
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN
+            margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
             horizontalCenter: parent.horizontalCenter
         }
         width: parent.width
@@ -112,7 +115,7 @@ Page {
                 Spacing { id: location_spacing; anchors.top: from.bottom }
 
                 SwitchLocation {
-                    anchors.topMargin: location_spacing.height/2
+                    anchors.topMargin: location_spacing.height/2 - 4
                     from: from
                     to: to
                 }
@@ -138,7 +141,6 @@ Page {
                     Text {
                         id: timeButton
                         font.pixelSize: MyConstants.FONT_XXXXLARGE * appWindow.scaling_factor
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: UIConstants.COLOR_INVERTED_FOREGROUND
                         text: Qt.formatTime(root.myTime, "hh:mm")
                     }
@@ -165,7 +167,6 @@ Page {
                         anchors.top: timeType.bottom
                         anchors.horizontalCenter: timeType.horizontalCenter
                         font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                         text: timeType.checked? qsTr("arrival") : qsTr("departure")
 
@@ -191,7 +192,6 @@ Page {
                     id: dateButton
                     height: ExtrasConstants.SIZE_BUTTON
                     font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
                     text: Qt.formatDate(root.myDate, "dd. MMMM yyyy")
                 }
@@ -211,7 +211,6 @@ Page {
             Button {
                 id: timedate_now
                 text: qsTr("Now")
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150

@@ -7,15 +7,14 @@ common_qml.source = qml/common
 common_qml.target = qml
 images.source = images
 loc.source = i18n
-DEPLOYMENTFOLDERS = common_qml images loc
+fonts.source = fonts
+DEPLOYMENTFOLDERS = common_qml images loc fonts
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
 
-CONFIG += qt-components
-
 symbian {
-    TARGET.UID3 = 0xE0253CFB
+    TARGET.UID3 = 0x2004bf5e
     DEPLOYMENTFOLDERS += symbian_qml
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
@@ -23,11 +22,18 @@ symbian {
     # range value if unprotected UID is defined for the application and
     # 0x2002CCCF value if protected UID is given to the application
     # DEPLOYMENT.installer_header = 0x2002CCCF
+    DEPLOYMENT.installer_header = 0x200346DE 0x2002AC89 0x2001E61C 0x200267C2
 
     # Allow network access on Symbian
-    TARGET.CAPABILITY += NetworkServices
+    TARGET.CAPABILITY += NetworkServices Location
 
-    # Add dependency to Symbian components
+    vendorinfo = \
+    "%{\"JukkaNousiainen-EN\"}" \
+    ":\"JukkaNousiainen\""
+
+    my_deployment.pkg_prerules = vendorinfo
+
+    CONFIG += qt-components
 }
 
 contains(MEEGO_EDITION, harmattan) {

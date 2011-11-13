@@ -23,18 +23,14 @@ Sheet {
 
          Column {
              width: parent.width
-             Label {
+             Header {
                  text: qsTr("Add to favorites")
-                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
-                 font.pixelSize: MyConstants.FONT_XXLARGE
-                 anchors.left: parent.left
              }
 
              Spacing {}
 
              Label {
                  text: qsTr("Enter name")
-                 font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                  font.pixelSize: MyConstants.FONT_XXLARGE
                  anchors.left: parent.left
              }
@@ -57,27 +53,34 @@ Sheet {
                  }
 
                  Keys.onReturnPressed: {
-                     textfield.platformCloseSoftwareInputPanel()
+                     sheetTextfield.platformCloseSoftwareInputPanel()
                      parent.focus = true
                  }
              }
          }
      }
      onAccepted: {
-         if(("OK" == Favorites.addFavorite(sheetTextfield.text, coords))) {
-             favoritesModel.clear()
-             Favorites.getFavorites(favoritesModel)
-             sheetTextfield.text = ''
+         if(sheetTextfield.text != '') {
+             if(("OK" == Favorites.addFavorite(sheetTextfield.text, coords))) {
+                 favoritesModel.clear()
+                 Favorites.getFavorites(favoritesModel)
+                 sheetTextfield.text = ''
 
-             if(is_add_favorites)
-                 favorites_page.textfield.clear()
+                 if(is_add_favorites)
+                     favorites_page.textfield.clear()
 
-             appWindow.banner.success = true
-             appWindow.banner.text = qsTr("Location added to favorites")
-             appWindow.banner.show()
-         } else {
+                 appWindow.banner.success = true
+                 appWindow.banner.text = qsTr("Location added to favorites")
+                 appWindow.banner.show()
+             } else {
+                 appWindow.banner.success = false
+                 appWindow.banner.text = qsTr("Location already in the favorites")
+                 appWindow.banner.show()
+             }
+         }
+         else {
              appWindow.banner.success = false
-             appWindow.banner.text = qsTr("Location already in the favorites")
+             appWindow.banner.text = qsTr("Name cannot be empty")
              appWindow.banner.show()
          }
      }

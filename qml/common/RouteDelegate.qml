@@ -7,10 +7,10 @@ Component {
     id: routeDelegate
     Item {
         id: delegate_item
-        height: 100
+        height: visible ? 100 : 0
         width: parent.width
         // do not show if from and to times or names match
-        enabled: !(from.name == to.name || from.time == to.time)
+        visible: !(from.name == to.name || from.time == to.time)
         opacity: 0.0
 
         Component.onCompleted: PropertyAnimation {
@@ -36,7 +36,6 @@ Component {
             Text {
                 text: Qt.formatTime(from.time, "hh:mm")
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
             Text {
@@ -44,7 +43,6 @@ Component {
                 width: parent.width
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
         }
@@ -56,11 +54,13 @@ Component {
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: "../../images/" + type + ".png"
+                smooth: true
+                height: 50 * appWindow.scaling_factor
+                width: height
             }
             Text {
                 text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -75,7 +75,6 @@ Component {
                 anchors.right: parent.right
                 horizontalAlignment: Qt.AlignRight
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
             Text {
@@ -84,7 +83,6 @@ Component {
                 width: parent.width
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
         }

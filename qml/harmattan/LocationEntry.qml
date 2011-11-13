@@ -35,6 +35,7 @@ Column {
     }
 
     function update_location(name, coords) {
+        suggestionModel.clear()
         textfield.auto_update = true
         textfield.text = name
         destination_coords = coords
@@ -97,7 +98,6 @@ Column {
         titleText: qsTr("Choose location")
         onAccepted: {
             update_location(suggestionModel.get(selectedIndex).name,suggestionModel.get(selectedIndex).coords)
-            suggestionModel.clear()
         }
         onRejected: {}
     }
@@ -148,12 +148,10 @@ Column {
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
-            source: theme.inverted ? 'image://theme/meegotouch-list-inverted-background-pressed-horizontal-center': 'image://theme/meegotouch-list-background-pressed-horizontal-center'
-        }
+            source: '../../images/background.png'        }
         Label {
             id: label
             font.pixelSize: MyConstants.FONT_XXLARGE
-            font.family: ExtrasConstants.FONT_FAMILY_LIGHT
             anchors.left: parent.left
             anchors.top: parent.top
         }

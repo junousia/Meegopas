@@ -77,7 +77,6 @@ Page {
                 id: addButton
                 text: qsTr("Add")
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                 font.pixelSize: UIConstants.FONT_SMALL
                 width: 150
                 height: 40
@@ -104,7 +103,6 @@ Page {
                         anchors.right: remove_button.left
                         anchors.verticalCenter: parent.verticalCenter
                         color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         font.pixelSize: UIConstants.FONT_XLARGE
                         elide: Text.ElideRight
                     }
@@ -113,13 +111,12 @@ Page {
                         text: qsTr("Remove")
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                         font.pixelSize: UIConstants.FONT_SMALL
                         width: 150
                         height: 40
                         onClicked: {
                             list.currentIndex = index
-                            deleteQuery.name = name
+                            deleteQuery.name = modelData
                             deleteQuery.open()
                         }
                     }
@@ -134,7 +131,6 @@ Page {
                 header: Label {
                     id: favoritesLabel
                     text: qsTr("Favorites")
-                    font.family: ExtrasConstants.FONT_FAMILY_LIGHT
                     font.pixelSize: MyConstants.FONT_XXLARGE
                 }
                 model: favoritesModel
