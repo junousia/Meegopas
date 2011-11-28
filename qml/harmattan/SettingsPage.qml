@@ -3,6 +3,7 @@ import com.nokia.meego 1.0
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
+import "../common/MyConstants.js" as MyConstants
 import "../common/storage.js" as Storage
 
 Page {
@@ -38,16 +39,18 @@ Page {
                 text: qsTr("Settings")
             }
 
-            Label {
+            Text {
                 text: qsTr("Change margin") + " (min)"
-                font.pixelSize: UIConstants.FONT_LARGE
+                font.pixelSize: UIConstants.FONT_XLARGE
+                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 anchors.left: parent.left
             }
             Row {
                 anchors.right: parent.right
-                Label {
+                Text {
                     text: "0"
-                    font.pixelSize: UIConstants.FONT_LARGE
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                 }
                 Slider {
@@ -67,18 +70,20 @@ Page {
                         Storage.setSetting("change_margin", change_margin.value)
                     }
                 }
-                Label {
+                Text {
                     text: "10"
-                    font.pixelSize: UIConstants.FONT_LARGE
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
 
             Separator {}
 
-            Label {
+            Text {
                 text: qsTr("Optimize route by")
-                font.pixelSize: UIConstants.FONT_LARGE
+                font.pixelSize: UIConstants.FONT_XLARGE
+                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 anchors.left: parent.left
             }
 
@@ -122,9 +127,10 @@ Page {
 
             Separator {}
 
-            Label {
+            Text {
                 text: qsTr("Walking speed")
-                font.pixelSize: UIConstants.FONT_LARGE
+                font.pixelSize: UIConstants.FONT_XLARGE
+                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 anchors.left: parent.left
             }
             ButtonColumn {

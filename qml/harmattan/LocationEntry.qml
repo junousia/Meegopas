@@ -148,10 +148,12 @@ Column {
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
-            source: '../../images/background.png'        }
-        Label {
+            source: '../../images/background.png'
+        }
+        Text {
             id: label
             font.pixelSize: MyConstants.FONT_XXLARGE
+            color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             anchors.left: parent.left
             anchors.top: parent.top
         }

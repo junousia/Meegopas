@@ -22,7 +22,7 @@ symbian {
     # range value if unprotected UID is defined for the application and
     # 0x2002CCCF value if protected UID is given to the application
     # DEPLOYMENT.installer_header = 0x2002CCCF
-    DEPLOYMENT.installer_header = 0x200346DE 0x2002AC89 0x2001E61C 0x200267C2
+    DEPLOYMENT.installer_header = 0x2002CCCF
 
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location
@@ -32,6 +32,7 @@ symbian {
     ":\"JukkaNousiainen\""
 
     my_deployment.pkg_prerules = vendorinfo
+    DEPLOYMENT += my_deployment
 
     CONFIG += qt-components
 }
@@ -73,4 +74,13 @@ include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
 TRANSLATIONS += meegopas_fi_FI.ts
+
+OTHER_FILES += \
+    qtc_packaging/debian_fremantle/rules \
+    qtc_packaging/debian_fremantle/README \
+    qtc_packaging/debian_fremantle/copyright \
+    qtc_packaging/debian_fremantle/control \
+    qtc_packaging/debian_fremantle/compat \
+    qtc_packaging/debian_fremantle/changelog
+
 

@@ -31,7 +31,7 @@ Page {
         ToolButtonRow {
             ToolButton {
                 text: qsTr("Search")
-                enabled: ((from.item.destination_coords != '' || from.item.destination_valid) && (to.item.destination_coords != '' || to.item.destination_valid))
+                enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
                 onClicked: {
                     result_page.item.routeModel.clear()
                     var walking_speed = Storage.getSetting("walking_speed")

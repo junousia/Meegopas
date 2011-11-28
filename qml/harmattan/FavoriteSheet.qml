@@ -29,9 +29,10 @@ Sheet {
 
              Spacing {}
 
-             Label {
+             Text {
                  text: qsTr("Enter name")
                  font.pixelSize: MyConstants.FONT_XXLARGE
+                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                  anchors.left: parent.left
              }
              TextField {

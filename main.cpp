@@ -12,7 +12,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-    QFontDatabase::addApplicationFont("fonts/nokia_pure.ttf");
+    //QFontDatabase::addApplicationFont("fonts/Nokia_Pure_Text_Light.ttf");
 
     QTranslator translator;
 #if defined(Q_WS_MAEMO_5) || defined(Q_WS_MAEMO_6) || defined(Q_OS_LINUX)
@@ -27,7 +27,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer->setMainQmlFile(QLatin1String("qml/harmattan/main.qml"));
 #else
     QFont newFont;
-    newFont.setFamily("Nokia Pure Text");
+    newFont.setFamily("Nokia Pure Text Light");
     newFont.setWeight(QFont::Light);
     newFont.setStyleStrategy(QFont::PreferAntialias);
     qDebug() << "Current locale: " << "i18n/meegopas_" + QLocale::system().name() + ".qm";

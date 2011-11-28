@@ -128,10 +128,11 @@ Page {
                 width: parent.width
                 height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
                 interactive: false
-                header: Label {
+                header: Text {
                     id: favoritesLabel
                     text: qsTr("Favorites")
                     font.pixelSize: MyConstants.FONT_XXLARGE
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 }
                 model: favoritesModel
                 delegate: favoritesManageDelegate
