@@ -8,7 +8,7 @@ common_qml.target = qml
 images.source = images
 loc.source = i18n
 fonts.source = fonts
-DEPLOYMENTFOLDERS = common_qml images loc fonts
+DEPLOYMENTFOLDERS = common_qml images loc
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
@@ -82,5 +82,9 @@ OTHER_FILES += \
     qtc_packaging/debian_fremantle/control \
     qtc_packaging/debian_fremantle/compat \
     qtc_packaging/debian_fremantle/changelog
+
+
+
+
 
 

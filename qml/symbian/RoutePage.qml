@@ -12,6 +12,7 @@ Page {
     property string toLoc : ''
     property alias model : routeModel
     property string header
+    property string subheader
 
     ToolBarLayout {
         id: routeTools
@@ -39,6 +40,7 @@ Page {
         delegate: RouteDelegate {}
         header: Header {
             text: header
+            subtext: subheader
         }
     }
 

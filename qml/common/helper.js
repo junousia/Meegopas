@@ -21,3 +21,13 @@ function switch_locations(from, to) {
     to.text = templo
     to.selected_favorite = tempindex
 }
+
+function parse_disruption_time(time) {
+        var newtime = time;
+        return new Date(newtime.slice(0,4),
+                        newtime.slice(5,7),
+                        newtime.slice(8,10),
+                        newtime.slice(11,13),
+                        newtime.slice(14,16),
+                        00, 00);
+}

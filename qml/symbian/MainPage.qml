@@ -41,6 +41,8 @@ Page {
                 var change_margin = Storage.getSetting("change_margin")
                 Reittiopas.route(from.getCoords().coords,
                                  to.getCoords().coords,
+                                 from.text,
+                                 to.text,
                                  Qt.formatDate(root.myDate, "yyyyMMdd"),
                                  Qt.formatTime(root.myTime, "hhmm"),
                                  timeType.checked? "arrival" : "departure",

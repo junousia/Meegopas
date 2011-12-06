@@ -28,7 +28,7 @@ Component {
             height: 40
             onClicked: {
                 list.currentIndex = index
-                deleteQuery.name = modelData
+                deleteQuery.message = modelData
                 deleteQuery.open()
             }
         }

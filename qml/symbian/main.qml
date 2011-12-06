@@ -20,7 +20,6 @@ Window {
         iconSource: success?"../../images/banner_green.png":"../../images/banner_red.png"
     }
 
-
     PageStack {
         id: pageStack
         toolBar: toolBar
@@ -48,6 +47,7 @@ Window {
         MenuLayout {
             MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
+            MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
             MenuItem { text: qsTr("About"); onClicked: about.open() }
         }
     }

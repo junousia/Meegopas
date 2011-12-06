@@ -3,10 +3,11 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QFontDatabase>
-#if defined(Q_WS_MAEMO_5) || defined(Q_WS_MAEMO_6) || defined(Q_OS_LINUX)
+#include "qmlapplicationviewer.h"
+#include "qplatformdefs.h"
+#if defined(Q_WS_MAEMO_5) || defined(MEEGO_EDITION_HARMATTAN)
 #include <MLocale>
 #endif
-#include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -15,7 +16,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     //QFontDatabase::addApplicationFont("fonts/Nokia_Pure_Text_Light.ttf");
 
     QTranslator translator;
-#if defined(Q_WS_MAEMO_5) || defined(Q_WS_MAEMO_6) || defined(Q_OS_LINUX)
+#if defined(Q_WS_MAEMO_5) || defined(MEEGO_EDITION_HARMATTAN)
     QFont newFont;
     newFont.setFamily("Nokia Pure Text Light");
     newFont.setWeight(QFont::Light);

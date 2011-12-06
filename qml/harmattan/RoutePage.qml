@@ -2,6 +2,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../common"
 import "../common/UIConstants.js" as UIConstants
+import "../common/MyConstants.js" as MyConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
 import "../common/reittiopas.js" as Reittiopas
 
@@ -11,6 +12,7 @@ Page {
     property string toLoc : ''
     property alias model : routeModel
     property string header
+    property string subheader
 
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
@@ -43,12 +45,24 @@ Page {
         delegate: RouteDelegate {}
         header: Header {
             text: header
+            subtext: subheader
         }
     }
 
     ScrollDecorator {
         id: scrolldecorator
         flickableItem: routeList
+    }
+
+    Text {
+        anchors.centerIn: parent
+        visible: (!busyIndicator.visible && routeModel.count == 0)
+        width: parent.width
+        text: qsTr("No current traffic exceptions")
+        horizontalAlignment: Qt.AlignHCenter
+        wrapMode: Text.WordWrap
+        font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {

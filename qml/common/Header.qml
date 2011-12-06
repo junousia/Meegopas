@@ -23,12 +23,12 @@ Item {
         width: parent.width
         font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-        text: '<i>' + subtext + '</i>'
+        text: subtext
         wrapMode: Text.WordWrap
         visible: parent.subtext
     }
     Separator {
         id: headerDivider
-        anchors.top: subheaderText.visible ? subheaderText.bottom : headerText.bottom
+        anchors.bottom: parent.bottom
     }
 }

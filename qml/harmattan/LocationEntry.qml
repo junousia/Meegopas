@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
-import QtMobility.location 1.1
+import QtMobility.location 1.2
 import "../common"
 import "../common/UIConstants.js" as UIConstants
 import "../common/ExtrasConstants.js" as ExtrasConstants
@@ -18,7 +18,6 @@ Column {
     property alias auto_update : textfield.auto_update
     property alias selected_favorite : favoriteQuery.selectedIndex
     property bool disable_favorites : false
-
 
     height: textfield.height + labelContainer.height
     width: parent.width

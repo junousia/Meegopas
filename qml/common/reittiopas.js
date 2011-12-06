@@ -3,7 +3,6 @@
 var API = 'http://api.reittiopas.fi/hsl/beta/'
 var USER = 'junousia'
 var PASS = 'p3ndolino'
-
 var transType = {}
 transType[1] = "bus"
 transType[2] = "tram"
@@ -13,17 +12,14 @@ transType[5] = "bus"
 transType[6] = "metro"
 transType[7] = "boat"
 transType[8] = "bus"
-transType[9] = "bus"
-transType[10] = "bus"
-transType[11] = "bus"
 transType[12] = "train"
-transType[13] = "train"
-transType[14] = "other"
 transType[21] = "bus"
 transType[22] = "bus"
 transType[23] = "bus"
 transType[24] = "bus"
 transType[25] = "bus"
+transType[36] = "bus"
+transType[39] = "bus"
 
 var last_result = []
 var last_route_index
@@ -90,40 +86,36 @@ function get_time_difference(earlierDate,laterDate)
 
 }
 
-function dump_leg_endpoints(target) {
+function dump_route(target) {
     var route = last_result[last_route_index][0]
     for (var legindex in route.legs) {
         var legdata = route.legs[legindex]
         var output = {}
+        output.from = {}
+        output.to = {}
 
-        if(legindex == 0) {
-            var first = {}
-            first.latitude = legdata.locs[0].coord.y
-            first.longitude = legdata.locs[0].coord.x
-            first.name = legdata.locs[0].name
-            first.time = legdata.locs[0].time
-            target.push(first)
-        }
+        output.from.latitude = legdata.locs[0].coord.y
+        output.from.longitude = legdata.locs[0].coord.x
+        output.from.name = legdata.locs[0].name
+        output.from.time = legdata.locs[0].time
 
-        output.latitude = legdata.locs[legdata.locs.length - 1].coord.y
-        output.longitude = legdata.locs[legdata.locs.length - 1].coord.x
-        output.name = legdata.locs[legdata.locs.length - 1].name
-        output.time = legdata.locs[legdata.locs.length - 1].time
-        target.push(output)
+        output.to.latitude = legdata.locs[legdata.locs.length - 1].coord.y
+        output.to.longitude = legdata.locs[legdata.locs.length - 1].coord.x
+        output.to.name = legdata.locs[legdata.locs.length - 1].name
+        output.to.time = legdata.locs[legdata.locs.length - 1].time
 
-    }
-}
+        output.shape = legdata.shape
 
-function dump_route_coords(target) {
-    var route = last_result[last_route_index][0]
-    for (var legindex in route.legs) {
-        var legdata = route.legs[legindex]
+        output.type = legdata.type
+        output.locs = []
         for (var locindex in legdata.locs) {
-            var output = {}
-            output.latitude = legdata.locs[locindex].coord.y
-            output.longitude = legdata.locs[locindex].coord.x
-            target.push(output)
+            var loc = {}
+            loc.latitude = legdata.locs[locindex].coord.y
+            loc.longitude = legdata.locs[locindex].coord.x
+            output.locs.push(loc)
         }
+
+        target.push(output)
     }
 }
 
@@ -136,8 +128,8 @@ function dump_stops(index, model) {
         var output = {
             "name" : legdata.locs[locindex].name,
             "coords" : legdata.locs[locindex].coord.x + "," + legdata.locs[locindex].coord.y,
-            "arrTime" : convTime(legdata.locs[locindex].arrTime),
-            "depTime" : convTime(legdata.locs[locindex].depTime),
+            "arrival_time" : convTime(legdata.locs[locindex].arrTime),
+            "departure_time" : convTime(legdata.locs[locindex].depTime),
             "time_diff" : locindex == 0 ? 0 : get_time_difference(convTime(legdata.locs[locindex - 1].depTime), convTime(legdata.locs[locindex].arrTime)).minutes
         }
         model.append(output)
@@ -169,8 +161,8 @@ function dump_legs(index, model) {
             output.locs[locindex] = {
                 "name" : legdata.locs[locindex].name,
                 "coords" : legdata.locs[locindex].coord.x + "," + legdata.locs[locindex].coord.y,
-                "arrTime" : convTime(legdata.locs[locindex].arrTime),
-                "depTime" : convTime(legdata.locs[locindex].depTime)
+                "arrival_time" : convTime(legdata.locs[locindex].arrTime),
+                "departure_time" : convTime(legdata.locs[locindex].depTime)
             }
         }
         model.append(output)
@@ -178,7 +170,7 @@ function dump_legs(index, model) {
     model.updating = false
 }
 
-function route_handler(routes,model) {
+function route_handler(routes,model, parameters) {
     for (var index in routes) {
         var output = {}
         var route = routes[index][0];
@@ -199,7 +191,7 @@ function route_handler(routes,model) {
                 "from":{},
                 "to":{},
                 "locs":[]}
-            output.legs[leg].from.name = legdata.locs[0].name?legdata.locs[0].name:''
+            output.legs[leg].from.name = legdata.locs[0].name?legdata.locs[0].name:""
             output.legs[leg].from.time = convTime(legdata.locs[0].depTime)
             output.legs[leg].to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
             output.legs[leg].to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
@@ -208,10 +200,17 @@ function route_handler(routes,model) {
                 output.legs[leg].locs.push(legdata.locs[locindex])
             }
 
+            output.shape = legdata.shape
+
+            // update name and time to first and last leg - not coming automatically from Reittiopas API
             if(leg == 0) {
+                output.legs[leg].from.name = parameters.from_name
+                output.legs[leg].locs[0].name = parameters.from_name
                 output.start = convTime(legdata.locs[0].depTime)
             }
             if(leg == (route.legs.length - 1)) {
+                output.legs[leg].to.name = parameters.to_name
+                output.legs[leg].locs[output.legs[leg].locs.length - 1].name = parameters.to_name
                 output.finish = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
             }
 
@@ -281,7 +280,7 @@ function api_request(parameters, result_handler, model) {
             } else {
                 var json = eval(req.responseText)
                 last_result = json
-                result_handler(json, model)
+                result_handler(json, model, parameters)
             }
         }
     }
@@ -299,7 +298,6 @@ function api_request(parameters, result_handler, model) {
     req.send()
 }
 
-
 function location_to_address(latitude, longitude, model) {
     var parameters = {}
     parameters.request = 'reverse_geocode'
@@ -315,11 +313,13 @@ function address_to_location(term, model) {
     api_request(parameters, suggestion_handler, model)
 }
 
-function route(from, to, date, time, timetype, walk_speed, optimize, change_margin, model) {
+function route(from, to, from_name, to_name, date, time, timetype, walk_speed, optimize, change_margin, model) {
     var parameters = {}
     parameters.request = 'route'
     parameters.from = from
     parameters.to = to
+    parameters.from_name = from_name
+    parameters.to_name = to_name
     parameters.time = time
     parameters.date = date
     parameters.timetype = timetype
@@ -328,6 +328,7 @@ function route(from, to, date, time, timetype, walk_speed, optimize, change_marg
     parameters.timetype = timetype
     parameters.optimize = optimize
     parameters.lang = "fi"
+    parameters.detail= "full"
     parameters.change_margin = change_margin
     api_request(parameters, route_handler, model)
 }

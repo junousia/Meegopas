@@ -39,6 +39,8 @@ Page {
                     var change_margin = Storage.getSetting("change_margin")
                     Reittiopas.route(from.getCoords().coords,
                                      to.getCoords().coords,
+                                     from.text,
+                                     to.text,
                                      Qt.formatDate(root.myDate, "yyyyMMdd"),
                                      Qt.formatTime(root.myTime, "hhmm"),
                                      timeType.checked? "arrival" : "departure",
@@ -63,7 +65,7 @@ Page {
     DatePickerDialog {
         id: datePicker
         onAccepted: {
-            root.myDate = new Date(datePicker.year, datePicker.month, datePicker.day, 0)
+            root.myDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day, 0)
             dateButton.text = Qt.formatDate(root.myDate, "dd. MMMM yyyy")
         }
         minimumYear: 2011

@@ -1,19 +1,25 @@
-meegopas (0.1.9) unstable; urgency=low
-  * <Add change description here>
+meegopas (0.1.1) unstable; urgency=low
+  * Symbian support
+  * Traffic exception info page
 
- -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ma, 31 loka 2011 18:17:51 +0200
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ma, 28 marraskuuta 2011 22:36:25 +0200
+
+meegopas (0.1.0) unstable; urgency=low
+  * Added notification for failed positioning
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ma, 31 lokakuuta 2011 17:25:32 +0200
 
 meegopas (0.0.9) unstable; urgency=low
   * Fade in animations for items
 
  -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  ma, 24 lokakuuta 2011 17:20:36 +0300
 
-meegopas (0.0.9) unstable; urgency=low
+meegopas (0.0.8) unstable; urgency=low
   * Added favorites
 
  -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  to, 20 lokakuuta 2011 21:28:19 +0300
 
-meegopas (0.0.9) unstable; urgency=low
+meegopas (0.0.6) unstable; urgency=low
   * Added translation to finnish
   * Settings for route optimization and walking speed, more to come
   * Added support for ferries
@@ -22,12 +28,12 @@ meegopas (0.0.9) unstable; urgency=low
 
  -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  la, 08 lokakuuta 2011 10:27:56 +0300
 
-meegopas (0.0.9) unstable; urgency=low
+meegopas (0.0.5) unstable; urgency=low
   * Added a "spinner" for location selector, indicates better an ongoing request
 
  -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  pe, 07 lokakuuta 2011 08:00:26 +0300
 
-meegopas (0.0.9) unstable; urgency=low
+meegopas (0.0.4) unstable; urgency=low
 
   * Initial Release.
 

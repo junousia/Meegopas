@@ -70,10 +70,10 @@ Page {
         ]
         content:[
             Column {
-                height: 125
+                height: 100
                 width: parent.width
                 anchors.margins: UIConstants.DEFAULT_MARGIN
-                spacing: UIConstants.DEFAULT_MARGIN
+                spacing: UIConstants.DEFAULT_MARGIN / 2
                 Text {
                     text: qsTr("Enter name")
                     font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
@@ -108,9 +108,7 @@ Page {
 
     QueryDialog {
         id: deleteQuery
-        property string name
         titleText: qsTr("Delete favorite?")
-        message: name
 
         rejectButtonText: qsTr("Cancel")
         acceptButtonText: qsTr("Delete")

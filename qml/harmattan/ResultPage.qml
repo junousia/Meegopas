@@ -13,6 +13,8 @@ Page {
     property alias routeModel : routeModel
     property string from : ""
     property string to : ""
+    property string duration
+    property string walking
 
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
@@ -38,6 +40,17 @@ Page {
         id: scrolldecorator
         flickableItem: list
         platformStyle: ScrollDecoratorStyle {}
+    }
+
+    Text {
+        anchors.centerIn: parent
+        visible: (!busyIndicator.visible && routeModel.count == 0)
+        width: parent.width
+        text: qsTr("No current traffic exceptions")
+        horizontalAlignment: Qt.AlignHCenter
+        wrapMode: Text.WordWrap
+        font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {

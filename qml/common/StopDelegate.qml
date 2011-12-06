@@ -39,7 +39,7 @@ Component {
             }
             Text {
                 id: time
-                text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
+                text: (index === 0)? Qt.formatTime(departure_time, "hh:mm") : Qt.formatTime(arrival_time, "hh:mm")
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND

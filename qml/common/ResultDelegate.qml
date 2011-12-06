@@ -104,6 +104,7 @@ Component {
                 routePage.fromLoc = from
                 routePage.toLoc = to
                 routePage.header = from + " - " + to
+                routePage.subheader = qsTr("total duration") + " " + duration + " min - " + qsTr("amount of walking") + " " + Math.floor(walk/100)/10 + ' km'
                 pageStack.push(routePage)
             }
         }
