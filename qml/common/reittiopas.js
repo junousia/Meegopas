@@ -1,6 +1,6 @@
 .pragma library
 
-var API = 'http://api.reittiopas.fi/hsl/beta/'
+var API = 'http://api.reittiopas.fi/hsl/prod/'
 var USER = ''
 var PASS = ''
 var transType = {}

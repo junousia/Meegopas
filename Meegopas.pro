@@ -7,7 +7,6 @@ common_qml.source = qml/common
 common_qml.target = qml
 images.source = images
 loc.source = i18n
-fonts.source = fonts
 DEPLOYMENTFOLDERS = common_qml images loc
 
 # Additional import path used to resolve QML modules in Creator's code model
@@ -27,9 +26,7 @@ symbian {
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location
 
-    vendorinfo = \
-    "%{\"JukkaNousiainen-EN\"}" \
-    ":\"JukkaNousiainen\""
+    vendorinfo = "%{\"JukkaNousiainen\"}" ":\"JukkaNousiainen\""
 
     my_deployment.pkg_prerules = vendorinfo
     DEPLOYMENT += my_deployment

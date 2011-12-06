@@ -21,7 +21,6 @@ Page {
         myDate = new Date()
         myTime = new Date()
         Storage.initialize()
-        Favorites.initialize()
     }
 
     ToolBarLayout {
@@ -31,6 +30,7 @@ Page {
         ToolButtonRow {
             ToolButton {
                 text: qsTr("Search")
+                anchors.horizontalCenter: parent.horizontalCenter
                 enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
                 onClicked: {
                     result_page.item.routeModel.clear()
