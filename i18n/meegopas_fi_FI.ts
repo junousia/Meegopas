@@ -223,7 +223,7 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="33"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="32"/>
         <location filename="../qml/symbian/MainPage.qml" line="35"/>
         <source>Search</source>
         <translation>Etsi</translation>
@@ -296,9 +296,13 @@
 <context>
     <name>ResultPage</name>
     <message>
-        <location filename="../qml/harmattan/ResultPage.qml" line="49"/>
         <source>No current traffic exceptions</source>
-        <translation>Ei voimassaolevia tiedotteita</translation>
+        <translation type="obsolete">Ei voimassaolevia tiedotteita</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/ResultPage.qml" line="49"/>
+        <source>No results</source>
+        <translation>Ei tuloksia</translation>
     </message>
 </context>
 <context>
@@ -311,8 +315,12 @@
     </message>
     <message>
         <location filename="../qml/harmattan/RoutePage.qml" line="61"/>
+        <source>No results</source>
+        <translation>Ei tuloksia</translation>
+    </message>
+    <message>
         <source>No current traffic exceptions</source>
-        <translation>Ei voimassaolevia tiedotteita</translation>
+        <translation type="obsolete">Ei voimassaolevia tiedotteita</translation>
     </message>
 </context>
 <context>

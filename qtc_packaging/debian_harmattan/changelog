@@ -1,3 +1,9 @@
+meegopas (0.1.2) unstable; urgency=low
+  * Corrected problem in Traffic exception page
+  * Fixed "No result" text in some of the pages
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  to, 08 joulukuuta 2011 19:25:01 +0200
+
 meegopas (0.1.1) unstable; urgency=low
   * Symbian support
   * Traffic exception info page
