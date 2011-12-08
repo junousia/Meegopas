@@ -13,7 +13,7 @@ Page {
         id: settingsTools
         x: 0
         y: 0
-        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(null,true); } }
     }
 
     Flickable {

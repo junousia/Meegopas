@@ -58,7 +58,7 @@ Page {
         anchors.centerIn: parent
         visible: (!busyIndicator.visible && routeModel.count == 0)
         width: parent.width
-        text: qsTr("No current traffic exceptions")
+        text: qsTr("No results")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
         font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor

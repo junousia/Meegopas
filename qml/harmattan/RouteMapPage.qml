@@ -28,8 +28,7 @@ Page {
         visible: (map_loader.progress < 1.0)
         running: true
         anchors.centerIn: parent
-        width: 75
-        height: 75
+        platformStyle: BusyIndicatorStyle { size: 'large' }
     }
 }
 
