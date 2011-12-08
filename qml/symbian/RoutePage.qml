@@ -49,6 +49,17 @@ Page {
         flickableItem: routeList
     }
 
+    Text {
+        anchors.centerIn: parent
+        visible: (!busyIndicator.visible && routeModel.count == 0)
+        width: parent.width
+        text: qsTr("No results")
+        horizontalAlignment: Qt.AlignHCenter
+        wrapMode: Text.WordWrap
+        font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+    }
+
     BusyIndicator {
         id: busyIndicator
         visible: (routeModel.updating)
