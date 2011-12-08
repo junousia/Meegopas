@@ -25,7 +25,7 @@ Page {
     XmlListModel {
         id: exceptionModel
         source: "http://www.poikkeusinfo.fi/xml/v2"
-        query: "/exceptionS/exception"
+        query: "/DISRUPTIONS/DISRUPTION"
         XmlRole { name: "time"; query: "VALIDITY/@from/string()" }
         XmlRole { name: "info_fi"; query: "INFO/TEXT[1]/string()" }
         XmlRole { name: "info_sv"; query: "INFO/TEXT[2]/string()" }
