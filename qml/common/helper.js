@@ -25,7 +25,7 @@ function switch_locations(from, to) {
 function parse_disruption_time(time) {
         var newtime = time;
         return new Date(newtime.slice(0,4),
-                        newtime.slice(5,7),
+                        parseInt(newtime.slice(5,7),10) - 1,
                         newtime.slice(8,10),
                         newtime.slice(11,13),
                         newtime.slice(14,16),
