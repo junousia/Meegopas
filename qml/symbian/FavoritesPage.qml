@@ -1,24 +1,18 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/reittiopas.js" as Reittiopas
-import "../common/favorites.js" as Favorites
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "favorites.js" as Favorites
 
 Page {
     tools: favoritesTools
 
     ToolBarLayout {
         id: favoritesTools
-        x: 0
-        y: 0
         ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
     }
 
     Component.onCompleted: {
-        favoritesModel.clear()
         Favorites.initialize()
         Favorites.getFavorites(favoritesModel)
     }
@@ -76,17 +70,18 @@ Page {
                 spacing: UIConstants.DEFAULT_MARGIN / 2
                 Text {
                     text: qsTr("Enter name")
-                    font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.left: parent.left
                 }
                 TextField {
                     id: sheetTextfield
                     width: parent.width
+                    text: sheet.text
                     Image {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        source: '../../images/clear.png'
+                        source: 'qrc:/images/clear.png'
                         visible: (sheetTextfield.activeFocus)
                         opacity: 0.8
                         MouseArea {
@@ -109,7 +104,6 @@ Page {
     QueryDialog {
         id: deleteQuery
         titleText: qsTr("Delete favorite?")
-
         rejectButtonText: qsTr("Cancel")
         acceptButtonText: qsTr("Delete")
         onAccepted: {
@@ -152,7 +146,8 @@ Page {
                 height: 40
                 enabled: favorite.destination_coords != ''
                 onClicked: {
-                    sheet.text = favorite.getCoords().name
+                    console.debug("text " + favorite.text)
+                    sheet.text = favorite.text
                     sheet.coords = favorite.getCoords().coords
                     sheet.open()
                 }
@@ -168,7 +163,7 @@ Page {
                 header: Text {
                     id: favoritesLabel
                     text: qsTr("Favorites")
-                    font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                 }
                 model: favoritesModel

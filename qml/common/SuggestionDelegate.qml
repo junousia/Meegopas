@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 
 Component {
     id: suggestionDelegate
@@ -29,7 +28,7 @@ Component {
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.left: parent.left
             anchors.right: locType.left
-            text: name
+            text: name + " " + housenumber
             font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
         }
         Text {

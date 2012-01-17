@@ -21,9 +21,10 @@ transType[25] = "bus"
 transType[36] = "bus"
 transType[39] = "bus"
 
-var last_result = []
-var last_route_index
-var last_route_coordinates = []
+//route instance
+var _instance = null
+var _http_request = null
+var _request_parent = null
 
 function busCode(code) {
     code = code.slice(1,5).trim().replace(/^[0]+/g,"")
@@ -83,11 +84,205 @@ function get_time_difference(earlierDate,laterDate)
        oDiff.seconds = Math.floor(nTotalDiff/1000);
 
        return oDiff;
-
 }
 
-function dump_route(target) {
-    var route = last_result[last_route_index][0]
+
+/****************************************************************************************************/
+/*                     address to location                                                          */
+/****************************************************************************************************/
+function get_geocode(term) {
+    this.parameters = {}
+    this.parameters.format = "xml"
+    this.parameters.request = 'geocode'
+    this.parameters.key = term
+    this.parameters.disable_unique_stop_names = 0
+    this.parameters.user = USER
+    this.parameters.pass = PASS
+    this.parameters.epsg_in = "wgs84"
+    this.parameters.epsg_out = "wgs84"
+    var query = []
+    for(var p in this.parameters) {
+        query.push(p + "=" + this.parameters[p])
+    }
+
+    console.log( API + '?' + query.join('&'))
+    return API + '?' + query.join('&')
+}
+
+/****************************************************************************************************/
+/*                     location to address                                                          */
+/****************************************************************************************************/
+function get_reverse_geocode(latitude, longitude) {
+    this.parameters = {}
+    this.parameters.format = "xml"
+    this.parameters.request = 'reverse_geocode'
+    this.parameters.coordinate = longitude + ',' + latitude
+    this.parameters.user = USER
+    this.parameters.pass = PASS
+    this.parameters.epsg_in = "wgs84"
+    this.parameters.epsg_out = "wgs84"
+
+    var query = []
+    for(var p in this.parameters) {
+        query.push(p + "=" + this.parameters[p])
+    }
+
+    console.log( API + '?' + query.join('&'))
+    return API + '?' + query.join('&')
+}
+
+/****************************************************************************************************/
+/*                     Reittiopas query class                                                       */
+/****************************************************************************************************/
+function reittiopas() {
+    this.model = null
+}
+reittiopas.prototype.api_request = function() {
+    _http_request = new XMLHttpRequest()
+    this.model.done = false
+
+    _request_parent = this
+    _http_request.onreadystatechange = _request_parent.result_handler
+
+    this.parameters.user = USER
+    this.parameters.pass = PASS
+    this.parameters.epsg_in = "wgs84"
+    this.parameters.epsg_out = "wgs84"
+    var query = []
+    for(var p in this.parameters) {
+        query.push(p + "=" + this.parameters[p])
+    }
+    console.log( API + '?' + query.join('&'))
+    _http_request.open("GET", API + '?' + query.join('&'))
+    _http_request.send()
+}
+
+/****************************************************************************************************/
+/*                                            Route search                                          */
+/****************************************************************************************************/
+
+function new_route_instance(from, to, from_name, to_name, date, time, timetype, walk_speed, optimize, change_margin, model) {
+    if(_instance)
+        delete _instance
+
+    _instance = new route_search(from, to, from_name, to_name, date, time, timetype, walk_speed, optimize, change_margin, model);
+    return _instance
+}
+
+function get_route_instance() {
+    return _instance
+}
+
+route_search.prototype = new reittiopas()
+route_search.prototype.constructor = route_search
+function route_search(parameters, route_model) {
+    this.last_result = []
+    this.model = route_model
+
+    this.time = parameters.time
+
+    this.last_route_index = -1
+    this.last_route_coordinates = []
+
+    this.from_name = parameters.from_name
+    this.to_name = parameters.to_name
+
+    this.parameters = parameters
+    delete this.parameters.from_name
+    delete this.parameters.to_name
+    delete this.parameters.time
+
+    this.parameters.date = Qt.formatDate(this.time, "yyyyMMdd")
+    this.parameters.time = Qt.formatTime(this.time, "hhmm")
+
+    this.parameters.format = "json"
+    this.parameters.request = 'route'
+    this.parameters.show = 5
+    this.parameters.lang = "fi"
+    this.parameters.detail= "full"
+    this.api_request()
+}
+
+route_search.prototype.result_handler = function() {
+    if (_http_request.readyState == XMLHttpRequest.DONE) {
+        if (_http_request.status != 200 && _http_request.status != 304) {
+            console.log('HTTP error ' + _http_request.status)
+            this.model.done = true
+            return
+        }
+    } else {
+        return
+    }
+
+    var parent = _request_parent
+    var routes = eval(_http_request.responseText)
+
+    parse_json(routes, parent)
+
+    _request_parent.model.done = true
+}
+
+function parse_json(routes, parent) {
+    for (var index in routes) {
+        var output = {}
+        var route = routes[index][0];
+        output.length = route.length
+        output.duration = Math.round(route.duration/60)
+        output.start = 0
+        output.finish = 0
+        output.first_transport = 0
+        output.last_transport = 0
+        output.walk = 0
+        output.legs = []
+        for (var leg in route.legs) {
+            var legdata = route.legs[leg]
+            output.legs[leg] = {"type":translate_typecode(legdata.type,legdata.code).type,
+                "code":translate_typecode(legdata.type,legdata.code).code,
+                "length":legdata.length,
+                "duration":Math.round(legdata.duration/60),
+                "from":{},
+                "to":{},
+                "locs":[]}
+            output.legs[leg].from.name = legdata.locs[0].name?legdata.locs[0].name:""
+            output.legs[leg].from.time = convTime(legdata.locs[0].depTime)
+            output.legs[leg].to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
+            output.legs[leg].to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
+
+            for (var locindex in legdata.locs) {
+                output.legs[leg].locs.push(legdata.locs[locindex])
+            }
+
+            output.legs[leg].shape = legdata.shape
+
+            // update name and time to first and last leg - not coming automatically from Reittiopas API
+            if(leg == 0) {
+                output.legs[leg].from.name = parent.from_name
+                output.legs[leg].locs[0].name = parent.from_name
+                output.start = convTime(legdata.locs[0].depTime)
+            }
+            if(leg == (route.legs.length - 1)) {
+                output.legs[leg].to.name = _request_parent.to_name
+                output.legs[leg].locs[output.legs[leg].locs.length - 1].name = parent.to_name
+                output.finish = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
+            }
+
+            /* update the first and last time using any other transportation than walking */
+            if(!output.first_transport && legdata.type != "walk")
+                output.first_transport = convTime(legdata.locs[0].depTime)
+            if(legdata.type != "walk")
+                output.last_transport = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
+
+            // amount of walk in the route
+            if(legdata.type == "walk")
+                output.walk += legdata.length
+        }
+        parent.last_result.push(output)
+        parent.model.append(output)
+    }
+}
+
+route_search.prototype.dump_route = function(target) {
+    var route = this.last_result[this.last_route_index]
     for (var legindex in route.legs) {
         var legdata = route.legs[legindex]
         var output = {}
@@ -119,8 +314,8 @@ function dump_route(target) {
     }
 }
 
-function dump_stops(index, model) {
-    var route = last_result[last_route_index][0]
+route_search.prototype.dump_stops = function(index, model) {
+    var route = this.last_result[this.last_route_index]
     var legdata = route.legs[index]
 
     for (var locindex in legdata.locs) {
@@ -134,19 +329,19 @@ function dump_stops(index, model) {
         }
         model.append(output)
     }
-    model.updating = false
+    model.done = true
 }
 
-function dump_legs(index, model) {
-    var route = last_result[index][0]
+route_search.prototype.dump_legs = function(index, model) {
+    var route = this.last_result[index]
 
     // save used route index for dumping stops
-    last_route_index = index
+    this.last_route_index = index
 
     for (var legindex in route.legs) {
         var legdata = route.legs[legindex]
-        var output = {"type":translate_typecode(legdata.type,legdata.code).type,
-            "code":translate_typecode(legdata.type,legdata.code).code,
+        var output = {"type":legdata.type,
+            "code":legdata.code,
             "length":legdata.length,
             "duration":Math.round(legdata.duration/60),
             "from":{},
@@ -167,168 +362,45 @@ function dump_legs(index, model) {
         }
         model.append(output)
     }
-    model.updating = false
+    model.done = true
 }
 
-function route_handler(routes,model, parameters) {
-    for (var index in routes) {
-        var output = {}
-        var route = routes[index][0];
-        output.length = route.length
-        output.duration = Math.round(route.duration/60)
-        output.start = 0
-        output.finish = 0
-        output.first_transport = 0
-        output.last_transport = 0
-        output.walk = 0
-        output.legs = []
-        for (var leg in route.legs) {
-            var legdata = route.legs[leg]
-            output.legs[leg] = {"type":translate_typecode(legdata.type,legdata.code).type,
-                "code":translate_typecode(legdata.type,legdata.code).code,
-                "length":legdata.length,
-                "duration":Math.round(legdata.duration/60),
-                "from":{},
-                "to":{},
-                "locs":[]}
-            output.legs[leg].from.name = legdata.locs[0].name?legdata.locs[0].name:""
-            output.legs[leg].from.time = convTime(legdata.locs[0].depTime)
-            output.legs[leg].to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
-            output.legs[leg].to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
 
-            for (var locindex in legdata.locs) {
-                output.legs[leg].locs.push(legdata.locs[locindex])
-            }
+location_to_address.prototype = new reittiopas
+location_to_address.prototype.constructor = location_to_address
+function location_to_address(latitude, longitude, model) {
+    this.model = model
+    this.parameters = {}
+    this.parameters.request = 'reverse_geocode'
+    this.parameters.coordinate = longitude + ',' + latitude
+    this.api_request(this.positioning_handler)
+}
 
-            output.shape = legdata.shape
-
-            // update name and time to first and last leg - not coming automatically from Reittiopas API
-            if(leg == 0) {
-                output.legs[leg].from.name = parameters.from_name
-                output.legs[leg].locs[0].name = parameters.from_name
-                output.start = convTime(legdata.locs[0].depTime)
-            }
-            if(leg == (route.legs.length - 1)) {
-                output.legs[leg].to.name = parameters.to_name
-                output.legs[leg].locs[output.legs[leg].locs.length - 1].name = parameters.to_name
-                output.finish = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
-            }
-
-            if(!output.first_transport && legdata.type != "walk")
-                output.first_transport = convTime(legdata.locs[0].depTime)
-            if(legdata.type != "walk")
-                output.last_transport = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
-
-            // amount of walk in the route
-            if(legdata.type == "walk")
-                output.walk += legdata.length
+location_to_address.prototype.positioning_handler = function() {
+    if (_http_request.readyState == XMLHttpRequest.DONE) {
+        if (_http_request.status != 200 && _http_request.status != 304) {
+            console.log('HTTP error ' + _http_request.status)
+            this.model.done = true
+            return
         }
-        last_result.push(output)
-        model.append(output)
+    } else {
+        return
     }
-    model.updating = false
-}
 
-function suggestion_handler(suggestions,model) {
-    model.clear()
+    var suggestions = eval(_http_request.responseText)
+
+    _request_parent.model.clear()
     for (var index in suggestions) {
         var output = {}
         var suggestion = suggestions[index];
         output.name = suggestion.name.split(',', 1).toString()
-
-        if(typeof suggestion.details.houseNumber != 'undefined') {
-            output.housenum = suggestion.details.houseNumber
-            output.name += " " + suggestion.details.houseNumber
-        }
 
         output.displayname = suggestion.matchedName
         output.city = suggestion.city
         output.type = suggestion.locType
         output.coords = suggestion.coords
 
-        model.append(output)
+        _request_parent.model.append(output)
     }
-    model.updating = false
-}
-
-function positioning_handler(suggestions,model) {
-    model.clear()
-    for (var index in suggestions) {                                                                                       
-        var output = {}                                                                                                    
-        var suggestion = suggestions[index];                                                                               
-        output.name = suggestion.name.split(',', 1).toString()                                                             
-                                                                                                                           
-        output.displayname = suggestion.matchedName                                                                        
-        output.city = suggestion.city                                                                                      
-        output.type = suggestion.locType                                                                                   
-        output.coords = suggestion.coords                                                                                  
-                                                                                                                           
-        model.append(output)                                                                                           
-    }
-    model.updating = false
-} 
-
-function api_request(parameters, result_handler, model) {
-    var req = new XMLHttpRequest()
-    model.updating = true
-    req.onreadystatechange = function() {
-        if (req.readyState == XMLHttpRequest.DONE) {
-            if (req.status != 200 && req.status != 304) {
-                console.log('HTTP error ' + req.status)
-                model.updating = false
-                return
-            } else {
-                var json = eval(req.responseText)
-                last_result = json
-                result_handler(json, model, parameters)
-            }
-        }
-    }
-
-    parameters.user = USER
-    parameters.pass = PASS
-    parameters.epsg_in = "wgs84"
-    parameters.epsg_out = "wgs84"
-    var query = []
-    for(var p in parameters) {
-        query.push(p + "=" + parameters[p])
-    }
-    console.log( API + '?' + query.join('&'))
-    req.open("GET", API + '?' + query.join('&'))
-    req.send()
-}
-
-function location_to_address(latitude, longitude, model) {
-    var parameters = {}
-    parameters.request = 'reverse_geocode'
-    parameters.coordinate = longitude + ',' + latitude
-    api_request(parameters, positioning_handler, model)
-}
-
-function address_to_location(term, model) {
-    var parameters = {}
-    parameters.request = 'geocode'
-    parameters.key = term
-    parameters.disable_unique_stop_names = 0
-    api_request(parameters, suggestion_handler, model)
-}
-
-function route(from, to, from_name, to_name, date, time, timetype, walk_speed, optimize, change_margin, model) {
-    var parameters = {}
-    parameters.request = 'route'
-    parameters.from = from
-    parameters.to = to
-    parameters.from_name = from_name
-    parameters.to_name = to_name
-    parameters.time = time
-    parameters.date = date
-    parameters.timetype = timetype
-    parameters.show = 5
-    parameters.walk_speed = walk_speed
-    parameters.timetype = timetype
-    parameters.optimize = optimize
-    parameters.lang = "fi"
-    parameters.detail= "full"
-    parameters.change_margin = change_margin
-    api_request(parameters, route_handler, model)
+    _request_parent.model.done = true
 }

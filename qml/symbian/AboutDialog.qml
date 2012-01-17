@@ -2,7 +2,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 QueryDialog {
-    titleText: "Meegopas v0.1.2"
+    titleText: "Meegopas v0.1.3"
     message: "(c) Jukka Nousiainen 2011\n\n" + qsTr("This application is free sofware licenced under the GNU Public License version 3")
     rejectButtonText: qsTr("Close")
 }

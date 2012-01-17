@@ -1,18 +1,17 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 
 Rectangle {
-    height: 30
-    width: count_label.width + 10
-    radius: 10
+    height: 35
+    width: count_label.width + 15
+    radius: 12
     smooth: true
-    color: "#4466ff"
+    color: "#0d67b3"
     property int count
     Text {
         id: count_label
         text: count
-        font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
         color: UIConstants.COLOR_INVERTED_FOREGROUND
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter

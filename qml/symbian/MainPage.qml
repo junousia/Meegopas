@@ -1,27 +1,31 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/reittiopas.js" as Reittiopas
-import "../common/storage.js" as Storage
-import "../common/favorites.js" as Favorites
-import "../common/helper.js" as Helper
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "storage.js" as Storage
+import "favorites.js" as Favorites
+import "helper.js" as Helper
 
 Page {
     id: root
     tools: toolBarLayout
 
-    property date myDate
     property date myTime
 
     Component.onCompleted: {
-        myDate = new Date()
-        myTime = new Date()
         Storage.initialize()
         Favorites.initialize()
+
+        myTime = new Date()
+        /* Set date for date picker */
+        timePicker.hour = Qt.formatTime(root.myTime, "hh")
+        timePicker.minute = Qt.formatTime(root.myTime, "mm")
+
+        /* Set date for date picker */
+        datePicker.day = Qt.formatDate(root.myTime, "dd")
+        datePicker.month = Qt.formatDate(root.myTime, "MM")
+        datePicker.year = Qt.formatDate(root.myTime, "yyyy")
     }
 
     ToolBarLayout {
@@ -29,47 +33,42 @@ Page {
         ToolButton {
             flat: true
             iconSource: "toolbar-back"
-            onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+            onClicked: pageStack.pop()
+            visible: pageStack.depth > 1
         }
         ToolButton {
             text: qsTr("Search")
             enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
             onClicked: {
-                result_page.item.routeModel.clear()
                 var walking_speed = Storage.getSetting("walking_speed")
                 var optimize = Storage.getSetting("optimize")
                 var change_margin = Storage.getSetting("change_margin")
-                Reittiopas.route(from.getCoords().coords,
-                                 to.getCoords().coords,
-                                 from.text,
-                                 to.text,
-                                 Qt.formatDate(root.myDate, "yyyyMMdd"),
-                                 Qt.formatTime(root.myTime, "hhmm"),
-                                 timeType.checked? "arrival" : "departure",
-                                 walking_speed == "Unknown"?"70":walking_speed,
-                                 optimize == "Unknown"?"default":optimize,
-                                 change_margin == "Unknown"?"3":Math.floor(change_margin),
-                                 result_page.item.routeModel)
-                result_page.item.from = from.getCoords().name
-                result_page.item.to = to.getCoords().name
-                pageStack.push(result_page.item)
+                var parameters = {}
+                parameters.from = from.getCoords().coords
+                parameters.to = to.getCoords().coords
+                parameters.from_name = from.text
+                parameters.to_name = to.text
+                parameters.time = root.myTime
+                parameters.timetype = timeType.checked? "arrival" : "departure"
+                parameters.walk_speed = walking_speed == "Unknown"?"70":walking_speed
+                parameters.optimize = optimize == "Unknown"?"default":optimize
+                parameters.change_margin = change_margin == "Unknown"?"3":Math.floor(change_margin)
+
+                pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             }
         }
         ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }
     }
 
-    Loader {
-        id: result_page
-        source: "ResultPage.qml"
-    }
-
     DatePickerDialog {
         id: datePicker
         onAccepted: {
-            root.myDate = new Date(datePicker.year, datePicker.month-1, datePicker.day, 0)
-            dateButton.text = Qt.formatDate(root.myDate, "dd. MMMM yyyy")
+            var tempTime = new Date(datePicker.year, datePicker.month-1, datePicker.day,
+                                    root.myTime.getHours(), root.myTime.getMinutes())
+            root.myTime = tempTime
+            dateButton.text = Qt.formatDate(root.myTime, "dd. MMMM yyyy")
         }
-        minimumYear: 2011
+        minimumYear: 2012
 
         acceptButtonText: qsTr("Accept")
         rejectButtonText: qsTr("Reject")
@@ -78,11 +77,11 @@ Page {
     TimePickerDialog {
         id: timePicker
         onAccepted: {
-            root.myTime = new Date(0, 0, 0, timePicker.hour, timePicker.minute, 0, 0)
+            var tempTime = new Date(root.myTime.getFullYear(), root.myTime.getMonth(),
+                                    root.myTime.getDate(), timePicker.hour, timePicker.minute)
+            root.myTime = tempTime
             timeButton.text = Qt.formatTime(root.myTime, "hh:mm")
         }
-        hour: Qt.formatTime(root.myDate, "hh")
-        minute: Qt.formatTime(root.myDate, "mm")
 
         fields: DateTime.Hours | DateTime.Minutes
         acceptButtonText: qsTr("Accept")
@@ -106,7 +105,7 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
-            Spacing {}
+            Header { text: qsTr("Meegopas"); apptitle: true }
 
             Item {
                 width: parent.width
@@ -114,10 +113,10 @@ Page {
 
                 LocationEntry { id: from; type: qsTr("From") }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 }
 
                 SwitchLocation {
-                    anchors.topMargin: location_spacing.height/2 - 4
+                    anchors.topMargin: UIConstants.DEFAULT_MARGIN/2 + 5
                     from: from
                     to: to
                 }
@@ -137,12 +136,12 @@ Page {
                     BorderImage {
                         anchors.fill: parent
                         visible: timeMouseArea.pressed
-                        source: theme.inverted ? '../../images/background.png': '../../images/background.png'
+                        source: 'qrc:/images/background.png'
                     }
 
                     Text {
                         id: timeButton
-                        font.pixelSize: MyConstants.FONT_XXXXLARGE * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
                         color: UIConstants.COLOR_INVERTED_FOREGROUND
                         text: Qt.formatTime(root.myTime, "hh:mm")
                     }
@@ -151,8 +150,6 @@ Page {
                         id: timeMouseArea
                         anchors.fill: parent
                         onClicked: {
-                            timePicker.hour = Qt.formatTime(root.myTime, "hh")
-                            timePicker.minute = Qt.formatTime(root.myTime, "mm")
                             timePicker.open()
                         }
                     }
@@ -188,23 +185,20 @@ Page {
                 BorderImage {
                     anchors.fill: parent
                     visible: dateMouseArea.pressed
-                    source: theme.inverted ? '../../images/background.png': '../../images/background.png'
+                    source: 'qrc:/images/background.png'
                 }
                 Text {
                     id: dateButton
-                    height: ExtrasConstants.SIZE_BUTTON
-                    font.pixelSize: MyConstants.FONT_XXLARGE * appWindow.scaling_factor
+                    height: UIConstants.SIZE_BUTTON
+                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                    text: Qt.formatDate(root.myDate, "dd. MMMM yyyy")
+                    text: Qt.formatDate(root.myTime, "dd. MMMM yyyy")
                 }
 
                 MouseArea {
                     id: dateMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        datePicker.day = Qt.formatDate(root.myDate, "dd")
-                        datePicker.month = Qt.formatDate(root.myDate, "MM")
-                        datePicker.year = Qt.formatDate(root.myDate, "yyyy")
                         datePicker.open()
                     }
                 }
@@ -218,9 +212,9 @@ Page {
                 width: 150
                 height: 40
                 onClicked: {
-                    root.myTime = root.myDate = new Date()
+                    root.myTime = root.myTime = new Date()
                     timeButton.text = Qt.formatTime(root.myTime, "hh:mm")
-                    dateButton.text = Qt.formatDate(root.myDate, "dd. MMMM yyyy")
+                    dateButton.text = Qt.formatDate(root.myTime, "dd. MMMM yyyy")
                 }
             }
         }

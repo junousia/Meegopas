@@ -1,15 +1,15 @@
 import QtQuick 1.1
 
 Item {
-    width: 45
-    height: 45
+    width: 50
+    height: 50
     property alias source : image.source
     property alias mouseArea : mouseArea
 
     BorderImage {
         anchors.fill: parent
         visible: mouseArea.pressed
-        source: theme.inverted ? '../../images/background.png': '../../images/background.png'
+        source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
     }
 
     Image {
@@ -18,7 +18,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         opacity: parent.enabled ? 0.8 : 0.3
         smooth: true
-        height: 40 * appWindow.scaling_factor
+        height: 50
         width: height
     }
     MouseArea {

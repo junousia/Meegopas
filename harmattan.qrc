@@ -1,0 +1,59 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.cpp">main.cpp</file>
+        <file alias="qml/Bubble.qml">qml/common/Bubble.qml</file>
+        <file alias="qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
+        <file alias="qml/ExtrasConstants.js">qml/common/ExtrasConstants.js</file>
+        <file alias="qml/favorites.js">qml/common/favorites.js</file>
+        <file alias="qml/FavoritesDelegate.js">qml/common/FavoritesDelegate.js</file>
+        <file alias="qml/FavoritesDelegate.qml">qml/common/FavoritesDelegate.qml</file>
+        <file alias="qml/Header.qml">qml/common/Header.qml</file>
+        <file alias="qml/helper.js">qml/common/helper.js</file>
+        <file alias="qml/MapElement.qml">qml/common/MapElement.qml</file>
+        <file alias="qml/mapworker.js">qml/common/mapworker.js</file>
+        <file alias="qml/MyButton.qml">qml/common/MyButton.qml</file>
+        <file alias="qml/MyConstants.js">qml/common/MyConstants.js</file>
+        <file alias="qml/reittiopas.js">qml/common/reittiopas.js</file>
+        <file alias="qml/ResultDelegate.qml">qml/common/ResultDelegate.qml</file>
+        <file alias="qml/RouteDelegate.qml">qml/common/RouteDelegate.qml</file>
+        <file alias="qml/Separator.qml">qml/common/Separator.qml</file>
+        <file alias="qml/Spacing.qml">qml/common/Spacing.qml</file>
+        <file alias="qml/StopDelegate.qml">qml/common/StopDelegate.qml</file>
+        <file alias="qml/storage.js">qml/common/storage.js</file>
+        <file alias="qml/SuggestionDelegate.qml">qml/common/SuggestionDelegate.qml</file>
+        <file alias="qml/SwitchLocation.qml">qml/common/SwitchLocation.qml</file>
+        <file alias="qml/UIConstants.js">qml/common/UIConstants.js</file>
+        <file alias="qml/AboutDialog.qml">qml/harmattan/AboutDialog.qml</file>
+        <file alias="qml/ExceptionsPage.qml">qml/harmattan/ExceptionsPage.qml</file>
+        <file alias="qml/FavoriteSheet.qml">qml/harmattan/FavoriteSheet.qml</file>
+        <file alias="qml/FavoritesPage.qml">qml/harmattan/FavoritesPage.qml</file>
+        <file alias="qml/LocationEntry.qml">qml/harmattan/LocationEntry.qml</file>
+        <file alias="qml/main.qml">qml/harmattan/main.qml</file>
+        <file alias="qml/MainPage.qml">qml/harmattan/MainPage.qml</file>
+        <file alias="qml/ResultPage.qml">qml/harmattan/ResultPage.qml</file>
+        <file alias="qml/RouteMapPage.qml">qml/harmattan/RouteMapPage.qml</file>
+        <file alias="qml/RoutePage.qml">qml/harmattan/RoutePage.qml</file>
+        <file alias="qml/SettingsPage.qml">qml/harmattan/SettingsPage.qml</file>
+        <file alias="qml/StopPage.qml">qml/harmattan/StopPage.qml</file>
+        <file>images/background.png</file>
+        <file>images/banner_green.png</file>
+        <file>images/banner_red.png</file>
+        <file>images/boat.png</file>
+        <file>images/bus.png</file>
+        <file>images/clear.png</file>
+        <file>images/favorite-mark.png</file>
+        <file>images/favorite-mark-inverse.png</file>
+        <file>images/favorite-unmark.png</file>
+        <file>images/favorite-unmark-inverse.png</file>
+        <file>images/gps-icon.png</file>
+        <file>images/mapmarker.png</file>
+        <file>images/metro.png</file>
+        <file>images/switch.png</file>
+        <file>images/switch-inverse.png</file>
+        <file>images/train.png</file>
+        <file>images/tram.png</file>
+        <file>images/walk.png</file>
+        <file>i18n/meegopas_fi_FI.qm</file>
+        <file>images/gps-icon-inverted.png</file>
+    </qresource>
+</RCC>

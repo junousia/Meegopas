@@ -1,7 +1,6 @@
 import QtQuick 1.0
 import com.nokia.symbian 1.1
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
+import "UIConstants.js" as UIConstants
 
 Component {
     id: favoritesManageDelegate

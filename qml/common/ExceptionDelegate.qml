@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 import "reittiopas.js" as Reittiopas
 import "helper.js" as Helper
 

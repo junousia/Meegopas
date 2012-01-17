@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 
 Component {
     id: stopDelegate
@@ -21,7 +20,7 @@ Component {
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
             visible: mouseArea.pressed
-            source: theme.inverted ? '../../images/background.png': '../../images/background.png'
+            source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
         }
         Column {
             id: time_column

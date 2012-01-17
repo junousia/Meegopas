@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 import "reittiopas.js" as Reittiopas
 
 Component {
@@ -8,7 +7,7 @@ Component {
     Item {
         id: delegate_item
         width: parent.width
-        height: 100
+        height: 125 * appWindow.scaling_factor
         opacity: 0.0
 
         Component.onCompleted: PropertyAnimation {
@@ -23,7 +22,7 @@ Component {
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
             visible: mouseArea.pressed
-            source: theme.inverted ? '../../images/background.png': '../../images/background.png'
+            source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
         }
         Column {
             anchors.verticalCenter: parent.verticalCenter
@@ -58,7 +57,7 @@ Component {
                     visible: repeater.count == 1? true : (type == "walk")? false : true
                     Image {
                         id: transportIcon
-                        source: "../../images/" + type + ".png"
+                        source: "qrc:/images/" + type + ".png"
                         smooth: true
                         height: 50 * appWindow.scaling_factor
                         width: height
@@ -99,13 +98,10 @@ Component {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                routePage.model.clear()
-                Reittiopas.dump_legs(index,routePage.model)
-                routePage.fromLoc = from
-                routePage.toLoc = to
-                routePage.header = from + " - " + to
-                routePage.subheader = qsTr("total duration") + " " + duration + " min - " + qsTr("amount of walking") + " " + Math.floor(walk/100)/10 + ' km'
-                pageStack.push(routePage)
+                pageStack.push(Qt.resolvedUrl("RoutePage.qml"), { route_index: index,
+                                   header: search_parameters.from_name + " - " + search_parameters.to_name,
+                                   subheader: qsTr("total duration") + " " + duration + " min - " + qsTr("amount of walking") + " " + Math.floor(walk/100)/10 + ' km'
+                               })
             }
         }
     }

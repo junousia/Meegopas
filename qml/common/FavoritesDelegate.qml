@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 
 Component {
     id: favoritesDelegate
@@ -37,7 +36,7 @@ Component {
 
         Image {
             id: icon
-            source: index == 0?'../../images/gps-icon-inverted.png':'image://theme/icon-m-common-favorite-mark-inverse'
+            source: index == 0?'qrc:/images/gps-icon-inverted.png':'image://theme/icon-m-common-favorite-mark-inverse'
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
         }

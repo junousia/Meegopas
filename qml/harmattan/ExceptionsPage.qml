@@ -1,9 +1,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
+import "UIConstants.js" as UIConstants
 
 Page {
     tools: exceptionTools
@@ -56,7 +53,7 @@ Page {
         text: qsTr("No current traffic exceptions")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
     }
 

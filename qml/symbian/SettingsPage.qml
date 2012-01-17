@@ -1,10 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/storage.js" as Storage
+import "UIConstants.js" as UIConstants
+import "storage.js" as Storage
 
 Page {
     tools: settingsTools
@@ -48,14 +45,11 @@ Page {
                 anchors.left: parent.left
             }
             Row {
-                Text {
-                    text: "0"
-                    font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                width: parent.width
+
                 Slider {
                     id: change_margin
+                    anchors.fill: parent
                     maximumValue: 10
                     minimumValue: 0
                     stepSize: 1
@@ -71,14 +65,9 @@ Page {
                         Storage.setSetting("change_margin", change_margin.value)
                     }
                 }
-                Text {
-                    text: "10"
-                    font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-                }
             }
+
+            Spacing {}
 
             Separator {}
 

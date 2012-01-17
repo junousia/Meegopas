@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="switch-inverse.svg">
+   sodipodi:docname="switch-inverse.svg"
+   inkscape:export-filename="/home/jukka/workspace/Harmattan/Meegopas/images/switch-inverse.png"
+   inkscape:export-xdpi="16.07"
+   inkscape:export-ydpi="16.07">
   <defs
      id="defs4">
     <marker
@@ -188,14 +191,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="56.871986"
-     inkscape:cy="69.627303"
+     inkscape:zoom="2"
+     inkscape:cx="33.962472"
+     inkscape:cy="79.341609"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1400"
-     inkscape:window-height="1026"
+     inkscape:window-width="1920"
+     inkscape:window-height="1176"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1" />
@@ -217,10 +220,11 @@
      id="layer1"
      transform="translate(0,-772.36218)">
     <g
-       id="g4124">
+       id="g4124"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#dddddd;stroke-opacity:1">
       <path
          sodipodi:type="star"
-         style="fill:none;stroke:#fdfdfd;stroke-width:24.60000038000000089;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3027)"
+         style="fill:none;stroke:#dddddd;stroke-width:24.60000038000000089;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3027);fill-opacity:1"
          id="path7900"
          sodipodi:sides="3"
          sodipodi:cx="34.745762"
@@ -238,7 +242,7 @@
          transform="matrix(-1.3488236,-0.71292603,0.71292603,-1.3488236,-20.960527,1504.6707)" />
       <path
          transform="matrix(-0.99366571,-0.11237642,0.11237642,-0.99366571,429.28502,1287.1052)"
-         style="fill:none;stroke:#fdfdfd;stroke-width:35;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none;filter:url(#filter3027)"
+         style="fill:none;stroke:#dddddd;stroke-width:35;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none;filter:url(#filter3027);fill-opacity:1"
          d="m 379.84252,415.3399 c -52.20535,41.26413 -130.43111,7.76003 -132.7981,-61.10351"
          id="path7902"
          inkscape:connector-curvature="0"
@@ -259,14 +263,14 @@
          sodipodi:cx="34.745762"
          sodipodi:sides="3"
          id="path4024"
-         style="fill:none;stroke:#fdfdfd;stroke-width:24.60000038000000089;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3027)"
+         style="fill:none;stroke:#dddddd;stroke-width:24.60000038000000089;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3027);fill-opacity:1"
          sodipodi:type="star" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path4026"
          d="m 379.84252,415.3399 c -52.20535,41.26413 -130.43111,7.76003 -132.7981,-61.10351"
-         style="fill:none;stroke:#fdfdfd;stroke-width:35;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none;filter:url(#filter3027)"
+         style="fill:none;stroke:#dddddd;stroke-width:35;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none;filter:url(#filter3027);fill-opacity:1"
          transform="matrix(0.99366571,0.11237642,-0.11237642,0.99366571,-149.28502,537.6192)" />
     </g>
   </g>

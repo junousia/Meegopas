@@ -14,7 +14,7 @@ QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
-    DEPLOYMENTFOLDERS += symbian_qml
+#    DEPLOYMENTFOLDERS += symbian_qml
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
     # fail to install if self-signed. By default qmake uses the unprotected
@@ -32,6 +32,9 @@ symbian {
     DEPLOYMENT += my_deployment
 
     CONFIG += qt-components
+
+    RESOURCES += \
+        symbian.qrc
 }
 
 contains(MEEGO_EDITION, harmattan) {
@@ -52,10 +55,16 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/control \
         qtc_packaging/debian_harmattan/compat \
         qtc_packaging/debian_harmattan/changelog
+
+    RESOURCES += \
+        harmattan.qrc
 }
 
 simulator {
     DEPLOYMENTFOLDERS += symbian_qml
+
+    RESOURCES += \
+        symbian.qrc
 }
 
 # If your application uses the Qt Mobility libraries, uncomment the following
@@ -71,6 +80,9 @@ include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
 TRANSLATIONS += meegopas_fi_FI.ts
+
+
+
 
 
 

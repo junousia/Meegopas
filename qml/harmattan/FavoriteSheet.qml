@@ -1,11 +1,8 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/reittiopas.js" as Reittiopas
-import "../common/favorites.js" as Favorites
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "favorites.js" as Favorites
 
 Sheet {
     visualParent: pageStack
@@ -31,7 +28,7 @@ Sheet {
 
              Text {
                  text: qsTr("Enter name")
-                 font.pixelSize: MyConstants.FONT_XXLARGE
+                 font.pixelSize: UIConstants.FONT_XXLARGE
                  color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                  anchors.left: parent.left
              }

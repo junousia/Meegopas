@@ -13,7 +13,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-    //QFontDatabase::addApplicationFont("fonts/Nokia_Pure_Text_Light.ttf");
 
     QTranslator translator;
 #if defined(Q_WS_MAEMO_5) || defined(MEEGO_EDITION_HARMATTAN)
@@ -22,20 +21,24 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     newFont.setWeight(QFont::Light);
     MLocale locale;
     qDebug() << "Current locale: " << locale.name();
-    translator.load("/opt/Meegopas/i18n/meegopas_" + locale.name() + ".qm");
+    translator.load(":/i18n/meegopas_" + locale.name() + ".qm");
     app.data()->setFont(newFont);
     app.data()->installTranslator(&translator);
-    viewer->setMainQmlFile(QLatin1String("qml/harmattan/main.qml"));
+    viewer->addImportPath(QLatin1String("qrc:/images/"));
+    viewer->addImportPath(QLatin1String("qrc:/i18n/"));
+    viewer->setSource(QUrl("qrc:/qml/main.qml"));
 #else
     QFont newFont;
     newFont.setFamily("Nokia Pure Text Light");
     newFont.setWeight(QFont::Light);
     newFont.setStyleStrategy(QFont::PreferAntialias);
-    qDebug() << "Current locale: " << "i18n/meegopas_" + QLocale::system().name() + ".qm";
-    translator.load("i18n/meegopas_" + QLocale::system().name());
+    qDebug() << "Current locale: " << "qrc:/i18n/meegopas_" + QLocale::system().name() + ".qm";
+    translator.load(":/i18n/meegopas_" + QLocale::system().name());
     app.data()->installTranslator(&translator);
     app.data()->setFont(newFont);
-    viewer->setMainQmlFile(QLatin1String("qml/symbian/main.qml"));
+    viewer->addImportPath(QLatin1String("qrc:/images/"));
+    viewer->addImportPath(QLatin1String("qrc:/i18n/"));
+    viewer->setSource(QUrl("qrc:/qml/main.qml"));
 #endif
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

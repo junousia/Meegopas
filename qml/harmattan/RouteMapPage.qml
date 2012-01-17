@@ -1,8 +1,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../common"
-import "../common/reittiopas.js" as Reittiopas
-import "../common/UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "UIConstants.js" as UIConstants
 
 Page {
     id: page
@@ -18,7 +17,7 @@ Page {
 
     Loader {
         id: map_loader
-        source: "../common/MapElement.qml"
+        source: "MapElement.qml"
         anchors.fill: parent
         visible: !(map_loader.progress < 1.0)
     }

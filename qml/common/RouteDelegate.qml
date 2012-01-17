@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
-import "ExtrasConstants.js" as ExtrasConstants
 import "reittiopas.js" as Reittiopas
 
 Component {
@@ -25,7 +24,7 @@ Component {
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
             visible: mouseArea.pressed
-            source: theme.inverted ? '../../images/background.png': '../../images/background.png'
+            source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
         }
         Column {
             anchors.left: parent.left
@@ -39,7 +38,7 @@ Component {
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
             Text {
-                text: (index === 0)? fromLoc : from.name
+                text: (index === 0)? from_name : from.name
                 width: parent.width
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
@@ -53,7 +52,7 @@ Component {
 
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
-                source: "../../images/" + type + ".png"
+                source: "qrc:/images/" + type + ".png"
                 smooth: true
                 height: 50 * appWindow.scaling_factor
                 width: height
@@ -78,7 +77,7 @@ Component {
                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             }
             Text {
-                text: index === routeModel.count - 1? toLoc : to.name
+                text: index === routeModel.count - 1? to_name : to.name
                 horizontalAlignment: Text.AlignRight
                 width: parent.width
                 elide: Text.ElideRight
@@ -91,10 +90,7 @@ Component {
             enabled: !(type == "walk")
             anchors.fill: parent
             onClicked: {
-                stopPage.model.clear()
-                Reittiopas.dump_stops(index, stopPage.model)
-                stopPage.code = code
-                pageStack.push(stopPage)
+                pageStack.push(Qt.resolvedUrl("StopPage.qml"),{ leg_index: index, leg_code: code })
             }
         }
     }

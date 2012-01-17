@@ -10,18 +10,18 @@ PageStackWindow {
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
-        background: theme.inverted?'image://theme/meegotouch-video-background':null
+        //background: theme.inverted?'image://theme/meegotouch-video-background':null
         backgroundFillMode: Image.Stretch
     }
 
-    MainPage{id: mainPage}
+    MainPage{ id: mainPage }
     AboutDialog { id: about }
 
     InfoBanner {
         id: banner
         property bool success : false
         visible: true
-        iconSource: success ? '../../images/banner_green.png':'../../images/banner_red.png'
+        iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
         z: 500
         y: 40
     }

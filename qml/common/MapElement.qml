@@ -2,8 +2,8 @@
 
 import QtQuick 1.1
 import QtMobility.location 1.2
-import "../common/reittiopas.js" as Reittiopas
-import "../common/UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "UIConstants.js" as UIConstants
 
 Item {
     Component {
@@ -43,7 +43,7 @@ Item {
         stopObj.offset.x = -15
         stopObj.offset.y = -40
         stopObj.z = 100
-        stopObj.source = "../../images/mapmarker.png"
+        stopObj.source = "qrc:/images/mapmarker.png"
         map.addMapObject(stopObj)
 
         var circleObj = stop_circle.createObject(null)
@@ -59,7 +59,8 @@ Item {
     function initialize() {
         var leg_endpoints = []
         var route_coords = []
-        Reittiopas.dump_route(route_coords)
+        var current_route = Reittiopas.get_route_instance()
+        current_route.dump_route(route_coords)
         console.log(" ")
         // draw stop/stations
         for (var index in route_coords) {
@@ -71,23 +72,20 @@ Item {
             }
 
             add_station(endpointdata.to.latitude,endpointdata.to.longitude, endpointdata.to.name)
-        }
 
-        for(var lineindex in route_coords) {
             var lineObj = route.createObject(null);
-            var leg = route_coords[lineindex]
 
             lineObj.border.width = 3
-            lineObj.border.color = leg.type == "walk" ? "green" : "blue"
+            lineObj.border.color = endpointdata.type == "walk" ? "green" : "blue"
             lineObj.smooth = true
-            for(var shapeindex in leg.shape) {
-                var shapedata = leg.shape[shapeindex]
+            for(var shapeindex in endpointdata.shape) {
+                var shapedata = endpointdata.shape[shapeindex]
                 lineObj.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', stop, "coord"));
             }
-            for (var routeindex in leg.locs) {
-                var coorddata = leg.locs[routeindex]
+            for (var routeindex in endpointdata.locs) {
+                var coorddata = endpointdata.locs[routeindex]
 
-                if(leg.type != "walk" && routeindex != 0) {
+                if(endpointdata.type != "walk" && routeindex != 0) {
                     var stopObj = stop_circle.createObject(null)
                     stopObj.center = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + coorddata.latitude + ';longitude:' + coorddata.longitude + ';}', stop, "coord");
                     stopObj.visible = true

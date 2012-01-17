@@ -2,12 +2,9 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import QtMobility.location 1.2
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/reittiopas.js" as Reittiopas
-import "../common/favorites.js" as Favorites
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "favorites.js" as Favorites
 
 Column {
     property alias type : label.text
@@ -27,41 +24,22 @@ Column {
     }
 
     function clear() {
-        suggestionModel.clear()
+        suggestionModel.source = ""
         textfield.text = ''
         destination_coords = ''
         query.selectedIndex = -1
     }
 
-    function update_location(name, coords) {
-        suggestionModel.clear()
+    function update_location(name, housenumber, coords) {
+        suggestionModel.source = ""
+        var address = name
+
+        if(housenumber && address[address.length - 1] != housenumber)
+            address += " " + housenumber
+
         textfield.auto_update = true
-        textfield.text = name
+        textfield.text = address
         destination_coords = coords
-    }
-
-    Timer {
-        id: updateTimer
-        repeat: false
-        interval: 100
-        triggeredOnStart: false
-        onTriggered: {
-            if(suggestionModel.count == 1 && !suggestionModel.updating) {
-                update_location(suggestionModel.get(0).name,suggestionModel.get(0).coords)
-            }
-        }
-    }
-
-    FavoriteSheet { id: favorite_sheet }
-
-    ListView {
-        id:dummyview
-        visible: false
-        delegate: Component {
-            Text { text: "dummy" }
-        }
-        model: suggestionModel
-        onCountChanged: { updateTimer.start() }
     }
 
     function getCoords() {
@@ -69,11 +47,13 @@ Column {
             return { "name":text, "coords":destination_coords }
         }
         else if(textfield.acceptableInput) {
-            return { "name":suggestionModel.get(0).displayname, "coords":suggestionModel.get(0).coords}
+            return { "name":suggestionModel.get(0).name, "coords":suggestionModel.get(0).coords}
         }
         else
             console.log("no acceptable input")
     }
+
+    FavoriteSheet { id: favorite_sheet }
 
     PositionSource {
         id: positionSource
@@ -81,9 +61,21 @@ Column {
         active: platformWindow.active
     }
 
-    ListModel {
+    XmlListModel {
         id: suggestionModel
-        property bool updating : false
+        query: "/response/node"
+        XmlRole { name: "name"; query: "name/string()" }
+        XmlRole { name: "city"; query: "city/string()" }
+        XmlRole { name: "coords"; query: "coords/string()" }
+        XmlRole { name: "housenumber"; query: "details/houseNumber/string()" }
+
+        onCountChanged: {
+            if(suggestionModel.count == 1) {
+                update_location(suggestionModel.get(0).name.split(',', 1).toString(),
+                                suggestionModel.get(0).housenumber,
+                                suggestionModel.get(0).coords)
+            }
+        }
     }
 
     ListModel {
@@ -96,7 +88,9 @@ Column {
         delegate: SuggestionDelegate {}
         titleText: qsTr("Choose location")
         onAccepted: {
-            update_location(suggestionModel.get(selectedIndex).name,suggestionModel.get(selectedIndex).coords)
+            update_location(suggestionModel.get(selectedIndex).name,
+                            suggestionModel.get(selectedIndex).housenumber,
+                            suggestionModel.get(selectedIndex).coords)
         }
         onRejected: {}
     }
@@ -104,14 +98,14 @@ Column {
     SelectionDialog {
         id: favoriteQuery
         model: favoritesModel
-        delegate: FavoritesDelegate {}
         titleText: qsTr("Choose location")
-
+        delegate: FavoritesDelegate {}
         onAccepted: {
+            /* if positionsource used */
             if(selectedIndex == 0) {
                 if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
-                    Reittiopas.location_to_address(positionSource.position.coordinate.latitude.toString(),
-                                                   positionSource.position.coordinate.longitude.toString(),suggestionModel)
+                    suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
+                                                                            positionSource.position.coordinate.longitude.toString())
                 }
                 else {
                     favoriteQuery.selectedIndex = -1
@@ -120,7 +114,9 @@ Column {
                     appWindow.banner.show()
                 }
             } else {
-                update_location(favoritesModel.get(selectedIndex).modelData, favoritesModel.get(selectedIndex).coord)
+                update_location(favoritesModel.get(selectedIndex).modelData,
+                                0,
+                                favoritesModel.get(selectedIndex).coord)
             }
         }
         onRejected: {}
@@ -133,7 +129,7 @@ Column {
         triggeredOnStart: false
         onTriggered: {
             if(textfield.acceptableInput) {
-                Reittiopas.address_to_location(textfield.text,suggestionModel)
+                suggestionModel.source = Reittiopas.get_geocode(textfield.text)
             }
         }
     }
@@ -147,29 +143,27 @@ Column {
         BorderImage {
             anchors.fill: parent
             visible: labelMouseArea.pressed
-            source: '../../images/background.png'
+            source: 'qrc:/images/background.png'
         }
         Text {
             id: label
-            font.pixelSize: MyConstants.FONT_XXLARGE
+            font.pixelSize: UIConstants.FONT_XXLARGE
             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             anchors.left: parent.left
             anchors.top: parent.top
         }
-
-        CountBubble {
+        Bubble {
             id: count
-            largeSized: true
-            value: suggestionModel.count
+            count: suggestionModel.count
             visible: (suggestionModel.count > 1)
             anchors.left: label.right
-            anchors.bottom: label.bottom
+            anchors.leftMargin: 2
+            anchors.verticalCenter: label.verticalCenter
         }
-
         BusyIndicator {
             id: busyIndicator
-            visible: suggestionModel.updating
-            running: suggestionModel.updating
+            visible: suggestionModel.status == XmlListModel.Loading
+            running: true
             anchors.left: label.right
             anchors.verticalCenter: label.verticalCenter
             platformStyle: BusyIndicatorStyle { size: 'medium' }
@@ -207,7 +201,7 @@ Column {
                 if(auto_update)
                     auto_update = false
                 else {
-                    suggestionModel.clear()
+                    suggestionModel.source = ""
                     selected_favorite = -1
                     destination_coords = ''
                     if(acceptableInput)
@@ -252,8 +246,8 @@ Column {
                 id: clearLocation
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                source: '../../images/clear.png'
-                visible: ((textfield.activeFocus) && !busyIndicator.running)
+                source: "qrc:/images/clear.png"
+                visible: ((textfield.activeFocus) && !busyIndicator.visible)
                 opacity: 0.8
                 MouseArea {
                     id: locationInputMouseArea
@@ -275,14 +269,14 @@ Column {
             enabled: !disable_favorites
             visible: !disable_favorites
             source: selected_favorite == -1?
-                        !theme.inverted?'../../images/favorite-unmark.png':'../../images/favorite-unmark-inverse.png' :
-                        !theme.inverted?'../../images/favorite-mark.png':'../../images/favorite-mark-inverse.png'
+                        !theme.inverted?'qrc:/images/favorite-unmark.png':'qrc:/images/favorite-unmark-inverse.png' :
+                        !theme.inverted?'qrc:/images/favorite-mark.png':'qrc:/images/favorite-mark-inverse.png'
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             mouseArea.onClicked: {
                 favoritesModel.clear()
                 Favorites.getFavorites(favoritesModel)
-                favoritesModel.insert(0, {modelData: qsTr("Current position"),coord:"0,0"})
+                favoritesModel.insert(0, {modelData: qsTr("Current location"),coord:"0,0"})
                 favoriteQuery.open()
             }
             mouseArea.onPressAndHold: {

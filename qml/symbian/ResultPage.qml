@@ -1,23 +1,21 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/reittiopas.js" as Reittiopas
-import "../common/storage.js" as Storage
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "storage.js" as Storage
 
 Page {
     tools: commonTools
-    property alias routeModel : routeModel
-    property string from : ""
-    property string to : ""
+    property variant search_parameters : 0
 
-    RoutePage { id: routePage }
+    onStatusChanged: {
+        if(status == Component.Ready && !routeModel.count)
+            Reittiopas.new_route_instance(search_parameters, routeModel)
+    }
 
     ListModel {
         id: routeModel
-        property bool updating : false
+        property bool done : false
     }
 
     ListView {
@@ -28,7 +26,7 @@ Page {
         delegate: ResultDelegate {}
 
         header: Header {
-            text: from + " - " + to
+            text: search_parameters.from_name + " - " + search_parameters.to_name
         }
     }
 
@@ -44,13 +42,13 @@ Page {
         text: qsTr("No results")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {
         id: busyIndicator
-        visible: (routeModel.updating)
+        visible: !(routeModel.done)
         running: true
         anchors.centerIn: parent
         width: 75

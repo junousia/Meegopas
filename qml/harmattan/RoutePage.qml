@@ -1,20 +1,24 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/reittiopas.js" as Reittiopas
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
 
 Page {
     tools: routeTools
-    property string fromLoc : ''
-    property string toLoc : ''
-    property alias model : routeModel
+    property int route_index
+    property string from_name
+    property string to_name
     property string header
     property string subheader
 
-    anchors.margins: UIConstants.DEFAULT_MARGIN
+    onStatusChanged: {
+        if(status == Component.Ready && !routeModel.count) {
+            var route = Reittiopas.get_route_instance()
+            route.dump_legs(route_index, routeModel)
+            from_name = route.from_name
+            to_name = route.to_name
+        }
+    }
 
     ToolBarLayout {
         id: routeTools
@@ -33,14 +37,13 @@ Page {
 
     ListModel {
         id: routeModel
-        property bool updating : false
+        property bool done : false
     }
-
-    StopPage { id: stopPage }
 
     ListView {
         id: routeList
         anchors.fill: parent
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
         delegate: RouteDelegate {}
         header: Header {
@@ -61,13 +64,13 @@ Page {
         text: qsTr("No results")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: MyConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
         color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {
         id: busyIndicator
-        visible: (routeModel.updating)
+        visible: !(routeModel.done)
         running: true
         platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent

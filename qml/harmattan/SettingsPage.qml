@@ -1,10 +1,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/MyConstants.js" as MyConstants
-import "../common/storage.js" as Storage
+import "UIConstants.js" as UIConstants
+import "storage.js" as Storage
 
 Page {
     tools: settingsTools

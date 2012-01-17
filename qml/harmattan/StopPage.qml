@@ -1,13 +1,18 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../common"
-import "../common/UIConstants.js" as UIConstants
-import "../common/ExtrasConstants.js" as ExtrasConstants
-import "../common/reittiopas.js" as Reittiopas
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
 
 Page {
-    property alias model: stopModel
-    property string code
+    property string leg_code
+    property int leg_index
+
+    onStatusChanged: {
+        if(status == Component.Ready && !stopModel.count) {
+            var route = Reittiopas.get_route_instance()
+            route.dump_stops(leg_index, stopModel)
+        }
+    }
 
     tools: commonTools
 
@@ -15,16 +20,17 @@ Page {
 
     ListModel {
         id: stopModel
-        property bool updating : false
+        property bool done : false
     }
 
     ListView {
         id: routeList
         anchors.fill: parent
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: stopModel
         delegate: StopDelegate {}
         header: Header {
-            text: qsTr("Stops for line ") + code
+            text: qsTr("Stops for line ") + leg_code
         }
     }
 
@@ -35,7 +41,7 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        visible: (stopModel.updating)
+        visible: !(stopModel.done)
         running: true
         platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent

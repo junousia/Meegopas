@@ -41,8 +41,12 @@
 .pragma library
 
 var FONT_FAMILY = "Nokia Pure Text";
-var FONT_DEFAULT_SIZE = 24; // DEPRECATED
+var FONT_FAMILY_BOLD = "Nokia Pure Text Bold";
+var FONT_FAMILY_LIGHT = "Nokia Pure Text Light";
 
+var FONT_XXLARGE  = 42;
+var FONT_XXXLARGE  = 52;
+var FONT_XXXXLARGE  = 72;
 var FONT_XLARGE  = 32;
 var FONT_LARGE   = 28;
 var FONT_SLARGE  = 26;
@@ -116,4 +120,6 @@ var HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE = 14;
 var LIST_ITEM_HEIGHT_SMALL = 64;
 var LIST_ITEM_HEIGHT_DEFAULT = 80;
 
-
+var SIZE_BUTTON = 51;
+var SIZE_SMALL_BUTTON = 43;
+var WIDTH_SMALL_BUTTON = 122;

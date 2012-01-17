@@ -3,7 +3,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import QtMobility.location 1.2
-import "../common"
 
 Page {
     id: page
@@ -19,7 +18,7 @@ Page {
 
     Loader {
         id: map_loader
-        source: "../common/MapElement.qml"
+        source: "MapElement.qml"
         anchors.fill: parent
         visible: !(map_loader.progress < 1.0)
     }
