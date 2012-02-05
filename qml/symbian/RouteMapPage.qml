@@ -1,4 +1,15 @@
-// adapted from example: http://developer.qt.nokia.com/wiki/QML_Maps_with_Pinch_Zoom
+/*
+ * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
+ *
+ * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * See full license at http://www.gnu.org/licenses/gpl-3.0.html
+ */
 
 import QtQuick 1.1
 import com.nokia.symbian 1.1
@@ -14,21 +25,14 @@ Page {
         x: 0
         y: 0
         ToolButton { iconSource: "toolbar-back"; onClicked: { pageStack.pop(); } }
+        ButtonRow {
+            ToolButton { iconSource: "toolbar-mediacontrol-backwards"; onClicked: { map.previous_station(); } }
+            ToolButton { iconSource: "toolbar-mediacontrol-forward"; onClicked: { map.next_station(); } }
+        }
     }
 
-    Loader {
-        id: map_loader
-        source: "MapElement.qml"
+    MapElement {
+        id: map
         anchors.fill: parent
-        visible: !(map_loader.progress < 1.0)
-    }
-
-    BusyIndicator {
-        id: busyIndicator
-        visible: (map_loader.progress < 1.0)
-        running: true
-        anchors.centerIn: parent
-        width: 75
-        height: 75
     }
 }

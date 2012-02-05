@@ -1,3 +1,16 @@
+/*
+ * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
+ *
+ * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * See full license at http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
@@ -33,6 +46,7 @@ Page {
         x: 0
         y: 0
         ToolButtonRow {
+            ToolIcon { visible: false }
             ToolButton {
                 text: qsTr("Search")
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -51,6 +65,18 @@ Page {
                     parameters.walk_speed = walking_speed == "Unknown"?"70":walking_speed
                     parameters.optimize = optimize == "Unknown"?"default":optimize
                     parameters.change_margin = change_margin == "Unknown"?"3":Math.floor(change_margin)
+                    parameters.transport_types = ["ferry"]
+                    if(Storage.getSetting("train_disabled") != "true")
+                        parameters.transport_types.push("train")
+                    if(Storage.getSetting("bus_disabled") != "true") {
+                        parameters.transport_types.push("bus")
+                        parameters.transport_types.push("uline")
+                        parameters.transport_types.push("service")
+                    }
+                    if(Storage.getSetting("bus_disabled") != "true")
+                        parameters.transport_types.push("metro")
+                    if(Storage.getSetting("tram_disabled") != "true")
+                        parameters.transport_types.push("tram")
 
                     pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
                 }

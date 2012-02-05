@@ -14,7 +14,6 @@
         <file alias="/qml/StopPage.qml">qml/symbian/StopPage.qml</file>
         <file alias="/qml/Bubble.qml">qml/common/Bubble.qml</file>
         <file alias="/qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
-        <file alias="/qml/ExtrasConstants.js">qml/common/ExtrasConstants.js</file>
         <file alias="/qml/favorites.js">qml/common/favorites.js</file>
         <file alias="/qml/FavoritesDelegate.js">qml/common/FavoritesDelegate.js</file>
         <file alias="/qml/FavoritesDelegate.qml">qml/common/FavoritesDelegate.qml</file>
@@ -22,7 +21,6 @@
         <file alias="/qml/helper.js">qml/common/helper.js</file>
         <file alias="/qml/MapElement.qml">qml/common/MapElement.qml</file>
         <file alias="/qml/MyButton.qml">qml/common/MyButton.qml</file>
-        <file alias="/qml/MyConstants.js">qml/common/MyConstants.js</file>
         <file alias="/qml/reittiopas.js">qml/common/reittiopas.js</file>
         <file alias="/qml/ResultDelegate.qml">qml/common/ResultDelegate.qml</file>
         <file alias="/qml/RouteDelegate.qml">qml/common/RouteDelegate.qml</file>
@@ -54,6 +52,7 @@
         <file>images/walk.png</file>
         <file>main.cpp</file>
         <file>i18n/meegopas_fi_FI.qm</file>
-        <file>qml/common/mapworker.js</file>
+        <file alias="qml/FlickableMap.qml">qml/common/FlickableMap.qml</file>
+        <file>i18n/meegopas_ru_RU.qm</file>
     </qresource>
 </RCC>

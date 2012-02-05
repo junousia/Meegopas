@@ -1,176 +1,133 @@
-// adapted from example: http://developer.qt.nokia.com/wiki/QML_Maps_with_Pinch_Zoom
+/*
+ * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
+ *
+ * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * See full license at http://www.gnu.org/licenses/gpl-3.0.html
+ */
 
 import QtQuick 1.1
 import QtMobility.location 1.2
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
+import "helper.js" as Helper
 
 Item {
-    Component {
-        id: route
-        MapPolyline {}
+    property bool positioning_active : true
+    property bool follow_position : false
+    property alias flickable_map : flickable_map
+    function next_station() {
+        flickable_map.panToCoordinate(Helper.next_station())
+    }
+    function previous_station() {
+        flickable_map.panToCoordinate(Helper.previous_station())
+    }
+    FlickableMap {
+        id: flickable_map
+        anchors.fill: parent
+    }
+
+    PositionSource {
+        id: positionSource
+        updateInterval: 500
+        active: positioning_active
+        onPositionChanged: {
+            if(follow_position)
+                flickable_map.panToCoordinate(current_position.center)
+        }
+    }
+
+    MapCircle {
+        id: current_position
+        smooth: true
+        color: "green"
+        visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid
+        radius: 8 * appWindow.scaling_factor
+        width: 8 * appWindow.scaling_factor
+        center: positionSource.position.coordinate
     }
 
     Component {
-        id: stop
-        MapImage {}
-    }
+        id: group
+        MapGroup {
+            property alias stop_text : stop_text
+            property alias stop_circle : stop_circle
+            property alias route : route
 
-    Component {
-        id: stop_circle
-        MapCircle {}
-    }
-
-    Component {
-        id: stop_text
-        MapText {}
-    }
-
-    function add_station(latitude, longitude, name) {
-        var textObj = stop_text.createObject(null)
-        textObj.coordinate = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', stop, "coord");
-        textObj.text = name?name:""
-        textObj.font.pixelSize = UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-        textObj.visible = true
-        textObj.offset.x = -(textObj.width/2)
-        textObj.offset.y = 10
-        textObj.z = 150
-        map.addMapObject(textObj)
-
-        var stopObj = stop.createObject(null)
-        stopObj.coordinate = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', stop, "coord");
-        stopObj.visible = true
-        stopObj.offset.x = -15
-        stopObj.offset.y = -40
-        stopObj.z = 100
-        stopObj.source = "qrc:/images/mapmarker.png"
-        map.addMapObject(stopObj)
-
-        var circleObj = stop_circle.createObject(null)
-        circleObj.center = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', stop, "coord");
-        circleObj.visible = true
-        circleObj.border.color = "red"
-        circleObj.radius = 5
-        circleObj.border.width = 5
-        circleObj.z = 50
-        map.addMapObject(circleObj)
+            MapText {
+                id: stop_text
+                smooth: true
+                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+                font.bold: true
+                offset.x: -(width/2)
+                offset.y: 10
+                z: -10
+            }
+            MapCircle {
+                id: stop_circle
+                smooth: true
+                color: "yellow"
+                radius: 8 * appWindow.scaling_factor
+                width: 8 * appWindow.scaling_factor
+                z: -5
+            }
+            MapPolyline {
+                id: route
+                smooth: true
+                border.width: 6 * appWindow.scaling_factor
+                z: -10
+            }
+        }
     }
 
     function initialize() {
-        var leg_endpoints = []
+        flickable_map.map.addMapObject(current_position)
         var route_coords = []
         var current_route = Reittiopas.get_route_instance()
         current_route.dump_route(route_coords)
-        console.log(" ")
-        // draw stop/stations
+
+        var current_z = 0;
+
         for (var index in route_coords) {
+            var map_group = group.createObject(null)
             var endpointdata = route_coords[index]
 
             if(index == 0) {
-                add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name)
-                map.center = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + endpointdata.from.latitude + ';longitude:' + endpointdata.from.longitude + ';}', stop, "coord");
+                var first_station = group.createObject(null)
+                var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + endpointdata.from.latitude + ';longitude:' + endpointdata.from.longitude + ';}', group, "coord")
+                flickable_map.panToCoordinate(coord)
+                add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
+                flickable_map.map.addMapObject(first_station);
             }
 
-            add_station(endpointdata.to.latitude,endpointdata.to.longitude, endpointdata.to.name)
+            add_station(endpointdata.to.latitude,endpointdata.to.longitude, endpointdata.to.name, map_group)
 
-            var lineObj = route.createObject(null);
+            map_group.route.border.color = endpointdata.type == "walk" ? "green" : "blue"
+            map_group.z = current_z++;
 
-            lineObj.border.width = 3
-            lineObj.border.color = endpointdata.type == "walk" ? "green" : "blue"
-            lineObj.smooth = true
             for(var shapeindex in endpointdata.shape) {
                 var shapedata = endpointdata.shape[shapeindex]
-                lineObj.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', stop, "coord"));
+                map_group.route.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', group, "coord"));
             }
-            for (var routeindex in endpointdata.locs) {
-                var coorddata = endpointdata.locs[routeindex]
 
-                if(endpointdata.type != "walk" && routeindex != 0) {
-                    var stopObj = stop_circle.createObject(null)
-                    stopObj.center = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + coorddata.latitude + ';longitude:' + coorddata.longitude + ';}', stop, "coord");
-                    stopObj.visible = true
-                    stopObj.border.color = "red"
-                    stopObj.radius = 5
-                    stopObj.border.width = 5
-                    stopObj.z = 25
-                    map.addMapObject(stopObj)
-                }
-            }
-            map.addMapObject(lineObj);
+            flickable_map.map.addMapObject(map_group);
         }
+    }
+
+    function add_station(latitude, longitude, name, map_group) {
+        var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', group, "coord")
+        map_group.stop_text.coordinate = coord;
+        map_group.stop_text.text = name?name:""
+        map_group.stop_circle.center = coord
+        Helper.add_station(coord)
     }
 
     Component.onCompleted: {
         initialize()
-    }
-
-    Map {
-        id: map
-        anchors.fill: parent
-        plugin: Plugin { name: "nokia" }
-        mapType: Map.StreetMap
-        zoomLevel: 15
-        center: Coordinate {
-            latitude: 60.2183967313
-            longitude: 24.8043979003
-        }
-    }
-
-    PinchArea {
-        id: pincharea
-
-        property double __oldZoom
-
-        anchors.fill: parent
-
-        function calcZoomDelta(zoom, percent) {
-            return zoom + Math.log(percent)/Math.log(2)
-        }
-
-        onPinchStarted: {
-            __oldZoom = map.zoomLevel
-        }
-
-        onPinchUpdated: {
-            map.zoomLevel = calcZoomDelta(__oldZoom, pinch.scale)
-        }
-
-        onPinchFinished: {
-            map.zoomLevel = calcZoomDelta(__oldZoom, pinch.scale)
-        }
-    }
-
-    MouseArea {
-        id: mousearea
-
-        property bool __isPanning: false
-        property int __lastX: -1
-        property int __lastY: -1
-
-        anchors.fill : parent
-
-        onPressed: {
-            __isPanning = true
-            __lastX = mouse.x
-            __lastY = mouse.y
-        }
-
-        onReleased: {
-            __isPanning = false
-        }
-
-        onPositionChanged: {
-            if (__isPanning) {
-                var dx = mouse.x - __lastX
-                var dy = mouse.y - __lastY
-                map.pan(-dx, -dy)
-                __lastX = mouse.x
-                __lastY = mouse.y
-            }
-        }
-
-        onCanceled: {
-            __isPanning = false;
-        }
     }
 }

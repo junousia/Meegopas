@@ -1,8 +1,21 @@
+/*
+ * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
+ *
+ * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * See full license at http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 .pragma library
 
 var API = 'http://api.reittiopas.fi/hsl/prod/'
-var USER = ''
-var PASS = ''
+var USER = 'junousia'
+var PASS = 'p3ndolino'
 var transType = {}
 transType[1] = "bus"
 transType[2] = "tram"
@@ -148,9 +161,14 @@ reittiopas.prototype.api_request = function() {
     this.parameters.pass = PASS
     this.parameters.epsg_in = "wgs84"
     this.parameters.epsg_out = "wgs84"
+
     var query = []
     for(var p in this.parameters) {
-        query.push(p + "=" + this.parameters[p])
+        if(p == "transport_types") {
+            query.push(p + "=" + this.parameters[p].join('|'))
+        } else {
+            query.push(p + "=" + this.parameters[p])
+        }
     }
     console.log( API + '?' + query.join('&'))
     _http_request.open("GET", API + '?' + query.join('&'))
@@ -317,17 +335,22 @@ route_search.prototype.dump_route = function(target) {
 route_search.prototype.dump_stops = function(index, model) {
     var route = this.last_result[this.last_route_index]
     var legdata = route.legs[index]
-
     for (var locindex in legdata.locs) {
         var locdata = legdata.locs[locindex]
-        var output = {
-            "name" : legdata.locs[locindex].name,
-            "coords" : legdata.locs[locindex].coord.x + "," + legdata.locs[locindex].coord.y,
-            "arrival_time" : convTime(legdata.locs[locindex].arrTime),
-            "departure_time" : convTime(legdata.locs[locindex].depTime),
-            "time_diff" : locindex == 0 ? 0 : get_time_difference(convTime(legdata.locs[locindex - 1].depTime), convTime(legdata.locs[locindex].arrTime)).minutes
+
+        /* for walking add only first and last "stop" */
+        if(legdata.type == "walk" && locindex != 0 && locindex != legdata.locs.length - 1) { }
+        else {
+            var output = {
+                "name" : legdata.locs[locindex].name,
+                "latitude" : legdata.locs[locindex].coord.y,
+                "longitude" :legdata.locs[locindex].coord.x,
+                "arrival_time" : convTime(legdata.locs[locindex].arrTime),
+                "departure_time" : convTime(legdata.locs[locindex].depTime),
+                "time_diff" : locindex == 0 ? 0 : get_time_difference(convTime(legdata.locs[locindex - 1].depTime), convTime(legdata.locs[locindex].arrTime)).minutes
+            }
+            model.append(output)
         }
-        model.append(output)
     }
     model.done = true
 }

@@ -1,3 +1,16 @@
+/*
+ * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
+ *
+ * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * See full license at http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "UIConstants.js" as UIConstants
@@ -28,6 +41,23 @@ Page {
             console.log("walking_speed setting: " + Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
             console.log("change_margin setting: " + Storage.getSetting("change_margin"))
+
+            if(Storage.getSetting("train_disabled") == "true") {
+                console.debug("train disabled")
+                transports.set_value("train")
+            }
+            if(Storage.getSetting("bus_disabled") == "true") {
+                console.debug("bus disabled")
+                transports.set_value("bus")
+            }
+            if(Storage.getSetting("metro_disabled") == "true") {
+                console.debug("metro disabled")
+                transports.set_value("metro")
+            }
+            if(Storage.getSetting("tram_disabled") == "true") {
+                console.debug("tram disabled")
+                transports.set_value("tram")
+            }
         }
 
         Column {
@@ -37,6 +67,66 @@ Page {
             Header {
                 text: qsTr("Settings")
             }
+
+            Text {
+                text: qsTr("Used transports")
+                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+
+                anchors.left: parent.left
+            }
+
+            ButtonColumn {
+                id: transports
+                exclusive: false
+                spacing: UIConstants.BUTTON_SPACING
+                function set_value(value) {
+                    if(value == "bus")
+                        bus.checked = false
+                    else if(value == "train")
+                        train.checked = false
+                    else if(value == "metro")
+                        metro.checked = false
+                    else if(value == "tram")
+                        tram.checked = false
+                    else
+                        console.log("unknown value")
+                }
+
+                anchors.right: parent.right
+                Button {
+                    id: bus
+                    text: qsTr("Bus")
+                    checkable: true
+                    checked: true
+                    onClicked: Storage.setSetting('bus_disabled', (!checked).toString())
+                }
+                Button {
+                    id: train
+                    checkable: true
+                    checked: true
+                    text: qsTr("Train")
+                    onClicked: Storage.setSetting('train_disabled', (!checked).toString())
+                }
+                Button {
+                    id: metro
+                    checkable: true
+                    checked: true
+                    text: qsTr("Metro")
+                    onClicked: Storage.setSetting('metro_disabled', (!checked).toString())
+                }
+                Button {
+                    id: tram
+                    checkable: true
+                    checked: true
+                    text: qsTr("Tram")
+                    onClicked: {
+                        Storage.setSetting('tram_disabled', (!checked).toString())
+                    }
+                }
+            }
+
+            Separator {}
 
             Text {
                 text: qsTr("Change margin") + " (min)"
