@@ -42,7 +42,8 @@ Page {
             text: qsTr("Map")
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                stop_page.state = stop_page.state == "normal" ? "map" : "normal"
+                //stop_page.state = stop_page.state == "normal" ? "map" : "normal"
+                map_loader.sourceComponent = map_component
             }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
@@ -84,11 +85,18 @@ Page {
         height: parent.height/2 + UIConstants.DEFAULT_MARGIN
     }
 
-    MapElement {
-        id: map
-        anchors.top: routeList.bottom
-        height: parent.height/2
-        width: parent.width
+    Loader {
+        id: map_loader
+    }
+
+    Component {
+        id: map_component
+        MapElement {
+            anchors.top: routeList.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: parent.height/2 + UIConstants.DEFAULT_MARGIN
+            width: parent.width + UIConstants.DEFAULT_MARGIN * 2
+        }
     }
 
     ScrollDecorator {

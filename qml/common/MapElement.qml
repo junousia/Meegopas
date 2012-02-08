@@ -94,11 +94,11 @@ Item {
         var current_z = 0;
 
         for (var index in route_coords) {
-            var map_group = group.createObject(null)
+            var map_group = group.createObject(flickable_map)
             var endpointdata = route_coords[index]
 
             if(index == 0) {
-                var first_station = group.createObject(null)
+                var first_station = group.createObject(flickable_map)
                 var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + endpointdata.from.latitude + ';longitude:' + endpointdata.from.longitude + ';}', group, "coord")
                 flickable_map.panToCoordinate(coord)
                 add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
@@ -112,7 +112,7 @@ Item {
 
             for(var shapeindex in endpointdata.shape) {
                 var shapedata = endpointdata.shape[shapeindex]
-                map_group.route.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', group, "coord"));
+                map_group.route.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', flickable_map, "coord"));
             }
 
             flickable_map.map.addMapObject(map_group);

@@ -43,43 +43,39 @@ Page {
 
     ToolBarLayout {
         id: mainTools
-        x: 0
-        y: 0
-        ToolButtonRow {
-            ToolIcon { visible: false }
-            ToolButton {
-                text: qsTr("Search")
-                anchors.horizontalCenter: parent.horizontalCenter
-                enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
-                onClicked: {
-                    var walking_speed = Storage.getSetting("walking_speed")
-                    var optimize = Storage.getSetting("optimize")
-                    var change_margin = Storage.getSetting("change_margin")
-                    var parameters = {}
-                    parameters.from = from.getCoords().coords
-                    parameters.to = to.getCoords().coords
-                    parameters.from_name = from.text
-                    parameters.to_name = to.text
-                    parameters.time = root.myTime
-                    parameters.timetype = timeType.checked? "arrival" : "departure"
-                    parameters.walk_speed = walking_speed == "Unknown"?"70":walking_speed
-                    parameters.optimize = optimize == "Unknown"?"default":optimize
-                    parameters.change_margin = change_margin == "Unknown"?"3":Math.floor(change_margin)
-                    parameters.transport_types = ["ferry"]
-                    if(Storage.getSetting("train_disabled") != "true")
-                        parameters.transport_types.push("train")
-                    if(Storage.getSetting("bus_disabled") != "true") {
-                        parameters.transport_types.push("bus")
-                        parameters.transport_types.push("uline")
-                        parameters.transport_types.push("service")
-                    }
-                    if(Storage.getSetting("bus_disabled") != "true")
-                        parameters.transport_types.push("metro")
-                    if(Storage.getSetting("tram_disabled") != "true")
-                        parameters.transport_types.push("tram")
-
-                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+        ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolButton {
+            text: qsTr("Search")
+            anchors.horizontalCenter: parent.horizontalCenter
+            enabled: ((from.destination_coords != '' || from.destination_valid) && (to.destination_coords != '' || to.destination_valid))
+            onClicked: {
+                var walking_speed = Storage.getSetting("walking_speed")
+                var optimize = Storage.getSetting("optimize")
+                var change_margin = Storage.getSetting("change_margin")
+                var parameters = {}
+                parameters.from = from.getCoords().coords
+                parameters.to = to.getCoords().coords
+                parameters.from_name = from.text
+                parameters.to_name = to.text
+                parameters.time = root.myTime
+                parameters.timetype = timeType.checked? "arrival" : "departure"
+                parameters.walk_speed = walking_speed == "Unknown"?"70":walking_speed
+                parameters.optimize = optimize == "Unknown"?"default":optimize
+                parameters.change_margin = change_margin == "Unknown"?"3":Math.floor(change_margin)
+                parameters.transport_types = ["ferry"]
+                if(Storage.getSetting("train_disabled") != "true")
+                    parameters.transport_types.push("train")
+                if(Storage.getSetting("bus_disabled") != "true") {
+                    parameters.transport_types.push("bus")
+                    parameters.transport_types.push("uline")
+                    parameters.transport_types.push("service")
                 }
+                if(Storage.getSetting("bus_disabled") != "true")
+                    parameters.transport_types.push("metro")
+                if(Storage.getSetting("tram_disabled") != "true")
+                    parameters.transport_types.push("tram")
+
+                pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             }
         }
         ToolIcon { iconId: "toolbar-view-menu" ; onClicked: myMenu.open(); }

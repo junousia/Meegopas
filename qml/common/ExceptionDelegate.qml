@@ -34,6 +34,7 @@ Component {
             id: column
             anchors.right: parent.right
             anchors.left: parent.left
+
             Text {
                 text: Qt.formatDateTime(Helper.parse_disruption_time(time), "dd.MM.yyyy - hh:mm")
                 anchors.left: parent.left
@@ -46,7 +47,7 @@ Component {
                 horizontalAlignment: Text.AlignLeft
                 width: parent.width
                 wrapMode: Text.WordWrap
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             }
         }

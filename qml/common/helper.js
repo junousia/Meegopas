@@ -17,7 +17,8 @@ var stations = []
 var current_station = 0
 
 function add_station(station) {
-    stations.push(station)
+    if(station)
+        stations.push(station)
 }
 
 function next_station() {
