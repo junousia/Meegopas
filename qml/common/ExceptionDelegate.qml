@@ -15,6 +15,7 @@ import QtQuick 1.1
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "helper.js" as Helper
+import "theme.js" as Theme
 
 Component {
     id: disruptionDelegate
@@ -40,15 +41,15 @@ Component {
                 anchors.left: parent.left
                 horizontalAlignment: Qt.AlignLeft
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             }
             Text {
                 text: info_fi
                 horizontalAlignment: Text.AlignLeft
                 width: parent.width
                 wrapMode: Text.WordWrap
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
             }
         }
     }

@@ -16,6 +16,7 @@ import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
+import "theme.js" as Theme
 
 Sheet {
     visualParent: pageStack
@@ -42,7 +43,7 @@ Sheet {
              Text {
                  text: qsTr("Enter name")
                  font.pixelSize: UIConstants.FONT_XXLARGE
-                 color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                  anchors.left: parent.left
              }
              TextField {

@@ -15,6 +15,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
+import "theme.js" as Theme
 
 Page {
     tools: routeTools
@@ -49,12 +50,28 @@ Page {
         property bool done : false
     }
 
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
+    Component {
+        id: delegate
+        Loader {
+            width: parent.width
+            source: type == "station" ? "qrc:/qml/RouteStationDelegate.qml" : "qrc:/qml/RouteDelegate.qml"
+        }
+
+    }
     ListView {
         id: routeList
         anchors.fill: parent
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
-        delegate: RouteDelegate {}
+        delegate: delegate
         header: Header {
             text: header
             subtext: subheader
@@ -74,7 +91,7 @@ Page {
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
         font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
-        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {

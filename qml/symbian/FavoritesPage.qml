@@ -16,6 +16,7 @@ import com.nokia.symbian 1.1
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
+import "theme.js" as Theme
 
 Page {
     tools: favoritesTools
@@ -123,8 +124,15 @@ Page {
             Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
             appWindow.banner.success = true
             appWindow.banner.text = qsTr("Favorite removed")
-            appWindow.banner.open()
+            appWindow.banner.show()
         }
+    }
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
     }
 
     Flickable {
@@ -154,12 +162,11 @@ Page {
                 id: addButton
                 text: qsTr("Add")
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_SMALL  * appWindow.scaling_factor
                 width: 150 * appWindow.scaling_factor
                 height: 40
                 enabled: favorite.destination_coords != ''
                 onClicked: {
-                    console.debug("text " + favorite.text)
                     sheet.text = favorite.text
                     sheet.coords = favorite.getCoords().coords
                     sheet.open()
@@ -177,7 +184,7 @@ Page {
                     id: favoritesLabel
                     text: qsTr("Favorites")
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 }
                 model: favoritesModel
                 delegate: FavoritesManageDelegate {}

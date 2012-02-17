@@ -13,6 +13,7 @@
 
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Rectangle {
     height: 35
@@ -25,7 +26,7 @@ Rectangle {
         id: count_label
         text: count
         font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-        color: UIConstants.COLOR_INVERTED_FOREGROUND
+        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
     }

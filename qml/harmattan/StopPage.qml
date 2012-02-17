@@ -15,6 +15,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
+import "theme.js" as Theme
 
 Page {
     id: stop_page
@@ -32,8 +33,6 @@ Page {
     tools: stopTools
     state: "normal"
 
-    anchors.margins: UIConstants.DEFAULT_MARGIN
-
     ToolBarLayout {
         id: stopTools
         visible: false
@@ -42,8 +41,12 @@ Page {
             text: qsTr("Map")
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                //stop_page.state = stop_page.state == "normal" ? "map" : "normal"
+                stop_page.state = stop_page.state == "normal" ? "map" : "normal"
                 map_loader.sourceComponent = map_component
+
+                // go to first stop
+                if(stop_page.state == "map")
+                    map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).latitude,stopModel.get(0).longitude)
             }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
@@ -57,12 +60,21 @@ Page {
         property bool done : false
     }
 
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
     ListView {
         id: routeList
         clip: true
         anchors.top: parent.top
         height: parent.height/2
         width: parent.width
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         z: 200
         model: stopModel
         delegate: StopDelegate {}
@@ -77,25 +89,35 @@ Page {
 
     Rectangle {
         id: map_clipper
-        color: "black"
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
         z: 100
-        anchors.top: parent.top - UIConstants.DEFAULT_MARGIN
-        anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width + UIConstants.DEFAULT_MARGIN * 2
-        height: parent.height/2 + UIConstants.DEFAULT_MARGIN
+        anchors.top: parent.top
+        anchors.bottom: map.top
+        anchors.topMargin: -UIConstants.DEFAULT_MARGIN
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Loader {
-        id: map_loader
+    Rectangle {
+        id: map
+        property alias map_loader : map_loader
+        anchors.top: routeList.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: parent.height/2 + UIConstants.DEFAULT_MARGIN
+        width: parent.width + UIConstants.DEFAULT_MARGIN * 2
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+
+        Loader {
+            id: map_loader
+            anchors.fill: parent
+        }
     }
 
     Component {
         id: map_component
         MapElement {
-            anchors.top: routeList.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            height: parent.height/2 + UIConstants.DEFAULT_MARGIN
-            width: parent.width + UIConstants.DEFAULT_MARGIN * 2
+            anchors.fill: parent
         }
     }
 

@@ -13,6 +13,7 @@
 
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Component {
     id: stopDelegate
@@ -28,18 +29,19 @@ Component {
             to: 1.0
             duration: 125
         }
-        BorderImage {
+        Rectangle {
             height: parent.height
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
+            color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+            z: -1
             visible: mouseArea.pressed
-            source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
         }
         Column {
             id: time_column
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: 100
+            width: UIConstants.LIST_ITEM_HEIGHT_SMALL
             Text {
                 id: diff
                 anchors.right: time.right
@@ -47,14 +49,18 @@ Component {
                 text: "+" + time_diff + " min"
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
             Text {
                 id: time
                 text: (index === 0)? Qt.formatTime(departure_time, "hh:mm") : Qt.formatTime(arrival_time, "hh:mm")
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
         }
         Column {
@@ -67,7 +73,9 @@ Component {
                 horizontalAlignment: Qt.AlignRight
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
         }
         MouseArea {
@@ -76,9 +84,11 @@ Component {
 
             onClicked: {
                 if(stop_page.state == "normal") {
+                    if(!map.map_loader.item)
+                        map_loader.sourceComponent = map_component
                     stop_page.state = "map"
                 }
-                map.flickable_map.panToLatLong(latitude,longitude)
+                map.map_loader.item.flickable_map.panToLatLong(latitude,longitude)
             }
         }
     }

@@ -12,6 +12,8 @@
  */
 
 import QtQuick 1.1
+import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Item {
     width: 50
@@ -19,17 +21,17 @@ Item {
     property alias source : image.source
     property alias mouseArea : mouseArea
 
-    BorderImage {
+    Rectangle {
         anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+        z: -1
         visible: mouseArea.pressed
-        source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
     }
 
     Image {
         id: image
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: parent.enabled ? 0.8 : 0.3
         smooth: true
         height: 50
         width: height

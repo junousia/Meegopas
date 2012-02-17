@@ -18,6 +18,7 @@ import QtMobility.location 1.2
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
+import "theme.js" as Theme
 
 Column {
     property alias type : label.text
@@ -153,15 +154,17 @@ Column {
         anchors.rightMargin: 5
         height: label.height
         width: label.width + count.width
-        BorderImage {
-            anchors.fill: parent
+        Rectangle {
+            height: parent.height
+            width: appWindow.width
+            color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+            z: -1
             visible: labelMouseArea.pressed
-            source: 'qrc:/images/background.png'
         }
         Text {
             id: label
             font.pixelSize: UIConstants.FONT_XXLARGE
-            color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             anchors.left: parent.left
             anchors.top: parent.top
         }
@@ -282,8 +285,8 @@ Column {
             enabled: !disable_favorites
             visible: !disable_favorites
             source: selected_favorite == -1?
-                        !theme.inverted?'qrc:/images/favorite-unmark.png':'qrc:/images/favorite-unmark-inverse.png' :
-                        !theme.inverted?'qrc:/images/favorite-mark.png':'qrc:/images/favorite-mark-inverse.png'
+                        !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-unmark.png':'qrc:/images/favorite-unmark-inverse.png' :
+                        !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-mark.png':'qrc:/images/favorite-mark-inverse.png'
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             mouseArea.onClicked: {

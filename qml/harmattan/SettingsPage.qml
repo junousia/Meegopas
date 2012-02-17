@@ -15,22 +15,27 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "storage.js" as Storage
+import "theme.js" as Theme
 
 Page {
     tools: settingsTools
 
     ToolBarLayout {
         id: settingsTools
-        x: 0
-        y: 0
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+    }
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
     }
 
     Flickable {
         id: settingsContent
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN
-
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         contentHeight: content_column.height + 2 * UIConstants.DEFAULT_MARGIN
         flickableDirection: Flickable.VerticalFlick
 
@@ -68,7 +73,7 @@ Page {
             Text {
                 text: qsTr("Used transports")
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
 
                 anchors.left: parent.left
             }
@@ -127,8 +132,8 @@ Page {
 
             Text {
                 text: qsTr("Change margin") + " (min)"
-                font.pixelSize: UIConstants.FONT_XLARGE
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
             Row {
@@ -159,7 +164,7 @@ Page {
                 Text {
                     text: "10"
                     font.pixelSize: UIConstants.FONT_XLARGE
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -168,8 +173,8 @@ Page {
 
             Text {
                 text: qsTr("Optimize route by")
-                font.pixelSize: UIConstants.FONT_XLARGE
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
 
@@ -215,8 +220,8 @@ Page {
 
             Text {
                 text: qsTr("Walking speed")
-                font.pixelSize: UIConstants.FONT_XLARGE
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
             ButtonColumn {

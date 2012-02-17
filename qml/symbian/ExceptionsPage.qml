@@ -14,25 +14,25 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Page {
-    tools: disruptionTools
+    tools: exceptionTools
 
     Component.onCompleted: {
-        disruptionModel.reload()
+        exceptionModel.reload()
     }
     ToolBarLayout {
-        id: disruptionTools
-        visible: false
+        id: exceptionTools
         ToolButton { iconSource: "toolbar-back"; onClicked: { pageStack.pop(); } }
         ToolButton {
             text: qsTr("Update")
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: { disruptionModel.reload() }
+            onClicked: { exceptionModel.reload() }
         }
     }
     XmlListModel {
-        id: disruptionModel
+        id: exceptionModel
         source: "http://www.poikkeusinfo.fi/xml/v2"
         query: "/DISRUPTIONS/DISRUPTION"
         XmlRole { name: "time"; query: "VALIDITY/@from/string()" }
@@ -41,11 +41,18 @@ Page {
         XmlRole { name: "info_en"; query: "INFO/TEXT[3]/string()" }
     }
 
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
     ListView {
         id: list
         anchors.fill: parent
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
-        model: disruptionModel
+        model: exceptionModel
         delegate: ExceptionDelegate {}
 
         header: Header {
@@ -60,18 +67,18 @@ Page {
 
     Text {
         anchors.centerIn: parent
-        visible: (!busyIndicator.visible && disruptionModel.count == 0)
+        visible: (!busyIndicator.visible && exceptionModel.count == 0)
         width: parent.width
         text: qsTr("No current traffic exceptions")
-        wrapMode: Text.WordWrap
         horizontalAlignment: Qt.AlignHCenter
+        wrapMode: Text.WordWrap
         font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
-        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {
         id: busyIndicator
-        visible: (disruptionModel.status != XmlListModel.Ready)
+        visible: (exceptionModel.status != XmlListModel.Ready)
         running: true
         anchors.centerIn: parent
         width: 75

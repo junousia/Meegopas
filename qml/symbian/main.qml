@@ -20,7 +20,7 @@ Window {
     id: appWindow
     property alias banner : banner
     property variant scaling_factor : 0.75
-
+    property variant colorscheme : "default"
     Item {
         id: theme
         property bool inverted : true
@@ -30,6 +30,14 @@ Window {
         id: banner
         property bool success : false
         iconSource: success ? "qrc:/images/banner_green.png":"qrc:/images/banner_red.png"
+    }
+
+    StatusBar {
+        id: status_bar
+        anchors.top: parent.top
+        visible: true
+        z: -1
+        opacity: 0.5
     }
 
     PageStack {

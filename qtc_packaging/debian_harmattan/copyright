@@ -7,7 +7,7 @@ Upstream Author(s):
 
 Copyright:
 
-    <Copyright (C) 2011 Jukka Nousiainen>
+    <Copyright (C) 2011-2012 Jukka Nousiainen>
 
 License:
 
@@ -28,9 +28,9 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
-The Debian packaging is (C) 2011, Jukka Nousiainen <nousiaisenjukka@gmail.com> and
+The Debian packaging is (C) 2012, Jukka Nousiainen <nousiaisenjukka@gmail.com> and
 is licensed under the GPL, see above.
 
-"Walker" icon from webcomic xkcd <www.xkcd.com> licensed under a Creative Commons Attribution-NonCommercial 2.5 License
+"Hat guy" icon from webcomic xkcd, strip #455 <http://www.xkcd.com/455> licensed under a Creative Commons Attribution-NonCommercial 2.5 License
 # Please also look if there are files or directories which have a
 # different copyright/license attached and list them here.

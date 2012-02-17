@@ -17,6 +17,7 @@ import com.nokia.extras 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
+import "theme.js" as Theme
 
 Page {
     id: favorites_page
@@ -24,8 +25,6 @@ Page {
 
     ToolBarLayout {
         id: favoritesTools
-        x: 0
-        y: 0
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
     }
 
@@ -60,10 +59,17 @@ Page {
         }
     }
 
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
     Flickable {
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN
+            margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
             fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
@@ -87,8 +93,8 @@ Page {
                 id: addButton
                 text: qsTr("Add")
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: UIConstants.FONT_SMALL
-                width: 150
+                font.pixelSize: UIConstants.FONT_SMALL  * appWindow.scaling_factor
+                width: 150 * appWindow.scaling_factor
                 height: 40
                 enabled: favorite.destination_coords != ''
                 onClicked: {
@@ -112,7 +118,7 @@ Page {
                         anchors.left: parent.left
                         anchors.right: remove_button.left
                         anchors.verticalCenter: parent.verticalCenter
-                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         font.pixelSize: UIConstants.FONT_XLARGE
                         elide: Text.ElideRight
                     }
@@ -141,8 +147,8 @@ Page {
                 header: Text {
                     id: favoritesLabel
                     text: qsTr("Favorites")
-                    font.pixelSize: UIConstants.FONT_XXLARGE
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 }
                 model: favoritesModel
                 delegate: favoritesManageDelegate

@@ -56,8 +56,14 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/compat \
         qtc_packaging/debian_harmattan/changelog
 
+    OTHER_FILES += \
+        splash.jpg
+
     RESOURCES += \
         harmattan.qrc
+
+    DEFINES += \
+        QMLJSDEBUGGER
 }
 
 simulator {

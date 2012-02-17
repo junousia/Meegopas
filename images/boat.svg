@@ -13,9 +13,12 @@
    height="500"
    id="svg1901"
    sodipodi:version="0.32"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.48.2 r9819"
    sodipodi:docname="boat.svg"
-   version="1.1">
+   version="1.1"
+   inkscape:export-filename="/home/jukka/workspace/Harmattan/Meegopas/images/boat.png"
+   inkscape:export-xdpi="18"
+   inkscape:export-ydpi="18">
   <defs
      id="defs1903">
     <inkscape:perspective
@@ -34,12 +37,12 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="196.75085"
+     inkscape:cx="-178.72284"
      inkscape:cy="224.94858"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1400"
-     inkscape:window-height="1026"
+     inkscape:window-width="1920"
+     inkscape:window-height="1176"
      inkscape:window-x="0"
      inkscape:window-y="24"
      showgrid="false"
@@ -74,18 +77,18 @@
      id="layer1"
      transform="translate(-149.5,-195.875)">
     <path
-       style="fill:#0080c8;fill-opacity:1;fill-rule:evenodd;stroke:#3b3b3b;stroke-width:7.55494022;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#0080c8;fill-opacity:1;fill-rule:evenodd;stroke:#444444;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 326.6076,260.4387 c -15.23596,0 -27.54061,14.22829 -27.54061,31.91464 l 0,165.21496 c 0,17.68634 12.30465,31.91464 27.54061,31.91464 l 149.80562,0 c 15.23596,0 27.54061,-14.2283 27.54061,-31.91464 l 0,-165.21496 c 0,-17.68635 -12.30465,-31.91464 -27.54061,-31.91464 l -149.80562,0 z m 33.6872,46.40621 c 14.03648,0 25.3488,14.22827 25.3488,31.91463 l 0,32.52307 c 0,17.68636 -11.31232,31.91464 -25.3488,31.91464 -14.03646,0 -25.34879,-14.22828 -25.34879,-31.91464 l 0,-32.52307 c 0,-17.68636 11.31233,-31.91463 25.34879,-31.91463 z m 85.57599,0 c 14.03647,0 25.30114,14.22827 25.30114,31.91463 l 0,32.52307 c 0,17.68636 -11.26467,31.91464 -25.30114,31.91464 -14.03648,0 -25.34878,-14.22828 -25.34878,-31.91464 l 0,-32.52307 c 0,-17.68636 11.3123,-31.91463 25.34878,-31.91463 z"
        id="rect4113"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#0080c8;fill-opacity:1;fill-rule:evenodd;stroke:#3b3b3b;stroke-width:7.55494022;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#0080c8;fill-opacity:1;fill-rule:evenodd;stroke:#444444;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 212.02034,457.90519 187.36563,-30.03725 191.67819,30.03725 c 43.69383,6.84712 44.92609,22.50776 43.35923,50.33269 l -1.07816,19.1463 c -1.7372,30.84982 -42.94021,58.02209 -92.07429,91.00815 0,0 -54.91687,29.41149 -93.15246,29.41149 -38.2356,0 -55.45593,0 -93.15246,0 -37.69652,0 -93.15245,-29.41149 -93.15245,-29.41149 -39.96841,-25.53046 -93.55071,-51.2059 -93.15245,-91.00815 0,0 0,14.46523 0,-19.1463 0,-27.88431 -7.97658,-42.10286 43.35922,-50.33269 z"
        id="rect4110"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="scssssssssss" />
     <path
-       style="fill:#0080c8;fill-opacity:1;fill-rule:evenodd;stroke:#3b3b3b;stroke-width:6.46852636;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#0080c8;fill-opacity:1;fill-rule:evenodd;stroke:#444444;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 190.12311,621.00753 c 18.33514,35.44248 48.56535,35.57123 70.4624,0 23.0867,45.52488 59.2267,26.56045 70.46245,0 26.98975,27.29541 44.9657,44.43563 70.46244,0 24.8425,46.56327 59.19659,23.79771 70.46241,0 22.63692,32.02338 46.46446,42.81531 70.46245,0 11.95494,24.20243 45.15213,47.43435 70.46243,0 7.65011,-14.33716 19.39662,8.6009 19.39662,19.28452 0,10.68359 -8.66168,31.70121 -19.39662,31.03017 l -46.97497,0 -46.97495,0 -46.97494,0 -46.97494,0 -46.97497,0 -46.97493,0 -46.97495,0 -46.97496,0 -46.97494,0 c -10.74573,0 -19.39663,-20.34658 -19.39663,-31.03017 0,-10.68362 10.75325,-31.73968 19.39663,-19.28452 z"
        id="rect4138"
        inkscape:connector-curvature="0"

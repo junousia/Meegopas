@@ -13,11 +13,11 @@
 
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Rectangle {
     width: parent.width
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.margins: UIConstants.DEFAULT_MARGIN/2
-    height: 2
-    color: "#444444"
+    height: 1
+    color: Theme.theme[appWindow.colorscheme].COLOR_SEPARATOR
 }

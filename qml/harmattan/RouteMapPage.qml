@@ -20,13 +20,19 @@ Page {
     id: page
     tools: mapTools
     anchors.fill: parent
+    property bool follow : false
 
     ToolBarLayout {
         id: mapTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
+        ToolIcon { iconId: "toolbar-back"
+            onClicked: {
+                pageStack.pop();
+            }
+        }
         ToolButtonRow {
-            ToolIcon { iconId: "toolbar-mediacontrol-previous"; onClicked: { map.previous_station(); } }
-            ToolIcon { iconId: "toolbar-mediacontrol-next"; onClicked: { map.next_station(); } }
+            ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !follow; onClicked: { map.previous_station(); } }
+            ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !follow; onClicked: { map.next_station(); } }
+            //ToolIcon { iconSource: "qrc:/images/gps-icon-inverted.png"; onClicked: { follow = follow?false:true } }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right

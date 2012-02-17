@@ -54,5 +54,8 @@
         <file>i18n/meegopas_fi_FI.qm</file>
         <file alias="qml/FlickableMap.qml">qml/common/FlickableMap.qml</file>
         <file>i18n/meegopas_ru_RU.qm</file>
+        <file alias="qml/ApplicationHeader.qml">qml/common/ApplicationHeader.qml</file>
+        <file alias="qml/theme.js">qml/common/theme.js</file>
+        <file alias="qml/RouteStationDelegate.qml">qml/common/RouteStationDelegate.qml</file>
     </qresource>
 </RCC>

@@ -13,9 +13,12 @@
    height="500"
    id="svg1901"
    sodipodi:version="0.32"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.48.2 r9819"
    sodipodi:docname="bus.svg"
-   version="1.1">
+   version="1.1"
+   inkscape:export-filename="/home/jukka/workspace/Harmattan/Meegopas/images/bus.png"
+   inkscape:export-xdpi="18"
+   inkscape:export-ydpi="18">
   <defs
      id="defs1903" />
   <sodipodi:namedview
@@ -25,13 +28,13 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="-414"
-     inkscape:cy="128.71265"
+     inkscape:zoom="1"
+     inkscape:cx="-334.78981"
+     inkscape:cy="294.21265"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1400"
-     inkscape:window-height="1026"
+     inkscape:window-width="1920"
+     inkscape:window-height="1176"
      inkscape:window-x="0"
      inkscape:window-y="24"
      showgrid="false"
@@ -60,7 +63,7 @@
      id="layer1"
      transform="translate(-149.5,-195.875)">
     <path
-       style="fill:#08a7cc;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:4.80592108;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#08a7cc;fill-opacity:1;fill-rule:evenodd;stroke:#444444;stroke-width:15;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
        d="m 240.88075,233.27796 c -20.48906,0 -36.97779,16.16687 -36.97779,36.25599 l 0,309.11276 c 0,20.08912 16.48873,36.28573 36.97779,36.28573 l 25.17766,0 c -0.012,0.31588 -0.0303,0.63288 -0.0303,0.95176 l 0,22.84216 c 0,13.70911 11.2563,24.74568 25.23833,24.74568 13.98203,0 25.23833,-11.03657 25.23833,-24.74568 l 0,-22.84216 c 0,-0.31888 -0.0182,-0.63588 -0.0303,-0.95176 l 168.96333,0 c -0.012,0.31588 -0.0303,0.63288 -0.0303,0.95176 l 0,22.84216 c 0,13.70911 11.25629,24.74568 25.23833,24.74568 13.98203,0 25.23833,-11.03657 25.23833,-24.74568 l 0,-22.84216 c 0,-0.31888 -0.0182,-0.63588 -0.0303,-0.95176 l 22.26554,0 c 20.48887,0 36.9776,-16.19661 36.9776,-36.28573 l 0,-309.11276 c 0,-20.08912 -16.48873,-36.25599 -36.97779,-36.25599 l -317.2385,0 z m 13.31686,32.35973 290.60478,0 c 9.0405,0 16.31998,7.13739 16.31998,16.00141 l 0,196.41882 c 0,8.86402 -7.27948,16.00141 -16.31998,16.00141 l -290.60478,0 c -9.0405,0 -16.31998,-7.13739 -16.31998,-16.00141 l 0,-196.41882 c 0,-8.86402 7.27948,-16.00141 16.31998,-16.00141 z m 37.06879,266.01603 c 13.67069,0 24.75298,10.22679 24.75298,22.84216 0,12.61538 -11.08229,22.84217 -24.75298,22.84217 -13.67069,0 -24.75297,-10.22679 -24.75297,-22.84217 0,-12.61537 11.08228,-22.84216 24.75297,-22.84216 z m 219.37931,0 c 13.67069,0 24.75298,10.22679 24.75298,22.84216 0,12.61538 -11.08229,22.84217 -24.75298,22.84217 -13.67069,0 -24.75297,-10.22679 -24.75297,-22.84217 0,-12.61537 11.08228,-22.84216 24.75297,-22.84216 z"
        id="rect3016"
        inkscape:connector-curvature="0" />

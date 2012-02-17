@@ -13,6 +13,8 @@
 
 import QtQuick 1.1
 import "helper.js" as Helper
+import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Item {
     id: locationSwitch
@@ -25,15 +27,15 @@ Item {
     property variant from
     property variant to
 
-    BorderImage {
+    Rectangle {
         anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+        z: -1
         visible: locationSwitchMouseArea.pressed
-        source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
     }
-
     Image {
         anchors.centerIn: parent
-        source: !theme.inverted?'qrc:/images/switch.png':'qrc:/images/switch-inverse.png'
+        source: !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/switch.png':'qrc:/images/switch-inverse.png'
         opacity: locationSwitch.enabled ? 0.8 : 0.3
         smooth: true
         height: 50

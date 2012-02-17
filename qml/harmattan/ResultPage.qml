@@ -16,6 +16,7 @@ import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
+import "theme.js" as Theme
 
 Page {
     tools: commonTools
@@ -31,6 +32,14 @@ Page {
         property bool done : false
     }
 
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
     ListView {
         id: list
         anchors.fill: parent
@@ -40,6 +49,9 @@ Page {
 
         header: Header {
             text: search_parameters.from_name + " - " + search_parameters.to_name
+            subtext: search_parameters.timetype == "departure"?
+                         qsTr("Departure time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm") :
+                         qsTr("Arrival time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm")
         }
     }
 
@@ -57,7 +69,7 @@ Page {
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
         font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
-        color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 
     BusyIndicator {

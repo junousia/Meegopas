@@ -65,7 +65,7 @@ function translate_typecode(type, code) {
     else if(transType[type] == "boat")
         return { type:transType[type], code:"" }
     else if(transType[type] == "metro")
-        return { type:transType[type], code:"metro" }
+        return { type:transType[type], code:"M" }
     else
         return { type:transType[type], code:code }
 }
@@ -363,17 +363,26 @@ route_search.prototype.dump_legs = function(index, model) {
 
     for (var legindex in route.legs) {
         var legdata = route.legs[legindex]
-        var output = {"type":legdata.type,
-            "code":legdata.code,
-            "length":legdata.length,
-            "duration":Math.round(legdata.duration/60),
-            "from":{},
-            "to":{},
-            "locs":[]}
-        output.from.name = legdata.locs[0].name?legdata.locs[0].name:''
-        output.from.time = convTime(legdata.locs[0].depTime)
-        output.to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
-        output.to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
+
+        var station = {}
+        station.type = "station"
+        station.name = legdata.locs[0].name?legdata.locs[0].name:''
+        station.time = convTime(legdata.locs[0].depTime)
+        station.code = ""
+        station.length = ""
+        station.duration = ""
+        station.leg_number = ""
+        station.locs = []
+        model.append(station)
+
+        var output = {}
+        output.type = legdata.type
+            output.code = legdata.code
+            output.length = legdata.length
+            output.duration = Math.round(legdata.duration/60)
+            output.leg_number = legindex
+            output.locs = []
+
         for (var locindex in legdata.locs) {
             var locdata = legdata.locs[locindex]
             output.locs[locindex] = {
@@ -385,9 +394,14 @@ route_search.prototype.dump_legs = function(index, model) {
         }
         model.append(output)
     }
+    var last_output = {"type":"station"}
+    last_output.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
+    last_output.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
+    last_output.leg_number = ""
+    model.append(last_output)
+
     model.done = true
 }
-
 
 location_to_address.prototype = new reittiopas
 location_to_address.prototype.constructor = location_to_address
@@ -395,7 +409,7 @@ function location_to_address(latitude, longitude, model) {
     this.model = model
     this.parameters = {}
     this.parameters.request = 'reverse_geocode'
-    this.parameters.coordinate = longitude + ',' + latitude
+    this.parameters.coordinate = longitude.replace(',','.') + ',' + latitude.replace(',','.')
     this.api_request(this.positioning_handler)
 }
 

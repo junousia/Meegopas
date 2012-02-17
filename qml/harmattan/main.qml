@@ -20,11 +20,10 @@ PageStackWindow {
     initialPage: mainPage
     property alias banner : banner
     property variant scaling_factor : 1
+    property string colorscheme : "default"
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
-        //background: theme.inverted?'image://theme/meegotouch-video-background':null
-        backgroundFillMode: Image.Stretch
     }
 
     MainPage{ id: mainPage }

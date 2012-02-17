@@ -13,6 +13,7 @@
 
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
+import "theme.js" as Theme
 
 Rectangle {
     width: parent.width

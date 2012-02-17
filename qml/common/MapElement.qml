@@ -16,8 +16,10 @@ import QtMobility.location 1.2
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 import "helper.js" as Helper
+import "theme.js" as Theme
 
 Item {
+    id: map_element
     property bool positioning_active : true
     property bool follow_position : false
     property alias flickable_map : flickable_map
@@ -45,11 +47,27 @@ Item {
     MapCircle {
         id: current_position
         smooth: true
-        color: "green"
+        color: "red"
         visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid
         radius: 8 * appWindow.scaling_factor
         width: 8 * appWindow.scaling_factor
         center: positionSource.position.coordinate
+    }
+
+    MapGroup {
+        id: root_group
+    }
+
+    Component {
+        id: stop
+        MapCircle {
+            id: stop_circle
+            smooth: true
+            color: "yellow"
+            radius: 6 * appWindow.scaling_factor
+            width: 6 * appWindow.scaling_factor
+            z: 5
+        }
     }
 
     Component {
@@ -63,10 +81,9 @@ Item {
                 id: stop_text
                 smooth: true
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                font.bold: true
                 offset.x: -(width/2)
-                offset.y: 10
-                z: -10
+                offset.y: 13
+                z: 0
             }
             MapCircle {
                 id: stop_circle
@@ -99,32 +116,44 @@ Item {
 
             if(index == 0) {
                 var first_station = group.createObject(flickable_map)
-                var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + endpointdata.from.latitude + ';longitude:' + endpointdata.from.longitude + ';}', group, "coord")
+                var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + endpointdata.from.latitude + ';longitude:' + endpointdata.from.longitude + ';}', flickable_map)
                 flickable_map.panToCoordinate(coord)
                 add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
-                flickable_map.map.addMapObject(first_station);
+                flickable_map.map.addMapObject(first_station)
             }
 
             add_station(endpointdata.to.latitude,endpointdata.to.longitude, endpointdata.to.name, map_group)
 
-            map_group.route.border.color = endpointdata.type == "walk" ? "green" : "blue"
-            map_group.z = current_z++;
+            map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]
 
             for(var shapeindex in endpointdata.shape) {
                 var shapedata = endpointdata.shape[shapeindex]
-                map_group.route.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', flickable_map, "coord"));
+                map_group.route.addCoordinate(Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + shapedata.y + ';longitude:' + shapedata.x + ';}', flickable_map));
             }
-
-            flickable_map.map.addMapObject(map_group);
+            if(endpointdata.type != "walk") {
+                for(var stopindex in endpointdata.locs) {
+                    var loc = endpointdata.locs[stopindex]
+                    if(stopindex != 0 && stopindex != endpointdata.locs.length - 1)
+                        add_stop(loc.latitude, loc.longitude)
+                }
+            }
+            flickable_map.map.addMapObject(map_group)
         }
     }
 
     function add_station(latitude, longitude, name, map_group) {
-        var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', group, "coord")
+        var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', flickable_map)
         map_group.stop_text.coordinate = coord;
         map_group.stop_text.text = name?name:""
         map_group.stop_circle.center = coord
         Helper.add_station(coord)
+    }
+
+    function add_stop(latitude, longitude) {
+        var stop_object = stop.createObject(flickable_map)
+        var coord = Qt.createQmlObject('import QtMobility.location 1.2; Coordinate{latitude:' + latitude + ';longitude:' + longitude + ';}', flickable_map)
+        stop_object.center = coord;
+        flickable_map.map.addMapObject(stop_object)
     }
 
     Component.onCompleted: {

@@ -14,6 +14,7 @@
 import QtQuick 1.1
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
+import "theme.js" as Theme
 
 Component {
     id: routeDelegate
@@ -30,33 +31,41 @@ Component {
             duration: 125
         }
 
-        BorderImage {
+        Rectangle {
             height: parent.height
             width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
+            color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+            z: -1
             visible: mouseArea.pressed
-            source: theme.inverted ? 'qrc:/images/background.png': 'qrc:/images/background.png'
         }
+
         Column {
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
                 text: "(" + Qt.formatTime(start, "hh:mm") + ")"
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
 
             Text {
                 text: first_transport ? Qt.formatTime(first_transport, "hh:mm") : Qt.formatTime(start, "hh:mm")
                 width: 75
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
 
             Text {
                 text: duration + " min"
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
         }
         Flow {
@@ -78,9 +87,11 @@ Component {
                     Text {
                         text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                         visible: true
-                        font.pixelSize: code == "metro" ? UIConstants.FONT_SMALL  * appWindow.scaling_factor : UIConstants.FONT_LSMALL * appWindow.scaling_factor
-                        color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         anchors.horizontalCenter: transportIcon.horizontalCenter
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: font.pixelSize * 1.2
                     }
                 }
             }
@@ -91,20 +102,26 @@ Component {
             Text {
                 text: "(" + Qt.formatTime(finish, "hh:mm") + ")"
                 anchors.right: parent.right
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
             Text {
                 text: last_transport ? Qt.formatTime(last_transport, "hh:mm") : Qt.formatTime(finish, "hh:mm")
                 anchors.right: parent.right
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
             Text {
                 text: qsTr("Walk ") + Math.floor(walk/100)/10 + ' km'
                 horizontalAlignment: Qt.AlignRight
-                color: !theme.inverted ? UIConstants.COLOR_SECONDARY_FOREGROUND : UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                 font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
         }
         MouseArea {

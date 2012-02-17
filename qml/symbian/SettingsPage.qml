@@ -15,15 +15,21 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "UIConstants.js" as UIConstants
 import "storage.js" as Storage
+import "theme.js" as Theme
 
 Page {
     tools: settingsTools
 
     ToolBarLayout {
         id: settingsTools
-        x: 0
-        y: 0
         ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+    }
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
     }
 
     Flickable {
@@ -36,11 +42,8 @@ Page {
         Component.onCompleted: {
             Storage.initialize()
             optimize.set_value(Storage.getSetting("optimize"))
-            console.log("optimize setting: " + Storage.getSetting("optimize"))
             walking_speed.set_value(Storage.getSetting("walking_speed"))
-            console.log("walking_speed setting: " + Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
-            console.log("change_margin setting: " + Storage.getSetting("change_margin"))
 
             if(Storage.getSetting("train_disabled") == "true") {
                 console.debug("train disabled")
@@ -70,8 +73,8 @@ Page {
 
             Text {
                 text: qsTr("Used transports")
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
 
                 anchors.left: parent.left
             }
@@ -130,16 +133,20 @@ Page {
 
             Text {
                 text: qsTr("Change margin") + " (min)"
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
             Row {
-                width: parent.width
-
+                anchors.right: parent.right
+                Text {
+                    text: "0"
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    anchors.verticalCenter: parent.verticalCenter
+                }
                 Slider {
                     id: change_margin
-                    anchors.fill: parent
                     maximumValue: 10
                     minimumValue: 0
                     stepSize: 1
@@ -155,32 +162,34 @@ Page {
                         Storage.setSetting("change_margin", change_margin.value)
                     }
                 }
+                Text {
+                    text: "10"
+                    font.pixelSize: UIConstants.FONT_XLARGE
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
-
-            Spacing {}
 
             Separator {}
 
             Text {
                 text: qsTr("Optimize route by")
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-
+                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
 
             ButtonColumn {
                 id: optimize
-                spacing: UIConstants.BUTTON_SPACING
                 function set_value(value) {
                     if(value == "default")
-                        optimize.checkedButton = def
+                        def.checked = true
                     else if(value == "fastest")
-                        optimize.checkedButton = fastest
+                        fastest.checked = true
                     else if(value == "least_transfers")
-                        optimize.checkedButton = transfers
+                        transfers.checked = true
                     else if(value == "least_walking")
-                        optimize.checkedButton = lwalking
+                        lwalking.checked = true
                     else
                         console.log("optimize value not set")
                 }
@@ -189,28 +198,22 @@ Page {
                 Button {
                     id: def
                     text: qsTr("Default")
-                    checkable: true
                     onClicked: Storage.setSetting('optimize', 'default')
                 }
                 Button {
                     id: fastest
-                    checkable: true
                     text: qsTr("Fastest")
                     onClicked: Storage.setSetting('optimize', 'fastest')
                 }
                 Button {
                     id: transfers
-                    checkable: true
                     text: qsTr("Least transfers")
                     onClicked: Storage.setSetting('optimize', 'least_transfers')
                 }
                 Button {
                     id: lwalking
-                    checkable: true
                     text: qsTr("Least walking")
-                    onClicked: { Storage.setSetting('optimize', 'least_walking')
-                        console.log("set value")
-                    }
+                    onClicked: Storage.setSetting('optimize', 'least_walking')
                 }
             }
 
@@ -218,9 +221,8 @@ Page {
 
             Text {
                 text: qsTr("Walking speed")
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-
+                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
             ButtonColumn {

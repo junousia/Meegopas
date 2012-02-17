@@ -29,6 +29,10 @@ Flickable {
     contentWidth: map.size.width * 2
     contentHeight: map.size.height * 2
     flickableDirection: Flickable.HorizontalAndVerticalFlick
+    boundsBehavior: Flickable.DragAndOvershootBounds
+    flickDeceleration: 4000
+    maximumFlickVelocity: 1000
+
     pressDelay: 500
     clip: true
     function updateSizes()
@@ -44,11 +48,8 @@ Flickable {
         contentY = centeredContentY
         map.pos.x = map.size.width/2
         map.pos.y = map.size.height/2
-        flickDeceleration = 4000
-        maximumFlickVelocity = 4000
     }
     function updateViewPort() {
-        //one pass, pans map and updtes content(X|Y) accordingly
         map.pan((contentX-centeredContentX)/map.getSkale,(contentY-centeredContentY)/map.getSkale)
 
         contentX = centeredContentX
@@ -61,13 +62,24 @@ Flickable {
         smooth: true
         id: map
 
-        //this values are constant and independent from scaling.
         size.width: mapFlickable.width * 2
         size.height: mapFlickable.height * 2
         zoomLevel: defaultZoomLevel
-        plugin: Plugin { name: "nokia" }
+        plugin: Plugin {
+            name: "nokia"
+            parameters: [
+                PluginParameter {
+                    name: "mapping.token"
+                    value: "QYpeZ4z7gwhQr7iW0hOTUQ%3D%3D"
+                },
+                PluginParameter {
+                    name: "mapping.appid"
+                    value: "ETjZnV1eZZ5o0JmN320V"
+                }
+            ]
+        }
         mapType: Map.StreetMap
-        connectivityMode: Map.OfflineMode
+        connectivityMode: Map.HybridMode
         center: Coordinate {
             latitude: defaultLatitude
             longitude:defaultLongitude

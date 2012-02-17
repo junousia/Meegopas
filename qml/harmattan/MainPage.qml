@@ -18,6 +18,7 @@ import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
 import "helper.js" as Helper
+import "theme.js" as Theme
 
 Page {
     id: root
@@ -26,7 +27,7 @@ Page {
     property date myTime
 
     Component.onCompleted: {
-        theme.inverted = true
+        theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
         myTime = new Date()
@@ -109,14 +110,30 @@ Page {
         rejectButtonText: qsTr("Reject")
     }
 
-    Flickable {
+    ApplicationHeader {
+        id: title
+        title: qsTr("Meegopas")
+        color: Theme.theme[appWindow.colorscheme].COLOR_APPHEADER_BACKGROUND
+    }
+
+    Rectangle {
+        id: background
         anchors.fill: parent
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
+    Flickable {
+        anchors.top: title.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
         anchors {
-            topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
             margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
             horizontalCenter: parent.horizontalCenter
         }
-        width: parent.width
+
         interactive: true
         flickableDirection: Flickable.VerticalFlick
         contentHeight: content_column.height
@@ -126,15 +143,13 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
-            Header { text: qsTr("Meegopas"); apptitle: true }
-
             Item {
                 width: parent.width
                 height: from.height + to.height + UIConstants.DEFAULT_MARGIN
 
                 LocationEntry { id: from; type: qsTr("From") }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2 + 3
@@ -154,17 +169,17 @@ Page {
                     height: timeButton.height
                     width: timeButton.width
 
-                    BorderImage {
+                    Rectangle {
                         anchors.fill: parent
+                        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+                        z: -1
                         visible: timeMouseArea.pressed
-                        source: 'qrc:/images/background.png'
                     }
-
                     Text {
                         id: timeButton
                         font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
-                        color: UIConstants.COLOR_INVERTED_FOREGROUND
-                        text: Qt.formatTime(root.myTime, "hh:mm")
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                    text: Qt.formatTime(root.myTime, "hh:mm")
                     }
 
                     MouseArea {
@@ -182,6 +197,7 @@ Page {
                 Item {
                     width: 150
                     height: timeType.height + timeTypeText.height
+                    anchors.verticalCenter: timeContainer.verticalCenter
                     Switch {
                         id: timeType
                         platformStyle: customswitch
@@ -192,7 +208,7 @@ Page {
                         anchors.top: timeType.bottom
                         anchors.horizontalCenter: timeType.horizontalCenter
                         font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
-                        color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                         text: timeType.checked? qsTr("arrival") : qsTr("departure")
 
                         MouseArea {
@@ -208,16 +224,17 @@ Page {
                 height: dateButton.height
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                BorderImage {
+                Rectangle {
                     anchors.fill: parent
+                    color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+                    z: -1
                     visible: dateMouseArea.pressed
-                    source: 'qrc:/images/background.png'
                 }
                 Text {
                     id: dateButton
                     height: UIConstants.SIZE_BUTTON
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
-                    color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
+                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                     text: Qt.formatDate(root.myTime, "dd. MMMM yyyy")
                 }
 
@@ -233,7 +250,7 @@ Page {
             Button {
                 id: timedate_now
                 text: qsTr("Now")
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
                 height: 40
