@@ -31,7 +31,7 @@ Component {
         }
         Rectangle {
             height: parent.height
-            width: appWindow.width
+            width: appWindow.width + UIConstants.DEFAULT_MARGIN * 2
             anchors.horizontalCenter: parent.horizontalCenter
             color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
             z: -1

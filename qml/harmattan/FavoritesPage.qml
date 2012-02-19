@@ -144,7 +144,7 @@ Page {
                 width: parent.width
                 height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
                 interactive: false
-                header: Text {
+                header: Label {
                     id: favoritesLabel
                     text: qsTr("Favorites")
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor

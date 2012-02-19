@@ -47,7 +47,7 @@ Column {
         suggestionModel.source = ""
         var address = name
 
-        if(housenumber)
+        if(housenumber && address.slice(address.length - housenumber.length) != housenumber)
             address += " " + housenumber
 
         textfield.auto_update = true
@@ -117,12 +117,14 @@ Column {
                 if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
                     suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
                                                                             positionSource.position.coordinate.longitude.toString())
+//                    appWindow.banner.text = "coordinates: " + positionSource.position.coordinate.latitude.toString() + "," + positionSource.position.coordinate.longitude.toString()
+//                    appWindow.banner.open()
                 }
                 else {
                     favoriteQuery.selectedIndex = -1
                     appWindow.banner.success = false
                     appWindow.banner.text = qsTr("Position not yet available")
-                    appWindow.banner.show()
+                    appWindow.banner.open()
                 }
             } else {
                 update_location(favoritesModel.get(selectedIndex).modelData,
@@ -158,7 +160,7 @@ Column {
         }
         Text {
             id: label
-            font.pixelSize: UIConstants.FONT_XXLARGE
+            font.pixelSize: UIConstants.FONT_XLARGE
             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
             anchors.left: parent.left
             anchors.top: parent.top

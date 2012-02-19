@@ -45,10 +45,10 @@ Item {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN * 5 * appWindow.scaling_factor
-        width: 30
+        width: 15
         Rectangle {
             anchors.right: parent.right
-            width: 25
+            width: 15
             height: 5
             color: Theme.theme['general'].TRANSPORT_COLORS[type]
         }
@@ -61,7 +61,7 @@ Item {
         }
         Rectangle {
             anchors.right: parent.right
-            width: 25
+            width: 15
             height: 5
             color: Theme.theme['general'].TRANSPORT_COLORS[type]
         }

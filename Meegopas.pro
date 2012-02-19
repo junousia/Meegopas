@@ -7,14 +7,14 @@ common_qml.source = qml/common
 common_qml.target = qml
 images.source = images
 loc.source = i18n
-DEPLOYMENTFOLDERS = common_qml images loc
+# DEPLOYMENTFOLDERS = common_qml images loc
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
-#    DEPLOYMENTFOLDERS += symbian_qml
+    # DEPLOYMENTFOLDERS += symbian_qml
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
     # fail to install if self-signed. By default qmake uses the unprotected
@@ -39,7 +39,7 @@ symbian {
 
 contains(MEEGO_EDITION, harmattan) {
     # add harmattan specific qml
-    DEPLOYMENTFOLDERS += harmattan_qml
+    # DEPLOYMENTFOLDERS += harmattan_qml
 
     # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
     CONFIG += qdeclarative-boostable
@@ -61,9 +61,6 @@ contains(MEEGO_EDITION, harmattan) {
 
     RESOURCES += \
         harmattan.qrc
-
-    DEFINES += \
-        QMLJSDEBUGGER
 }
 
 simulator {

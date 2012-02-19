@@ -146,7 +146,7 @@ Page {
 
                 LocationEntry { id: from; type: qsTr("From") }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2

@@ -25,8 +25,7 @@ Item {
     anchors.bottomMargin: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
     height: headerText.height + headerDivider.height +
             (subheaderText.visible ? subheaderText.height : 0) +
-            UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
-
+            UIConstants.DEFAULT_MARGIN * 2 * appWindow.scaling_factor
     Text {
         id: headerText
         width: parent.width

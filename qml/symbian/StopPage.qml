@@ -33,6 +33,8 @@ Page {
     tools: stopTools
     state: "normal"
 
+    anchors.margins: UIConstants.DEFAULT_MARGIN
+
     ToolBarLayout {
         id: stopTools
         visible: false
