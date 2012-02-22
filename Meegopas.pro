@@ -7,7 +7,11 @@ common_qml.source = qml/common
 common_qml.target = qml
 images.source = images
 loc.source = i18n
-# DEPLOYMENTFOLDERS = common_qml images loc
+DEPLOYMENTFOLDERS = common_qml images loc
+
+splash.files = splash.png splash-l.png
+splash.path = /usr/share/$${TARGET}/
+INSTALLS += splash
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
@@ -55,9 +59,6 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/control \
         qtc_packaging/debian_harmattan/compat \
         qtc_packaging/debian_harmattan/changelog
-
-    OTHER_FILES += \
-        splash.jpg
 
     RESOURCES += \
         harmattan.qrc
