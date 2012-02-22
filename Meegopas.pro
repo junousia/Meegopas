@@ -27,12 +27,16 @@ symbian {
     # DEPLOYMENT.installer_header = 0x2002CCCF
     DEPLOYMENT.installer_header = 0x2002CCCF
 
+    VERSION = 1.1.3
+
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location
 
     vendorinfo = "%{\"JukkaNousiainen\"}" ":\"JukkaNousiainen\""
 
     my_deployment.pkg_prerules = vendorinfo
+    my_deployment.pkg_prerules += "(0x200346de), 1, 1, 0, {\"Qt Quick components for Symbian\"}"
+
     DEPLOYMENT += my_deployment
 
     CONFIG += qt-components
