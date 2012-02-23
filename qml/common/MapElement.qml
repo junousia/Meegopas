@@ -82,7 +82,7 @@ Item {
                 smooth: true
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 offset.x: -(width/2)
-                offset.y: font.pixelSize
+                offset.y: 18
                 z: 0
             }
             MapCircle {
