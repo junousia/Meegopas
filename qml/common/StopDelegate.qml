@@ -19,7 +19,7 @@ Component {
     id: stopDelegate
     Item {
         id: stop_item
-        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+        height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
         width: parent.width
         opacity: 0.0
 

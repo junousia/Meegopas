@@ -176,8 +176,8 @@ Page {
                     Text {
                         id: timeButton
                         font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                    text: Qt.formatTime(root.myTime, "hh:mm")
+                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                        text: Qt.formatTime(root.myTime, "hh:mm")
                     }
 
                     MouseArea {

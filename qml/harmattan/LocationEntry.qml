@@ -156,7 +156,7 @@ Column {
         width: label.width + count.width
         Rectangle {
             height: parent.height
-            width: appWindow.width
+            width: label.width + count.width
             color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
             z: -1
             visible: labelMouseArea.pressed
@@ -177,14 +177,6 @@ Column {
             anchors.left: label.right
             anchors.leftMargin: 2
             anchors.verticalCenter: label.verticalCenter
-        }
-        BusyIndicator {
-            id: busyIndicator
-            visible: suggestionModel.status == XmlListModel.Loading
-            running: true
-            anchors.left: label.right
-            anchors.verticalCenter: label.verticalCenter
-            platformStyle: BusyIndicatorStyle { size: 'medium' }
         }
 
         MouseArea {
@@ -276,6 +268,25 @@ Column {
                 }
             }
 
+            BusyIndicator {
+                id: busyIndicator
+                visible: suggestionModel.status == XmlListModel.Loading
+                running: true
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.rightMargin: 15
+                platformStyle: BusyIndicatorStyle {
+                    size: 'small'
+                    spinnerFrames: "image://theme/spinner"
+                }
+                MouseArea {
+                    id: spinnerMouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        suggestionModel.source = ""
+                    }
+                }
+            }
             Keys.onReturnPressed: {
                 textfield.platformCloseSoftwareInputPanel()
                 parent.focus = true

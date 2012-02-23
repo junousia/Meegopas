@@ -109,6 +109,7 @@ Column {
     SelectionDialog {
         id: favoriteQuery
         model: favoritesModel
+        height: 310
         titleText: qsTr("Choose location")
 
         onAccepted: {
@@ -171,13 +172,6 @@ Column {
             visible: (suggestionModel.count > 1)
             anchors.left: label.right
             anchors.leftMargin: 2
-            anchors.verticalCenter: label.verticalCenter
-        }
-        BusyIndicator {
-            id: busyIndicator
-            visible: suggestionModel.status == XmlListModel.Loading
-            running: true
-            anchors.left: label.right
             anchors.verticalCenter: label.verticalCenter
         }
 
@@ -267,6 +261,22 @@ Column {
                 }
             }
 
+            BusyIndicator {
+                id: busyIndicator
+                platformInverted: true
+                visible: suggestionModel.status == XmlListModel.Loading
+                running: true
+                anchors.rightMargin: 10
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                MouseArea {
+                    id: busyMouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        suggestionModel.source = ""
+                    }
+                }
+            }
             Keys.onReturnPressed: {
                 textfield.platformCloseSoftwareInputPanel()
                 parent.focus = true

@@ -47,7 +47,7 @@ Item {
         wrapMode: Text.WordWrap
         visible: parent.subtext
         lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.1
+        lineHeight: font.pixelSize * 1.0
     }
 
     Separator {

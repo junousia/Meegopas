@@ -30,6 +30,8 @@ Page {
         }
     }
 
+    anchors.margins: UIConstants.DEFAULT_MARGIN
+
     tools: stopTools
     state: "normal"
 

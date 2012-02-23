@@ -14,13 +14,15 @@ Rectangle {
     anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
 
     height: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_HEIGHT_PORTRAIT : UIConstants.HEADER_DEFAULT_HEIGHT_LANDSCAPE
-    z: 99
+    z: 10
     Text {
         id: title
         color: Theme.theme[appWindow.colorscheme].COLOR_APPHEADER_FOREGROUND
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: 20
-        font.pixelSize: 32 * appWindow.scaling_factor
+        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
+        anchors.bottomMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
+        anchors.topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
+        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
     }
 }
