@@ -143,6 +143,8 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
+            Spacing { height: UIConstants.DEFAULT_MARGIN / 3 }
+
             Item {
                 width: parent.width
                 height: from.height + to.height + UIConstants.DEFAULT_MARGIN
@@ -152,7 +154,7 @@ Page {
                 Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 }
 
                 SwitchLocation {
-                    anchors.topMargin: UIConstants.DEFAULT_MARGIN/2 + 3
+                    anchors.topMargin: UIConstants.DEFAULT_MARGIN/2
                     from: from
                     to: to
                 }
@@ -178,8 +180,10 @@ Page {
                     Text {
                         id: timeButton
                         font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                    text: Qt.formatTime(root.myTime, "hh:mm")
+                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                        text: Qt.formatTime(root.myTime, "hh:mm")
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: font.pixelSize * 1.2
                     }
 
                     MouseArea {
@@ -210,6 +214,8 @@ Page {
                         font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                         text: timeType.checked? qsTr("arrival") : qsTr("departure")
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: font.pixelSize * 1.2
 
                         MouseArea {
                             anchors.fill: parent
@@ -236,6 +242,8 @@ Page {
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                     text: Qt.formatDate(root.myTime, "dd. MMMM yyyy")
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.2
                 }
 
                 MouseArea {

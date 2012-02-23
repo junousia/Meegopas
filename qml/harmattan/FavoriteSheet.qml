@@ -45,6 +45,8 @@ Sheet {
                  font.pixelSize: UIConstants.FONT_XXLARGE
                  color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                  anchors.left: parent.left
+                 lineHeightMode: Text.FixedHeight
+                 lineHeight: font.pixelSize * 1.2
              }
              TextField {
                  id: sheetTextfield

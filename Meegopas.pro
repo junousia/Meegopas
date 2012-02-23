@@ -7,7 +7,7 @@ common_qml.source = qml/common
 common_qml.target = qml
 images.source = images
 loc.source = i18n
-DEPLOYMENTFOLDERS = common_qml images loc
+# DEPLOYMENTFOLDERS = common_qml images loc
 
 splash.files = splash.png splash-l.png
 splash.path = /usr/share/$${TARGET}/

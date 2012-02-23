@@ -42,6 +42,8 @@ Component {
                 horizontalAlignment: Qt.AlignLeft
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
             Text {
                 text: info_fi
@@ -50,6 +52,8 @@ Component {
                 wrapMode: Text.WordWrap
                 font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
         }
     }

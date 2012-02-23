@@ -167,6 +167,8 @@ Column {
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             anchors.left: parent.left
             anchors.top: parent.top
+            lineHeightMode: Text.FixedHeight
+            lineHeight: font.pixelSize * 1.1
         }
         Bubble {
             id: count

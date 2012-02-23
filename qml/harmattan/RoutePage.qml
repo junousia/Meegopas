@@ -96,6 +96,8 @@ Page {
         wrapMode: Text.WordWrap
         font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+        lineHeightMode: Text.FixedHeight
+        lineHeight: font.pixelSize * 1.2
     }
 
     BusyIndicator {

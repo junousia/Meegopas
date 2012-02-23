@@ -36,7 +36,6 @@ Item {
     Image {
         anchors.centerIn: parent
         source: !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/switch.png':'qrc:/images/switch-inverse.png'
-        opacity: locationSwitch.enabled ? 0.8 : 0.3
         smooth: true
         height: 50
         width: height

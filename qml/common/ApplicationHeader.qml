@@ -11,6 +11,7 @@ Rectangle {
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
+    anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
 
     height: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_HEIGHT_PORTRAIT : UIConstants.HEADER_DEFAULT_HEIGHT_LANDSCAPE
     z: 99

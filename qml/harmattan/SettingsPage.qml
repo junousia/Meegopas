@@ -76,6 +76,8 @@ Page {
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
 
                 anchors.left: parent.left
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
 
             ButtonColumn {
@@ -91,8 +93,6 @@ Page {
                         metro.checked = false
                     else if(value == "tram")
                         tram.checked = false
-                    else
-                        console.log("unknown value")
                 }
 
                 anchors.right: parent.right
@@ -135,6 +135,8 @@ Page {
                 font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
             Row {
                 anchors.right: parent.right
@@ -143,6 +145,8 @@ Page {
                     font.pixelSize: UIConstants.FONT_XLARGE
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.2
                 }
                 Slider {
                     id: change_margin
@@ -166,6 +170,8 @@ Page {
                     font.pixelSize: UIConstants.FONT_XLARGE
                     color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.2
                 }
             }
 
@@ -176,6 +182,8 @@ Page {
                 font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
 
             ButtonColumn {
@@ -189,8 +197,6 @@ Page {
                         transfers.checked = true
                     else if(value == "least_walking")
                         lwalking.checked = true
-                    else
-                        console.log("optimize value not set")
                 }
 
                 anchors.right: parent.right
@@ -223,6 +229,8 @@ Page {
                 font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
             ButtonColumn {
                 id: walking_speed
@@ -235,8 +243,6 @@ Page {
                         vfwalking.checked = true
                     else if(value == "150")
                         running.checked = true
-                    else
-                        console.log("walking_speed value not set")
                 }
 
                 anchors.right: parent.right

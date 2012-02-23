@@ -121,6 +121,8 @@ Page {
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         font.pixelSize: UIConstants.FONT_XLARGE
                         elide: Text.ElideRight
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: font.pixelSize * 1.2
                     }
                     Button {
                         id: remove_button
@@ -144,11 +146,12 @@ Page {
                 width: parent.width
                 height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
                 interactive: false
-                header: Label {
-                    id: favoritesLabel
+                header: Text {
                     text: qsTr("Favorites")
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.1
                 }
                 model: favoritesModel
                 delegate: favoritesManageDelegate
