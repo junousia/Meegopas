@@ -7,7 +7,7 @@ common_qml.source = qml/common
 common_qml.target = qml
 images.source = images
 loc.source = i18n
-# DEPLOYMENTFOLDERS = common_qml images loc
+DEPLOYMENTFOLDERS = common_qml images loc
 
 splash.files = splash.png splash-l.png
 splash.path = /usr/share/$${TARGET}/
@@ -27,7 +27,7 @@ symbian {
     # DEPLOYMENT.installer_header = 0x2002CCCF
     DEPLOYMENT.installer_header = 0x2002CCCF
 
-    VERSION = 1.1.3
+    VERSION = 1.2.0
 
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location
@@ -47,7 +47,7 @@ symbian {
 
 contains(MEEGO_EDITION, harmattan) {
     # add harmattan specific qml
-    # DEPLOYMENTFOLDERS += harmattan_qml
+    DEPLOYMENTFOLDERS += harmattan_qml
 
     # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
     CONFIG += qdeclarative-boostable

@@ -20,6 +20,7 @@ Item {
     height: 50
     property alias source : image.source
     property alias mouseArea : mouseArea
+    property alias image : image
 
     Rectangle {
         anchors.fill: parent

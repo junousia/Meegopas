@@ -28,6 +28,8 @@ Page {
         ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
     }
 
+    FavoriteSheet { id: sheet }
+
     property alias textfield : favorite
 
     Component.onCompleted: {
@@ -36,11 +38,100 @@ Page {
         Favorites.getFavorites(favoritesModel)
     }
 
-    FavoriteSheet { id: sheet }
-
     ListModel {
         id: favoritesModel
         property bool updating : false
+    }
+
+    Dialog {
+        id: edit_dialog
+        property alias name : editTextField.text
+        visualParent: pageStack
+        title: Column {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            Text {
+                text: qsTr("Edit favorite name")
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignCenter
+                elide: Text.ElideNone
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.bold: true
+                font.family: UIConstants.FONT_FAMILY
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+            }
+            Spacing { }
+        }
+
+        content: Item {
+            width: parent.width
+            height: edit_column.height + UIConstants.DEFAULT_MARGIN * 2
+            Column {
+                id: edit_column
+                width: parent.width
+                spacing: UIConstants.DEFAULT_MARGIN
+                TextField {
+                    id: editTextField
+                    width: parent.width
+                    text: edit_dialog.name
+
+                    Image {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/images/clear.png"
+                        visible: (editTextField.activeFocus)
+                        opacity: 0.8
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                editTextField.text = ''
+                            }
+                        }
+                    }
+
+                    Keys.onReturnPressed: {
+                        editTextField.platformCloseSoftwareInputPanel()
+                        parent.focus = true
+                    }
+                }
+            }
+        }
+        buttons: Column {
+            spacing: UIConstants.DEFAULT_MARGIN
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: button_save.width
+            Button {
+                id: button_save
+                text: qsTr("Save")
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: {
+                    if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
+                        favoritesModel.clear()
+                        Favorites.getFavorites(favoritesModel)
+
+                        appWindow.banner.success = true
+                        appWindow.banner.text = qsTr("Favorite name successfully modified")
+                        appWindow.banner.show()
+                    } else {
+                        appWindow.banner.success = false
+                        appWindow.banner.text = qsTr("Favorite name modification failed")
+                        appWindow.banner.show()
+                    }
+
+                    edit_dialog.close()
+                }
+            }
+            Button {
+                id: button_cancel
+                text: qsTr("Cancel")
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: edit_dialog.close()
+            }
+        }
     }
 
     QueryDialog {
@@ -73,7 +164,7 @@ Page {
             fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
-        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN
+        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
 
         Component.onCompleted: {
             Favorites.initialize()
@@ -82,7 +173,7 @@ Page {
         Column {
             id: content_column
             width: parent.width
-            spacing: UIConstants.DEFAULT_MARGIN
+            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
             Header {
                 text: qsTr("Manage favorites")
             }
@@ -98,8 +189,7 @@ Page {
                 height: 40
                 enabled: favorite.destination_coords != ''
                 onClicked: {
-                    sheet.is_add_favorites = true
-                    sheet.text = favorite.getCoords().name
+                    sheet.name = favorite.getCoords().name
                     sheet.coords = favorite.getCoords().coords
                     sheet.open()
                 }
@@ -111,28 +201,34 @@ Page {
                 id: favoritesManageDelegate
                 Item {
                     width: parent.width
-                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL
+                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
 
                     Text {
                         text: modelData
                         anchors.left: parent.left
-                        anchors.right: remove_button.left
+                        anchors.right: edit_button.left
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                        font.pixelSize: UIConstants.FONT_XLARGE
+                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
                         elide: Text.ElideRight
                         lineHeightMode: Text.FixedHeight
                         lineHeight: font.pixelSize * 1.2
                     }
-                    Button {
+                    MyButton {
+                        id: edit_button
+                        source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-edit-white':'image://theme/icon-m-toolbar-edit'
+                        anchors.right: remove_button.left
+                        mouseArea.onClicked: {
+                            list.currentIndex = index
+                            edit_dialog.name = modelData
+                            edit_dialog.open()
+                        }
+                    }
+                    MyButton {
                         id: remove_button
-                        text: qsTr("Remove")
+                        source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-delete-white':'image://theme/icon-m-toolbar-delete'
                         anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: UIConstants.FONT_SMALL
-                        width: 150
-                        height: 40
-                        onClicked: {
+                        mouseArea.onClicked: {
                             list.currentIndex = index
                             deleteQuery.name = modelData
                             deleteQuery.open()

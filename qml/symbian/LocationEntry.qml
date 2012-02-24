@@ -13,11 +13,11 @@
 
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import com.nokia.extras 1.1
-import QtMobility.location 1.1
+import QtMobility.location 1.2
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
+import "theme.js" as Theme
 
 Column {
     property alias type : label.text
@@ -65,6 +65,8 @@ Column {
         else
             console.log("no acceptable input")
     }
+
+    FavoriteSheet { id: favorite_sheet }
 
     PositionSource {
         id: positionSource
@@ -270,7 +272,7 @@ Column {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea {
-                    id: busyMouseArea
+                    id: spinnerMouseArea
                     anchors.fill: parent
                     onClicked: {
                         suggestionModel.source = ""
@@ -288,8 +290,8 @@ Column {
             enabled: !disable_favorites
             visible: !disable_favorites
             source: selected_favorite == -1?
-                        !theme.inverted?'qrc:/images/favorite-unmark.png':'qrc:/images/favorite-unmark-inverse.png' :
-                        !theme.inverted?'qrc:/images/favorite-mark.png':'qrc:/images/favorite-mark-inverse.png'
+                        !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-unmark.png':'qrc:/images/favorite-unmark-inverse.png' :
+                        !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-mark.png':'qrc:/images/favorite-mark-inverse.png'
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             mouseArea.onClicked: {
@@ -297,6 +299,22 @@ Column {
                 Favorites.getFavorites(favoritesModel)
                 favoritesModel.insert(0, {modelData: qsTr("Current location"),coord:"0,0"})
                 favoriteQuery.open()
+            }
+            mouseArea.onPressAndHold: {
+                if(destination_coords && favoriteQuery.selectedIndex <= 0) {
+                    if(("OK" == Favorites.addFavorite(textfield.text, destination_coords))) {
+                        favoritesModel.clear()
+                        Favorites.getFavorites(favoritesModel)
+                        favoriteQuery.selectedIndex = favoritesModel.count
+                        appWindow.banner.success = true
+                        appWindow.banner.text = qsTr("Location added to favorites")
+                        appWindow.banner.open()
+                    } else {
+                        appWindow.banner.success = false
+                        appWindow.banner.text = qsTr("Location already in the favorites")
+                        appWindow.banner.open()
+                    }
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ Component {
     id: favoritesManageDelegate
     Item {
         width: parent.width
-        height: UIConstants.LIST_ITEM_HEIGHT_SMALL
+        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
 
         Text {
             text: modelData

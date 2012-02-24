@@ -18,87 +18,102 @@ import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
 import "theme.js" as Theme
 
-Sheet {
+Dialog {
+    id: add_dialog
+    property alias name : editTextField.text
+    property string coords : ""
+
     visualParent: pageStack
-
-    acceptButtonText: qsTr("Save")
-    rejectButtonText: qsTr("Cancel")
-
-    property alias text : sheetTextfield.text
-    property string coords
-    property bool is_add_favorites : false
+    title: Column {
+        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        Text {
+            text: qsTr("Add to favorites")
+            font.pixelSize: UIConstants.FONT_XLARGE
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Qt.AlignCenter
+            elide: Text.ElideNone
+            font.bold: true
+            font.family: UIConstants.FONT_FAMILY
+            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+        }
+        Spacing { }
+    }
 
     content: Item {
-         anchors.fill: parent
-         anchors.margins: UIConstants.DEFAULT_MARGIN
+        width: parent.width
+        height: edit_column.height + UIConstants.DEFAULT_MARGIN * 2
+        Column {
+            id: edit_column
+            width: parent.width
+            spacing: UIConstants.DEFAULT_MARGIN
+            TextField {
+                id: editTextField
+                width: parent.width
+                text: add_dialog.name
 
-         Column {
-             width: parent.width
-             Header {
-                 text: qsTr("Add to favorites")
-             }
+                Image {
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/images/clear.png"
+                    visible: (editTextField.activeFocus)
+                    opacity: 0.8
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            editTextField.text = ''
+                        }
+                    }
+                }
 
-             Spacing {}
+                Keys.onReturnPressed: {
+                    editTextField.platformCloseSoftwareInputPanel()
+                    parent.focus = true
+                }
+            }
+        }
+    }
+    buttons: Column {
+        spacing: UIConstants.DEFAULT_MARGIN
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: button_save.width
+        Button {
+            id: button_save
+            text: qsTr("Add")
+            font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+            width: UIConstants.BUTTON_WIDTH
+            height: UIConstants.BUTTON_HEIGHT
+            onClicked: {
+                if(add_dialog.name != '') {
+                    if(("OK" == Favorites.addFavorite(add_dialog.name, coords))) {
+                        favoritesModel.clear()
+                        Favorites.getFavorites(favoritesModel)
+                        add_dialog.name = ''
 
-             Text {
-                 text: qsTr("Enter name")
-                 font.pixelSize: UIConstants.FONT_XXLARGE
-                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                 anchors.left: parent.left
-                 lineHeightMode: Text.FixedHeight
-                 lineHeight: font.pixelSize * 1.2
-             }
-             TextField {
-                 id: sheetTextfield
-                 width: parent.width
-
-                 Image {
-                     anchors.right: parent.right
-                     anchors.verticalCenter: parent.verticalCenter
-                     source: 'image://theme/icon-m-input-clear'
-                     visible: (sheetTextfield.activeFocus)
-                     opacity: 0.8
-                     MouseArea {
-                         anchors.fill: parent
-                         onClicked: {
-                             sheetTextfield.text = ''
-                         }
-                     }
-                 }
-
-                 Keys.onReturnPressed: {
-                     sheetTextfield.platformCloseSoftwareInputPanel()
-                     parent.focus = true
-                 }
-             }
-         }
-     }
-     onAccepted: {
-         if(sheetTextfield.text != '') {
-             if(("OK" == Favorites.addFavorite(sheetTextfield.text, coords))) {
-                 favoritesModel.clear()
-                 Favorites.getFavorites(favoritesModel)
-                 sheetTextfield.text = ''
-
-                 if(is_add_favorites)
-                     favorites_page.textfield.clear()
-
-                 appWindow.banner.success = true
-                 appWindow.banner.text = qsTr("Location added to favorites")
-                 appWindow.banner.show()
-             } else {
-                 appWindow.banner.success = false
-                 appWindow.banner.text = qsTr("Location already in the favorites")
-                 appWindow.banner.show()
-             }
-         }
-         else {
-             appWindow.banner.success = false
-             appWindow.banner.text = qsTr("Name cannot be empty")
-             appWindow.banner.show()
-         }
-     }
-     onRejected: {
-         sheetTextfield.text = ''
-     }
+                        appWindow.banner.success = true
+                        appWindow.banner.text = qsTr("Location added to favorites")
+                        appWindow.banner.show()
+                    } else {
+                        appWindow.banner.success = false
+                        appWindow.banner.text = qsTr("Location already in the favorites")
+                        appWindow.banner.show()
+                    }
+                }
+                else {
+                    appWindow.banner.success = false
+                    appWindow.banner.text = qsTr("Name cannot be empty")
+                    appWindow.banner.show()
+                }
+                add_dialog.close()
+            }
+        }
+        Button {
+            id: button_cancel
+            text: qsTr("Cancel")
+            font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+            width: UIConstants.BUTTON_WIDTH
+            height: UIConstants.BUTTON_HEIGHT
+            onClicked: add_dialog.close()
+        }
+    }
 }

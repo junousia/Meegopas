@@ -53,6 +53,30 @@ function addFavorite(name, coord) {
 }
 
 // This function is used to write a setting into the database
+function updateFavorite(name, coord, updatemodel) {
+    var db = getDatabase();
+    var res = "";
+    db.transaction(function(tx) {
+                       var rs = tx.executeSql('SELECT coord,name FROM favorites WHERE coord = ?', coord);
+                       if (rs.rows.length != 1) {
+                           res = "Not exist"
+                       }
+                       else {
+                           rs = tx.executeSql('UPDATE favorites SET name = ? WHERE coord = ?', [name,coord]);
+                           if (rs.rowsAffected > 0) {
+                               res = "OK";
+                               updatemodel.clear()
+                               getFavorites(updatemodel)
+                           } else {
+                               res = "Error";
+                           }
+                       }
+                   });
+  // The function returns “OK” if it was successful, or “Error” if it wasn't
+  return res;
+}
+
+// This function is used to write a setting into the database
 function deleteFavorite(coord, updatemodel) {
    // setting: string representing the setting name (eg: “username”)
    // value: string representing the value of the setting (eg: “myUsername”)
@@ -60,7 +84,6 @@ function deleteFavorite(coord, updatemodel) {
    var res = "";
    db.transaction(function(tx) {
         var rs = tx.executeSql('DELETE FROM favorites WHERE coord = ?;', coord);
-              console.log(rs.rowsAffected)
               if (rs.rowsAffected > 0) {
                 res = "OK";
                   updatemodel.clear()

@@ -19,6 +19,7 @@ import "favorites.js" as Favorites
 import "theme.js" as Theme
 
 Page {
+    id: favorites_page
     tools: favoritesTools
 
     ToolBarLayout {
@@ -26,7 +27,12 @@ Page {
         ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
     }
 
+    FavoriteSheet { id: sheet }
+
+    property alias textfield : favorite
+
     Component.onCompleted: {
+        favoritesModel.clear()
         Favorites.initialize()
         Favorites.getFavorites(favoritesModel)
     }
@@ -36,95 +42,76 @@ Page {
         property bool updating : false
     }
 
-    Dialog {
-        id: sheet
-        property string coords
-        property string text
-        title: qsTr("Add favorite")
-        onFocusChanged: sheetTextfield.focus = true
-        onAccepted: {
-            if(("OK" == Favorites.addFavorite(sheetTextfield.text, coords))) {
-                favoritesModel.clear()
-                Favorites.getFavorites(favoritesModel)
-                sheetTextfield.text = ''
-
-                appWindow.banner.success = true
-                appWindow.banner.text = qsTr("Location added to favorites")
-                appWindow.banner.open()
-            } else {
-                appWindow.banner.success = false
-                appWindow.banner.text = qsTr("Location already in the favorites")
-                appWindow.banner.open()
-            }
-        }
-        onRejected: {
-
-        }
-
-        buttons: [
-            Row {
-                anchors.margins: UIConstants.DEFAULT_MARGIN
-                spacing: UIConstants.DEFAULT_MARGIN
-                anchors.horizontalCenter: parent.horizontalCenter
-                ToolButton {
-                    text: qsTr("Save")
-                    onClicked: sheet.accept()
-                }
-                ToolButton {
-                    text: qsTr("Cancel")
-                    onClicked: sheet.reject()
-                }
-            }
-        ]
-        content:[
-            Column {
-                height: 100
+    CommonDialog {
+        id: edit_dialog
+        property alias name : editTextField.text
+        visualParent: pageStack
+        titleText:qsTr("Edit favorite name")
+        buttonTexts: [qsTr("Save"), qsTr("Cancel")]
+        content: Column {
+            id: edit_column
+            width: parent.width
+            spacing: UIConstants.DEFAULT_MARGIN
+            TextField {
+                id: editTextField
                 width: parent.width
-                anchors.margins: UIConstants.DEFAULT_MARGIN
-                spacing: UIConstants.DEFAULT_MARGIN / 2
-                Text {
-                    text: qsTr("Enter name")
-                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
-                    color: UIConstants.COLOR_INVERTED_FOREGROUND
-                    anchors.left: parent.left
-                }
-                TextField {
-                    id: sheetTextfield
-                    width: parent.width
-                    text: sheet.text
-                    Image {
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: 'qrc:/images/clear.png'
-                        visible: (sheetTextfield.activeFocus)
-                        opacity: 0.8
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                sheetTextfield.text = ''
-                            }
+                text: edit_dialog.name
+
+                Image {
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/images/clear.png"
+                    visible: (editTextField.activeFocus)
+                    opacity: 0.8
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            editTextField.text = ''
                         }
                     }
+                }
 
-                    Keys.onReturnPressed: {
-                        sheetTextfield.platformCloseSoftwareInputPanel()
-                        parent.focus = true
-                    }
+                Keys.onReturnPressed: {
+                    editTextField.platformCloseSoftwareInputPanel()
+                    parent.focus = true
                 }
             }
-        ]
+        }
+        onButtonClicked: {
+            if(index == 0) {
+                if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
+                    favoritesModel.clear()
+                    Favorites.getFavorites(favoritesModel)
+
+                    appWindow.banner.success = true
+                    appWindow.banner.text = qsTr("Favorite name successfully modified")
+                    appWindow.banner.open()
+                } else {
+                    appWindow.banner.success = false
+                    appWindow.banner.text = qsTr("Favorite name modification failed")
+                    appWindow.banner.open()
+                }
+
+                edit_dialog.close()
+            }
+            else
+                edit_dialog.close()
+        }
     }
 
     QueryDialog {
         id: deleteQuery
+        property string name
         titleText: qsTr("Delete favorite?")
+        message: name
+
         rejectButtonText: qsTr("Cancel")
         acceptButtonText: qsTr("Delete")
         onAccepted: {
             Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
             appWindow.banner.success = true
             appWindow.banner.text = qsTr("Favorite removed")
-            appWindow.banner.show()
+            appWindow.banner.open()
         }
     }
 
@@ -142,7 +129,7 @@ Page {
             fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
-        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN
+        contentHeight: content_column.height
 
         Component.onCompleted: {
             Favorites.initialize()
@@ -151,7 +138,8 @@ Page {
         Column {
             id: content_column
             width: parent.width
-            spacing: UIConstants.DEFAULT_MARGIN
+            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+
             Header {
                 text: qsTr("Manage favorites")
             }
@@ -167,7 +155,7 @@ Page {
                 height: 40
                 enabled: favorite.destination_coords != ''
                 onClicked: {
-                    sheet.text = favorite.text
+                    sheet.name = favorite.getCoords().name
                     sheet.coords = favorite.getCoords().coords
                     sheet.open()
                 }
@@ -175,19 +163,66 @@ Page {
 
             Separator {}
 
+            Component {
+                id: favoritesManageDelegate
+                Item {
+                    width: parent.width
+                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+
+                    Text {
+                        text: modelData
+                        anchors.left: parent.left
+                        anchors.right: edit_button.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                        elide: Text.ElideRight
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: font.pixelSize * 1.2
+                    }
+                    MyButton {
+                        id: edit_button
+                        source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?"image://theme/toolbar-settings":"image://theme/toolbar-settings-inverse"
+                        anchors.right: remove_button.left
+                        image.height: 35
+                        mouseArea.onClicked: {
+                            list.currentIndex = index
+                            edit_dialog.name = modelData
+                            edit_dialog.open()
+                        }
+                    }
+                    MyButton {
+                        id: remove_button
+                        source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?"image://theme/toolbar-delete":"image://theme/toolbar-delete-inverse"
+                        anchors.right: parent.right
+                        image.height: 35
+                        mouseArea.onClicked: {
+                            list.currentIndex = index
+                            deleteQuery.name = modelData
+                            deleteQuery.open()
+                        }
+                    }
+                }
+            }
+
             ListView {
                 id: list
                 width: parent.width
-                height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
+                height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor + UIConstants.DEFAULT_MARGIN * 5
                 interactive: false
-                header: Text {
-                    id: favoritesLabel
-                    text: qsTr("Favorites")
-                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                header: Column {
+                    width: parent.width
+                    Text {
+                        id: header_text
+                        text: qsTr("Favorites")
+                        font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
+                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                        lineHeightMode: Text.FixedHeight
+                        lineHeight: font.pixelSize * 1.1
+                    }
                 }
                 model: favoritesModel
-                delegate: FavoritesManageDelegate {}
+                delegate: favoritesManageDelegate
             }
         }
     }

@@ -163,7 +163,7 @@ Column {
         }
         Text {
             id: label
-            font.pixelSize: UIConstants.FONT_XXLARGE
+            font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             anchors.left: parent.left
             anchors.top: parent.top
@@ -309,10 +309,20 @@ Column {
                 favoriteQuery.open()
             }
             mouseArea.onPressAndHold: {
-                if(destination_coords) {
-                    favorite_sheet.coords = destination_coords
-                    favorite_sheet.text = textfield.text
-                    favorite_sheet.open()
+                if(destination_coords && favoriteQuery.selectedIndex <= 0) {
+                    if(("OK" == Favorites.addFavorite(textfield.text, destination_coords))) {
+                        favoritesModel.clear()
+                        Favorites.getFavorites(favoritesModel)
+                        favoriteQuery.selectedIndex = favoritesModel.count
+                        appWindow.banner.success = true
+                        appWindow.banner.text = qsTr("Location added to favorites")
+                        appWindow.banner.show()
+                    } else {
+                        appWindow.banner.success = false
+                        appWindow.banner.text = qsTr("Location already in the favorites")
+                        appWindow.banner.show()
+                    }
+
                 }
             }
         }

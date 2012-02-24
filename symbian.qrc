@@ -57,5 +57,6 @@
         <file alias="qml/ApplicationHeader.qml">qml/common/ApplicationHeader.qml</file>
         <file alias="qml/theme.js">qml/common/theme.js</file>
         <file alias="qml/RouteStationDelegate.qml">qml/common/RouteStationDelegate.qml</file>
+        <file alias="qml/FavoriteSheet.qml">qml/symbian/FavoriteSheet.qml</file>
     </qresource>
 </RCC>
