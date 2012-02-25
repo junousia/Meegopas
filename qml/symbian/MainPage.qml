@@ -75,7 +75,7 @@ Page {
                     parameters.transport_types.push("uline")
                     parameters.transport_types.push("service")
                 }
-                if(Storage.getSetting("bus_disabled") != "true")
+                if(Storage.getSetting("metro_disabled") != "true")
                     parameters.transport_types.push("metro")
                 if(Storage.getSetting("tram_disabled") != "true")
                     parameters.transport_types.push("tram")
@@ -175,9 +175,9 @@ Page {
 
                     Text {
                         id: timeButton
-                        font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
-                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                        text: Qt.formatTime(root.myTime, "hh:mm")
+                        font.pizxelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                    text: Qt.formatTime(root.myTime, "hh:mm")
                     }
 
                     MouseArea {

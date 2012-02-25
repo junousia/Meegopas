@@ -71,7 +71,7 @@ Page {
                     parameters.transport_types.push("uline")
                     parameters.transport_types.push("service")
                 }
-                if(Storage.getSetting("bus_disabled") != "true")
+                if(Storage.getSetting("metro_disabled") != "true")
                     parameters.transport_types.push("metro")
                 if(Storage.getSetting("tram_disabled") != "true")
                     parameters.transport_types.push("tram")
