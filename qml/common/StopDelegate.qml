@@ -23,12 +23,8 @@ Component {
         width: parent.width
         opacity: 0.0
 
-        Component.onCompleted: PropertyAnimation {
-            target: stop_item
-            property: "opacity"
-            to: 1.0
-            duration: 125
-        }
+        Component.onCompleted: ListItemAnimation { target: stop_item }
+
         Rectangle {
             height: parent.height
             width: appWindow.width + UIConstants.DEFAULT_MARGIN * 2

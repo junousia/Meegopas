@@ -26,7 +26,7 @@ theme['light'].COLOR_APPHEADER_FOREGROUND = "#ffffff"
 theme['light'].COLOR_APPHEADER_BACKGROUND = "#05647a"
 theme['light'].COLOR_BACKGROUND = "#E0E1E2"
 theme['light'].COLOR_BACKGROUND_CLICKED = "#bbbbbb"
-theme['light'].COLOR_SEPARATOR = "#ffffff"
+theme['light'].COLOR_SEPARATOR = "#999999"
 
 theme['warm'] = {}
 theme['warm'].PLATFORM_INVERTED = 0
