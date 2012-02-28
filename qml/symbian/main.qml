@@ -73,6 +73,7 @@ Window {
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
             MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
             MenuItem { text: qsTr("About"); onClicked: about.open() }
+            MenuItem { text: qsTr("Exit"); onClicked: Qt.quit() }
         }
     }
 

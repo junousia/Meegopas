@@ -137,9 +137,13 @@ Page {
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 anchors.left: parent.left
             }
-            Row {
+            Item {
                 anchors.right: parent.right
+                width: parent.width
+                height: change_margin.height
                 Text {
+                    id: min_change
+                    anchors.left: parent.left
                     text: "0"
                     font.pixelSize: UIConstants.FONT_XLARGE
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
@@ -147,6 +151,8 @@ Page {
                 }
                 Slider {
                     id: change_margin
+                    anchors.right: max_change.left
+                    anchors.left: min_change.right
                     maximumValue: 10
                     minimumValue: 0
                     stepSize: 1
@@ -163,10 +169,12 @@ Page {
                     }
                 }
                 Text {
+                    id: max_change
                     text: "10"
                     font.pixelSize: UIConstants.FONT_XLARGE
                     color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
                 }
             }
 

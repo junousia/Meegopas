@@ -175,7 +175,7 @@ Page {
 
                     Text {
                         id: timeButton
-                        font.pizxelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     text: Qt.formatTime(root.myTime, "hh:mm")
                     }
