@@ -82,11 +82,6 @@ Page {
         }
     }
 
-    ScrollDecorator {
-        id: scrolldecorator
-        flickableItem: routeList
-    }
-
     Text {
         anchors.centerIn: parent
         visible: (!busyIndicator.visible && routeModel.count == 0)

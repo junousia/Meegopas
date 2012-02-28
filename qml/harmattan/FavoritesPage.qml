@@ -46,7 +46,6 @@ Page {
     Dialog {
         id: edit_dialog
         property alias name : editTextField.text
-        visualParent: pageStack
         title: Column {
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
@@ -133,20 +132,73 @@ Page {
             }
         }
     }
-
-    QueryDialog {
-        id: deleteQuery
+    Dialog {
+        id: delete_dialog
         property string name
-        titleText: qsTr("Delete favorite?")
-        message: name
 
-        rejectButtonText: qsTr("Cancel")
-        acceptButtonText: qsTr("Delete")
-        onAccepted: {
-            Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
-            appWindow.banner.success = true
-            appWindow.banner.text = qsTr("Favorite removed")
-            appWindow.banner.show()
+        title: Column {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            Text {
+                text: qsTr("Delete favorite?")
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignCenter
+                elide: Text.ElideNone
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.bold: true
+                font.family: UIConstants.FONT_FAMILY
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+            }
+            Spacing { }
+        }
+
+        content: Item {
+            width: parent.width
+            height: delete_column.height + UIConstants.DEFAULT_MARGIN * 2
+            Column {
+                id: delete_column
+                width: parent.width
+                spacing: UIConstants.DEFAULT_MARGIN
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text {
+                    text: delete_dialog.name
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: UIConstants.COLOR_INVERTED_FOREGROUND
+                    font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                    elide: Text.ElideRight
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.2
+                }
+            }
+        }
+        buttons: Column {
+            spacing: UIConstants.DEFAULT_MARGIN
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: button_save.width
+            Button {
+                id: delete_ok
+                text: qsTr("Delete")
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: {
+                    Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
+                    appWindow.banner.success = true
+                    appWindow.banner.text = qsTr("Favorite removed")
+                    appWindow.banner.show()
+
+                    delete_dialog.close()
+                }
+            }
+            Button {
+                id: delete_cancel
+                text: qsTr("Cancel")
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: delete_dialog.close()
+            }
         }
     }
 
@@ -230,8 +282,8 @@ Page {
                         anchors.right: parent.right
                         mouseArea.onClicked: {
                             list.currentIndex = index
-                            deleteQuery.name = modelData
-                            deleteQuery.open()
+                            delete_dialog.name = modelData
+                            delete_dialog.open()
                         }
                     }
                 }

@@ -123,11 +123,6 @@ Page {
         }
     }
 
-    ScrollDecorator {
-        id: scrolldecorator
-        flickableItem: routeList
-    }
-
     states: [
         State {
             name: "map"
