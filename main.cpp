@@ -1,4 +1,5 @@
 #include <QtGui/QApplication>
+#include <QDeclarativeContext>
 #include <QtDebug>
 #include <QTranslator>
 #include <QLocale>
@@ -7,6 +8,7 @@
 #include "qplatformdefs.h"
 #if defined(Q_WS_MAEMO_5) || defined(MEEGO_EDITION_HARMATTAN)
 #include <MLocale>
+#include "shortcut.h"
 #endif
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -20,10 +22,22 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     newFont.setFamily("Nokia Pure Text Light");
     newFont.setWeight(QFont::Light);
     MLocale locale;
+
+
+        QStringList cmdline_args = QCoreApplication::arguments();
+        qDebug() << cmdline_args;
+
     qDebug() << "Current locale: " << locale.name();
     translator.load(":/i18n/meegopas_" + locale.name() + ".qm");
     app.data()->setFont(newFont);
     app.data()->installTranslator(&translator);
+
+    QDeclarativeContext *ctxt = viewer->rootContext();
+
+    /*  */
+    Shortcut sc;
+    ctxt->setContextProperty("Shortcut", &sc);
+
     viewer->addImportPath(QLatin1String("qrc:/images/"));
     viewer->addImportPath(QLatin1String("qrc:/i18n/"));
     viewer->setSource(QUrl("qrc:/qml/main.qml"));

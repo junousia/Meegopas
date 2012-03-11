@@ -81,7 +81,8 @@ CONFIG += mobility
 MOBILITY += location systeminfo
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    shortcut.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -89,6 +90,9 @@ qtcAddDeployment()
 
 TRANSLATIONS += meegopas_fi_FI.ts \
                 meegopas_ru_RU.ts
+
+HEADERS += \
+    shortcut.h
 
 
 

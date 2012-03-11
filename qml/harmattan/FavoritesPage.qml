@@ -46,6 +46,7 @@ Page {
     Dialog {
         id: edit_dialog
         property alias name : editTextField.text
+        property string old_name : ""
         title: Column {
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
@@ -107,6 +108,13 @@ Page {
                 height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
                 onClicked: {
                     if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
+
+                        /* update shortcut, if exists */
+                        if(Shortcut.checkIfExists(edit_dialog.old_name)) {
+                            Shortcut.removeShortcut(edit_dialog.old_name)
+                            Shortcut.toggleShortcut(edit_dialog.name)
+                        }
+
                         favoritesModel.clear()
                         Favorites.getFavorites(favoritesModel)
 
@@ -187,7 +195,7 @@ Page {
                     appWindow.banner.success = true
                     appWindow.banner.text = qsTr("Favorite removed")
                     appWindow.banner.show()
-
+                    Shortcut.removeShortcut(delete_dialog.name)
                     delete_dialog.close()
                 }
             }
@@ -258,7 +266,7 @@ Page {
                     Text {
                         text: modelData
                         anchors.left: parent.left
-                        anchors.right: edit_button.left
+                        anchors.right: shortcut_button.left
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
@@ -267,12 +275,29 @@ Page {
                         lineHeight: font.pixelSize * 1.2
                     }
                     MyButton {
+                        id: shortcut_button
+                        property bool toggled : false
+                        Component.onCompleted: {
+                            toggled = Shortcut.checkIfExists(modelData)
+                        }
+                        anchors.right: edit_button.left
+                        source: toggled?
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white-selected':'image://theme/icon-m-toolbar-frequent-used-selected' :
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white':'image://theme/icon-m-toolbar-frequent-used'
+                        mouseArea.onClicked: {
+                            Shortcut.toggleShortcut(modelData)
+                            toggled = toggled ? false : true
+                        }
+                    }
+
+                    MyButton {
                         id: edit_button
                         source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-edit-white':'image://theme/icon-m-toolbar-edit'
                         anchors.right: remove_button.left
                         mouseArea.onClicked: {
                             list.currentIndex = index
                             edit_dialog.name = modelData
+                            edit_dialog.old_name = modelData
                             edit_dialog.open()
                         }
                     }
