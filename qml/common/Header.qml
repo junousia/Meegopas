@@ -18,7 +18,6 @@ import "theme.js" as Theme
 Item {
     property string text
     property string subtext
-    property bool apptitle : false
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -29,7 +28,7 @@ Item {
     Text {
         id: headerText
         width: parent.width
-        font.pixelSize: apptitle?UIConstants.FONT_XLARGE * appWindow.scaling_factor : UIConstants.FONT_XLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
         wrapMode: Text.WordWrap
         text: parent.text

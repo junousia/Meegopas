@@ -16,8 +16,11 @@ import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
 import "UIConstants.js" as UIConstants
 
-Window {
+PageStackWindow {
     id: appWindow
+    initialPage: MainPage {}
+    showStatusBar: appWindow.inPortrait
+
     property alias banner : banner
     property variant scaling_factor : 0.75
     property bool positioning_active : true
@@ -30,48 +33,30 @@ Window {
         property bool inverted : true
     }
 
+    Label {
+        id: title
+        text: "Meegopas"
+        visible: appWindow.inPortrait
+    }
+
     InfoBanner {
         id: banner
         property bool success : false
         iconSource: success ? "qrc:/images/banner_green.png":"qrc:/images/banner_red.png"
     }
 
-    StatusBar {
-        id: status_bar
-        anchors.top: parent.top
-        visible: true
-        z: -1
-        opacity: 0.5
-    }
-
-    PageStack {
-        id: pageStack
-        toolBar: toolBar
-        anchors { left: parent.left; right: parent.right; top: parent.top; bottom: toolBar.top }
-        MouseArea {
-            anchors.fill: parent
-            enabled: pageStack.busy
+    ToolBarLayout {
+        id: commonTools
+        visible: false
+        ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolButton { iconSource: "toolbar-view-menu";
+             anchors.right: parent===undefined ? undefined : parent.right
+             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
         }
     }
-
-    ToolBar {
-        id: toolBar
-        anchors.bottom: appWindow.bottom
-        tools: ToolBarLayout {
-            id: commonTools
-            ToolButton {
-                flat: true
-                iconSource: "toolbar-back"
-                onClicked: pageStack.pop()
-            }
-        }
-    }
-
-    AboutDialog { id: about }
 
     Menu {
         id: myMenu
-        visualParent: pageStack
         MenuLayout {
             MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
@@ -81,7 +66,5 @@ Window {
         }
     }
 
-    Component.onCompleted: {
-        pageStack.push(Qt.resolvedUrl("MainPage.qml"))
-    }
+    AboutDialog { id: about }
 }

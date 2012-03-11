@@ -138,8 +138,6 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
-            Header { text: qsTr("Meegopas"); apptitle: true }
-
             Item {
                 width: parent.width
                 height: from.height + to.height + UIConstants.DEFAULT_MARGIN

@@ -17,7 +17,7 @@ import com.nokia.extras 1.0
 
 PageStackWindow {
     id: appWindow
-    initialPage: mainPage
+    initialPage: MainPage {}
 
     showStatusBar: appWindow.inPortrait
 
@@ -32,7 +32,6 @@ PageStackWindow {
         id: defaultStyle
     }
 
-    MainPage{ id: mainPage }
     AboutDialog { id: about }
 
     InfoBanner {
