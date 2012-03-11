@@ -18,6 +18,9 @@ import com.nokia.extras 1.0
 PageStackWindow {
     id: appWindow
     initialPage: mainPage
+
+    showStatusBar: appWindow.inPortrait
+
     property alias banner : banner
     property variant scaling_factor : 1
     property bool positioning_active : true
