@@ -12,16 +12,24 @@
  */
 
 import QtQuick 1.1
+import QtMobility.location 1.2
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
 Component {
     id: stopDelegate
+
     Item {
         id: stop_item
         height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
         width: parent.width
-        opacity: 0.0
+        opacity: 1.0
+
+        Coordinate {
+            id: coordinate
+            latitude: stop_latitude
+            longitude: stop_longitude
+        }
 
         Component.onCompleted: PropertyAnimation {
             target: stop_item
@@ -29,6 +37,54 @@ Component {
             to: 1.0
             duration: 125
         }
+
+        onStateChanged: {
+            if(state == "there")
+                stop_page.list.currentIndex = index
+        }
+        state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 50)?
+                   "there":
+                   (coordinate.distanceTo(stop_page.position.position.coordinate) < 300 &&
+                    coordinate.distanceTo(stop_page.position.position.coordinate) != 0)?
+                       "near":
+                       "far"
+
+        states: [
+            State {
+                name: "far"
+                PropertyChanges { target: current_station; color: "green" }
+                PropertyChanges { target: current_station; opacity: 0.0 }
+            },
+            State {
+                name: "near"
+                PropertyChanges { target: current_station; color: "yellow" }
+                PropertyChanges { target: current_station; opacity: 1.0 }
+            },
+            State {
+                name: "there"
+                PropertyChanges { target: current_station; color: "red" }
+                PropertyChanges { target: current_station; opacity: 1.0 }
+            }
+        ]
+        transitions: [
+            Transition {
+                ParallelAnimation {
+                    ColorAnimation { duration: 300 }
+                    NumberAnimation { properties: "opacity"; duration: 500 }
+                }
+            }
+        ]
+
+        Rectangle {
+            id: current_station
+            anchors.left: time_column.right
+            anchors.verticalCenter: parent.verticalCenter
+            color: coordinate.distanceTo(stop_page.position.position.coordinate) < 150? "red" : "yellow"
+            opacity: 0.0
+            height: UIConstants.LIST_ITEM_HEIGHT_SMALL - UIConstants.DEFAULT_MARGIN
+            width: 5
+        }
+
         Rectangle {
             height: parent.height
             width: appWindow.width + UIConstants.DEFAULT_MARGIN * 2
@@ -41,7 +97,7 @@ Component {
             id: time_column
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: UIConstants.LIST_ITEM_HEIGHT_SMALL
+            width: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
             Text {
                 id: diff
                 anchors.right: time.right
@@ -83,12 +139,13 @@ Component {
             anchors.fill: parent
 
             onClicked: {
-                if(stop_page.state == "normal") {
-                    if(!map.map_loader.item)
-                        map_loader.sourceComponent = map_component
-                    stop_page.state = "map"
-                }
-                map.map_loader.item.flickable_map.panToLatLong(latitude,longitude)
+                // show map if currently hidden
+                if(appWindow.map_visible == false)
+                    appWindow.map_visible = true
+
+                // follow mode disables panning to location
+                if(!appWindow.follow_mode)
+                    map.map_loader.item.flickable_map.panToLatLong(stop_latitude,stop_longitude)
             }
         }
     }

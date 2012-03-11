@@ -12,6 +12,7 @@
  */
 
 import QtQuick 1.1
+import QtMobility.location 1.2
 import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
@@ -21,19 +22,33 @@ Page {
     id: stop_page
     property string leg_code
     property int leg_index
+    property alias position : position
+    property alias list : routeList
     anchors.fill: parent
+
+    state: appWindow.map_visible? "map" : "normal"
+
+    onStateChanged: {
+        if(state == "map") {
+            map_loader.sourceComponent = map_component
+
+            // go to first stop
+            map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).latitude,stopModel.get(0).longitude)
+        }
+    }
 
     onStatusChanged: {
         if(status == Component.Ready && !stopModel.count) {
             var route = Reittiopas.get_route_instance()
             route.dump_stops(leg_index, stopModel)
+            if(appWindow.map_visible)
+                map_loader.sourceComponent = map_component
         }
     }
 
     anchors.margins: UIConstants.DEFAULT_MARGIN
 
     tools: stopTools
-    state: "normal"
 
     ToolBarLayout {
         id: stopTools
@@ -41,20 +56,33 @@ Page {
         ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
         ToolButton {
             text: qsTr("Map")
+            checkable: true
+            checked: appWindow.map_visible
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                stop_page.state = stop_page.state == "normal" ? "map" : "normal"
-                map_loader.sourceComponent = map_component
-
-                // go to first stop
-                if(stop_page.state == "map")
-                    map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).latitude,stopModel.get(0).longitude)
+                appWindow.map_visible = appWindow.map_visible? false : true
             }
         }
-        ToolIcon { platformIconId: "toolbar-view-menu";
-             anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+        ToolButton {
+            text: qsTr("Follow")
+            checkable: true
+            enabled: stop_page.state == "map"
+            checked: appWindow.follow_mode
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                appWindow.follow_mode = appWindow.follow_mode ? false : true
+            }
         }
+//        ToolIcon { platformIconId: "toolbar-view-menu";
+//             anchors.right: parent===undefined ? undefined : parent.right
+//             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+//        }
+    }
+
+    PositionSource {
+        id: position
+        updateInterval: 500
+        active: appWindow.positioning_active
     }
 
     ListModel {
@@ -112,6 +140,7 @@ Page {
         Loader {
             id: map_loader
             anchors.fill: parent
+            onLoaded: map_loader.item.initialize()
         }
     }
 

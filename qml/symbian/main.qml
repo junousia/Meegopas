@@ -20,7 +20,11 @@ Window {
     id: appWindow
     property alias banner : banner
     property variant scaling_factor : 0.75
-    property variant colorscheme : "default"
+    property bool positioning_active : true
+    property bool follow_mode : false
+    property bool map_visible : false
+    property string colorscheme : "default"
+
     Item {
         id: theme
         property bool inverted : true

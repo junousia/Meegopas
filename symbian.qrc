@@ -15,7 +15,6 @@
         <file alias="/qml/Bubble.qml">qml/common/Bubble.qml</file>
         <file alias="/qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
         <file alias="/qml/favorites.js">qml/common/favorites.js</file>
-        <file alias="/qml/FavoritesDelegate.js">qml/common/FavoritesDelegate.js</file>
         <file alias="/qml/FavoritesDelegate.qml">qml/common/FavoritesDelegate.qml</file>
         <file alias="/qml/Header.qml">qml/common/Header.qml</file>
         <file alias="/qml/helper.js">qml/common/helper.js</file>

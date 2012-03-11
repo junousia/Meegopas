@@ -14,8 +14,8 @@
 .pragma library
 
 var API = 'http://api.reittiopas.fi/hsl/prod/'
-var USER = ''
-var PASS = ''
+var USER = 'junousia'
+var PASS = 'p3ndolino'
 var transType = {}
 transType[1] = "bus"
 transType[2] = "tram"
@@ -343,12 +343,13 @@ route_search.prototype.dump_stops = function(index, model) {
         else {
             var output = {
                 "name" : legdata.locs[locindex].name,
-                "latitude" : legdata.locs[locindex].coord.y,
-                "longitude" :legdata.locs[locindex].coord.x,
+                "stop_latitude" : legdata.locs[locindex].coord.y,
+                "stop_longitude" :legdata.locs[locindex].coord.x,
                 "arrival_time" : convTime(legdata.locs[locindex].arrTime),
                 "departure_time" : convTime(legdata.locs[locindex].depTime),
                 "time_diff" : locindex == 0 ? 0 : get_time_difference(convTime(legdata.locs[locindex - 1].depTime), convTime(legdata.locs[locindex].arrTime)).minutes
             }
+
             model.append(output)
         }
     }

@@ -20,6 +20,9 @@ PageStackWindow {
     initialPage: mainPage
     property alias banner : banner
     property variant scaling_factor : 1
+    property bool positioning_active : true
+    property bool follow_mode : false
+    property bool map_visible : false
     property string colorscheme : "default"
 
     platformStyle: PageStackWindowStyle {

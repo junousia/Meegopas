@@ -26,6 +26,9 @@ Flickable {
 
     property double centeredContentX: map.size.width*0.75
     property double centeredContentY: map.size.height*0.75
+
+    interactive: !appWindow.follow_mode
+
     contentWidth: map.size.width * 2
     contentHeight: map.size.height * 2
     flickableDirection: Flickable.HorizontalAndVerticalFlick
@@ -175,10 +178,10 @@ Flickable {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            panToCoordinate(map.toCoordinate(Qt.point(mouseX-map.pos.x,mouseY-map.pos.y)))
-        }
-    }
+//    MouseArea {
+//        anchors.fill: parent
+//        onClicked: {
+//            panToCoordinate(map.toCoordinate(Qt.point(mouseX-map.pos.x,mouseY-map.pos.y)))
+//        }
+//    }
 }

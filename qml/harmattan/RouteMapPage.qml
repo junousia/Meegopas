@@ -20,7 +20,19 @@ Page {
     id: page
     tools: mapTools
     anchors.fill: parent
-    property bool follow : false
+
+    onStatusChanged: {
+        if(status == Component.Ready)
+            timer.start()
+    }
+
+    Timer {
+        id: timer
+        interval: 500
+        triggeredOnStart: false
+        repeat: false
+        onTriggered: map_loader.sourceComponent = map_component
+    }
 
     ToolBarLayout {
         id: mapTools
@@ -29,20 +41,44 @@ Page {
                 pageStack.pop();
             }
         }
-        ToolButtonRow {
-            ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !follow; onClicked: { map.previous_station(); } }
-            ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !follow; onClicked: { map.next_station(); } }
-            //ToolIcon { iconSource: "qrc:/images/gps-icon-inverted.png"; onClicked: { follow = follow?false:true } }
+        ToolButton {
+            text: qsTr("Follow")
+            checkable: true
+            enabled: stop_page.state == "map"
+            checked: appWindow.follow_mode
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                appWindow.follow_mode = appWindow.follow_mode ? false : true
+            }
         }
-        ToolIcon { platformIconId: "toolbar-view-menu";
-             anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+
+        ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
+        ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
+//        ToolIcon { platformIconId: "toolbar-view-menu";
+//             anchors.right: parent===undefined ? undefined : parent.right
+//             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+//        }
+    }
+    Loader {
+        id: map_loader
+        anchors.fill: parent
+        onLoaded: map_loader.item.initialize()
+    }
+
+    Component {
+        id: map_component
+        MapElement {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.fill: parent
         }
     }
 
-    MapElement {
-        id: map
-        anchors.fill: parent
+    BusyIndicator {
+        id: busyIndicator
+        visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading
+        running: true
+        platformStyle: BusyIndicatorStyle { size: 'large' }
+        anchors.centerIn: parent
     }
 }
 

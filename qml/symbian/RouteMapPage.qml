@@ -20,19 +20,65 @@ Page {
     tools: mapTools
     anchors.fill: parent
 
+    onStatusChanged: {
+        if(status == Component.Ready)
+            timer.start()
+    }
+
+    Timer {
+        id: timer
+        interval: 500
+        triggeredOnStart: false
+        repeat: false
+        onTriggered: map_loader.sourceComponent = map_component
+    }
+
     ToolBarLayout {
         id: mapTools
-        x: 0
-        y: 0
-        ToolButton { iconSource: "toolbar-back"; onClicked: { pageStack.pop(); } }
-        ButtonRow {
-            ToolButton { iconSource: "toolbar-mediacontrol-backwards"; onClicked: { map.previous_station(); } }
-            ToolButton { iconSource: "toolbar-mediacontrol-forward"; onClicked: { map.next_station(); } }
+        ToolButton {
+            iconSource: "toolbar-back"
+            onClicked: {
+                pageStack.pop();
+            }
+        }
+        ToolButton {
+            text: qsTr("Follow")
+            checkable: true
+            enabled: stop_page.state == "map"
+            checked: appWindow.follow_mode
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                appWindow.follow_mode = appWindow.follow_mode ? false : true
+            }
+        }
+
+        ToolButton { iconSource: "toolbar-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
+        ToolButton { iconSource: "toolbar-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
+//        ToolIcon { platformIconId: "toolbar-view-menu";
+//             anchors.right: parent===undefined ? undefined : parent.right
+//             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+//        }
+    }
+    Loader {
+        id: map_loader
+        anchors.fill: parent
+        onLoaded: map_loader.item.initialize()
+    }
+
+    Component {
+        id: map_component
+        MapElement {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.fill: parent
         }
     }
 
-    MapElement {
-        id: map
-        anchors.fill: parent
+    BusyIndicator {
+        id: busyIndicator
+        visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading
+        running: true
+        anchors.centerIn: parent
+        width: 75
+        height: 75
     }
 }

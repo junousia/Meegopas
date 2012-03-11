@@ -11,13 +11,24 @@
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
 
+.pragma library
+
 var stations = []
 var current_station = 0
 
 var objects = []
 
 function push_to_objects(item) {
-    objects.push(item)
+    if(item)
+        objects.push(item)
+}
+
+function set_group_objects(group) {
+    group.objects = objects
+}
+
+function clear_objects() {
+    objects = []
 }
 
 function add_station(station) {
@@ -28,6 +39,7 @@ function add_station(station) {
 function next_station() {
     return stations[++current_station%stations.length]
 }
+
 function previous_station() {
     return stations[--current_station%stations.length]
 }
