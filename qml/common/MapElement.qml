@@ -142,7 +142,6 @@ Item {
                     coord.latitude = endpointdata.from.latitude
                     coord.longitude = endpointdata.from.longitude
 
-                    flickable_map.panToCoordinate(coord)
                     add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
                     //flickable_map.map.addMapObject(first_station)
                     Helper.push_to_objects(first_station)

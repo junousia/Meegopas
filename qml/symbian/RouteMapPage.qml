@@ -49,6 +49,11 @@ Page {
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
                 appWindow.follow_mode = appWindow.follow_mode ? false : true
+                appWindow.banner.success = true
+                appWindow.banner.text = appWindow.follow_mode?
+                            qsTr("Follow current location enabled") :
+                            qsTr("Follow current location disabled")
+                appWindow.banner.open()
             }
         }
 

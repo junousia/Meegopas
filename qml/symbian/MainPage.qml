@@ -138,6 +138,8 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
+            Spacing { height: appWindow.inPortrait? 20 : 0 }
+
             Item {
                 width: parent.width
                 height: from.height + to.height + UIConstants.DEFAULT_MARGIN

@@ -31,9 +31,6 @@ Page {
     onStateChanged: {
         if(state == "map") {
             map_loader.sourceComponent = map_component
-
-            // go to first stop
-            map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).latitude,stopModel.get(0).longitude)
         }
     }
 
@@ -111,10 +108,6 @@ Page {
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }
-        onCountChanged: {
-            if(stopModel.done)
-                map.flickable_map.panToLatLong(stopModel.get(0).latitude,stopModel.get(0).longitude)
-        }
     }
 
     Rectangle {
@@ -140,7 +133,12 @@ Page {
         Loader {
             id: map_loader
             anchors.fill: parent
-            onLoaded: map_loader.item.initialize()
+            onLoaded: {
+                map_loader.item.initialize()
+
+                // go to first stop
+                map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).stop_latitude,stopModel.get(0).stop_longitude)
+            }
         }
     }
 
@@ -167,7 +165,7 @@ Page {
         }
     ]
     transitions: Transition {
-        NumberAnimation { properties: "height"; duration: 500; easing.type: Easing.InOutCubic }
+        NumberAnimation { properties: "height"; duration: 500; easing.type: Easing.OutCubic }
         NumberAnimation { properties: "opacity"; duration: 500; }
     }
 

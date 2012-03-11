@@ -52,6 +52,9 @@ Page {
             id: edit_column
             width: parent.width
             spacing: UIConstants.DEFAULT_MARGIN
+
+            Spacing { height: UIConstants.DEFAULT_MARGIN/2 }
+
             TextField {
                 id: editTextField
                 width: parent.width
@@ -76,6 +79,7 @@ Page {
                     parent.focus = true
                 }
             }
+            Spacing { height: UIConstants.DEFAULT_MARGIN/2 }
         }
         onButtonClicked: {
             if(index == 0) {
@@ -103,8 +107,10 @@ Page {
         id: deleteQuery
         property string name
         titleText: qsTr("Delete favorite?")
-        message: name
-
+        content: Label {
+            text: deleteQuery.name
+            anchors.centerIn: parent
+        }
         rejectButtonText: qsTr("Cancel")
         acceptButtonText: qsTr("Delete")
         onAccepted: {
