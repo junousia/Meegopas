@@ -23,7 +23,6 @@ Dialog {
     property alias name : editTextField.text
     property string coords : ""
 
-    visualParent: pageStack
     title: Column {
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter

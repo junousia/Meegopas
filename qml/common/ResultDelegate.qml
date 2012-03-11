@@ -24,12 +24,7 @@ Component {
         height: 125 * appWindow.scaling_factor
         opacity: 0.0
 
-        Component.onCompleted: PropertyAnimation {
-            target: delegate_item
-            property: "opacity"
-            to: 1.0
-            duration: 125
-        }
+        Component.onCompleted: ListItemAnimation { target: delegate_item }
 
         Rectangle {
             height: parent.height

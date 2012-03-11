@@ -56,5 +56,7 @@
         <file alias="qml/ApplicationHeader.qml">qml/common/ApplicationHeader.qml</file>
         <file alias="qml/theme.js">qml/common/theme.js</file>
         <file alias="qml/RouteStationDelegate.qml">qml/common/RouteStationDelegate.qml</file>
+        <file alias="qml/ListItemAnimation.qml">qml/common/ListItemAnimation.qml</file>
+        <file alias="qml/SettingsItem.qml">qml/common/SettingsItem.qml</file>
     </qresource>
 </RCC>

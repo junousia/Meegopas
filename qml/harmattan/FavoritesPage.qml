@@ -46,7 +46,7 @@ Page {
     Dialog {
         id: edit_dialog
         property alias name : editTextField.text
-        visualParent: pageStack
+        property string old_name : ""
         title: Column {
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
@@ -108,6 +108,13 @@ Page {
                 height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
                 onClicked: {
                     if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
+
+                        /* update shortcut, if exists */
+                        if(Shortcut.checkIfExists(edit_dialog.old_name)) {
+                            Shortcut.removeShortcut(edit_dialog.old_name)
+                            Shortcut.toggleShortcut(edit_dialog.name)
+                        }
+
                         favoritesModel.clear()
                         Favorites.getFavorites(favoritesModel)
 
@@ -133,20 +140,73 @@ Page {
             }
         }
     }
-
-    QueryDialog {
-        id: deleteQuery
+    Dialog {
+        id: delete_dialog
         property string name
-        titleText: qsTr("Delete favorite?")
-        message: name
 
-        rejectButtonText: qsTr("Cancel")
-        acceptButtonText: qsTr("Delete")
-        onAccepted: {
-            Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
-            appWindow.banner.success = true
-            appWindow.banner.text = qsTr("Favorite removed")
-            appWindow.banner.show()
+        title: Column {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            Text {
+                text: qsTr("Delete favorite?")
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignCenter
+                elide: Text.ElideNone
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.bold: true
+                font.family: UIConstants.FONT_FAMILY
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+            }
+            Spacing { }
+        }
+
+        content: Item {
+            width: parent.width
+            height: delete_column.height + UIConstants.DEFAULT_MARGIN * 2
+            Column {
+                id: delete_column
+                width: parent.width
+                spacing: UIConstants.DEFAULT_MARGIN
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text {
+                    text: delete_dialog.name
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: UIConstants.COLOR_INVERTED_FOREGROUND
+                    font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                    elide: Text.ElideRight
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.2
+                }
+            }
+        }
+        buttons: Column {
+            spacing: UIConstants.DEFAULT_MARGIN
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: button_save.width
+            Button {
+                id: delete_ok
+                text: qsTr("Delete")
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: {
+                    Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
+                    appWindow.banner.success = true
+                    appWindow.banner.text = qsTr("Favorite removed")
+                    appWindow.banner.show()
+                    Shortcut.removeShortcut(delete_dialog.name)
+                    delete_dialog.close()
+                }
+            }
+            Button {
+                id: delete_cancel
+                text: qsTr("Cancel")
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: delete_dialog.close()
+            }
         }
     }
 
@@ -206,7 +266,7 @@ Page {
                     Text {
                         text: modelData
                         anchors.left: parent.left
-                        anchors.right: edit_button.left
+                        anchors.right: shortcut_button.left
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
@@ -215,12 +275,29 @@ Page {
                         lineHeight: font.pixelSize * 1.2
                     }
                     MyButton {
+                        id: shortcut_button
+                        property bool toggled : false
+                        Component.onCompleted: {
+                            toggled = Shortcut.checkIfExists(modelData)
+                        }
+                        anchors.right: edit_button.left
+                        source: toggled?
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white-selected':'image://theme/icon-m-toolbar-frequent-used-selected' :
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white':'image://theme/icon-m-toolbar-frequent-used'
+                        mouseArea.onClicked: {
+                            Shortcut.toggleShortcut(modelData)
+                            toggled = toggled ? false : true
+                        }
+                    }
+
+                    MyButton {
                         id: edit_button
                         source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-edit-white':'image://theme/icon-m-toolbar-edit'
                         anchors.right: remove_button.left
                         mouseArea.onClicked: {
                             list.currentIndex = index
                             edit_dialog.name = modelData
+                            edit_dialog.old_name = modelData
                             edit_dialog.open()
                         }
                     }
@@ -230,8 +307,8 @@ Page {
                         anchors.right: parent.right
                         mouseArea.onClicked: {
                             list.currentIndex = index
-                            deleteQuery.name = modelData
-                            deleteQuery.open()
+                            delete_dialog.name = modelData
+                            delete_dialog.open()
                         }
                     }
                 }

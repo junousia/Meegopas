@@ -55,12 +55,6 @@ Page {
         }
     }
 
-    ScrollDecorator {
-        id: scrolldecorator
-        flickableItem: list
-        platformStyle: ScrollDecoratorStyle {}
-    }
-
     Text {
         anchors.centerIn: parent
         visible: (!busyIndicator.visible && routeModel.count == 0)

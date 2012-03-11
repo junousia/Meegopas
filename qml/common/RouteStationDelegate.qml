@@ -22,12 +22,7 @@ Item {
     height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT / 2 * appWindow.scaling_factor
     opacity: 0.0
 
-    Component.onCompleted: PropertyAnimation {
-        target: stationDelegate
-        property: "opacity"
-        to: 1.0
-        duration: 125
-    }
+    Component.onCompleted: ListItemAnimation { target: stationDelegate }
 
     Column {
         id: time_column

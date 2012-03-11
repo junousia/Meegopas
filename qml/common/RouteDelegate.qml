@@ -25,12 +25,7 @@ Item {
     // do not show if from and to times or names match
     opacity: 0.0
 
-    Component.onCompleted: PropertyAnimation {
-        target: routeDelegate
-        property: "opacity"
-        to: 1.0
-        duration: 125
-    }
+    Component.onCompleted: ListItemAnimation { target: routeDelegate }
 
     Rectangle {
         height: parent.height

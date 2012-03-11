@@ -31,12 +31,7 @@ Component {
             longitude: stop_longitude
         }
 
-        Component.onCompleted: PropertyAnimation {
-            target: stop_item
-            property: "opacity"
-            to: 1.0
-            duration: 125
-        }
+        Component.onCompleted: ListItemAnimation { target: stop_item }
 
         onStateChanged: {
             if(state == "there")

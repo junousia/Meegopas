@@ -62,11 +62,6 @@ Page {
         }
     }
 
-    ScrollDecorator {
-        id: scrolldecorator
-        flickableItem: list
-    }
-
     Text {
         anchors.centerIn: parent
         visible: (!busyIndicator.visible && exceptionModel.count == 0)
