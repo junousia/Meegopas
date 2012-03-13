@@ -38,21 +38,36 @@ Item {
             lineHeight: font.pixelSize * 1.2
         }
     }
-
-    Column {
-        id: name_column
+    Item {
         anchors.right: parent.right
         anchors.left: time_column.right
         anchors.verticalCenter: parent.verticalCenter
-        Text {
-            text: name
-            width: parent.width
-            horizontalAlignment: Qt.AlignRight
-            elide: Text.ElideRight
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-            lineHeightMode: Text.FixedHeight
-            lineHeight: font.pixelSize * 1.2
+        Row {
+            height: parent.height
+            anchors.right: parent.right
+            spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+
+            Text {
+                id: station_code
+                horizontalAlignment: Qt.AlignRight
+                anchors.verticalCenter: parent.verticalCenter
+                text: shortcode? "(" + shortcode + ")" : ""
+                elide: Text.ElideRight
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
+            }
+            Text {
+                text: name
+                horizontalAlignment: Qt.AlignRight
+                anchors.verticalCenter: parent.verticalCenter
+                elide: Text.ElideRight
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
+            }
         }
     }
 }

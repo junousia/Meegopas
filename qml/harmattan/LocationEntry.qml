@@ -81,6 +81,7 @@ Column {
         XmlRole { name: "name"; query: "name/string()" }
         XmlRole { name: "city"; query: "city/string()" }
         XmlRole { name: "coords"; query: "coords/string()" }
+        XmlRole { name: "shortCode"; query: "shortCode/string()" }
         XmlRole { name: "housenumber"; query: "details/houseNumber/string()" }
 
         onCountChanged: {

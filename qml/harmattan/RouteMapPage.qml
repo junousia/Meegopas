@@ -44,7 +44,6 @@ Page {
         ToolButton {
             text: qsTr("Follow")
             checkable: true
-            enabled: stop_page.state == "map"
             checked: appWindow.follow_mode
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {

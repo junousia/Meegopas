@@ -79,6 +79,7 @@ Item {
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN * 3
         width: 100
         Image {
+            visible: type != "walk"
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/" + type + ".png"
             smooth: true

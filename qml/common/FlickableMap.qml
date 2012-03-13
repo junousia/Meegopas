@@ -82,7 +82,7 @@ Flickable {
             ]
         }
         mapType: Map.StreetMap
-        connectivityMode: Map.HybridMode
+        connectivityMode: Map.OfflineMode
         center: Coordinate {
             latitude: defaultLatitude
             longitude:defaultLongitude
