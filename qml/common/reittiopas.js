@@ -118,7 +118,7 @@ function get_geocode(term) {
         query.push(p + "=" + this.parameters[p])
     }
 
-    //console.debug( API + '?' + query.join('&'))
+    console.debug( API + '?' + query.join('&'))
     return API + '?' + query.join('&')
 }
 
@@ -140,7 +140,7 @@ function get_reverse_geocode(latitude, longitude) {
         query.push(p + "=" + this.parameters[p])
     }
 
-    //console.debug( API + '?' + query.join('&'))
+    console.debug( API + '?' + query.join('&'))
     return API + '?' + query.join('&')
 }
 
@@ -170,7 +170,7 @@ reittiopas.prototype.api_request = function() {
             query.push(p + "=" + this.parameters[p])
         }
     }
-    //console.debug( API + '?' + query.join('&'))
+    console.debug( API + '?' + query.join('&'))
     _http_request.open("GET", API + '?' + query.join('&'))
     _http_request.send()
 }
@@ -224,7 +224,7 @@ function route_search(parameters, route_model) {
 route_search.prototype.result_handler = function() {
     if (_http_request.readyState == XMLHttpRequest.DONE) {
         if (_http_request.status != 200 && _http_request.status != 304) {
-            //console.debug('HTTP error ' + _http_request.status)
+            console.debug('HTTP error ' + _http_request.status)
             this.model.done = true
             return
         }
@@ -350,6 +350,7 @@ route_search.prototype.dump_stops = function(index, model) {
             var output = {
                 "name" : legdata.locs[locindex].name,
                 "shortcode" : legdata.locs[locindex].shortCode,
+                "visited" : 0,
                 "stop_latitude" : legdata.locs[locindex].coord.y,
                 "stop_longitude" :legdata.locs[locindex].coord.x,
                 "arrival_time" : convTime(legdata.locs[locindex].arrTime),
@@ -427,7 +428,7 @@ function location_to_address(latitude, longitude, model) {
 location_to_address.prototype.positioning_handler = function() {
     if (_http_request.readyState == XMLHttpRequest.DONE) {
         if (_http_request.status != 200 && _http_request.status != 304) {
-            //console.debug('HTTP error ' + _http_request.status)
+            console.debug('HTTP error ' + _http_request.status)
             this.model.done = true
             return
         }

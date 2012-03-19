@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="main.cpp">main.cpp</file>
         <file alias="qml/Bubble.qml">qml/common/Bubble.qml</file>
         <file alias="qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
         <file alias="qml/favorites.js">qml/common/favorites.js</file>
@@ -42,7 +41,6 @@
         <file>images/favorite-unmark.png</file>
         <file>images/favorite-unmark-inverse.png</file>
         <file>images/gps-icon.png</file>
-        <file>images/mapmarker.png</file>
         <file>images/metro.png</file>
         <file>images/switch.png</file>
         <file>images/switch-inverse.png</file>
@@ -58,5 +56,8 @@
         <file alias="qml/RouteStationDelegate.qml">qml/common/RouteStationDelegate.qml</file>
         <file alias="qml/ListItemAnimation.qml">qml/common/ListItemAnimation.qml</file>
         <file alias="qml/SettingsItem.qml">qml/common/SettingsItem.qml</file>
+        <file alias="qml/MySelectionDialog.qml">qml/harmattan/MySelectionDialog.qml</file>
+        <file alias="qml/MyTextfield.qml">qml/harmattan/MyTextfield.qml</file>
+        <file alias="qml/MyBusyIndicator.qml">qml/harmattan/MyBusyIndicator.qml</file>
     </qresource>
 </RCC>

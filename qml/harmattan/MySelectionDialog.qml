@@ -14,8 +14,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.1
 
-QueryDialog {
-    titleText: "Meegopas v0.2.0"
-    message: "(c) Jukka Nousiainen 2012\n\n" + qsTr("This application is free sofware licenced under the GNU Public License version 3")
-    rejectButtonText: qsTr("Close")
+SelectionDialog {
+
 }

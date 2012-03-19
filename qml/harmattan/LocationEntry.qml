@@ -12,8 +12,6 @@
  */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
 import QtMobility.location 1.2
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
@@ -22,16 +20,40 @@ import "theme.js" as Theme
 
 Column {
     property alias type : label.text
+    property alias textfield : textfield.text
+    property variant destination_name : ''
     property variant destination_coords : ''
+
     property bool destination_valid : (suggestionModel.count > 0)
-    property alias model: suggestionModel
-    property alias text : textfield.text
-    property alias auto_update : textfield.auto_update
     property alias selected_favorite : favoriteQuery.selectedIndex
     property bool disable_favorites : false
 
     height: textfield.height + labelContainer.height
     width: parent.width
+
+    signal locationDone(string name, string coord)
+
+    state: destination_coords? "validated" : destination_valid? "sufficient" : "error"
+
+    states: [
+        State {
+            name: "error"
+            PropertyChanges { target: statusIndicator; color: "red" }
+        },
+        State {
+            name: "sufficient"
+            PropertyChanges { target: statusIndicator; color: "yellow" }
+        },
+        State {
+            name: "validated"
+            PropertyChanges { target: statusIndicator; color: "green" }
+        }
+    ]
+    transitions: [
+        Transition {
+            ColorAnimation { duration: 100 }
+        }
+    ]
 
     Component.onCompleted: {
         Favorites.initialize()
@@ -42,36 +64,46 @@ Column {
         textfield.text = ''
         destination_coords = ''
         query.selectedIndex = -1
+        locationDone("","")
     }
 
-    function update_location(name, housenumber, coords) {
+    function updateLocation(name, housenumber, coords) {
         suggestionModel.source = ""
         var address = name
 
         if(housenumber && address.slice(address.length - housenumber.length) != housenumber)
             address += " " + housenumber
 
-        textfield.auto_update = true
-        textfield.text = address
+        destination_name = address
         destination_coords = coords
+        textfield.text = address
+
+        locationDone(address, coords)
     }
 
-    function getCoords() {
-        if(destination_coords != '') {
-            return { "name":text, "coords":destination_coords }
+    Timer {
+        id: gpsTimer
+        onTriggered: getCurrentCoords()
+        interval: 200
+        repeat: true
+    }
+
+    function getCurrentCoords() {
+        if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
+            gpsTimer.stop()
+            suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
+                                                                    positionSource.position.coordinate.longitude.toString())
+        } else {
+            /* poll again in 200ms */
+            gpsTimer.start()
         }
-        else if(textfield.acceptableInput) {
-            return { "name":suggestionModel.get(0).name, "coords":suggestionModel.get(0).coords}
-        }
-        else
-            console.log("no acceptable input")
     }
 
     FavoriteSheet { id: favorite_sheet }
 
     PositionSource {
         id: positionSource
-        updateInterval: 1000
+        updateInterval: 500
         active: platformWindow.active
     }
 
@@ -84,11 +116,25 @@ Column {
         XmlRole { name: "shortCode"; query: "shortCode/string()" }
         XmlRole { name: "housenumber"; query: "details/houseNumber/string()" }
 
-        onCountChanged: {
-            if(suggestionModel.count == 1) {
-                update_location(suggestionModel.get(0).name.split(',', 1).toString(),
-                                suggestionModel.get(0).housenumber,
-                                suggestionModel.get(0).coords)
+        onStatusChanged: {
+            if(status == XmlListModel.Ready && source != "") {
+                /* if only result, take it into use */
+                if(suggestionModel.count == 1) {
+                    updateLocation(suggestionModel.get(0).name.split(',', 1).toString(),
+                                   suggestionModel.get(0).housenumber,
+                                   suggestionModel.get(0).coords)
+                } else if (suggestionModel.count == 0) {
+                    appWindow.banner.success = false
+                    appWindow.banner.text = qsTr("No results")
+                    appWindow.banner.show()
+                } else {
+                    /* just update the first result to main page */
+                    locationDone(suggestionModel.get(0).name.split(',', 1).toString(),suggestionModel.get(0).coords)
+                }
+            } else if (status == XmlListModel.Error) {
+                appWindow.banner.success = false
+                appWindow.banner.text = qsTr("Error")
+                appWindow.banner.show()
             }
         }
     }
@@ -97,20 +143,20 @@ Column {
         id: favoritesModel
     }
 
-    SelectionDialog {
+    MySelectionDialog {
         id: query
         model: suggestionModel
         delegate: SuggestionDelegate {}
         titleText: qsTr("Choose location")
         onAccepted: {
-            update_location(suggestionModel.get(selectedIndex).name,
+            updateLocation(suggestionModel.get(selectedIndex).name,
                             suggestionModel.get(selectedIndex).housenumber,
                             suggestionModel.get(selectedIndex).coords)
         }
         onRejected: {}
     }
 
-    SelectionDialog {
+    MySelectionDialog {
         id: favoriteQuery
         model: favoritesModel
         titleText: qsTr("Choose location")
@@ -129,7 +175,7 @@ Column {
                     appWindow.banner.show()
                 }
             } else {
-                update_location(favoritesModel.get(selectedIndex).modelData,
+                updateLocation(favoritesModel.get(selectedIndex).modelData,
                                 0,
                                 favoritesModel.get(selectedIndex).coord)
             }
@@ -196,25 +242,19 @@ Column {
     Item {
         width: parent.width
         height: textfield.height
-        TextField {
+        MyTextfield {
             id: textfield
-            property bool auto_update : false
             anchors.left: parent.left
             anchors.right: disable_favorites ? parent.right : favoritePicker.left
             placeholderText: qsTr("Type a location")
-            validator: RegExpValidator { regExp: /^.{3,50}$/ }
-            inputMethodHints: Qt.ImhNoPredictiveText
-            platformStyle: TextFieldStyle {
-                paddingLeft: 45
-            }
 
             onTextChanged: {
-                if(auto_update)
-                    auto_update = false
-                else {
+                if(text != destination_name) {
                     suggestionModel.source = ""
                     selected_favorite = -1
-                    destination_coords = ''
+                    destination_coords = ""
+                    destination_name = ""
+
                     if(acceptableInput)
                         suggestionTimer.restart()
                     else
@@ -222,7 +262,7 @@ Column {
                 }
             }
             Rectangle {
-                id: status
+                id: statusIndicator
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: UIConstants.DEFAULT_MARGIN
@@ -230,28 +270,7 @@ Column {
                 radius: 10
                 height: 20
                 width: 20
-                state: destination_coords?"validated":suggestionModel.count > 0? "sufficient":"error"
                 opacity: 0.6
-
-                states: [
-                    State {
-                        name: "error"
-                        PropertyChanges { target: status; color: "red" }
-                    },
-                    State {
-                        name: "sufficient"
-                        PropertyChanges { target: status; color: "yellow" }
-                    },
-                    State {
-                        name: "validated"
-                        PropertyChanges { target: status; color: "green" }
-                    }
-                ]
-                transitions: [
-                    Transition {
-                        ColorAnimation { duration: 100 }
-                    }
-                ]
             }
             Image {
                 id: clearLocation
@@ -259,7 +278,6 @@ Column {
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/images/clear.png"
                 visible: ((textfield.activeFocus) && !busyIndicator.visible)
-                opacity: 0.8
                 MouseArea {
                     id: locationInputMouseArea
                     anchors.fill: parent
@@ -269,17 +287,14 @@ Column {
                 }
             }
 
-            BusyIndicator {
+            MyBusyIndicator {
                 id: busyIndicator
                 visible: suggestionModel.status == XmlListModel.Loading
                 running: true
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: 15
-                platformStyle: BusyIndicatorStyle {
-                    size: 'small'
-                    spinnerFrames: "image://theme/spinner"
-                }
+
                 MouseArea {
                     id: spinnerMouseArea
                     anchors.fill: parent

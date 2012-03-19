@@ -9,10 +9,6 @@ images.source = images
 loc.source = i18n
 DEPLOYMENTFOLDERS = common_qml images loc
 
-splash.files = splash.png splash-l.png
-splash.path = /usr/share/$${TARGET}/
-INSTALLS += splash
-
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
 
@@ -55,6 +51,18 @@ contains(MEEGO_EDITION, harmattan) {
     # for MLocale
     CONFIG += meegotouch
 
+    # D-Bus service
+    dbusservice.path = /usr/share/dbus-1/services
+    dbusservice.files = com.juknousi.meegopas.service
+    dbusinterface.path = /usr/share/dbus-1/interfaces
+    dbusinterface.files = com.juknousi.meegopas.xml
+    INSTALLS += dbusservice dbusinterface
+
+    # splash screen
+    splash.files = splash.png splash-l.png
+    splash.path = /usr/share/$${TARGET}/
+    INSTALLS += splash
+
     OTHER_FILES += \
         qtc_packaging/debian_harmattan/rules \
         qtc_packaging/debian_harmattan/README \
@@ -81,8 +89,18 @@ CONFIG += mobility
 MOBILITY += location systeminfo
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp \
-    shortcut.cpp
+SOURCES += src/main.cpp \
+    src/shortcut.cpp \
+    src/route.cpp \
+    src/meegopasadaptor.cpp
+
+HEADERS += \
+    include/shortcut.h \
+    include/route.h \
+    include/meegopasadaptor.h
+
+INCLUDEPATH += src \
+    include
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -91,8 +109,12 @@ qtcAddDeployment()
 TRANSLATIONS += meegopas_fi_FI.ts \
                 meegopas_ru_RU.ts
 
-HEADERS += \
-    shortcut.h
+
+
+OTHER_FILES += \
+    com.juknousi.meegopas.service \
+    com.juknousi.meegopas.xml \
+    Meegopas_harmattan.desktop
 
 
 

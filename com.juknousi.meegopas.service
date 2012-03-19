@@ -1,0 +1,4 @@
+[D-BUS Service]
+Interface=com.juknousi.meegopas
+Name=com.juknousi.meegopas
+Exec=/usr/bin/invoker --single-instance --splash=/usr/share/Meegopas/splash-l.png --type=m -s /opt/Meegopas/bin/Meegopas -prestart

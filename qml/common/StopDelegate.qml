@@ -40,7 +40,7 @@ Component {
         state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 50)?
                    "there":
                    (coordinate.distanceTo(stop_page.position.position.coordinate) < 300 &&
-                    coordinate.distanceTo(stop_page.position.position.coordinate) != 0)?
+                    coordinate.distanceTo(stop_page.position.position.coordinate) != 0) && !visited?
                        "near":
                        "far"
 
@@ -72,7 +72,7 @@ Component {
 
         Rectangle {
             id: current_station
-            anchors.left: time_column.right
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             color: coordinate.distanceTo(stop_page.position.position.coordinate) < 150? "red" : "yellow"
             opacity: 0.0
@@ -84,13 +84,14 @@ Component {
             height: parent.height
             width: appWindow.width + UIConstants.DEFAULT_MARGIN * 2
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.leftMargin: 5
             color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
             z: -1
             visible: mouseArea.pressed
         }
         Column {
             id: time_column
-            anchors.left: parent.left
+            anchors.left: current_station.right
             anchors.verticalCenter: parent.verticalCenter
             width: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
             Text {

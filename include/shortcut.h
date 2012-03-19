@@ -14,7 +14,7 @@ public:
     Shortcut(QObject *parent = 0);
 
 public slots:
-    int toggleShortcut(const QString &name);
+    int toggleShortcut(const QString &name, const QString &coord);
     bool checkIfExists(const QString &name);
     void removeShortcut(const QString &name);
 };

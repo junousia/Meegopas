@@ -6,7 +6,7 @@ Shortcut::Shortcut(QObject *parent) :
 {
 }
 
-int Shortcut::toggleShortcut(const QString &name) {
+int Shortcut::toggleShortcut(const QString &name, const QString &coord) {
     QCryptographicHash namehash(QCryptographicHash::Md4);
     namehash.addData(name.toUtf8());
     QFile file("/home/user/.local/share/applications/meegopas_" + QString(namehash.result().toHex()) + ".desktop");
@@ -18,14 +18,15 @@ int Shortcut::toggleShortcut(const QString &name) {
                       "Version=1.0" << endl <<
                       "Type=Application" << endl <<
                       "Name=" << name << endl <<
-                      "Exec=/usr/bin/invoker --single-instance --splash=/usr/share/Meegopas/splash-l.png --type=d /opt/Meegopas/bin/Meegopas" << endl <<
                       "Icon=/usr/share/icons/hicolor/80x80/apps/Meegopas80.png\n" << endl <<
-                      "X-Window-Icon=" << endl <<
-                      "X-HildonDesk-ShowInToolbar=true" << endl <<
-                      "X-Osso-Type=application/x-executable" << endl <<
-                      "X-Maemo-Service=" << endl <<
-                      "X-Maemo-Fixed-Args=parametri" << endl <<
-                      "X-Maemo-Method=com.my.interface.Method" << endl;
+                      "Exec=qdbus com.juknousi.meegopas /com/juknousi/meegopas route " << name << " " << coord << endl;
+
+//                      "X-Maemo-Service=com.juknousi.meegopas" << endl <<
+//                      "X-Maemo-Fixed-Args=" << name << " "<< coord << endl <<
+//                      "X-Maemo-Method=com.juknousi.meegopas.route" << endl <<
+//                      "X-Maemo-Object-Path=/com/juknousi/meegopas" << endl;
+
+
             return 1;
         } else {
             qDebug( "Could not create file" );
@@ -33,6 +34,7 @@ int Shortcut::toggleShortcut(const QString &name) {
     } else {
         if (file.remove()) return 2;
     }
+    return 0;
 }
 
 bool Shortcut::checkIfExists(const QString &name){

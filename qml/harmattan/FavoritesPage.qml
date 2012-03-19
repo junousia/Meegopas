@@ -12,7 +12,7 @@
  */
 
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import com.nokia.meego 1.1
 import com.nokia.extras 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
@@ -46,6 +46,7 @@ Page {
     Dialog {
         id: edit_dialog
         property alias name : editTextField.text
+        property string coord
         property string old_name : ""
         title: Column {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -112,7 +113,7 @@ Page {
                         /* update shortcut, if exists */
                         if(Shortcut.checkIfExists(edit_dialog.old_name)) {
                             Shortcut.removeShortcut(edit_dialog.old_name)
-                            Shortcut.toggleShortcut(edit_dialog.name)
+                            Shortcut.toggleShortcut(edit_dialog.name,favoritesModel.get(list.currentIndex).coord)
                         }
 
                         favoritesModel.clear()
@@ -285,8 +286,17 @@ Page {
                                     Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white-selected':'image://theme/icon-m-toolbar-frequent-used-selected' :
                                     Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white':'image://theme/icon-m-toolbar-frequent-used'
                         mouseArea.onClicked: {
-                            Shortcut.toggleShortcut(modelData)
+                            Shortcut.toggleShortcut(modelData, coord)
                             toggled = toggled ? false : true
+                            if(toggled) {
+                                appWindow.banner.success = true
+                                appWindow.banner.text = qsTr("Favorite added to application menu")
+                                appWindow.banner.show()
+                            } else {
+                                appWindow.banner.success = false
+                                appWindow.banner.text = qsTr("Favorite removed from application menu")
+                                appWindow.banner.show()
+                            }
                         }
                     }
 
@@ -298,6 +308,7 @@ Page {
                             list.currentIndex = index
                             edit_dialog.name = modelData
                             edit_dialog.old_name = modelData
+                            edit_dialog.coord = coord
                             edit_dialog.open()
                         }
                     }

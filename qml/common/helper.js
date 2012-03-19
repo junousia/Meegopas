@@ -45,24 +45,16 @@ function previous_station() {
 }
 
 function switch_locations(from, to) {
-    var templo = from.text
+    var templo = from.destination_name
     var tempcoord = from.destination_coords
     var tempindex = from.selected_favorite
 
-    if(from.destination_coords != '') {
-        to.auto_update = true
-    }
-    if(to.destination_coords != '') {
-        from.auto_update = true
-    }
-    from.model.source = ""
-    from.destination_coords = to.destination_coords
-    from.text = to.text
+    from.clear()
+    from.updateLocation(to.destination_name, 0, to.destination_coords)
     from.selected_favorite = to.selected_favorite
 
-    to.model.source = ""
-    to.destination_coords = tempcoord
-    to.text = templo
+    to.clear()
+    to.updateLocation(templo, 0, tempcoord)
     to.selected_favorite = tempindex
 }
 

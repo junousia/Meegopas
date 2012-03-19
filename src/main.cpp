@@ -4,11 +4,13 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QFontDatabase>
+#include <QtDBus/QtDBus>
 #include "qmlapplicationviewer.h"
 #include "qplatformdefs.h"
 #if defined(Q_WS_MAEMO_5) || defined(MEEGO_EDITION_HARMATTAN)
 #include <MLocale>
 #include "shortcut.h"
+#include "meegopasadaptor.h"
 #endif
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -22,11 +24,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     newFont.setFamily("Nokia Pure Text Light");
     newFont.setWeight(QFont::Light);
     MLocale locale;
-
-
-        QStringList cmdline_args = QCoreApplication::arguments();
-        qDebug() << cmdline_args;
-
     qDebug() << "Current locale: " << locale.name();
     translator.load(":/i18n/meegopas_" + locale.name() + ".qm");
     app.data()->setFont(newFont);
@@ -34,13 +31,32 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QDeclarativeContext *ctxt = viewer->rootContext();
 
-    /*  */
+    /* set shortcut to app */
     Shortcut sc;
     ctxt->setContextProperty("Shortcut", &sc);
 
     viewer->addImportPath(QLatin1String("qrc:/images/"));
     viewer->addImportPath(QLatin1String("qrc:/i18n/"));
+
+    /* publish viewer class to QML */
+    ctxt->setContextProperty("QmlApplicationViewer", &(*viewer));
+
+    /* set starting page */
     viewer->setSource(QUrl("qrc:/qml/main.qml"));
+
+    /* register dbus interface */
+    QDBusConnection bus = QDBusConnection::sessionBus();
+    Route route;
+    route.setContext(ctxt);
+    new MeegopasAdaptor(&route);
+
+    if(bus.registerService("com.juknousi.meegopas") == QDBusConnectionInterface::ServiceNotRegistered)
+        qDebug() << "Registering DBus service failed";
+
+    if(bus.registerObject("/com/juknousi/meegopas", &route) == false)
+        qDebug() << "Registering DBus adaptor object failed";
+
+    ctxt->setContextProperty("Route", &route);
 #else
     QFont newFont;
     newFont.setFamily("Nokia Pure Text Light");
@@ -57,6 +73,5 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->showExpanded();
-
     return app->exec();
 }
