@@ -193,7 +193,6 @@ Item {
                 }
             }
 
-            //flickable_map.map.addMapObject(map_group)
             Helper.push_to_objects(map_group)
         }
         Helper.set_group_objects(root_group)

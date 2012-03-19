@@ -35,7 +35,7 @@ Item {
     }
 
     function add_value(new_value) {
-        value.text += value.text != ""? ", " : ""
+        value.text += value.text != "" ? ", " : ""
         value.text += new_value
     }
 

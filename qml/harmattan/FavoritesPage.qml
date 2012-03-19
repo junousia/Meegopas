@@ -283,8 +283,8 @@ Page {
                         }
                         anchors.right: edit_button.left
                         source: toggled?
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white-selected':'image://theme/icon-m-toolbar-frequent-used-selected' :
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-frequent-used-white':'image://theme/icon-m-toolbar-frequent-used'
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-common-favorite-mark-selected':'image://theme/icon-m-common-favorite-mark-selected' :
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-common-favorite-unmark-inverse':'image://theme/icon-m-common-favorite-unmark'
                         mouseArea.onClicked: {
                             Shortcut.toggleShortcut(modelData, coord)
                             toggled = toggled ? false : true

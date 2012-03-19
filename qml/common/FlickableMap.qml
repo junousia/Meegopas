@@ -62,9 +62,7 @@ Flickable {
         updateViewPort()
     }
     Map {
-        smooth: true
         id: map
-
         size.width: mapFlickable.width * 2
         size.height: mapFlickable.height * 2
         zoomLevel: defaultZoomLevel
@@ -82,7 +80,7 @@ Flickable {
             ]
         }
         mapType: Map.StreetMap
-        connectivityMode: Map.OfflineMode
+        connectivityMode: Map.OnlineMode
         center: Coordinate {
             latitude: defaultLatitude
             longitude:defaultLongitude
@@ -177,11 +175,4 @@ Flickable {
             }
         }
     }
-
-//    MouseArea {
-//        anchors.fill: parent
-//        onClicked: {
-//            panToCoordinate(map.toCoordinate(Qt.point(mouseX-map.pos.x,mouseY-map.pos.y)))
-//        }
-//    }
 }

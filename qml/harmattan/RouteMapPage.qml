@@ -61,7 +61,9 @@ Page {
     Loader {
         id: map_loader
         anchors.fill: parent
-        onLoaded: map_loader.item.initialize()
+        onLoaded: {
+            map_loader.item.initialize()
+        }
     }
 
     Component {
