@@ -50,10 +50,27 @@ Page {
         /* bring application to front */
         QmlApplicationViewer.showFullScreen()
 
+        /* Update time */
+        updateTime()
+
+        /* clear 'from' field, and enter new 'to' */
         from.updateLocation("", 0 , "")
         from.getCurrentCoords()
         to.updateLocation(name, 0, coord)
         state = "waiting"
+    }
+
+    function updateTime() {
+        myTime = new Date()
+
+        /* Set date for date picker */
+        timePicker.hour = Qt.formatTime(mainPage.myTime, "hh")
+        timePicker.minute = Qt.formatTime(mainPage.myTime, "mm")
+
+        /* Set date for date picker */
+        datePicker.day = Qt.formatDate(mainPage.myTime, "dd")
+        datePicker.month = Qt.formatDate(mainPage.myTime, "MM")
+        datePicker.year = Qt.formatDate(mainPage.myTime, "yyyy")
     }
 
     onEndpointsValidChanged: {
@@ -70,16 +87,7 @@ Page {
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
-        myTime = new Date()
-
-        /* Set date for date picker */
-        timePicker.hour = Qt.formatTime(mainPage.myTime, "hh")
-        timePicker.minute = Qt.formatTime(mainPage.myTime, "mm")
-
-        /* Set date for date picker */
-        datePicker.day = Qt.formatDate(mainPage.myTime, "dd")
-        datePicker.month = Qt.formatDate(mainPage.myTime, "MM")
-        datePicker.year = Qt.formatDate(mainPage.myTime, "yyyy")
+        updateTime()
     }
 
     states: [
@@ -368,9 +376,7 @@ Page {
                 width: 150
                 height: 40
                 onClicked: {
-                    mainPage.myTime = mainPage.myTime = new Date()
-                    timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
-                    dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
+                    updateTime()
                 }
             }
         }
