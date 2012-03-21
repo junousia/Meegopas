@@ -15,9 +15,14 @@ import QtQuick 1.1
 import com.nokia.meego 1.1
 
 TextField {
-    validator: RegExpValidator { regExp: /^.{3,}$/ }
+    property alias regExpValidator : regExpValidator
+    validator: regExpValidator
     inputMethodHints: Qt.ImhNoPredictiveText
     platformStyle: TextFieldStyle {
         paddingLeft: 45
+    }
+    RegExpValidator {
+        id: regExpValidator
+        regExp: /^.{3,}$/
     }
 }
