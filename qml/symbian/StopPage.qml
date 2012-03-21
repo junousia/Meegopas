@@ -76,6 +76,7 @@ Page {
                 appWindow.banner.open()
             }
         }
+        ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }
     }
     PositionSource {
         id: position
@@ -106,6 +107,7 @@ Page {
         z: 200
         model: stopModel
         delegate: StopDelegate {}
+        interactive: !busyIndicator.visible
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }

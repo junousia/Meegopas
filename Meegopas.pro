@@ -74,6 +74,17 @@ contains(MEEGO_EDITION, harmattan) {
 
     RESOURCES += \
         harmattan.qrc
+
+    SOURCES += \
+        src/shortcut.cpp \
+        src/route.cpp \
+        src/meegopasadaptor.cpp
+
+
+    HEADERS += \
+        include/shortcut.h \
+        include/route.h \
+        include/meegopasadaptor.h
 }
 
 simulator {
@@ -90,14 +101,6 @@ MOBILITY += location systeminfo
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += src/main.cpp \
-    src/shortcut.cpp \
-    src/route.cpp \
-    src/meegopasadaptor.cpp
-
-HEADERS += \
-    include/shortcut.h \
-    include/route.h \
-    include/meegopasadaptor.h
 
 INCLUDEPATH += src \
     include

@@ -3,7 +3,7 @@
         <file alias="qml/Bubble.qml">qml/common/Bubble.qml</file>
         <file alias="qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
         <file alias="qml/favorites.js">qml/common/favorites.js</file>
-        <file alias="qml/FavoritesDelegate.qml">qml/common/FavoritesDelegate.qml</file>
+        <file alias="qml/FavoritesDelegate.qml">qml/harmattan/FavoritesDelegate.qml</file>
         <file alias="qml/Header.qml">qml/common/Header.qml</file>
         <file alias="qml/helper.js">qml/common/helper.js</file>
         <file alias="qml/MapElement.qml">qml/common/MapElement.qml</file>
@@ -22,7 +22,7 @@
         <file alias="qml/ExceptionsPage.qml">qml/harmattan/ExceptionsPage.qml</file>
         <file alias="qml/FavoriteSheet.qml">qml/harmattan/FavoriteSheet.qml</file>
         <file alias="qml/FavoritesPage.qml">qml/harmattan/FavoritesPage.qml</file>
-        <file alias="qml/LocationEntry.qml">qml/harmattan/LocationEntry.qml</file>
+        <file alias="qml/LocationEntry.qml">qml/common/LocationEntry.qml</file>
         <file alias="qml/main.qml">qml/harmattan/main.qml</file>
         <file alias="qml/MainPage.qml">qml/harmattan/MainPage.qml</file>
         <file alias="qml/ResultPage.qml">qml/harmattan/ResultPage.qml</file>

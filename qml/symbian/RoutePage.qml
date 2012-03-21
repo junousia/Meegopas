@@ -72,6 +72,7 @@ Page {
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
         delegate: delegate
+        interactive: !busyIndicator.visible
         header: Header {
             text: header
             subtext: subheader

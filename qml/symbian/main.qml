@@ -43,6 +43,9 @@ PageStackWindow {
         id: banner
         property bool success : false
         iconSource: success ? "qrc:/images/banner_green.png":"qrc:/images/banner_red.png"
+        function show() {
+            banner.open()
+        }
     }
 
     ToolBarLayout {
@@ -62,7 +65,6 @@ PageStackWindow {
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
             MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
             MenuItem { text: qsTr("About"); onClicked: about.open() }
-            MenuItem { text: qsTr("Exit"); onClicked: Qt.quit() }
         }
     }
 

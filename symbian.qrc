@@ -4,7 +4,8 @@
         <file alias="/qml/ExceptionsPage.qml">qml/symbian/ExceptionsPage.qml</file>
         <file alias="/qml/FavoritesManageDelegate.qml">qml/symbian/FavoritesManageDelegate.qml</file>
         <file alias="/qml/FavoritesPage.qml">qml/symbian/FavoritesPage.qml</file>
-        <file alias="/qml/LocationEntry.qml">qml/symbian/LocationEntry.qml</file>
+        <file alias="/qml/FavoritesDelegate.qml">qml/symbian/FavoritesDelegate.qml</file>
+        <file alias="/qml/LocationEntry.qml">qml/common/LocationEntry.qml</file>
         <file alias="/qml/main.qml">qml/symbian/main.qml</file>
         <file alias="/qml/MainPage.qml">qml/symbian/MainPage.qml</file>
         <file alias="/qml/ResultPage.qml">qml/symbian/ResultPage.qml</file>
@@ -15,7 +16,6 @@
         <file alias="/qml/Bubble.qml">qml/common/Bubble.qml</file>
         <file alias="/qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
         <file alias="/qml/favorites.js">qml/common/favorites.js</file>
-        <file alias="/qml/FavoritesDelegate.qml">qml/common/FavoritesDelegate.qml</file>
         <file alias="/qml/Header.qml">qml/common/Header.qml</file>
         <file alias="/qml/helper.js">qml/common/helper.js</file>
         <file alias="/qml/MapElement.qml">qml/common/MapElement.qml</file>
@@ -49,7 +49,6 @@
         <file>images/train.png</file>
         <file>images/tram.png</file>
         <file>images/walk.png</file>
-        <file>main.cpp</file>
         <file>i18n/meegopas_fi_FI.qm</file>
         <file alias="qml/FlickableMap.qml">qml/common/FlickableMap.qml</file>
         <file>i18n/meegopas_ru_RU.qm</file>
@@ -58,5 +57,8 @@
         <file alias="qml/RouteStationDelegate.qml">qml/common/RouteStationDelegate.qml</file>
         <file alias="qml/FavoriteSheet.qml">qml/symbian/FavoriteSheet.qml</file>
         <file alias="qml/ListItemAnimation.qml">qml/common/ListItemAnimation.qml</file>
+        <file alias="qml/MyBusyIndicator.qml">qml/symbian/MyBusyIndicator.qml</file>
+        <file alias="qml/MySelectionDialog.qml">qml/symbian/MySelectionDialog.qml</file>
+        <file alias="qml/MyTextfield.qml">qml/symbian/MyTextfield.qml</file>
     </qresource>
 </RCC>

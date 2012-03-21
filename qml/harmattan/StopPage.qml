@@ -105,6 +105,7 @@ Page {
         z: 200
         model: stopModel
         delegate: StopDelegate {}
+        interactive: !busyIndicator.visible
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }

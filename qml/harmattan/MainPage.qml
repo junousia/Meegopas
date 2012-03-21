@@ -241,7 +241,7 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
 
-            Spacing { height: UIConstants.DEFAULT_MARGIN / 3 }
+            Spacing { height: appWindow.inPortrait? 20 : 0 }
 
             Item {
                 width: parent.width

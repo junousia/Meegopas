@@ -46,7 +46,7 @@ Page {
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
         delegate: ResultDelegate {}
-
+        interactive: !busyIndicator.visible
         header: Header {
             text: search_parameters.from_name + " - " + search_parameters.to_name
             subtext: search_parameters.timetype == "departure"?
