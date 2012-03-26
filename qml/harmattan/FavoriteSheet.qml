@@ -27,7 +27,7 @@ Dialog {
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         Text {
-            text: qsTr("Add to favorites")
+            text: qsTr("Enter name for the favorite")
             font.pixelSize: UIConstants.FONT_XLARGE
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Qt.AlignCenter

@@ -14,7 +14,7 @@ QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
-    # DEPLOYMENTFOLDERS += symbian_qml
+    DEPLOYMENTFOLDERS += symbian_qml
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
     # fail to install if self-signed. By default qmake uses the unprotected
@@ -100,7 +100,7 @@ CONFIG += mobility
 MOBILITY += location systeminfo
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += src/main.cpp \
+SOURCES += src/main.cpp
 
 INCLUDEPATH += src \
     include
@@ -118,6 +118,8 @@ OTHER_FILES += \
     com.juknousi.meegopas.service \
     com.juknousi.meegopas.xml \
     Meegopas_harmattan.desktop
+
+HEADERS +=
 
 
 

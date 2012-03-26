@@ -49,6 +49,7 @@ Item {
 
             Text {
                 id: station_code
+                visible: appWindow.show_station_code
                 horizontalAlignment: Qt.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
                 text: shortcode? "(" + shortcode + ")" : ""

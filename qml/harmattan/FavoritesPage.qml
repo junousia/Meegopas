@@ -30,8 +30,6 @@ Page {
 
     FavoriteSheet { id: sheet }
 
-    property alias textfield : favorite
-
     Component.onCompleted: {
         favoritesModel.clear()
         Favorites.initialize()
@@ -210,6 +208,65 @@ Page {
             }
         }
     }
+    Dialog {
+        id: add_dialog
+        property string name : ''
+        property string coords : ''
+        content: Item {
+            width: parent.width
+            height: add_column.height + UIConstants.DEFAULT_MARGIN * 2
+            Column {
+                id: add_column
+                property alias entry : entry
+                width: parent.width
+                spacing: UIConstants.DEFAULT_MARGIN
+                anchors.horizontalCenter: parent.horizontalCenter
+                LocationEntry {
+                    id: entry
+                    font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                    font.bold: true
+                    font.family: UIConstants.FONT_FAMILY
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 1.8
+                    type: qsTr("Search for location")
+                    disable_favorites: true
+                    onLocationDone: {
+                        add_dialog.name = name
+                        add_dialog.coords = coord
+                    }
+                }
+            }
+        }
+        buttons: Column {
+            spacing: UIConstants.DEFAULT_MARGIN
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: button_save.width
+            Button {
+                text: qsTr("Next")
+                enabled: add_dialog.coords != ''
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: {
+                    sheet.name = add_dialog.name
+                    sheet.coords = add_dialog.coords
+                    sheet.open()
+                    add_dialog.close()
+                    entry.clear()
+                }
+            }
+            Button {
+                text: qsTr("Cancel")
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: {
+                    add_dialog.close()
+                    entry.clear()
+                }
+            }
+        }
+    }
 
     Rectangle {
         id: background
@@ -219,6 +276,8 @@ Page {
     }
 
     Flickable {
+        interactive: favoritesModel.count
+
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
             margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
@@ -239,24 +298,13 @@ Page {
                 text: qsTr("Manage favorites")
             }
 
-            LocationEntry { id: favorite; type: qsTr("Add favorite"); disable_favorites: true }
-
             Button {
-                id: addButton
-                text: qsTr("Add")
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: UIConstants.FONT_SMALL  * appWindow.scaling_factor
-                width: 150 * appWindow.scaling_factor
-                height: 40
-                enabled: favorite.destination_coords != ''
+                width: parent.width
+                text: qsTr("Add favorite")
                 onClicked: {
-                    sheet.name = favorite.getCoords().name
-                    sheet.coords = favorite.getCoords().coords
-                    sheet.open()
+                    add_dialog.open()
                 }
             }
-
-            Separator {}
 
             Component {
                 id: favoritesManageDelegate
@@ -278,13 +326,14 @@ Page {
                     MyButton {
                         id: shortcut_button
                         property bool toggled : false
+                        imageSize: 40
                         Component.onCompleted: {
                             toggled = Shortcut.checkIfExists(modelData)
                         }
                         anchors.right: edit_button.left
                         source: toggled?
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-common-favorite-mark-selected':'image://theme/icon-m-common-favorite-mark-selected' :
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-common-favorite-unmark-inverse':'image://theme/icon-m-common-favorite-unmark'
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-mark-inverse.png':'qrc:/images/favorite-mark.png' :
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-unmark-inverse.png':'qrc:/images/favorite-unmark.png'
                         mouseArea.onClicked: {
                             Shortcut.toggleShortcut(modelData, coord)
                             toggled = toggled ? false : true
@@ -330,16 +379,20 @@ Page {
                 width: parent.width
                 height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
                 interactive: false
-                header: Text {
-                    text: qsTr("Favorites")
-                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.1
-                }
                 model: favoritesModel
                 delegate: favoritesManageDelegate
             }
         }
+    }
+
+    Text {
+        anchors.centerIn: parent
+        visible: favoritesModel.count == 0
+        width: parent.width
+        text: qsTr("No saved favorites")
+        horizontalAlignment: Qt.AlignHCenter
+        wrapMode: Text.WordWrap
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 }

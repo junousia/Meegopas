@@ -26,6 +26,7 @@ PageStackWindow {
     property bool positioning_active : true
     property bool follow_mode : false
     property bool map_visible : false
+    property bool show_station_code : false
     property string colorscheme : "default"
 
     Item {

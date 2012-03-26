@@ -37,28 +37,15 @@ Component {
             if(state == "there")
                 stop_page.list.currentIndex = index
         }
-        state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 50)?
-                   "there":
-                   (coordinate.distanceTo(stop_page.position.position.coordinate) < 300 &&
-                    coordinate.distanceTo(stop_page.position.position.coordinate) != 0) && !visited?
-                       "near":
-                       "far"
+        state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 50)? "near": "far"
 
         states: [
             State {
                 name: "far"
-                PropertyChanges { target: current_station; color: "green" }
-                PropertyChanges { target: current_station; opacity: 0.0 }
             },
             State {
                 name: "near"
-                PropertyChanges { target: current_station; color: "yellow" }
-                PropertyChanges { target: current_station; opacity: 1.0 }
-            },
-            State {
-                name: "there"
-                PropertyChanges { target: current_station; color: "red" }
-                PropertyChanges { target: current_station; opacity: 1.0 }
+                PropertyChanges { target: routeList; currentIndex: index }
             }
         ]
         transitions: [
@@ -71,27 +58,17 @@ Component {
         ]
 
         Rectangle {
-            id: current_station
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            color: coordinate.distanceTo(stop_page.position.position.coordinate) < 150? "red" : "yellow"
-            opacity: 0.0
-            height: UIConstants.LIST_ITEM_HEIGHT_SMALL - UIConstants.DEFAULT_MARGIN
-            width: 5
-        }
-
-        Rectangle {
             height: parent.height
             width: appWindow.width + UIConstants.DEFAULT_MARGIN * 2
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.leftMargin: 5
+            anchors.leftMargin: 10
             color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
             z: -1
             visible: mouseArea.pressed
         }
         Column {
             id: time_column
-            anchors.left: current_station.right
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             width: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
             Text {
@@ -126,6 +103,7 @@ Component {
 
                 Text {
                     id: station_code
+                    visible: appWindow.show_station_code
                     horizontalAlignment: Qt.AlignRight
                     anchors.verticalCenter: parent.verticalCenter
                     text: shortcode? "(" + shortcode + ")" : ""

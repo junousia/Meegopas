@@ -50,9 +50,13 @@ Component {
 
         Image {
             id: icon
-            source: index == 0?'qrc:/images/gps-icon-inverted.png':'image://theme/icon-m-common-favorite-mark-inverse'
+            source: index == 0?'qrc:/images/gps-icon-inverted.png':'qrc:/images/favorite-mark-inverse.png'
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
+            height: 40
+            width: 40
+            smooth: true
+            anchors.margins: UIConstants.DEFAULT_MARGIN / 2
         }
 
         Text {

@@ -31,6 +31,8 @@ CommonDialog {
         width: parent.width
         spacing: UIConstants.DEFAULT_MARGIN
 
+        Spacing { height: UIConstants.DEFAULT_MARGIN/2 }
+
         TextField {
             id: addTextField
             width: parent.width

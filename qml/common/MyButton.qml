@@ -16,6 +16,7 @@ import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
 Item {
+    property int imageSize: 50
     width: 50
     height: 50
     property alias source : image.source
@@ -31,11 +32,10 @@ Item {
 
     Image {
         id: image
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         smooth: true
-        height: 50
-        width: height
+        height: imageSize
+        width: imageSize
     }
     MouseArea {
         id: mouseArea

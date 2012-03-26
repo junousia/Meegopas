@@ -76,7 +76,7 @@ Item {
         id: transportColumn
         anchors.left: rect.left
         anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: UIConstants.DEFAULT_MARGIN * 3
+        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
         width: 100
         Image {
             visible: type != "walk"

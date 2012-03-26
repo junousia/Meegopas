@@ -29,6 +29,8 @@ function set_group_objects(group) {
 
 function clear_objects() {
     objects = []
+    stations = []
+    current_station = 0
 }
 
 function add_station(station) {
@@ -42,6 +44,11 @@ function next_station() {
 
 function previous_station() {
     return stations[--current_station%stations.length]
+}
+
+function first_station() {
+    current_station = 0
+    return stations[current_station]
 }
 
 function switch_locations(from, to) {

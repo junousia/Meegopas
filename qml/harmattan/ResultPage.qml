@@ -40,18 +40,94 @@ Page {
         z: -50
     }
 
+    Component {
+        id: footer
+        Item {
+            height: 35
+            width: parent.width
+            visible: !busyIndicator.visible
+            Label {
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("...")
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 0.8
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+            }
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    /* workaround to modify qml array is to make a copy of it,
+                       modify the copy and assign the copy back to the original */
+                    var new_parameters = search_parameters
+                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 15)
+                    search_parameters = new_parameters
+                    routeModel.clear()
+                    Reittiopas.new_route_instance(search_parameters, routeModel)
+                }
+            }
+            Rectangle {
+                height: parent.height
+                width: appWindow.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+                z: -1
+                visible: mouseArea.pressed
+            }
+        }
+    }
+
+
     ListView {
         id: list
         anchors.fill: parent
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         model: routeModel
+        footer: footer
         delegate: ResultDelegate {}
         interactive: !busyIndicator.visible
-        header: Header {
-            text: search_parameters.from_name + " - " + search_parameters.to_name
-            subtext: search_parameters.timetype == "departure"?
-                         qsTr("Departure time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm") :
-                         qsTr("Arrival time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm")
+        header: Column {
+            width: parent.width
+            Header {
+                text: search_parameters.from_name + " - " + search_parameters.to_name
+                subtext: search_parameters.timetype == "departure"?
+                             qsTr("Departure time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm") :
+                             qsTr("Arrival time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm")
+            }
+            Item {
+                height: 35
+                width: parent.width
+                visible: !busyIndicator.visible
+                Label {
+                    anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("...")
+                    lineHeightMode: Text.FixedHeight
+                    lineHeight: font.pixelSize * 0.8
+                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND                }
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        /* workaround to modify qml array is to make a copy of it,
+                           modify the copy and assign the copy back to the original */
+                        var new_parameters = search_parameters
+                        new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 15)
+                        search_parameters = new_parameters
+                        routeModel.clear()
+                        Reittiopas.new_route_instance(search_parameters, routeModel)
+                    }
+                }
+                Rectangle {
+                    height: parent.height
+                    width: appWindow.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
+                    z: -1
+                    visible: mouseArea.pressed
+                }
+            }
         }
     }
 

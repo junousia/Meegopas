@@ -95,6 +95,16 @@ Page {
         z: -50
     }
 
+    Component {
+        id: highlight_component
+        Rectangle {
+            anchors.leftMargin: -UIConstants.DEFAULT_MARGIN
+            color: "red"
+            width: 5
+            height: 25
+        }
+    }
+
     ListView {
         id: routeList
         clip: true
@@ -106,6 +116,9 @@ Page {
         model: stopModel
         delegate: StopDelegate {}
         interactive: !busyIndicator.visible
+        highlightFollowsCurrentItem: true
+        highlight: highlight_component
+        currentIndex: -1
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }

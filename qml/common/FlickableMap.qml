@@ -40,20 +40,21 @@ Flickable {
     clip: true
     function updateSizes()
     {
+        centeredContentY = map.size.height*0.75
+        centeredContentX = map.size.width*0.75
+        map.pos.x = map.size.width/2
+        map.pos.y = map.size.height/2
         map.transformOrigin = Item.Center
         map.scenter.x = map.width/2.0
         map.scenter.y = map.height/2.0
-        updateViewPort()
     }
     Component.onCompleted: {
         updateSizes()
-        contentX = centeredContentX
-        contentY = centeredContentY
-        map.pos.x = map.size.width/2
-        map.pos.y = map.size.height/2
+        updateViewPort()
     }
+
     function updateViewPort() {
-        map.pan((contentX-centeredContentX)/map.getSkale,(contentY-centeredContentY)/map.getSkale)
+        map.pan((contentX-centeredContentX)/map.getScale,(contentY-centeredContentY)/map.getScale)
 
         contentX = centeredContentX
         contentY = centeredContentY
@@ -61,6 +62,12 @@ Flickable {
     onMovementEnded: {
         updateViewPort()
     }
+
+    onWidthChanged: {
+        updateSizes()
+        updateViewPort()
+    }
+
     Map {
         id: map
         size.width: mapFlickable.width * 2
@@ -86,26 +93,32 @@ Flickable {
             longitude:defaultLongitude
         }
         property alias scenter: tform.origin
-        property alias getSkale: tform.xScale
-        function setSkale(v) {
+        property alias getScale: tform.xScale
+        function setScale(v) {
             tform.xScale = v
             tform.yScale = v
         }
-        transform: Scale{
+        transform: Scale {
             id: tform
         }
     }
 
     function panToCoordinate(coordinate) {
-        panAnimation.latitude = coordinate.latitude;
-        panAnimation.longitude = coordinate.longitude;
-        panAnimation.restart();
+        map.center.latitude = coordinate.latitude
+        map.center.longitude = coordinate.longitude
+// animations disabled due to occasional crashing during panning
+//        panAnimation.latitude = coordinate.latitude;
+//        panAnimation.longitude = coordinate.longitude;
+//        panAnimation.restart();
     }
 
     function panToLatLong(latitude,longitude) {
-        panAnimation.latitude = latitude;
-        panAnimation.longitude = longitude;
-        panAnimation.restart();
+        map.center.latitude = latitude
+        map.center.longitude = longitude
+// animations disabled due to occasional crashing during panning
+//        panAnimation.latitude = latitude;
+//        panAnimation.longitude = longitude;
+//        panAnimation.restart();
     }
 
     ParallelAnimation {
@@ -140,7 +153,7 @@ Flickable {
         property double contentInitX
         property double contentInitY
         onPinchStarted: {
-            initScale = map.getSkale
+            initScale = map.getScale
             p1toC_X = (pinch.center.x-map.size.width)
             p1toC_Y = (pinch.center.y-map.size.height)
             contentInitX = mapFlickable.contentX
@@ -161,16 +174,16 @@ Flickable {
             mapFlickable.contentY = contentInitY-contentDriftY-tCenterDriftY
             if(initScale*pinch.scale <= 0.75 && map.zoomLevel > 2) {
                 map.zoomLevel -= 1
-                map.setSkale(1.5)
-                initScale = map.getSkale/pinch.scale
+                map.setScale(1.5)
+                initScale = map.getScale/pinch.scale
             } else if(initScale*pinch.scale >= 1.5 && map.zoomLevel < 18) {
                 map.zoomLevel += 1
-                map.setSkale(0.75)
-                initScale = map.getSkale/pinch.scale
+                map.setScale(0.75)
+                initScale = map.getScale/pinch.scale
             } else {
                 if(! ((map.zoomLevel == 18 && (initScale*pinch.scale) > 2.0)
                       || (map.zoomLevel == 2 && (initScale*pinch.scale) < 0.85))) {
-                    map.setSkale(initScale*pinch.scale)
+                    map.setScale(initScale*pinch.scale)
                 }
             }
         }

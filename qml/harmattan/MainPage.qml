@@ -84,6 +84,10 @@ Page {
     }
 
     Component.onCompleted: {
+//        var saved_theme = Storage.getSetting("theme")
+//        if(saved_theme && saved_theme != "Unknown")
+//            appWindow.colorscheme = saved_theme
+
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
@@ -238,7 +242,7 @@ Page {
 
         Column {
             id: content_column
-            spacing: UIConstants.DEFAULT_MARGIN
+            spacing: appWindow.inPortrait? UIConstants.DEFAULT_MARGIN : UIConstants.DEFAULT_MARGIN / 2
             width: parent.width
 
             Spacing { height: appWindow.inPortrait? 20 : 0 }
@@ -275,7 +279,7 @@ Page {
                 }
             }
 
-            Spacing {}
+            Spacing { height: appWindow.inPortrait? 20 : 0 }
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter

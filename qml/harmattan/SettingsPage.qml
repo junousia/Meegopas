@@ -41,6 +41,7 @@ Page {
 
         Component.onCompleted: {
             Storage.initialize()
+            //theme.set_value(Storage.getSetting("theme"))
             optimize.set_value(Storage.getSetting("optimize"))
             walking_speed.set_value(Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
@@ -70,6 +71,46 @@ Page {
             Header {
                 text: qsTr("Settings")
             }
+//            Text {
+//                text: qsTr("Color scheme")
+//                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
+//                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+//                anchors.left: parent.left
+//                lineHeightMode: Text.FixedHeight
+//                lineHeight: font.pixelSize * 1.2
+//            }
+
+//            ButtonColumn {
+//                id: theme
+//                function set_value(value) {
+//                    if(value == "default")
+//                        theme_default.checked = true
+//                    else if(value == "ligth")
+//                        theme_light.checked = true
+//                    else if(value == "warm")
+//                        theme_warm.checked = true
+//                }
+
+//                anchors.right: parent.right
+//                Button {
+//                    id: theme_default
+//                    text: qsTr("Default")
+//                    onClicked: Storage.setSetting('theme', 'default')
+//                }
+//                Button {
+//                    id: theme_light
+//                    text: qsTr("Light")
+//                    onClicked: Storage.setSetting('theme', 'light')
+//                }
+//                Button {
+//                    id: theme_warm
+//                    text: qsTr("Warm")
+//                    onClicked: Storage.setSetting('theme', 'warm')
+//                }
+//            }
+
+//            Separator {}
+
             Text {
                 text: qsTr("Used transports")
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
@@ -143,7 +184,7 @@ Page {
                 Text {
                     text: "0"
                     font.pixelSize: UIConstants.FONT_XLARGE
-                    color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
+                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                     lineHeightMode: Text.FixedHeight
                     lineHeight: font.pixelSize * 1.2

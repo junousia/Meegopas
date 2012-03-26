@@ -29,6 +29,10 @@ Item {
     function previous_station() {
         flickable_map.panToCoordinate(Helper.previous_station())
     }
+    function first_station() {
+        flickable_map.panToCoordinate(Helper.first_station())
+    }
+
     FlickableMap {
         id: flickable_map
         anchors.fill: parent
@@ -60,6 +64,7 @@ Item {
 
     Component {
         id: coord_component
+
         Coordinate {
             id: coord
         }
@@ -67,6 +72,7 @@ Item {
 
     Component {
         id: stop
+
         MapCircle {
             id: stop_circle
             smooth: true
@@ -79,7 +85,9 @@ Item {
 
     Component {
         id: group
+
         MapGroup {
+            id: stop_group
             property alias stop_text : stop_text
             property alias stop_circle : stop_circle
             property alias route : route
@@ -120,6 +128,7 @@ Item {
 
         for (var index in route_coords) {
             var map_group = group.createObject(appWindow)
+
             if(!map_group) {
                 console.debug("creating object failed")
                 return
@@ -134,16 +143,17 @@ Item {
             if(index == 0) {
                 if(endpointdata.from.latitude && endpointdata.from.longitude) {
                     var first_station = group.createObject(appWindow)
+
                     if(!first_station) {
                         console.debug("creating object failed")
                         return
                     }
+
                     var coord = coord_component.createObject(appWindow)
                     coord.latitude = endpointdata.from.latitude
                     coord.longitude = endpointdata.from.longitude
 
                     add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
-                    //flickable_map.map.addMapObject(first_station)
                     Helper.push_to_objects(first_station)
                 }
                 else
@@ -221,6 +231,7 @@ Item {
 
     function add_stop(latitude, longitude) {
         if(latitude && longitude) {
+
             var stop_object = stop.createObject(appWindow)
             if(!stop_object) {
                 console.debug("creating object failed")
@@ -230,7 +241,6 @@ Item {
             coord.latitude = latitude
             coord.longitude = longitude
             stop_object.center = coord;
-            //flickable_map.map.addMapObject(stop_object)
             Helper.push_to_objects(stop_object)
         }
         else

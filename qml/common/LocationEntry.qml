@@ -20,6 +20,9 @@ import "theme.js" as Theme
 
 Column {
     property alias type : label.text
+    property alias font : label.font
+    property alias lineHeightMode : label.lineHeightMode
+    property alias lineHeight : label.lineHeight
     property alias textfield : textfield.text
     property variant destination_name : ''
     property variant destination_coords : ''

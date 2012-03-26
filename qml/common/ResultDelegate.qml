@@ -21,7 +21,7 @@ Component {
     Item {
         id: delegate_item
         width: parent.width
-        height: 125 * appWindow.scaling_factor
+        height: 110 * appWindow.scaling_factor
         opacity: 0.0
 
         Component.onCompleted: ListItemAnimation { target: delegate_item }

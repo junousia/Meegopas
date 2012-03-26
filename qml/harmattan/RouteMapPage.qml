@@ -63,6 +63,7 @@ Page {
         anchors.fill: parent
         onLoaded: {
             map_loader.item.initialize()
+            map_loader.item.first_station()
         }
     }
 
