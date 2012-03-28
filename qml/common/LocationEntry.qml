@@ -21,6 +21,7 @@ import "theme.js" as Theme
 Column {
     property alias type : label.text
     property alias font : label.font
+    property alias label : labelContainer
     property alias lineHeightMode : label.lineHeightMode
     property alias lineHeight : label.lineHeight
     property alias textfield : textfield.text
@@ -216,8 +217,6 @@ Column {
             id: label
             font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-            anchors.left: parent.left
-            anchors.top: parent.top
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.1
         }
@@ -258,6 +257,7 @@ Column {
                     selected_favorite = -1
                     destination_coords = ""
                     destination_name = ""
+                    locationDone("","")
 
                     if(acceptableInput)
                         suggestionTimer.restart()

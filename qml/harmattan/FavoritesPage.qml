@@ -46,10 +46,7 @@ Page {
         property alias name : editTextField.text
         property string coord
         property string old_name : ""
-        title: Column {
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width
-            Text {
+        title: Text {
                 text: qsTr("Edit favorite name")
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignCenter
@@ -59,46 +56,38 @@ Page {
                 font.family: UIConstants.FONT_FAMILY
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             }
-            Spacing { }
-        }
 
-        content: Item {
+        content: TextField {
+            id: editTextField
             width: parent.width
-            height: edit_column.height + UIConstants.DEFAULT_MARGIN * 2
-            Column {
-                id: edit_column
-                width: parent.width
-                spacing: UIConstants.DEFAULT_MARGIN
-                TextField {
-                    id: editTextField
-                    width: parent.width
-                    text: edit_dialog.name
+            text: edit_dialog.name
 
-                    Image {
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: "qrc:/images/clear.png"
-                        visible: (editTextField.activeFocus)
-                        opacity: 0.8
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                editTextField.text = ''
-                            }
-                        }
-                    }
-
-                    Keys.onReturnPressed: {
-                        editTextField.platformCloseSoftwareInputPanel()
-                        parent.focus = true
+            Image {
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/images/clear.png"
+                visible: (editTextField.activeFocus)
+                opacity: 0.8
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        editTextField.text = ''
                     }
                 }
+            }
+
+            Keys.onReturnPressed: {
+                editTextField.platformCloseSoftwareInputPanel()
+                parent.focus = true
             }
         }
         buttons: Column {
             spacing: UIConstants.DEFAULT_MARGIN
             anchors.horizontalCenter: parent.horizontalCenter
             width: button_save.width
+
+            Spacing {}
+
             Button {
                 id: button_save
                 text: qsTr("Save")
@@ -142,47 +131,34 @@ Page {
     Dialog {
         id: delete_dialog
         property string name
-
-        title: Column {
+        title: Text {
+            text: qsTr("Delete favorite?")
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width
-            Text {
-                text: qsTr("Delete favorite?")
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Qt.AlignCenter
-                elide: Text.ElideNone
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                font.bold: true
-                font.family: UIConstants.FONT_FAMILY
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-            }
-            Spacing { }
+            horizontalAlignment: Qt.AlignCenter
+            elide: Text.ElideNone
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.bold: true
+            font.family: UIConstants.FONT_FAMILY
+            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
         }
 
-        content: Item {
-            width: parent.width
-            height: delete_column.height + UIConstants.DEFAULT_MARGIN * 2
-            Column {
-                id: delete_column
-                width: parent.width
-                spacing: UIConstants.DEFAULT_MARGIN
-                anchors.horizontalCenter: parent.horizontalCenter
-                Text {
-                    text: delete_dialog.name
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: UIConstants.COLOR_INVERTED_FOREGROUND
-                    font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-                    elide: Text.ElideRight
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.2
-                }
-            }
+        content: Text {
+            text: delete_dialog.name
+            anchors.centerIn: parent
+            anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
+            color: UIConstants.COLOR_INVERTED_FOREGROUND
+            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+            elide: Text.ElideRight
+            lineHeightMode: Text.FixedHeight
+            lineHeight: font.pixelSize * 1.2
         }
         buttons: Column {
             spacing: UIConstants.DEFAULT_MARGIN
             anchors.horizontalCenter: parent.horizontalCenter
             width: button_save.width
+
+            Spacing {}
+
             Button {
                 id: delete_ok
                 text: qsTr("Delete")
@@ -212,35 +188,29 @@ Page {
         id: add_dialog
         property string name : ''
         property string coords : ''
-        content: Item {
-            width: parent.width
-            height: add_column.height + UIConstants.DEFAULT_MARGIN * 2
-            Column {
-                id: add_column
-                property alias entry : entry
-                width: parent.width
-                spacing: UIConstants.DEFAULT_MARGIN
-                anchors.horizontalCenter: parent.horizontalCenter
-                LocationEntry {
-                    id: entry
-                    font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                    font.bold: true
-                    font.family: UIConstants.FONT_FAMILY
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.8
-                    type: qsTr("Search for location")
-                    disable_favorites: true
-                    onLocationDone: {
-                        add_dialog.name = name
-                        add_dialog.coords = coord
-                    }
+        content: LocationEntry {
+                id: entry
+                anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.bold: true
+                font.family: UIConstants.FONT_FAMILY
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.5
+                label.anchors.horizontalCenter: entry.horizontalCenter
+                type: qsTr("Search for location")
+                disable_favorites: true
+                onLocationDone: {
+                    add_dialog.name = name
+                    add_dialog.coords = coord
                 }
             }
-        }
         buttons: Column {
             spacing: UIConstants.DEFAULT_MARGIN
             anchors.horizontalCenter: parent.horizontalCenter
             width: button_save.width
+
+            Spacing {}
+
             Button {
                 text: qsTr("Next")
                 enabled: add_dialog.coords != ''

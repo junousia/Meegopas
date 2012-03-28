@@ -56,7 +56,6 @@ Component {
             height: 40
             width: 40
             smooth: true
-            anchors.margins: UIConstants.DEFAULT_MARGIN / 2
         }
 
         Text {
@@ -66,8 +65,8 @@ Component {
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.left: icon.right
             anchors.right: parent.right
-            anchors.leftMargin: UIConstants.MARGIN_DEFAULT
-            anchors.rightMargin: UIConstants.MARGIN_DEFAULT
+            anchors.leftMargin: UIConstants.DEFAULT_MARGIN
+            anchors.rightMargin: UIConstants.DEFAULT_MARGIN
             text: modelData
             font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
         }
