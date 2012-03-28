@@ -38,7 +38,6 @@ Page {
 
     ListModel {
         id: favoritesModel
-        property bool updating : false
     }
 
     Dialog {
