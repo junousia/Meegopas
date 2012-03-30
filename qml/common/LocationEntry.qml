@@ -136,8 +136,11 @@ Column {
                     locationDone(suggestionModel.get(0).name.split(',', 1).toString(),suggestionModel.get(0).coords)
                 }
             } else if (status == XmlListModel.Error) {
+                selected_favorite = -1
+                suggestionModel.source = ""
+                locationDone("", 0, "")
                 appWindow.banner.success = false
-                appWindow.banner.text = qsTr("Error")
+                appWindow.banner.text = qsTr("Could not find location")
                 appWindow.banner.show()
             }
         }

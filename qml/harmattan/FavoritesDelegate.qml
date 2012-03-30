@@ -65,7 +65,7 @@ Component {
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.left: icon.right
             anchors.right: parent.right
-            anchors.leftMargin: UIConstants.DEFAULT_MARGIN
+            anchors.leftMargin: UIConstants.DEFAULT_MARGIN/2
             anchors.rightMargin: UIConstants.DEFAULT_MARGIN
             text: modelData
             font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor

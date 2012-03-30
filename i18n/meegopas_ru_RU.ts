@@ -91,15 +91,15 @@
 <context>
     <name>FavoritesPage</name>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="150"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="134"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="152"/>
         <source>Delete favorite?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="134"/>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="203"/>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="259"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="122"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="178"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="228"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="48"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="107"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="157"/>
@@ -107,77 +107,77 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="53"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="49"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="47"/>
         <source>Edit favorite name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="121"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="109"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="90"/>
         <source>Favorite name successfully modified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="125"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="113"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="94"/>
         <source>Favorite name modification failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="188"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="163"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="158"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="195"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="170"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="162"/>
         <source>Favorite removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="231"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="199"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="125"/>
         <source>Search for location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="245"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="214"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="107"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="298"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="267"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="194"/>
         <source>Manage favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="392"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="361"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="262"/>
         <source>No saved favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="303"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="272"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="199"/>
         <source>Add favorite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="342"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="311"/>
         <source>Favorite added to application menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="346"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="315"/>
         <source>Favorite removed from application menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="104"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="92"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="48"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
@@ -191,43 +191,43 @@
 <context>
     <name>LocationEntry</name>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="131"/>
+        <location filename="../qml/common/LocationEntry.qml" line="132"/>
         <source>No results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="139"/>
-        <source>Error</source>
+        <location filename="../qml/common/LocationEntry.qml" line="142"/>
+        <source>Could not find location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="153"/>
-        <location filename="../qml/common/LocationEntry.qml" line="165"/>
+        <location filename="../qml/common/LocationEntry.qml" line="156"/>
+        <location filename="../qml/common/LocationEntry.qml" line="168"/>
         <source>Choose location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="178"/>
+        <location filename="../qml/common/LocationEntry.qml" line="181"/>
         <source>Position not yet available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="253"/>
+        <location filename="../qml/common/LocationEntry.qml" line="254"/>
         <source>Type a location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="328"/>
+        <location filename="../qml/common/LocationEntry.qml" line="330"/>
         <source>Current location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="338"/>
+        <location filename="../qml/common/LocationEntry.qml" line="340"/>
         <source>Location added to favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="342"/>
+        <location filename="../qml/common/LocationEntry.qml" line="344"/>
         <source>Location already in the favorites</source>
         <translation type="unfinished"></translation>
     </message>

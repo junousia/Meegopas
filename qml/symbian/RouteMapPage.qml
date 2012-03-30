@@ -16,7 +16,7 @@ import com.nokia.symbian 1.1
 import QtMobility.location 1.2
 
 Page {
-    id: page
+    id: stop_page
     tools: mapTools
     anchors.fill: parent
 
@@ -67,7 +67,10 @@ Page {
     Loader {
         id: map_loader
         anchors.fill: parent
-        onLoaded: map_loader.item.initialize()
+        onLoaded: {
+            map_loader.item.initialize()
+            map_loader.item.first_station()
+        }
     }
 
     Component {

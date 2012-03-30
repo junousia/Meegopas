@@ -140,6 +140,7 @@ Page {
                 map_loader.item.initialize()
 
                 // go to first stop
+                map.map_loader.item.first_station()
                 map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).stop_latitude,stopModel.get(0).stop_longitude)
             }
         }
