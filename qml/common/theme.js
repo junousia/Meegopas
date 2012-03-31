@@ -14,6 +14,7 @@ theme['default'].COLOR_APPHEADER_BACKGROUND = "#05647a"
 theme['default'].COLOR_BACKGROUND = "#000000"
 theme['default'].COLOR_BACKGROUND_CLICKED = "#333333"
 theme['default'].COLOR_SEPARATOR = "#8c8c8c"
+theme['default'].COLOR_HIGHLIGHT = "#05647a"
 
 theme['light'] = {}
 theme['light'].PLATFORM_INVERTED = 0
@@ -27,6 +28,7 @@ theme['light'].COLOR_APPHEADER_BACKGROUND = "#05647a"
 theme['light'].COLOR_BACKGROUND = "#E0E1E2"
 theme['light'].COLOR_BACKGROUND_CLICKED = "#bbbbbb"
 theme['light'].COLOR_SEPARATOR = "#999999"
+theme['light'].COLOR_HIGHLIGHT = "#05647a"
 
 theme['warm'] = {}
 theme['warm'].PLATFORM_INVERTED = 0
@@ -40,6 +42,7 @@ theme['warm'].COLOR_APPHEADER_BACKGROUND = "#53414c"
 theme['warm'].COLOR_BACKGROUND = "#78696f"
 theme['warm'].COLOR_BACKGROUND_CLICKED = "#b29b99"
 theme['warm'].COLOR_SEPARATOR = "#ffffff"
+theme['warm'].COLOR_HIGHLIGHT = "#05647a"
 
 theme['general'] = {}
 theme['general'].TRANSPORT_COLORS = {}

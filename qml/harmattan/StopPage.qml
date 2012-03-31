@@ -99,7 +99,7 @@ Page {
         id: highlight_component
         Rectangle {
             anchors.horizontalCenterOffset: -15
-            color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+            color: Theme.theme[appWindow.colorscheme].COLOR_HIGHLIGHT
             width: 5
             height: 25
         }
