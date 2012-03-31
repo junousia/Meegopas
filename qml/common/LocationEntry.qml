@@ -26,7 +26,7 @@ Column {
     property alias lineHeight : label.lineHeight
     property alias textfield : textfield.text
     property variant destination_name : ''
-    property variant destination_coords : ''
+    property variant destination_coord : ''
 
     property bool destination_valid : (suggestionModel.count > 0)
     property alias selected_favorite : favoriteQuery.selectedIndex
@@ -36,8 +36,9 @@ Column {
     width: parent.width
 
     signal locationDone(string name, string coord)
+    signal locationError()
 
-    state: destination_coords? "validated" : destination_valid? "sufficient" : "error"
+    state: destination_coord ? "validated" : destination_valid ? "sufficient" : "error"
 
     states: [
         State {
@@ -66,12 +67,12 @@ Column {
     function clear() {
         suggestionModel.source = ""
         textfield.text = ''
-        destination_coords = ''
+        destination_coord = ''
         query.selectedIndex = -1
         locationDone("","")
     }
 
-    function updateLocation(name, housenumber, coords) {
+    function updateLocation(name, housenumber, coord) {
         suggestionModel.source = ""
         var address = name
 
@@ -79,20 +80,20 @@ Column {
             address += " " + housenumber
 
         destination_name = address
-        destination_coords = coords
+        destination_coord = coord
         textfield.text = address
 
-        locationDone(address, coords)
+        locationDone(address, coord)
     }
 
     Timer {
         id: gpsTimer
-        onTriggered: getCurrentCoords()
+        onTriggered: getCurrentCoord()
         interval: 200
         repeat: true
     }
 
-    function getCurrentCoords() {
+    function getCurrentCoord() {
         if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
             gpsTimer.stop()
             suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
@@ -116,7 +117,7 @@ Column {
         query: "/response/node"
         XmlRole { name: "name"; query: "name/string()" }
         XmlRole { name: "city"; query: "city/string()" }
-        XmlRole { name: "coords"; query: "coords/string()" }
+        XmlRole { name: "coord"; query: "coords/string()" }
         XmlRole { name: "shortCode"; query: "shortCode/string()" }
         XmlRole { name: "housenumber"; query: "details/houseNumber/string()" }
 
@@ -126,19 +127,20 @@ Column {
                 if(suggestionModel.count == 1) {
                     updateLocation(suggestionModel.get(0).name.split(',', 1).toString(),
                                    suggestionModel.get(0).housenumber,
-                                   suggestionModel.get(0).coords)
+                                   suggestionModel.get(0).coord)
                 } else if (suggestionModel.count == 0) {
                     appWindow.banner.success = false
                     appWindow.banner.text = qsTr("No results")
                     appWindow.banner.show()
                 } else {
                     /* just update the first result to main page */
-                    locationDone(suggestionModel.get(0).name.split(',', 1).toString(),suggestionModel.get(0).coords)
+                    locationDone(suggestionModel.get(0).name.split(',', 1).toString(),suggestionModel.get(0).coord)
                 }
             } else if (status == XmlListModel.Error) {
                 selected_favorite = -1
                 suggestionModel.source = ""
                 locationDone("", 0, "")
+                locationError()
                 appWindow.banner.success = false
                 appWindow.banner.text = qsTr("Could not find location")
                 appWindow.banner.show()
@@ -158,7 +160,7 @@ Column {
         onAccepted: {
             updateLocation(suggestionModel.get(selectedIndex).name,
                             suggestionModel.get(selectedIndex).housenumber,
-                            suggestionModel.get(selectedIndex).coords)
+                            suggestionModel.get(selectedIndex).coord)
         }
         onRejected: {}
     }
@@ -258,7 +260,7 @@ Column {
                 if(text != destination_name) {
                     suggestionModel.source = ""
                     selected_favorite = -1
-                    destination_coords = ""
+                    destination_coord = ""
                     destination_name = ""
                     locationDone("","")
 
@@ -332,8 +334,8 @@ Column {
                 favoriteQuery.open()
             }
             mouseArea.onPressAndHold: {
-                if(destination_coords && favoriteQuery.selectedIndex <= 0) {
-                    if(("OK" == Favorites.addFavorite(textfield.text, destination_coords))) {
+                if(destination_coord && favoriteQuery.selectedIndex <= 0) {
+                    if(("OK" == Favorites.addFavorite(textfield.text, destination_coord))) {
                         favoritesModel.clear()
                         Favorites.getFavorites(favoritesModel)
                         favoriteQuery.selectedIndex = favoritesModel.count

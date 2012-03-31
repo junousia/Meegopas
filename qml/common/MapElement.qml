@@ -122,18 +122,18 @@ Item {
 
         Helper.clear_objects()
 
-        var route_coords = []
+        var route_coord = []
         var current_route = Reittiopas.get_route_instance()
-        current_route.dump_route(route_coords)
+        current_route.dump_route(route_coord)
 
-        for (var index in route_coords) {
+        for (var index in route_coord) {
             var map_group = group.createObject(appWindow)
 
             if(!map_group) {
                 console.debug("creating object failed")
                 return
             }
-            var endpointdata = route_coords[index]
+            var endpointdata = route_coord[index]
 
             if(!endpointdata) {
                 console.debug("no data in result index " + index)

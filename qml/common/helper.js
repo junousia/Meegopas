@@ -53,11 +53,11 @@ function first_station() {
 
 function switch_locations(from, to) {
     var templo = from.destination_name
-    var tempcoord = from.destination_coords
+    var tempcoord = from.destination_coord
     var tempindex = from.selected_favorite
 
     from.clear()
-    from.updateLocation(to.destination_name, 0, to.destination_coords)
+    from.updateLocation(to.destination_name, 0, to.destination_coord)
     from.selected_favorite = to.selected_favorite
 
     to.clear()

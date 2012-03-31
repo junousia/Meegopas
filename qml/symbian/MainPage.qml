@@ -27,13 +27,13 @@ Page {
 
     property date myTime
 
-    property variant toCoords: ''
+    property variant toCoord: ''
     property variant toName: ''
 
-    property variant fromCoords: ''
+    property variant fromCoord: ''
     property variant fromName: ''
 
-    property bool endpointsValid : (toCoords && fromCoords)
+    property bool endpointsValid : (toCoord && fromCoord)
 
     /* Connect dbus callback to function newRoute() */
     Connections {
@@ -54,7 +54,7 @@ Page {
 
         /* clear 'from' field, and enter new 'to' */
         from.updateLocation("", 0 , "")
-        from.getCurrentCoords()
+        from.getCurrentcoord()
         to.updateLocation(name, 0, coord)
         state = "waiting"
     }
@@ -114,9 +114,9 @@ Page {
         var change_margin = Storage.getSetting("change_margin")
 
         parameters.from_name = fromName
-        parameters.from = fromCoords
+        parameters.from = fromCoord
         parameters.to_name = toName
-        parameters.to = toCoords
+        parameters.to = toCoord
 
         parameters.time = mainPage.myTime
         parameters.timetype = timeType.checked? "arrival" : "departure"
@@ -245,7 +245,11 @@ Page {
                     type: qsTr("From")
                     onLocationDone: {
                         fromName = name
-                        fromCoords = coord
+                        fromCoord = coord
+                    }
+                    onLocationError: {
+                        /* error in getting current position, cancel the wait */
+                        mainPage.state = "normal"
                     }
                 }
 
@@ -262,7 +266,7 @@ Page {
                     type: qsTr("To")
                     onLocationDone: {
                         toName = name
-                        toCoords = coord
+                        toCoord = coord
                     }
                     anchors.top: location_spacing.bottom
                 }

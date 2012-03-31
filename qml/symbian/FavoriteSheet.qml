@@ -21,7 +21,7 @@ import "theme.js" as Theme
 CommonDialog {
     id: add_dialog
     property alias name : addTextField.text
-    property string coords : ""
+    property string coord : ""
 
     visualParent: pageStack
     titleText:qsTr("Enter favorite name")
@@ -61,7 +61,7 @@ CommonDialog {
     onButtonClicked: {
         if(index == 0) {
             if(add_dialog.name != '') {
-                if(("OK" == Favorites.addFavorite(add_dialog.name, coords))) {
+                if(("OK" == Favorites.addFavorite(add_dialog.name, coord))) {
                     favoritesModel.clear()
                     Favorites.getFavorites(favoritesModel)
                     add_dialog.name = ''

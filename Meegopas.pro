@@ -1,20 +1,14 @@
-# Add more folders to ship with the application, here
-harmattan_qml.source = qml/harmattan
-harmattan_qml.target = qml
-symbian_qml.source = qml/symbian
-symbian_qml.target = qml
-common_qml.source = qml/common
-common_qml.target = qml
-images.source = images
-loc.source = i18n
-DEPLOYMENTFOLDERS = common_qml images loc
-
 # Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH = qml/common qml/symbian qml/harmattan qml
+QML_IMPORT_PATH = qml qml/common qml/harmattan qml/symbian
+
+# qml files to be visible in the project
+OTHER_FILES += \
+        qml/common/* \
+        qml/harmattan/* \
+        qml/symbian/*
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
-    DEPLOYMENTFOLDERS += symbian_qml
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
     # fail to install if self-signed. By default qmake uses the unprotected
@@ -42,9 +36,6 @@ symbian {
 }
 
 contains(MEEGO_EDITION, harmattan) {
-    # add harmattan specific qml
-    DEPLOYMENTFOLDERS += harmattan_qml
-
     # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
     CONFIG += qdeclarative-boostable
 
@@ -70,7 +61,7 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/copyright \
         qtc_packaging/debian_harmattan/control \
         qtc_packaging/debian_harmattan/compat \
-        qtc_packaging/debian_harmattan/changelog
+        qtc_packaging/debian_harmattan/changelog \
 
     RESOURCES += \
         harmattan.qrc
@@ -88,8 +79,6 @@ contains(MEEGO_EDITION, harmattan) {
 }
 
 simulator {
-    DEPLOYMENTFOLDERS += symbian_qml
-
     RESOURCES += \
         symbian.qrc
 }
@@ -102,7 +91,8 @@ MOBILITY += location systeminfo
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += src/main.cpp
 
-INCLUDEPATH += src \
+INCLUDEPATH += \
+    src \
     include
 
 # Please do not modify the following two lines. Required for deployment.

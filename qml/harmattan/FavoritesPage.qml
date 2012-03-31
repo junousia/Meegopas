@@ -186,7 +186,7 @@ Page {
     Dialog {
         id: add_dialog
         property string name : ''
-        property string coords : ''
+        property string coord : ''
         content: LocationEntry {
                 id: entry
                 anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
@@ -200,7 +200,7 @@ Page {
                 disable_favorites: true
                 onLocationDone: {
                     add_dialog.name = name
-                    add_dialog.coords = coord
+                    add_dialog.coord = coord
                 }
             }
         buttons: Column {
@@ -212,13 +212,13 @@ Page {
 
             Button {
                 text: qsTr("Next")
-                enabled: add_dialog.coords != ''
+                enabled: add_dialog.coord != ''
                 font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
                 width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
                 height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
                 onClicked: {
                     sheet.name = add_dialog.name
-                    sheet.coords = add_dialog.coords
+                    sheet.coord = add_dialog.coord
                     sheet.open()
                     add_dialog.close()
                     entry.clear()

@@ -214,7 +214,7 @@ function route_search(parameters, route_model) {
     this.parameters.time = Qt.formatTime(this.time, "hhmm")
 
     this.parameters.format = "json"
-    this.parameters.request = 'route'
+    this.parameters.request = "route"
     this.parameters.show = 5
     this.parameters.lang = "fi"
     this.parameters.detail= "full"
@@ -256,7 +256,7 @@ function parse_json(routes, parent) {
             var legdata = route.legs[leg]
             output.legs[leg] = {"type":translate_typecode(legdata.type,legdata.code).type,
                 "code":translate_typecode(legdata.type,legdata.code).code,
-                "shortcode":legdata.shortCode,
+                "shortCode":legdata.shortCode,
                 "length":legdata.length,
                 "duration":Math.round(legdata.duration/60),
                 "from":{},
@@ -264,15 +264,13 @@ function parse_json(routes, parent) {
                 "locs":[]}
             output.legs[leg].from.name = legdata.locs[0].name?legdata.locs[0].name:""
             output.legs[leg].from.time = convTime(legdata.locs[0].depTime)
-            output.legs[leg].from.shortcode = legdata.locs[0].shortCode
+            output.legs[leg].from.shortCode = legdata.locs[0].shortCode
 
             output.legs[leg].to.name = legdata.locs[legdata.locs.length - 1].name?legdata.locs[legdata.locs.length - 1].name : ''
             output.legs[leg].to.time = convTime(legdata.locs[legdata.locs.length - 1].arrTime)
-            output.legs[leg].to.shortcode = legdata.locs[legdata.locs.length - 1].shortCode
+            output.legs[leg].to.shortCode = legdata.locs[legdata.locs.length - 1].shortCode
 
-            for (var locindex in legdata.locs) {
-                output.legs[leg].locs.push(legdata.locs[locindex])
-            }
+            output.legs[leg].locs = legdata.locs
 
             output.legs[leg].shape = legdata.shape
 
@@ -315,13 +313,13 @@ route_search.prototype.dump_route = function(target) {
         output.from.longitude = legdata.locs[0].coord.x
         output.from.name = legdata.locs[0].name
         output.from.time = legdata.locs[0].time
-        output.from.shortcode = legdata.locs[0].shortCode
+        output.from.shortCode = legdata.locs[0].shortCode
 
         output.to.latitude = legdata.locs[legdata.locs.length - 1].coord.y
         output.to.longitude = legdata.locs[legdata.locs.length - 1].coord.x
         output.to.name = legdata.locs[legdata.locs.length - 1].name
         output.to.time = legdata.locs[legdata.locs.length - 1].time
-        output.to.shortcode = legdata.locs[legdata.locs.length - 1].shortCode
+        output.to.shortCode = legdata.locs[legdata.locs.length - 1].shortCode
 
         output.shape = legdata.shape
 
@@ -349,12 +347,11 @@ route_search.prototype.dump_stops = function(index, model) {
         else {
             var output = {
                 "name" : legdata.locs[locindex].name,
-                "shortcode" : legdata.locs[locindex].shortCode,
-                "visited" : 0,
+                "shortCode" : legdata.locs[locindex].shortCode,
                 "stop_latitude" : legdata.locs[locindex].coord.y,
                 "stop_longitude" :legdata.locs[locindex].coord.x,
-                "arrival_time" : convTime(legdata.locs[locindex].arrTime),
-                "departure_time" : convTime(legdata.locs[locindex].depTime),
+                "arrTime" : convTime(legdata.locs[locindex].arrTime),
+                "depTime" : convTime(legdata.locs[locindex].depTime),
                 "time_diff" : locindex == 0 ? 0 : get_time_difference(convTime(legdata.locs[locindex - 1].depTime), convTime(legdata.locs[locindex].arrTime)).minutes
             }
 
@@ -378,7 +375,7 @@ route_search.prototype.dump_legs = function(index, model) {
         station.name = legdata.locs[0].name?legdata.locs[0].name:''
         station.time = convTime(legdata.locs[0].depTime)
         station.code = ""
-        station.shortcode = legdata.locs[0].shortCode
+        station.shortCode = legdata.locs[0].shortCode
         station.length = ""
         station.duration = ""
         station.leg_number = ""
@@ -388,7 +385,7 @@ route_search.prototype.dump_legs = function(index, model) {
         var output = {}
         output.type = legdata.type
         output.code = legdata.code
-        output.shortcode = legdata.shortcode
+        output.shortCode = legdata.shortCode
         output.length = legdata.length
         output.duration = Math.round(legdata.duration)
         output.leg_number = legindex
@@ -398,10 +395,10 @@ route_search.prototype.dump_legs = function(index, model) {
             var locdata = legdata.locs[locindex]
             output.locs[locindex] = {
                 "name" : legdata.locs[locindex].name,
-                "shortcode" : legdata.locs[locindex].shortcode,
-                "coords" : legdata.locs[locindex].coord.x + "," + legdata.locs[locindex].coord.y,
-                "arrival_time" : convTime(legdata.locs[locindex].arrTime),
-                "departure_time" : convTime(legdata.locs[locindex].depTime)
+                "shortCode" : legdata.locs[locindex].shortCode,
+                "coord" : legdata.locs[locindex].coord.x + "," + legdata.locs[locindex].coord.y,
+                "arrTime" : convTime(legdata.locs[locindex].arrTime),
+                "depTime" : convTime(legdata.locs[locindex].depTime)
             }
         }
         model.append(output)
@@ -447,7 +444,7 @@ location_to_address.prototype.positioning_handler = function() {
         output.displayname = suggestion.matchedName
         output.city = suggestion.city
         output.type = suggestion.locType
-        output.coords = suggestion.coords
+        output.coord = suggestion.coord
 
         _request_parent.model.append(output)
     }

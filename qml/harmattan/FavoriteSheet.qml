@@ -21,7 +21,7 @@ import "theme.js" as Theme
 Dialog {
     id: add_dialog
     property alias name : editTextField.text
-    property string coords : ""
+    property string coord : ""
 
     title: Column {
         width: parent.width
@@ -84,7 +84,7 @@ Dialog {
             height: UIConstants.BUTTON_HEIGHT
             onClicked: {
                 if(add_dialog.name != '') {
-                    if(("OK" == Favorites.addFavorite(add_dialog.name, coords))) {
+                    if(("OK" == Favorites.addFavorite(add_dialog.name, coord))) {
                         favoritesModel.clear()
                         Favorites.getFavorites(favoritesModel)
                         add_dialog.name = ''

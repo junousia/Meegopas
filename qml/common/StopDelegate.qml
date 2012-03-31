@@ -84,7 +84,7 @@ Component {
             }
             Text {
                 id: time
-                text: (index === 0)? Qt.formatTime(departure_time, "hh:mm") : Qt.formatTime(arrival_time, "hh:mm")
+                text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                 elide: Text.ElideRight
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
@@ -106,7 +106,7 @@ Component {
                     visible: appWindow.show_station_code
                     horizontalAlignment: Qt.AlignRight
                     anchors.verticalCenter: parent.verticalCenter
-                    text: shortcode? "(" + shortcode + ")" : ""
+                    text: shortCode? "(" + shortCode + ")" : ""
                     elide: Text.ElideRight
                     font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND

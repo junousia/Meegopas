@@ -108,7 +108,7 @@ Page {
         titleText:qsTr("Add new favorite")
 
         property string name : ''
-        property string coords : ''
+        property string coord : ''
         content: Item {
             width: parent.width
             height: add_column.height + UIConstants.DEFAULT_MARGIN
@@ -127,7 +127,7 @@ Page {
                     disable_favorites: true
                     onLocationDone: {
                         add_dialog.name = name
-                        add_dialog.coords = coord
+                        add_dialog.coord = coord
                     }
                 }
             }
@@ -135,7 +135,7 @@ Page {
         onButtonClicked: {
             if(index == 0) {
                 sheet.name = add_dialog.name
-                sheet.coords = add_dialog.coords
+                sheet.coord = add_dialog.coord
                 sheet.open()
                 add_dialog.close()
                 entry.clear()

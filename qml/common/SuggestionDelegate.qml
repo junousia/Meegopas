@@ -47,7 +47,7 @@ Component {
         }
         Text {
             id: locType
-            width: 75
+            width: 100
             elide: Text.ElideRight
             color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
             horizontalAlignment: Text.AlignRight
