@@ -5,7 +5,9 @@ QML_IMPORT_PATH = qml qml/common qml/harmattan qml/symbian
 OTHER_FILES += \
         qml/common/* \
         qml/harmattan/* \
-        qml/symbian/*
+        qml/symbian/* \
+    qtc_packaging/debian_harmattan/prerm \
+    qml/common/SectionHeader.qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
@@ -62,6 +64,7 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/control \
         qtc_packaging/debian_harmattan/compat \
         qtc_packaging/debian_harmattan/changelog \
+        qtc_packaging/debian_harmattan/prerm
 
     RESOURCES += \
         harmattan.qrc

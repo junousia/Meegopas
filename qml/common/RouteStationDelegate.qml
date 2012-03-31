@@ -28,7 +28,7 @@ Item {
         id: time_column
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        width: 50
+        width: 100
 
         Text {
             text: Qt.formatTime(time, "hh:mm")
@@ -38,37 +38,37 @@ Item {
             lineHeight: font.pixelSize * 1.2
         }
     }
-    Item {
-        anchors.right: parent.right
+    Row {
+        height: parent.height
         anchors.left: time_column.right
+        anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        Row {
-            height: parent.height
-            anchors.right: parent.right
-            spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+        layoutDirection: Qt.RightToLeft
 
-            Text {
-                id: station_code
-                visible: appWindow.show_station_code
-                horizontalAlignment: Qt.AlignRight
-                anchors.verticalCenter: parent.verticalCenter
-                text: shortCode? "(" + shortCode + ")" : ""
-                elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
-            Text {
-                text: name
-                horizontalAlignment: Qt.AlignRight
-                anchors.verticalCenter: parent.verticalCenter
-                elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
+        spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+        clip: true
+
+        Text {
+            text: name
+            horizontalAlignment: Qt.AlignRight
+            anchors.verticalCenter: parent.verticalCenter
+            elide: Text.ElideRight
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+            lineHeightMode: Text.FixedHeight
+            lineHeight: font.pixelSize * 1.2
+        }
+        Text {
+            id: station_code
+            visible: appWindow.show_station_code
+            horizontalAlignment: Qt.AlignRight
+            anchors.verticalCenter: parent.verticalCenter
+            text: shortCode? "(" + shortCode + ")" : ""
+            elide: Text.ElideRight
+            font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+            color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+            lineHeightMode: Text.FixedHeight
+            lineHeight: font.pixelSize * 1.2
         }
     }
 }

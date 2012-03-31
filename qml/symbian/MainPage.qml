@@ -17,7 +17,6 @@ import com.nokia.extras 1.1
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
-import "favorites.js" as Favorites
 import "helper.js" as Helper
 import "theme.js" as Theme
 
@@ -54,7 +53,7 @@ Page {
 
         /* clear 'from' field, and enter new 'to' */
         from.updateLocation("", 0 , "")
-        from.getCurrentcoord()
+        from.getCurrentCoord()
         to.updateLocation(name, 0, coord)
         state = "waiting"
     }
@@ -83,6 +82,10 @@ Page {
     }
 
     Component.onCompleted: {
+//        var saved_theme = Storage.getSetting("theme")
+//        if(saved_theme && saved_theme != "Unknown")
+//            appWindow.colorscheme = saved_theme
+
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
@@ -140,7 +143,6 @@ Page {
     ToolBarLayout {
         id: mainTools
         ToolButton {
-            flat: true
             iconSource: "toolbar-back"
             onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
         }
@@ -231,7 +233,7 @@ Page {
 
         Column {
             id: content_column
-            spacing: UIConstants.DEFAULT_MARGIN
+            spacing: appWindow.inPortrait? UIConstants.DEFAULT_MARGIN : UIConstants.DEFAULT_MARGIN / 2
             width: parent.width
 
             Spacing { height: appWindow.inPortrait? 20 : 0 }
@@ -272,10 +274,11 @@ Page {
                 }
             }
 
-            Spacing {}
+            Spacing { height: appWindow.inPortrait? 20 : 0 }
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
+                height: Math.max(timetypeContainer.height,timeContainer.height)
                 Item {
                     id: timeContainer
                     height: timeButton.height
@@ -307,6 +310,7 @@ Page {
                 }
 
                 Item {
+                    id: timetypeContainer
                     width: 150
                     height: timeType.height + timeTypeText.height
                     anchors.verticalCenter: timeContainer.verticalCenter
@@ -345,7 +349,6 @@ Page {
                 }
                 Text {
                     id: dateButton
-                    height: UIConstants.SIZE_BUTTON
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                     text: Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")

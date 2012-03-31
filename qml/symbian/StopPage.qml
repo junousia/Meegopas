@@ -45,8 +45,6 @@ Page {
 
     tools: stopTools
 
-    anchors.margins: UIConstants.DEFAULT_MARGIN
-
     ToolBarLayout {
         id: stopTools
         visible: false
@@ -97,19 +95,37 @@ Page {
         z: -50
     }
 
+    Component {
+        id: highlight_component
+        Rectangle {
+            anchors.horizontalCenterOffset: -15
+            color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+            width: 5
+            height: 25
+        }
+    }
+
     ListView {
         id: routeList
         clip: true
         anchors.top: parent.top
         height: parent.height/2
-        width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        anchors.horizontalCenter: parent.horizontalCenter
         z: 200
         model: stopModel
         delegate: StopDelegate {}
         interactive: !busyIndicator.visible
+        highlightFollowsCurrentItem: true
+        highlight: highlight_component
+        currentIndex: -1
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
+        }
+        onCurrentIndexChanged: {
+            positionViewAtIndex(currentIndex, ListView.Center)
         }
     }
 

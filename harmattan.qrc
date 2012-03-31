@@ -59,5 +59,6 @@
         <file alias="qml/MySelectionDialog.qml">qml/harmattan/MySelectionDialog.qml</file>
         <file alias="qml/MyTextfield.qml">qml/harmattan/MyTextfield.qml</file>
         <file alias="qml/MyBusyIndicator.qml">qml/harmattan/MyBusyIndicator.qml</file>
+        <file alias="qml/SectionHeader.qml">qml/common/SectionHeader.qml</file>
     </qresource>
 </RCC>

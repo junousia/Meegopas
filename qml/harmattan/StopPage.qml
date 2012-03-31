@@ -98,8 +98,8 @@ Page {
     Component {
         id: highlight_component
         Rectangle {
-            anchors.leftMargin: -UIConstants.DEFAULT_MARGIN
-            color: "red"
+            anchors.horizontalCenterOffset: -15
+            color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
             width: 5
             height: 25
         }
@@ -121,6 +121,9 @@ Page {
         currentIndex: -1
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
+        }
+        onCurrentIndexChanged: {
+            positionViewAtIndex(currentIndex, ListView.Center)
         }
     }
 

@@ -41,8 +41,6 @@ Page {
     }
 
     function newRoute(name, coord) {
-        console.log("New route request " + name + " " + coord)
-
         /* clear all other pages from the stack */
         while(pageStack.depth > 1)
             pageStack.pop(null, true)
@@ -298,6 +296,7 @@ Page {
                         z: -1
                         visible: timeMouseArea.pressed
                     }
+
                     Text {
                         id: timeButton
                         font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor

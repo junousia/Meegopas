@@ -35,13 +35,14 @@ Component {
 
         onStateChanged: {
             if(state == "there")
-                stop_page.list.currentIndex = index
+                stop_page.list.selectedIndex = index
         }
         state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 50)? "near": "far"
 
         states: [
             State {
                 name: "far"
+                PropertyChanges { target: routeList; currentIndex: routeList.currentIndex }
             },
             State {
                 name: "near"
@@ -59,9 +60,8 @@ Component {
 
         Rectangle {
             height: parent.height
-            width: appWindow.width + UIConstants.DEFAULT_MARGIN * 2
+            width: appWindow.width
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.leftMargin: 10
             color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
             z: -1
             visible: mouseArea.pressed
@@ -70,7 +70,7 @@ Component {
             id: time_column
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
+            width: 100 * appWindow.scaling_factor
             Text {
                 id: diff
                 anchors.right: time.right
@@ -92,37 +92,35 @@ Component {
                 lineHeight: font.pixelSize * 1.2
             }
         }
-        Item {
-            anchors.right: parent.right
+        Row {
             anchors.left: time_column.right
+            anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            Row {
-                height: parent.height
-                anchors.right: parent.right
-                spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+            layoutDirection: Qt.RightToLeft
+            spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+            clip: true
 
-                Text {
-                    id: station_code
-                    visible: appWindow.show_station_code
-                    horizontalAlignment: Qt.AlignRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: shortCode? "(" + shortCode + ")" : ""
-                    elide: Text.ElideRight
-                    font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.2
-                }
-                Text {
-                    text: name
-                    horizontalAlignment: Qt.AlignRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    elide: Text.ElideRight
-                    font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.2
-                }
+            Text {
+                text: name
+                horizontalAlignment: Qt.AlignRight
+                anchors.verticalCenter: parent.verticalCenter
+                elide: Text.ElideRight
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
+            }
+            Text {
+                id: station_code
+                visible: appWindow.show_station_code
+                horizontalAlignment: Qt.AlignRight
+                anchors.verticalCenter: parent.verticalCenter
+                text: shortCode? "(" + shortCode + ")" : ""
+                elide: Text.ElideRight
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                lineHeightMode: Text.FixedHeight
+                lineHeight: font.pixelSize * 1.2
             }
         }
         MouseArea {

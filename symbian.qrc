@@ -60,5 +60,7 @@
         <file alias="qml/MyBusyIndicator.qml">qml/symbian/MyBusyIndicator.qml</file>
         <file alias="qml/MySelectionDialog.qml">qml/symbian/MySelectionDialog.qml</file>
         <file alias="qml/MyTextfield.qml">qml/symbian/MyTextfield.qml</file>
+        <file alias="qml/SettingsItem.qml">qml/common/SettingsItem.qml</file>
+        <file alias="qml/SectionHeader.qml">qml/common/SectionHeader.qml</file>
     </qresource>
 </RCC>

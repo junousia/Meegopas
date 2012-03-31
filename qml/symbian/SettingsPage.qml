@@ -71,18 +71,25 @@ Page {
                 text: qsTr("Settings")
             }
 
-            Text {
+            SectionHeader {
                 text: qsTr("Used transports")
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-
-                anchors.left: parent.left
             }
 
-            ButtonColumn {
+//            SettingsItem {
+//                setting.text: "Color sceme"
+//                value.text: ""
+//                showComboBox: true
+//                Component.onCompleted: {
+//                    settingModel.append({"name":"default"})
+//                    settingModel.append({"name":"light"})
+//                    settingModel.append({"name":"warm"})
+//                }
+//            }
+
+            ButtonRow {
                 id: transports
                 exclusive: false
-                spacing: UIConstants.BUTTON_SPACING
+                width: parent.width
                 function set_value(value) {
                     if(value == "bus")
                         bus.checked = false
@@ -100,42 +107,44 @@ Page {
                 Button {
                     id: bus
                     text: qsTr("Bus")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    iconSource: "qrc:/images/bus.png"
                     checkable: true
                     checked: true
                     onClicked: Storage.setSetting('bus_disabled', (!checked).toString())
                 }
                 Button {
                     id: train
+                    text: qsTr("Train")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     checkable: true
                     checked: true
-                    text: qsTr("Train")
+                    iconSource: "qrc:/images/train.png"
                     onClicked: Storage.setSetting('train_disabled', (!checked).toString())
                 }
                 Button {
                     id: metro
+                    text: qsTr("Metro")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     checkable: true
                     checked: true
-                    text: qsTr("Metro")
+                    iconSource: "qrc:/images/metro.png"
                     onClicked: Storage.setSetting('metro_disabled', (!checked).toString())
                 }
                 Button {
                     id: tram
+                    text: qsTr("Tram")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     checkable: true
                     checked: true
-                    text: qsTr("Tram")
+                    iconSource: "qrc:/images/tram.png"
                     onClicked: {
                         Storage.setSetting('tram_disabled', (!checked).toString())
                     }
                 }
             }
-
-            Separator {}
-
-            Text {
+            SectionHeader {
                 text: qsTr("Change margin") + " (min)"
-                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                anchors.left: parent.left
             }
             Item {
                 anchors.right: parent.right
@@ -145,7 +154,7 @@ Page {
                     id: min_change
                     anchors.left: parent.left
                     text: "0"
-                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -171,20 +180,15 @@ Page {
                 Text {
                     id: max_change
                     text: "10"
-                    font.pixelSize: UIConstants.FONT_XLARGE
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                 }
             }
 
-            Separator {}
-
-            Text {
+            SectionHeader {
                 text: qsTr("Optimize route by")
-                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                anchors.left: parent.left
             }
 
             ButtonColumn {
@@ -205,33 +209,36 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: def
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Default")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('optimize', 'default')
                 }
                 Button {
                     id: fastest
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Fastest")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('optimize', 'fastest')
                 }
                 Button {
                     id: transfers
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Least transfers")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('optimize', 'least_transfers')
                 }
                 Button {
                     id: lwalking
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Least walking")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('optimize', 'least_walking')
                 }
             }
 
-            Separator {}
-
-            Text {
+            SectionHeader {
                 text: qsTr("Walking speed")
-                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scaling_factor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                anchors.left: parent.left
             }
             ButtonColumn {
                 id: walking_speed
@@ -252,22 +259,30 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: walking
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Walking")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('walking_speed', '70')
                 }
                 Button {
                     id: fwalking
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Fast walking")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('walking_speed', '100')
                 }
                 Button {
                     id: vfwalking
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Very fast walking")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('walking_speed', '120')
                 }
                 Button {
                     id: running
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Running")
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     onClicked: Storage.setSetting('walking_speed', '150')
                 }
             }

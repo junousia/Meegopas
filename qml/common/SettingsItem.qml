@@ -12,6 +12,8 @@
  */
 
 import QtQuick 1.1
+import com.nokia.symbian 1.1
+
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
@@ -20,7 +22,8 @@ Item {
     property alias mouseArea : mouseArea
     property alias setting : setting
     property alias value : value
-
+    property alias settingModel : settingModel
+    property string group : ""
     property bool showDrillDown : false
     property bool showComboBox : false
 
@@ -29,6 +32,10 @@ Item {
     opacity: 0.0
 
     Component.onCompleted: ListItemAnimation { target: settings_item }
+
+    ListModel {
+        id: settingModel
+    }
 
     function set_value(new_value) {
         value.text = new_value
@@ -41,6 +48,11 @@ Item {
 
     function clear_value() {
         value.text = ""
+    }
+
+    SelectionDialog {
+        id: settingDialog
+        model: settingModel
     }
 
     Rectangle {
@@ -89,6 +101,7 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: settings_item
+        onClicked: settingDialog.open()
     }
 }
 
