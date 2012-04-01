@@ -19,7 +19,6 @@ Item {
 
     Text {
         id: header
-        text: qsTr("Used transports")
         font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
         anchors.right: parent.right

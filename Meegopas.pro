@@ -6,8 +6,8 @@ OTHER_FILES += \
         qml/common/* \
         qml/harmattan/* \
         qml/symbian/* \
-    qtc_packaging/debian_harmattan/prerm \
-    qml/common/SectionHeader.qml
+    qml/common/SectionHeader.qml \
+    qtc_packaging/debian_harmattan/postrm
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
@@ -64,7 +64,7 @@ contains(MEEGO_EDITION, harmattan) {
         qtc_packaging/debian_harmattan/control \
         qtc_packaging/debian_harmattan/compat \
         qtc_packaging/debian_harmattan/changelog \
-        qtc_packaging/debian_harmattan/prerm
+        qtc_packaging/debian_harmattan/postrm
 
     RESOURCES += \
         harmattan.qrc
