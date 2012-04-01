@@ -109,7 +109,7 @@ Column {
     PositionSource {
         id: positionSource
         updateInterval: 500
-        active: true//platformWindow.active
+        active: platformWindow.active
     }
 
     XmlListModel {

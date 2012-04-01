@@ -1,15 +1,11 @@
 <aegis>
         <request policy="add">
-                <!-- Application uses QtDeclarative module. -->
-
-                <!-- import QtMobility.location 1.1 -->
                 <credential name="Location" />
                 <credential name="TrackerReadAccess" />
                 <credential name="TrackerWriteAccess" />
-
                 <for path="/opt/Meegopas/bin/Meegopas" />
         </request>
-        <request context="INSTALL"><credential name="UID::user" />
-            <for path="/opt/Meegopas/bin/Meegopas" />
+        <request context="INSTALL">
+                <credential name="UID::user" />
         </request>
 </aegis>
