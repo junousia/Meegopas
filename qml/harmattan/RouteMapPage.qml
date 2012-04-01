@@ -21,6 +21,8 @@ Page {
     tools: mapTools
     anchors.fill: parent
 
+    orientationLock: PageOrientation.LockPortrait
+
     onStatusChanged: {
         if(status == Component.Ready)
             timer.start()

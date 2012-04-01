@@ -1,6 +1,6 @@
 #!/bin/sh
 case "$1" in
-remove|upgrade|deconfigure)
+remove|purge)
 /usr/bin/aegis-exec -s -u user rm -f /home/user/.local/share/applications/meegopas_*
 ;;
 failed-upgrade)
