@@ -126,9 +126,9 @@ Page {
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }
-        onCurrentIndexChanged: {
-            positionViewAtIndex(currentIndex, ListView.Center)
-        }
+//        onCurrentIndexChanged: {
+//            positionViewAtIndex(currentIndex, ListView.Center)
+//        }
     }
 
     Rectangle {

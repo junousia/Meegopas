@@ -30,7 +30,6 @@
         <file alias="/qml/SuggestionDelegate.qml">qml/common/SuggestionDelegate.qml</file>
         <file alias="/qml/SwitchLocation.qml">qml/common/SwitchLocation.qml</file>
         <file alias="/qml/UIConstants.js">qml/common/UIConstants.js</file>
-        <file>images/background.png</file>
         <file>images/banner_green.png</file>
         <file>images/banner_red.png</file>
         <file>images/boat.png</file>

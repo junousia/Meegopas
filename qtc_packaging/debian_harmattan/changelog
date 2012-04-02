@@ -1,4 +1,4 @@
-meegopas (0.2.0) unstable; urgency=low
+meegopas (1.2.0) unstable; urgency=low
   * Button for searching 15 min earlier and later routes
   * Support for adding destination shortcuts to application menu
   * Map crashing fixed - panning animation caused the QML Map plugin to crash

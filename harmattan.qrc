@@ -30,7 +30,6 @@
         <file alias="qml/RoutePage.qml">qml/harmattan/RoutePage.qml</file>
         <file alias="qml/SettingsPage.qml">qml/harmattan/SettingsPage.qml</file>
         <file alias="qml/StopPage.qml">qml/harmattan/StopPage.qml</file>
-        <file>images/background.png</file>
         <file>images/banner_green.png</file>
         <file>images/banner_red.png</file>
         <file>images/boat.png</file>
