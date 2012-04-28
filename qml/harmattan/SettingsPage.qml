@@ -12,7 +12,7 @@
  */
 
 import QtQuick 1.1
-import com.nokia.meego 1.1
+import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "storage.js" as Storage
 import "theme.js" as Theme

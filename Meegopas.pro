@@ -105,8 +105,6 @@ qtcAddDeployment()
 TRANSLATIONS += meegopas_fi_FI.ts \
                 meegopas_ru_RU.ts
 
-
-
 OTHER_FILES += \
     com.juknousi.meegopas.service \
     com.juknousi.meegopas.xml \

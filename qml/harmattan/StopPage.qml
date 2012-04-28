@@ -13,7 +13,7 @@
 
 import QtQuick 1.1
 import QtMobility.location 1.2
-import com.nokia.meego 1.1
+import com.nokia.meego 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "theme.js" as Theme
