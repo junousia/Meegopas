@@ -9,13 +9,12 @@
  * before re-generating it.
  */
 
-#ifndef MEEGOPASADAPTOR_H_1331920214
-#define MEEGOPASADAPTOR_H_1331920214
+#ifndef MEEGOPASADAPTOR_H_1336347858
+#define MEEGOPASADAPTOR_H_1336347858
 
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
 #include "route.h"
-
 class QByteArray;
 template<class T> class QList;
 template<class Key, class Value> class QMap;
@@ -36,6 +35,10 @@ class MeegopasAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"in\" type=\"s\" name=\"name\"/>\n"
 "      <arg direction=\"in\" type=\"s\" name=\"coord\"/>\n"
 "    </method>\n"
+"    <method name=\"cycling\">\n"
+"      <arg direction=\"in\" type=\"s\" name=\"name\"/>\n"
+"      <arg direction=\"in\" type=\"s\" name=\"coord\"/>\n"
+"    </method>\n"
 "  </interface>\n"
         "")
 public:
@@ -47,6 +50,7 @@ public:
 
 public: // PROPERTIES
 public Q_SLOTS: // METHODS
+    void cycling(const QString &name, const QString &coord);
     void route(const QString &name, const QString &coord);
 Q_SIGNALS: // SIGNALS
 };

@@ -13,26 +13,29 @@
 
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import QtMobility.location 1.2
+import "UIConstants.js" as UIConstants
+import "reittiopas.js" as Reittiopas
+import "storage.js" as Storage
+import "theme.js" as Theme
 
 Page {
-    id: stop_page
     tools: mapTools
-    anchors.fill: parent
+    property variant search_parameters : 0
+
+    property bool routeDone : (doneIndicator.done && map_loader.status == Loader.Ready)
+
+    onRouteDoneChanged: {
+        if(routeDone) {
+            map_loader.item.initialize_cycling()
+        }
+    }
 
     onStatusChanged: {
-        if(status == Component.Ready)
-            timer.start()
+        if(status == Component.Ready) {
+            map_loader.sourceComponent = map_component
+            Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
+        }
     }
-
-    Timer {
-        id: timer
-        interval: 500
-        triggeredOnStart: false
-        repeat: false
-        onTriggered: map_loader.sourceComponent = map_component
-    }
-
     ToolBarLayout {
         id: mapTools
         ToolButton {
@@ -44,7 +47,6 @@ Page {
         ToolButton {
             text: qsTr("Follow")
             checkable: true
-            enabled: stop_page.state == "map"
             checked: appWindow.follow_mode
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
@@ -56,21 +58,24 @@ Page {
                 appWindow.banner.open()
             }
         }
-
-        ToolButton { iconSource: "toolbar-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
-        ToolButton { iconSource: "toolbar-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
-//        ToolIcon { platformIconId: "toolbar-view-menu";
-//             anchors.right: parent===undefined ? undefined : parent.right
-//             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
-//        }
     }
+
+    Item {
+        id: doneIndicator
+        property bool done : false
+    }
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
+        z: -50
+    }
+
     Loader {
         id: map_loader
         anchors.fill: parent
-        onLoaded: {
-            map_loader.item.initialize()
-            map_loader.item.first_station()
-        }
     }
 
     Component {
@@ -81,12 +86,24 @@ Page {
         }
     }
 
+    Text {
+        anchors.centerIn: parent
+        visible: (!busyIndicator.visible && false)
+        width: parent.width
+        text: qsTr("No results")
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: Qt.AlignHCenter
+        wrapMode: Text.WordWrap
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+    }
+
     BusyIndicator {
         id: busyIndicator
-        visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading
+        visible: !(doneIndicator.done)
         running: true
-        anchors.centerIn: parent
         width: 75
         height: 75
+        anchors.centerIn: parent
     }
 }

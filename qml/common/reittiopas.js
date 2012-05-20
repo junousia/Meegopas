@@ -39,6 +39,8 @@ var _instance = null
 var _http_request = null
 var _request_parent = null
 
+var _cycling_instance = null
+
 function busCode(code) {
     code = code.slice(1,5).trim().replace(/^[0]+/g,"")
     return code
@@ -200,7 +202,6 @@ function route_search(parameters, route_model) {
     this.time = parameters.time
 
     this.last_route_index = -1
-    this.last_route_coordinates = []
 
     this.from_name = parameters.from_name
     this.to_name = parameters.to_name
@@ -221,26 +222,7 @@ function route_search(parameters, route_model) {
     this.api_request()
 }
 
-route_search.prototype.result_handler = function() {
-    if (_http_request.readyState == XMLHttpRequest.DONE) {
-        if (_http_request.status != 200 && _http_request.status != 304) {
-            console.debug('HTTP error ' + _http_request.status)
-            this.model.done = true
-            return
-        }
-    } else {
-        return
-    }
-
-    var parent = _request_parent
-    var routes = eval(_http_request.responseText)
-
-    parse_json(routes, parent)
-
-    _request_parent.model.done = true
-}
-
-function parse_json(routes, parent) {
+route_search.prototype.parse_json = function(routes, parent) {
     for (var index in routes) {
         var output = {}
         var route = routes[index][0];
@@ -299,6 +281,25 @@ function parse_json(routes, parent) {
         parent.last_result.push(output)
         parent.model.append(output)
     }
+}
+
+route_search.prototype.result_handler = function() {
+    if (_http_request.readyState == XMLHttpRequest.DONE) {
+        if (_http_request.status != 200 && _http_request.status != 304) {
+            console.debug('HTTP error ' + _http_request.status)
+            this.model.done = true
+            return
+        }
+    } else {
+        return
+    }
+
+    var parent = _request_parent
+    var routes = eval(_http_request.responseText)
+
+    _request_parent.parse_json(routes, parent)
+
+    _request_parent.model.done = true
 }
 
 route_search.prototype.dump_route = function(target) {
@@ -448,5 +449,56 @@ location_to_address.prototype.positioning_handler = function() {
 
         _request_parent.model.append(output)
     }
+    _request_parent.model.done = true
+}
+/****************************************************************************************************/
+/*                                            Cycling search                                        */
+/****************************************************************************************************/
+
+function new_cycling_instance(parameters, route_model) {
+    if(_cycling_instance)
+        delete _cycling_instance
+
+    _cycling_instance = new cycling_search(parameters, route_model)
+    return _cycling_instance
+}
+
+function get_cycling_instance() {
+    return _cycling_instance
+}
+
+cycling_search.prototype = new reittiopas()
+cycling_search.prototype.constructor = cycling_search
+function cycling_search(parameters, route_model) {
+    this.last_result = {}
+    this.model = route_model
+
+    this.from_name = parameters.from_name
+    this.to_name = parameters.to_name
+
+    this.parameters = parameters
+    delete this.parameters.from_name
+    delete this.parameters.to_name
+
+    this.parameters.format = "json"
+    this.parameters.request = "cycling"
+    this.parameters.lang = "fi"
+    this.parameters.detail= "full"
+    this.api_request()
+}
+
+cycling_search.prototype.result_handler = function() {
+    if (_http_request.readyState == XMLHttpRequest.DONE) {
+        if (_http_request.status != 200 && _http_request.status != 304) {
+            console.debug('HTTP error ' + _http_request.status)
+            this.model.done = true
+            return
+        }
+    } else {
+        return
+    }
+    var parent = _request_parent
+    var routes = eval('(' + _http_request.responseText + ')')
+    _request_parent.last_result = routes
     _request_parent.model.done = true
 }

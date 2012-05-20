@@ -7,7 +7,9 @@ OTHER_FILES += \
         qml/harmattan/* \
         qml/symbian/* \
     qml/common/SectionHeader.qml \
-    qtc_packaging/debian_harmattan/postrm
+    qtc_packaging/debian_harmattan/postrm \
+    qml/harmattan/CyclingPage.qml \
+    qml/symbian/CyclingPage.qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
@@ -19,7 +21,7 @@ symbian {
     # DEPLOYMENT.installer_header = 0x2002CCCF
     DEPLOYMENT.installer_header = 0x2002CCCF
 
-    VERSION = 1.2.0
+    VERSION = 1.3.0
 
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location

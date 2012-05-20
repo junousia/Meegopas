@@ -75,7 +75,7 @@ Page {
         /* if we receive coordinates we are waiting for, start route search */
         if(state == "waiting" && endpointsValid) {
             var parameters = {}
-            setParameters(parameters)
+            setRouteParameters(parameters)
             pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             state = "normal"
         }
@@ -111,7 +111,7 @@ Page {
     ]
     state: "normal"
 
-    function setParameters(parameters) {
+    function setRouteParameters(parameters) {
         var walking_speed = Storage.getSetting("walking_speed")
         var optimize = Storage.getSetting("optimize")
         var change_margin = Storage.getSetting("change_margin")
@@ -140,20 +140,41 @@ Page {
             parameters.transport_types.push("tram")
     }
 
+    function setCyclingParameters(parameters) {
+        var optimize_cycling = Storage.getSetting("optimize_cycling")
+
+        parameters.from_name = fromName
+        parameters.from = fromCoord
+        parameters.to_name = toName
+        parameters.to = toCoord
+        parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
+    }
+
     ToolBarLayout {
         id: mainTools
         ToolButton {
             iconSource: "toolbar-back"
             onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
         }
-        ToolButton {
-            text: qsTr("Search")
-            anchors.horizontalCenter: parent.horizontalCenter
-            enabled: endpointsValid
-            onClicked: {
-                var parameters = {}
-                setParameters(parameters)
-                pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+        ButtonRow {
+            Button {
+                text: qsTr("Route")
+                anchors.horizontalCenter: parent.horizontalCenter
+                enabled: endpointsValid
+                onClicked: {
+                    var parameters = {}
+                    setRouteParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+                }
+            }
+            Button {
+                text: qsTr("Cycling")
+                enabled: endpointsValid
+                onClicked: {
+                    var parameters = {}
+                    setCyclingParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+                }
             }
         }
         ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }

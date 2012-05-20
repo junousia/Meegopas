@@ -286,6 +286,53 @@ Page {
                     onClicked: Storage.setSetting('walking_speed', '150')
                 }
             }
+            SectionHeader {
+                text: qsTr("Optimize cycling route by")
+            }
+
+            ButtonColumn {
+                id: optimize_cycling
+                function set_value(value) {
+                    if(value == "kleroweighted")
+                        optimize_cycling.chekedButton = cyclingDefault
+                    else if(value == "klerotarmac")
+                        optimize_cycling.chekedButton = cyclingTarmac
+                    else if(value == "klerosand")
+                        optimize_cycling.chekedButton = cyclingGravel
+                    else if(value == "kleroshortest")
+                        optimize_cycling.chekedButton = cyclingShortest
+                }
+
+                anchors.right: parent.right
+                Button {
+                    id: cyclingDefault
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Default")
+                    onClicked: Storage.setSetting('optimize_cycling', 'kleroweighted')
+                }
+                Button {
+                    id: cyclingTarmac
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Tarmac")
+                    onClicked: Storage.setSetting('optimize_cycling', 'klerotarmac')
+                }
+                Button {
+                    id: cyclingGravel
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Gravel")
+                    onClicked: Storage.setSetting('optimize_cycling', 'klerosand')
+                }
+                Button {
+                    id: cyclingShortest
+                    width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Shortest")
+                    onClicked: Storage.setSetting('optimize_cycling', 'kleroshortest')
+                }
+            }
         }
     }
 }

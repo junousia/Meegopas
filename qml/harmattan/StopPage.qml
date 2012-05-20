@@ -28,8 +28,6 @@ Page {
 
     state: appWindow.map_visible? "map" : "normal"
 
-    orientationLock: PageOrientation.LockPortrait
-
     onStateChanged: {
         if(state == "map") {
             map_loader.sourceComponent = map_component
@@ -53,23 +51,23 @@ Page {
         id: stopTools
         visible: false
         ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
-        ToolButton {
-            text: qsTr("Map")
-            checkable: true
-            checked: appWindow.map_visible
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                appWindow.map_visible = appWindow.map_visible? false : true
+        ToolButtonRow {
+            ToolButton {
+                text: qsTr("Map")
+                checkable: true
+                checked: appWindow.map_visible
+                onClicked: {
+                    appWindow.map_visible = appWindow.map_visible? false : true
+                }
             }
-        }
-        ToolButton {
-            text: qsTr("Follow")
-            checkable: true
-            enabled: stop_page.state == "map"
-            checked: appWindow.follow_mode
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode ? false : true
+            ToolButton {
+                text: qsTr("Follow")
+                checkable: true
+                enabled: stop_page.state == "map"
+                checked: appWindow.follow_mode
+                onClicked: {
+                    appWindow.follow_mode = appWindow.follow_mode ? false : true
+                }
             }
         }
 //        ToolIcon { platformIconId: "toolbar-view-menu";

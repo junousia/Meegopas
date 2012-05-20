@@ -156,10 +156,9 @@ Item {
                     add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
                     Helper.push_to_objects(first_station)
                 }
-                else
+                else {
                     console.debug("invalid coordinates for the first station")
-
-
+                }
             }
             add_station(endpointdata.to.latitude,endpointdata.to.longitude, endpointdata.to.name, map_group)
 
@@ -207,6 +206,50 @@ Item {
         }
         Helper.set_group_objects(root_group)
         flickable_map.map.addMapObject(root_group)
+    }
+
+    function initialize_cycling() {
+        flickable_map.map.addMapObject(current_position)
+
+        Helper.clear_objects()
+
+        var route_coord = []
+        var current_route = Reittiopas.get_cycling_instance()
+
+        var last_result = current_route.last_result
+        console.log(last_result.length)
+
+        for(var index in last_result.path) {
+            var leg = last_result.path[index]
+            var map_group = group.createObject(appWindow)
+            map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[leg.type]
+
+            if(!map_group) {
+                console.debug("creating object failed")
+                return
+            }
+            for(var pointindex in leg.points) {
+                var point = leg.points[pointindex]
+                if(point.y && point.x) {
+                    var shape_coord = coord_component.createObject(appWindow)
+                    shape_coord.latitude = point.y
+                    shape_coord.longitude = point.x
+
+                    if(!shape_coord) {
+                        console.debug("creating object failed")
+                        return
+                    }
+                    map_group.route.addCoordinate(shape_coord)
+                    Helper.add_station(shape_coord)
+                }
+            }
+
+            Helper.push_to_objects(map_group)
+        }
+
+        Helper.set_group_objects(root_group)
+        flickable_map.map.addMapObject(root_group)
+        first_station()
     }
 
     function add_station(latitude, longitude, name, map_group) {

@@ -30,6 +30,11 @@ PageStackWindow {
     property string colorscheme : "default"
 
     Item {
+        id: platformWindow
+        property bool active: true
+    }
+
+    Item {
         id: theme
         property bool inverted : true
     }

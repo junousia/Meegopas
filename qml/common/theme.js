@@ -53,3 +53,8 @@ theme['general'].TRANSPORT_COLORS.metro = "#ee5400"
 theme['general'].TRANSPORT_COLORS.ferry = "#0080c8"
 theme['general'].TRANSPORT_COLORS.tram = "#925bc6"
 
+theme['general'].TRANSPORT_COLORS.tarmac = "#61b700"
+theme['general'].TRANSPORT_COLORS.gravel = "#ee5400"
+theme['general'].TRANSPORT_COLORS.unknown = "#767676"
+
+

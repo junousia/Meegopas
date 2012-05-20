@@ -28,8 +28,6 @@ Page {
 
     state: appWindow.map_visible? "map" : "normal"
 
-    orientationLock: PageOrientation.LockPortrait
-
     onStateChanged: {
         if(state == "map") {
             map_loader.sourceComponent = map_component

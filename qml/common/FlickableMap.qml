@@ -48,10 +48,6 @@ Flickable {
         map.scenter.x = map.width/2.0
         map.scenter.y = map.height/2.0
     }
-    Component.onCompleted: {
-        updateSizes()
-        updateViewPort()
-    }
 
     function updateViewPort() {
         map.pan((contentX-centeredContentX)/map.getScale,(contentY-centeredContentY)/map.getScale)
@@ -59,11 +55,8 @@ Flickable {
         contentX = centeredContentX
         contentY = centeredContentY
     }
-    onMovementEnded: {
-        updateViewPort()
-    }
 
-    onWidthChanged: {
+    onMovementEnded: {
         updateSizes()
         updateViewPort()
     }
@@ -101,47 +94,25 @@ Flickable {
         transform: Scale {
             id: tform
         }
+
+        Component.onCompleted: {
+            mapFlickable.updateSizes()
+            mapFlickable.updateViewPort()
+        }
     }
 
     function panToCoordinate(coordinate) {
+        updateSizes()
+        updateViewPort()
         map.center.latitude = coordinate.latitude
         map.center.longitude = coordinate.longitude
-// animations disabled due to occasional crashing during panning
-//        panAnimation.latitude = coordinate.latitude;
-//        panAnimation.longitude = coordinate.longitude;
-//        panAnimation.restart();
     }
 
     function panToLatLong(latitude,longitude) {
+        updateSizes()
+        updateViewPort()
         map.center.latitude = latitude
         map.center.longitude = longitude
-// animations disabled due to occasional crashing during panning
-//        panAnimation.latitude = latitude;
-//        panAnimation.longitude = longitude;
-//        panAnimation.restart();
-    }
-
-    ParallelAnimation {
-        id: panAnimation
-
-        property real latitude
-        property real longitude
-
-        PropertyAnimation {
-            target: map
-            property: "center.latitude"
-            to: panAnimation.latitude
-            easing.type: Easing.InOutCubic
-            duration: 1000
-        }
-
-        PropertyAnimation {
-            target: map
-            property: "center.longitude"
-            to: panAnimation.longitude
-            easing.type: Easing.InOutCubic
-            duration: 1000
-        }
     }
 
     PinchArea {

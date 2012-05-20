@@ -33,6 +33,12 @@ MeegopasAdaptor::~MeegopasAdaptor()
     // destructor
 }
 
+void MeegopasAdaptor::cycling(const QString &name, const QString &coord)
+{
+    // handle method call com.juknousi.meegopas.cycling
+    parent()->cycling(name, coord);
+}
+
 void MeegopasAdaptor::route(const QString &name, const QString &coord)
 {
     // handle method call com.juknousi.meegopas.route

@@ -18,3 +18,10 @@ void Route::route(const QString &name, const QString &coord)
     emit newRoute(name, coord);
     return;
 }
+
+void Route::cycling(const QString &name, const QString &coord)
+{
+    qDebug() << "cycling" << name << " " << coord;
+    emit newCycling(name, coord);
+    return;
+}

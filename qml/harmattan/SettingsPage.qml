@@ -45,6 +45,7 @@ Page {
             optimize.set_value(Storage.getSetting("optimize"))
             walking_speed.set_value(Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
+            optimize_cycling.set_value(Storage.getSetting("optimize_cycling"))
 
             if(Storage.getSetting("train_disabled") == "true") {
                 console.debug("train disabled")
@@ -294,6 +295,50 @@ Page {
                     font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
                     text: qsTr("Running")
                     onClicked: Storage.setSetting('walking_speed', '150')
+                }
+            }
+
+            SectionHeader {
+                text: qsTr("Optimize cycling route by")
+            }
+
+            ButtonColumn {
+                id: optimize_cycling
+                function set_value(value) {
+                    if(value == "kleroweighted")
+                        cyclingDefault.checked = true
+                    else if(value == "klerotarmac")
+                        cyclingTarmac.checked = true
+                    else if(value == "klerosand")
+                        cyclingGravel.checked = true
+                    else if(value == "kleroshortest")
+                        cyclingShortest.checked = true
+                }
+
+                anchors.right: parent.right
+                Button {
+                    id: cyclingDefault
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Default")
+                    onClicked: Storage.setSetting('optimize_cycling', 'kleroweighted')
+                }
+                Button {
+                    id: cyclingTarmac
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Tarmac")
+                    onClicked: Storage.setSetting('optimize_cycling', 'klerotarmac')
+                }
+                Button {
+                    id: cyclingGravel
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Gravel")
+                    onClicked: Storage.setSetting('optimize_cycling', 'klerosand')
+                }
+                Button {
+                    id: cyclingShortest
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    text: qsTr("Shortest")
+                    onClicked: Storage.setSetting('optimize_cycling', 'kleroshortest')
                 }
             }
         }

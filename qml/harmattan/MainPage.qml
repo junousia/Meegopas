@@ -40,6 +40,12 @@ Page {
         onNewRoute: newRoute(name, coord)
     }
 
+    /* Connect dbus callback to function newCycling() */
+    Connections {
+        target: Route
+        onNewCycling: newCycling(name, coord)
+    }
+
     function newRoute(name, coord) {
         /* clear all other pages from the stack */
         while(pageStack.depth > 1)
@@ -55,7 +61,22 @@ Page {
         from.updateLocation("", 0 , "")
         from.getCurrentCoord()
         to.updateLocation(name, 0, coord)
-        state = "waiting"
+        state = "waiting_route"
+    }
+
+    function newCycling(name, coord) {
+        /* clear all other pages from the stack */
+        while(pageStack.depth > 1)
+            pageStack.pop(null, true)
+
+        /* bring application to front */
+        QmlApplicationViewer.showFullScreen()
+
+        /* clear 'from' field, and enter new 'to' */
+        from.updateLocation("", 0 , "")
+        from.getCurrentCoord()
+        to.updateLocation(name, 0, coord)
+        state = "waiting_cycling"
     }
 
     function updateTime() {
@@ -73,10 +94,16 @@ Page {
 
     onEndpointsValidChanged: {
         /* if we receive coordinates we are waiting for, start route search */
-        if(state == "waiting" && endpointsValid) {
+        if(state == "waiting_route" && endpointsValid) {
             var parameters = {}
-            setParameters(parameters)
+            setRouteParameters(parameters)
             pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+            state = "normal"
+        }
+        if(state == "waiting_cycling" && endpointsValid) {
+            var parameters = {}
+            setCyclingParameters(parameters)
+            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
             state = "normal"
         }
     }
@@ -99,7 +126,12 @@ Page {
             PropertyChanges { target: busyIndicator; opacity: 0.0 }
         },
         State {
-            name: "waiting"
+            name: "waiting_route"
+            PropertyChanges { target: waiting; opacity: 0.7 }
+            PropertyChanges { target: busyIndicator; opacity: 1.0 }
+        },
+        State {
+            name: "waiting_cycling"
             PropertyChanges { target: waiting; opacity: 0.7 }
             PropertyChanges { target: busyIndicator; opacity: 1.0 }
         }
@@ -111,7 +143,7 @@ Page {
     ]
     state: "normal"
 
-    function setParameters(parameters) {
+    function setRouteParameters(parameters) {
         var walking_speed = Storage.getSetting("walking_speed")
         var optimize = Storage.getSetting("optimize")
         var change_margin = Storage.getSetting("change_margin")
@@ -140,18 +172,38 @@ Page {
             parameters.transport_types.push("tram")
     }
 
+    function setCyclingParameters(parameters) {
+        var optimize_cycling = Storage.getSetting("optimize_cycling")
+
+        parameters.from_name = fromName
+        parameters.from = fromCoord
+        parameters.to_name = toName
+        parameters.to = toCoord
+        parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
+    }
+
     ToolBarLayout {
         id: mainTools
         ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolButtonRow {
         ToolButton {
-            text: qsTr("Search")
-            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Cycling")
             enabled: endpointsValid
             onClicked: {
                 var parameters = {}
-                setParameters(parameters)
+                setCyclingParameters(parameters)
+                pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+            }
+        }
+        ToolButton {
+            text: qsTr("Route")
+            enabled: endpointsValid
+            onClicked: {
+                var parameters = {}
+                setRouteParameters(parameters)
                 pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             }
+        }
         }
         ToolIcon { iconId: "toolbar-view-menu" ; onClicked: myMenu.open(); }
     }
