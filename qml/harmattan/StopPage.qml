@@ -49,7 +49,6 @@ Page {
 
     ToolBarLayout {
         id: stopTools
-        visible: false
         ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
         ToolButtonRow {
             ToolButton {
@@ -98,9 +97,9 @@ Page {
     Component {
         id: highlight_component
         Rectangle {
-            anchors.horizontalCenterOffset: -15
             color: Theme.theme[appWindow.colorscheme].COLOR_HIGHLIGHT
-            width: 5
+            anchors.left: stop_page.left
+            width: parent.width
             height: 25
         }
     }

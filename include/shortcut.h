@@ -16,7 +16,10 @@ public:
 public slots:
     int toggleShortcut(const QString &name, const QString &coord);
     bool checkIfExists(const QString &name);
+    int toggleCyclingShortcut(const QString &name, const QString &coord);
+    bool checkIfCyclingExists(const QString &name);
     void removeShortcut(const QString &name);
+    void removeCyclingShortcut(const QString &name);
 };
 
 

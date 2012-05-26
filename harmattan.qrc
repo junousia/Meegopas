@@ -60,5 +60,9 @@
         <file alias="qml/MyBusyIndicator.qml">qml/harmattan/MyBusyIndicator.qml</file>
         <file alias="qml/SectionHeader.qml">qml/common/SectionHeader.qml</file>
         <file alias="qml/CyclingPage.qml">qml/harmattan/CyclingPage.qml</file>
+        <file>images/home-mark.png</file>
+        <file>images/home-mark-inverse.png</file>
+        <file>images/home-unmark.png</file>
+        <file>images/home-unmark-inverse.png</file>
     </qresource>
 </RCC>

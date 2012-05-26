@@ -96,10 +96,15 @@ Page {
                 onClicked: {
                     if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
 
-                        /* update shortcut, if exists */
+                        /* update shortcuts, if exists */
                         if(Shortcut.checkIfExists(edit_dialog.old_name)) {
                             Shortcut.removeShortcut(edit_dialog.old_name)
                             Shortcut.toggleShortcut(edit_dialog.name,favoritesModel.get(list.currentIndex).coord)
+                        }
+
+                        if(Shortcut.checkIfCyclingExists(edit_dialog.old_name)) {
+                            Shortcut.removeCyclingShortcut(edit_dialog.old_name)
+                            Shortcut.toggleCyclingShortcut(edit_dialog.name,favoritesModel.get(list.currentIndex).coord)
                         }
 
                         favoritesModel.clear()
@@ -170,6 +175,7 @@ Page {
                     appWindow.banner.text = qsTr("Favorite removed")
                     appWindow.banner.show()
                     Shortcut.removeShortcut(delete_dialog.name)
+                    Shortcut.removeCyclingShortcut(delete_dialog.name)
                     delete_dialog.close()
                 }
             }
@@ -237,6 +243,95 @@ Page {
         }
     }
 
+    Dialog {
+        id: shortcut_dialog
+        property string name
+        property string coord
+        signal shortcutsChanged()
+
+        title: Text {
+            text: qsTr("Add to application menu?")
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Qt.AlignCenter
+            elide: Text.ElideNone
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.bold: true
+            font.family: UIConstants.FONT_FAMILY
+            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+        }
+
+        content:
+            Column {
+                spacing: UIConstants.DEFAULT_MARGIN
+                Spacing {}
+                Row {
+                    CheckBox {
+                        id: shortcut_route_checkbox
+                        Connections {
+                            target: shortcut_dialog
+                            onNameChanged: shortcut_route_checkbox.checked = Shortcut.checkIfExists(shortcut_dialog.name)
+                        }
+
+                        text: qsTr("Route search")
+                        onClicked: {
+                            Shortcut.toggleShortcut(shortcut_dialog.name, shortcut_dialog.coord)
+                            shortcut_dialog.shortcutsChanged()
+                            if(checked) {
+                                appWindow.banner.success = true
+                                appWindow.banner.text = qsTr("Favorite added to application menu")
+                                appWindow.banner.show()
+                            } else {
+                                appWindow.banner.success = false
+                                appWindow.banner.text = qsTr("Favorite removed from application menu")
+                                appWindow.banner.show()
+                            }
+                        }
+                    }
+                }
+                Row {
+                    CheckBox {
+                        id: shortcut_cycling_checkbox
+                        Connections {
+                            target: shortcut_dialog
+                            onNameChanged: shortcut_cycling_checkbox.checked = Shortcut.checkIfCyclingExists(shortcut_dialog.name)
+                        }
+                        text: qsTr("Cycling")
+                        onClicked: {
+                            Shortcut.toggleCyclingShortcut(shortcut_dialog.name, shortcut_dialog.coord)
+                            shortcut_dialog.shortcutsChanged()
+                            if(checked) {
+                                appWindow.banner.success = true
+                                appWindow.banner.text = qsTr("Favorite added to application menu")
+                                appWindow.banner.show()
+                            } else {
+                                appWindow.banner.success = false
+                                appWindow.banner.text = qsTr("Favorite removed from application menu")
+                                appWindow.banner.show()
+                            }
+                        }
+                    }
+                }
+            }
+        buttons: Column {
+            spacing: UIConstants.DEFAULT_MARGIN
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: button_save.width
+
+            Spacing {}
+
+            Button {
+                id: shortcut_close
+                text: qsTr("Close")
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                onClicked: {
+                    shortcut_dialog.close()
+                }
+            }
+        }
+    }
+
     Rectangle {
         id: background
         anchors.fill: parent
@@ -295,26 +390,24 @@ Page {
                     MyButton {
                         id: shortcut_button
                         property bool toggled : false
+
+                        Connections {
+                            target: shortcut_dialog
+                            onShortcutsChanged: shortcut_button.toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
+                        }
+
                         imageSize: 40
                         Component.onCompleted: {
-                            toggled = Shortcut.checkIfExists(modelData)
+                            toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
                         }
                         anchors.right: edit_button.left
                         source: toggled?
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-mark-inverse.png':'qrc:/images/favorite-mark.png' :
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-unmark-inverse.png':'qrc:/images/favorite-unmark.png'
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-mark-inverse.png':'qrc:/images/home-mark.png' :
+                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-unmark-inverse.png':'qrc:/images/home-unmark.png'
                         mouseArea.onClicked: {
-                            Shortcut.toggleShortcut(modelData, coord)
-                            toggled = toggled ? false : true
-                            if(toggled) {
-                                appWindow.banner.success = true
-                                appWindow.banner.text = qsTr("Favorite added to application menu")
-                                appWindow.banner.show()
-                            } else {
-                                appWindow.banner.success = false
-                                appWindow.banner.text = qsTr("Favorite removed from application menu")
-                                appWindow.banner.show()
-                            }
+                            shortcut_dialog.name = modelData
+                            shortcut_dialog.coord = coord
+                            shortcut_dialog.open()
                         }
                     }
 

@@ -22,7 +22,7 @@ Page {
     id: cyclingPage
     tools: mapTools
     property variant search_parameters : 0
-
+    property bool initDone : false
     property bool routeDone : (doneIndicator.done && map_loader.status == Loader.Ready)
 
     onRouteDoneChanged: {
@@ -32,10 +32,18 @@ Page {
     }
 
     onStatusChanged: {
-        if(status == Component.Ready) {
+        if(status == Component.Ready && !initDone) {
+            initDone = true
             map_loader.sourceComponent = map_component
             Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
         }
+    }
+
+    Connections {
+        target: map_loader.item
+        onNewCycling: length >= 1000?
+                          title.title = qsTr("Route length: ") + Math.floor(length/100)/10 + " km" :
+                          title.title = qsTr("Route length: ") + length + " m"
     }
 
     ToolBarLayout {
@@ -73,6 +81,14 @@ Page {
         z: -50
     }
 
+    ApplicationHeader {
+        id: title
+        title: qsTr("")
+        color: Theme.theme[appWindow.colorscheme].COLOR_MAPHEADER_BACKGROUND
+        title_color: Theme.theme[appWindow.colorscheme].COLOR_MAPHEADER_FOREGROUND
+        anchors.top: parent.top
+    }
+
     Loader {
         id: map_loader
         anchors.fill: cyclingPage
@@ -81,7 +97,7 @@ Page {
     Component {
         id: map_component
         MapElement {
-            anchors.horizontalCenter: cyclingPage.horizontalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.fill: cyclingPage
         }
     }

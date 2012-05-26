@@ -23,6 +23,8 @@ Item {
     property bool positioning_active : true
     property alias flickable_map : flickable_map
 
+    signal newCycling(int length)
+
     function next_station() {
         flickable_map.panToCoordinate(Helper.next_station())
     }
@@ -111,7 +113,7 @@ Item {
             MapPolyline {
                 id: route
                 smooth: true
-                border.width: 6 * appWindow.scaling_factor
+                border.width: 8 * appWindow.scaling_factor
                 z: -10
             }
         }
@@ -217,7 +219,8 @@ Item {
         var current_route = Reittiopas.get_cycling_instance()
 
         var last_result = current_route.last_result
-        console.log(last_result.length)
+
+        map_element.newCycling(last_result.length)
 
         for(var index in last_result.path) {
             var leg = last_result.path[index]

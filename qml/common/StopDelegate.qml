@@ -37,7 +37,7 @@ Component {
             if(state == "there")
                 stop_page.list.selectedIndex = index
         }
-        state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 50)? "near": "far"
+        state: (coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.distanceTo(stop_page.position.position.coordinate) < 150)? "near": "far"
 
         states: [
             State {

@@ -74,3 +74,7 @@ function parse_disruption_time(time) {
                         newtime.slice(14,16),
                         00, 00);
 }
+
+function meter_to_kilometer(distance) {
+
+}

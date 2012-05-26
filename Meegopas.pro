@@ -51,7 +51,9 @@ contains(MEEGO_EDITION, harmattan) {
     dbusservice.files = com.juknousi.meegopas.service
     dbusinterface.path = /usr/share/dbus-1/interfaces
     dbusinterface.files = com.juknousi.meegopas.xml
-    INSTALLS += dbusservice dbusinterface
+    icons.path = /usr/share/icons/hicolor/80x80/apps/
+    icons.files = MeegopasCycling80.png
+    INSTALLS += dbusservice dbusinterface icons
 
     # splash screen
     splash.files = splash.png splash-l.png

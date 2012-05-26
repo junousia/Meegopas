@@ -93,8 +93,21 @@ Column {
         repeat: true
     }
 
+    function positionValid(position) {
+        if(position.latitudeValid &&
+                position.longitudeValid &&
+                position.horizontalAccuracyValid &&
+                position.horizontalAccuracy < 150 &&
+                position.verticalAccuracyValid &&
+                position.verticalAccuracy < 150)
+            return true
+        else
+            return false
+    }
+
     function getCurrentCoord() {
-        if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
+        /* wait until position is accurate enough */
+        if(positionValid(positionSource.position)) {
             gpsTimer.stop()
             suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
                                                                     positionSource.position.coordinate.longitude.toString())

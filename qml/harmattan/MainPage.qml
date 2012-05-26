@@ -85,11 +85,13 @@ Page {
         /* Set date for date picker */
         timePicker.hour = Qt.formatTime(mainPage.myTime, "hh")
         timePicker.minute = Qt.formatTime(mainPage.myTime, "mm")
+        timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
 
         /* Set date for date picker */
         datePicker.day = Qt.formatDate(mainPage.myTime, "dd")
         datePicker.month = Qt.formatDate(mainPage.myTime, "MM")
         datePicker.year = Qt.formatDate(mainPage.myTime, "yyyy")
+        dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
     }
 
     onEndpointsValidChanged: {
@@ -186,24 +188,24 @@ Page {
         id: mainTools
         ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { myMenu.close(); pageStack.pop(); } }
         ToolButtonRow {
-        ToolButton {
-            text: qsTr("Cycling")
-            enabled: endpointsValid
-            onClicked: {
-                var parameters = {}
-                setCyclingParameters(parameters)
-                pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+            ToolButton {
+                text: qsTr("Cycling")
+                enabled: endpointsValid
+                onClicked: {
+                    var parameters = {}
+                    setCyclingParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+                }
             }
-        }
-        ToolButton {
-            text: qsTr("Route")
-            enabled: endpointsValid
-            onClicked: {
-                var parameters = {}
-                setRouteParameters(parameters)
-                pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+            ToolButton {
+                text: qsTr("Route")
+                enabled: endpointsValid
+                onClicked: {
+                    var parameters = {}
+                    setRouteParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+                }
             }
-        }
         }
         ToolIcon { iconId: "toolbar-view-menu" ; onClicked: myMenu.open(); }
     }
@@ -246,7 +248,7 @@ Page {
         anchors.fill: parent
         MouseArea {
             anchors.fill: parent
-            enabled: mainPage.state == "waiting"
+            enabled: mainPage.state != "normal"
             onClicked: mainPage.state = "normal"
         }
     }
