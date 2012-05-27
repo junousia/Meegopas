@@ -35,9 +35,8 @@ Flickable {
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickDeceleration: 4000
     maximumFlickVelocity: 1000
-
     pressDelay: 500
-    clip: true
+
     function updateSizes()
     {
         centeredContentY = map.size.height*0.75
@@ -66,6 +65,8 @@ Flickable {
         size.width: mapFlickable.width * 2
         size.height: mapFlickable.height * 2
         zoomLevel: defaultZoomLevel
+        clip: true
+
         plugin: Plugin {
             name: "nokia"
             parameters: [

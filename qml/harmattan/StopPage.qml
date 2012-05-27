@@ -98,8 +98,7 @@ Page {
         id: highlight_component
         Rectangle {
             color: Theme.theme[appWindow.colorscheme].COLOR_HIGHLIGHT
-            anchors.left: stop_page.left
-            width: parent.width
+            width: stop_page.width + 2 * UIConstants.DEFAULT_MARGIN
             height: 25
         }
     }

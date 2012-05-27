@@ -6,10 +6,7 @@ OTHER_FILES += \
         qml/common/* \
         qml/harmattan/* \
         qml/symbian/* \
-    qml/common/SectionHeader.qml \
-    qtc_packaging/debian_harmattan/postrm \
-    qml/harmattan/CyclingPage.qml \
-    qml/symbian/CyclingPage.qml
+        qtc_packaging/debian_harmattan/postrm
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
@@ -52,7 +49,7 @@ contains(MEEGO_EDITION, harmattan) {
     dbusinterface.path = /usr/share/dbus-1/interfaces
     dbusinterface.files = com.juknousi.meegopas.xml
     icons.path = /usr/share/icons/hicolor/80x80/apps/
-    icons.files = MeegopasCycling80.png
+    icons.files = MeegopasCycling80.png MeegopasRoute80.png
     INSTALLS += dbusservice dbusinterface icons
 
     # splash screen

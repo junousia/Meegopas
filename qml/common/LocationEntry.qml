@@ -94,12 +94,7 @@ Column {
     }
 
     function positionValid(position) {
-        if(position.latitudeValid &&
-                position.longitudeValid &&
-                position.horizontalAccuracyValid &&
-                position.horizontalAccuracy < 150 &&
-                position.verticalAccuracyValid &&
-                position.verticalAccuracy < 150)
+        if(position.latitudeValid && position.longitudeValid)
             return true
         else
             return false

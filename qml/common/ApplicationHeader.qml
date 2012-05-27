@@ -13,7 +13,8 @@ Rectangle {
     anchors.right: parent.right
     anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
 
-    height: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_HEIGHT_PORTRAIT : UIConstants.HEADER_DEFAULT_HEIGHT_LANDSCAPE
+    height: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_HEIGHT_PORTRAIT * appWindow.scaling_factor:
+                                  UIConstants.HEADER_DEFAULT_HEIGHT_LANDSCAPE * appWindow.scaling_factor
     z: 10
     Text {
         id: title
@@ -21,8 +22,10 @@ Rectangle {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN
-        anchors.bottomMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE
-        anchors.topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
+        anchors.bottomMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_PORTRAIT * appWindow.scaling_factor:
+                                                    UIConstants.HEADER_DEFAULT_BOTTOM_SPACING_LANDSCAPE * appWindow.scaling_factor
+        anchors.topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT * appWindow.scaling_factor:
+                                                 UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE * appWindow.scaling_factor
         font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
     }
 }

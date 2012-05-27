@@ -156,25 +156,22 @@ Page {
             iconSource: "toolbar-back"
             onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
         }
-        ButtonRow {
-            Button {
-                text: qsTr("Route")
-                anchors.horizontalCenter: parent.horizontalCenter
-                enabled: endpointsValid
-                onClicked: {
-                    var parameters = {}
-                    setRouteParameters(parameters)
-                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
-                }
+        ToolButton {
+            text: qsTr("Cycling")
+            enabled: endpointsValid
+            onClicked: {
+                var parameters = {}
+                setCyclingParameters(parameters)
+                pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
             }
-            Button {
-                text: qsTr("Cycling")
-                enabled: endpointsValid
-                onClicked: {
-                    var parameters = {}
-                    setCyclingParameters(parameters)
-                    pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-                }
+        }
+        ToolButton {
+            text: qsTr("Route search")
+            enabled: endpointsValid
+            onClicked: {
+                var parameters = {}
+                setRouteParameters(parameters)
+                pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             }
         }
         ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }

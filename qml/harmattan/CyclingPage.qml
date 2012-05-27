@@ -48,10 +48,9 @@ Page {
 
     ToolBarLayout {
         id: mapTools
-        ToolIcon { iconId: "toolbar-back"
-            onClicked: {
-                pageStack.pop();
-            }
+        ToolIcon {
+            iconId: "toolbar-back"
+            onClicked: { myMenu.close(); pageStack.pop(); }
         }
         ToolButton {
             text: qsTr("Follow")

@@ -198,7 +198,7 @@ Page {
                 }
             }
             ToolButton {
-                text: qsTr("Route")
+                text: qsTr("Route search")
                 enabled: endpointsValid
                 onClicked: {
                     var parameters = {}

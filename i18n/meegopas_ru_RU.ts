@@ -19,13 +19,24 @@
 <context>
     <name>CyclingPage</name>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="49"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="45"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="46"/>
+        <source>Route length: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="57"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="48"/>
         <source>Follow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="93"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="86"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="109"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="93"/>
         <source>No results</source>
         <translation type="unfinished"></translation>
@@ -116,15 +127,15 @@
 <context>
     <name>FavoritesPage</name>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="134"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="139"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="152"/>
         <source>Delete favorite?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="122"/>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="178"/>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="228"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="127"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="184"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="234"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="48"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="107"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="157"/>
@@ -138,66 +149,88 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="109"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="114"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="90"/>
         <source>Favorite name successfully modified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="113"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="118"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="94"/>
         <source>Favorite name modification failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="163"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="168"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="158"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="170"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="175"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="162"/>
         <source>Favorite removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="199"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="205"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="125"/>
         <source>Search for location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="214"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="220"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="107"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="267"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="253"/>
+        <source>Add to application menu?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="275"/>
+        <source>Route search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="298"/>
+        <source>Cycling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="324"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="362"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="194"/>
         <source>Manage favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="361"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="454"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="262"/>
         <source>No saved favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="272"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="367"/>
         <location filename="../qml/symbian/FavoritesPage.qml" line="199"/>
         <source>Add favorite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="311"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="281"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="304"/>
         <source>Favorite added to application menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/FavoritesPage.qml" line="315"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="285"/>
+        <location filename="../qml/harmattan/FavoritesPage.qml" line="308"/>
         <source>Favorite removed from application menu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -216,43 +249,43 @@
 <context>
     <name>LocationEntry</name>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="133"/>
+        <location filename="../qml/common/LocationEntry.qml" line="146"/>
         <source>No results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="145"/>
+        <location filename="../qml/common/LocationEntry.qml" line="158"/>
         <source>Could not find location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="159"/>
-        <location filename="../qml/common/LocationEntry.qml" line="171"/>
+        <location filename="../qml/common/LocationEntry.qml" line="172"/>
+        <location filename="../qml/common/LocationEntry.qml" line="184"/>
         <source>Choose location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="184"/>
+        <location filename="../qml/common/LocationEntry.qml" line="197"/>
         <source>Position not yet available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="257"/>
+        <location filename="../qml/common/LocationEntry.qml" line="270"/>
         <source>Type a location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="333"/>
+        <location filename="../qml/common/LocationEntry.qml" line="346"/>
         <source>Current location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="343"/>
+        <location filename="../qml/common/LocationEntry.qml" line="356"/>
         <source>Location added to favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/LocationEntry.qml" line="347"/>
+        <location filename="../qml/common/LocationEntry.qml" line="360"/>
         <source>Location already in the favorites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -260,76 +293,80 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="157"/>
         <location filename="../qml/symbian/MainPage.qml" line="161"/>
         <source>Route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="166"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="192"/>
         <location filename="../qml/symbian/MainPage.qml" line="171"/>
         <source>Cycling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="179"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="201"/>
+        <source>Route search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/MainPage.qml" line="215"/>
         <location filename="../qml/symbian/MainPage.qml" line="185"/>
         <source>Choose date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="188"/>
-        <location filename="../qml/harmattan/MainPage.qml" line="203"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="224"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="239"/>
         <location filename="../qml/symbian/MainPage.qml" line="194"/>
         <location filename="../qml/symbian/MainPage.qml" line="209"/>
         <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="189"/>
-        <location filename="../qml/harmattan/MainPage.qml" line="204"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="225"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="240"/>
         <location filename="../qml/symbian/MainPage.qml" line="195"/>
         <location filename="../qml/symbian/MainPage.qml" line="210"/>
         <source>Reject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="194"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="230"/>
         <location filename="../qml/symbian/MainPage.qml" line="200"/>
         <source>Choose time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="233"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="269"/>
         <source>Meegopas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="272"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="308"/>
         <location filename="../qml/symbian/MainPage.qml" line="268"/>
         <source>From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="293"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="329"/>
         <location filename="../qml/symbian/MainPage.qml" line="289"/>
         <source>To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="354"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="390"/>
         <location filename="../qml/symbian/MainPage.qml" line="348"/>
         <source>arrival</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="354"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="390"/>
         <location filename="../qml/symbian/MainPage.qml" line="348"/>
         <source>departure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="398"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="434"/>
         <location filename="../qml/symbian/MainPage.qml" line="391"/>
         <source>Now</source>
         <translation type="unfinished"></translation>
@@ -385,18 +422,18 @@
 <context>
     <name>RouteMapPage</name>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="47"/>
-        <location filename="../qml/symbian/RouteMapPage.qml" line="47"/>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="45"/>
+        <location filename="../qml/symbian/RouteMapPage.qml" line="45"/>
         <source>Follow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/symbian/RouteMapPage.qml" line="56"/>
+        <location filename="../qml/symbian/RouteMapPage.qml" line="54"/>
         <source>Follow current location enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/symbian/RouteMapPage.qml" line="57"/>
+        <location filename="../qml/symbian/RouteMapPage.qml" line="55"/>
         <source>Follow current location disabled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -470,13 +507,12 @@
         <location filename="../qml/harmattan/SettingsPage.qml" line="235"/>
         <location filename="../qml/harmattan/SettingsPage.qml" line="322"/>
         <location filename="../qml/symbian/SettingsPage.qml" line="213"/>
-        <location filename="../qml/symbian/SettingsPage.qml" line="310"/>
+        <location filename="../qml/symbian/SettingsPage.qml" line="311"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/harmattan/SettingsPage.qml" line="241"/>
-        <location filename="../qml/harmattan/SettingsPage.qml" line="328"/>
         <location filename="../qml/symbian/SettingsPage.qml" line="220"/>
         <source>Fastest</source>
         <translation type="unfinished"></translation>
@@ -531,18 +567,19 @@
     </message>
     <message>
         <location filename="../qml/harmattan/SettingsPage.qml" line="334"/>
-        <location filename="../qml/symbian/SettingsPage.qml" line="322"/>
+        <location filename="../qml/symbian/SettingsPage.qml" line="325"/>
         <source>Gravel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/harmattan/SettingsPage.qml" line="340"/>
-        <location filename="../qml/symbian/SettingsPage.qml" line="328"/>
+        <location filename="../qml/symbian/SettingsPage.qml" line="332"/>
         <source>Shortest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/symbian/SettingsPage.qml" line="316"/>
+        <location filename="../qml/harmattan/SettingsPage.qml" line="328"/>
+        <location filename="../qml/symbian/SettingsPage.qml" line="318"/>
         <source>Tarmac</source>
         <translation type="unfinished"></translation>
     </message>
@@ -550,36 +587,36 @@
 <context>
     <name>StopPage</name>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="57"/>
-        <location filename="../qml/symbian/StopPage.qml" line="55"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="55"/>
+        <location filename="../qml/symbian/StopPage.qml" line="53"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="66"/>
-        <location filename="../qml/symbian/StopPage.qml" line="64"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="63"/>
+        <location filename="../qml/symbian/StopPage.qml" line="62"/>
         <source>Follow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="125"/>
-        <location filename="../qml/symbian/StopPage.qml" line="127"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="122"/>
+        <location filename="../qml/symbian/StopPage.qml" line="125"/>
         <source>Stops for line </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="125"/>
-        <location filename="../qml/symbian/StopPage.qml" line="127"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="122"/>
+        <location filename="../qml/symbian/StopPage.qml" line="125"/>
         <source>Walking route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/symbian/StopPage.qml" line="74"/>
+        <location filename="../qml/symbian/StopPage.qml" line="72"/>
         <source>Follow current position enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/symbian/StopPage.qml" line="75"/>
+        <location filename="../qml/symbian/StopPage.qml" line="73"/>
         <source>Follow current position disabled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -588,25 +625,25 @@
     <name>main</name>
     <message>
         <location filename="../qml/harmattan/main.qml" line="61"/>
-        <location filename="../qml/symbian/main.qml" line="65"/>
+        <location filename="../qml/symbian/main.qml" line="70"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/harmattan/main.qml" line="62"/>
-        <location filename="../qml/symbian/main.qml" line="66"/>
+        <location filename="../qml/symbian/main.qml" line="71"/>
         <source>Manage favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/harmattan/main.qml" line="63"/>
-        <location filename="../qml/symbian/main.qml" line="67"/>
+        <location filename="../qml/symbian/main.qml" line="72"/>
         <source>Exception info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/harmattan/main.qml" line="64"/>
-        <location filename="../qml/symbian/main.qml" line="68"/>
+        <location filename="../qml/symbian/main.qml" line="73"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>

@@ -18,7 +18,7 @@ int Shortcut::toggleShortcut(const QString &name, const QString &coord) {
                       "Version=1.0" << endl <<
                       "Type=Application" << endl <<
                       "Name=" << name << endl <<
-                      "Icon=/usr/share/icons/hicolor/80x80/apps/Meegopas80.png\n" << endl <<
+                      "Icon=/usr/share/icons/hicolor/80x80/apps/MeegopasRoute80.png\n" << endl <<
                       "Exec=qdbus com.juknousi.meegopas /com/juknousi/meegopas route \"" << name << "\" " << coord << endl;
 
             return 1;
