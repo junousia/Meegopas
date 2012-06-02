@@ -18,7 +18,7 @@ symbian {
     # DEPLOYMENT.installer_header = 0x2002CCCF
     DEPLOYMENT.installer_header = 0x2002CCCF
 
-    VERSION = 1.3.0
+    VERSION = 1.4.0
 
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location

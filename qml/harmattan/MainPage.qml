@@ -26,13 +26,16 @@ Page {
 
     property date myTime
 
+    property variant currentCoord: ''
+    property variant currentName: ''
+
     property variant toCoord: ''
     property variant toName: ''
 
     property variant fromCoord: ''
     property variant fromName: ''
 
-    property bool endpointsValid : (toCoord && fromCoord)
+    property bool endpointsValid : (toCoord && (fromCoord || currentCoord))
 
     /* Connect dbus callback to function newRoute() */
     Connections {
@@ -150,8 +153,8 @@ Page {
         var optimize = Storage.getSetting("optimize")
         var change_margin = Storage.getSetting("change_margin")
 
-        parameters.from_name = fromName
-        parameters.from = fromCoord
+        parameters.from_name = fromName ? fromName : currentName
+        parameters.from = fromCoord ? fromCoord : currentCoord
         parameters.to_name = toName
         parameters.to = toCoord
 
@@ -177,8 +180,8 @@ Page {
     function setCyclingParameters(parameters) {
         var optimize_cycling = Storage.getSetting("optimize_cycling")
 
-        parameters.from_name = fromName
-        parameters.from = fromCoord
+        parameters.from_name = fromName ? fromName : currentName
+        parameters.from = fromCoord ? fromCoord : currentCoord
         parameters.to_name = toName
         parameters.to = toCoord
         parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
@@ -306,9 +309,14 @@ Page {
                 LocationEntry {
                     id: from
                     type: qsTr("From")
+                    isFrom: true
                     onLocationDone: {
                         fromName = name
                         fromCoord = coord
+                    }
+                    onCurrentLocationDone: {
+                        currentName = name
+                        currentCoord = coord
                     }
                     onLocationError: {
                         /* error in getting current position, cancel the wait */
@@ -316,7 +324,7 @@ Page {
                     }
                 }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 * appWindow.scaling_factor }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2

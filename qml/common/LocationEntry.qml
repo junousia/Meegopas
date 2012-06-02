@@ -25,8 +25,20 @@ Column {
     property alias lineHeightMode : label.lineHeightMode
     property alias lineHeight : label.lineHeight
     property alias textfield : textfield.text
+
+    property variant current_name : ''
+    property variant current_coord : ''
+
+    Coordinate {
+        id: previousCoord
+        latitude: 0
+        longitude: 0
+    }
+
     property variant destination_name : ''
     property variant destination_coord : ''
+
+    property bool isFrom : false
 
     property bool destination_valid : (suggestionModel.count > 0)
     property alias selected_favorite : favoriteQuery.selectedIndex
@@ -36,9 +48,10 @@ Column {
     width: parent.width
 
     signal locationDone(string name, string coord)
+    signal currentLocationDone(string name, string coord)
     signal locationError()
 
-    state: destination_coord ? "validated" : destination_valid ? "sufficient" : "error"
+    state: (destination_coord || current_coord) ? "validated" : destination_valid ? "sufficient" : "error"
 
     states: [
         State {
@@ -86,9 +99,25 @@ Column {
         locationDone(address, coord)
     }
 
+    function updateCurrentLocation(name, housenumber, coord) {
+        currentLocationModel.source = ""
+        var address = name
+
+        if(housenumber && address.slice(address.length - housenumber.length) != housenumber)
+            address += " " + housenumber
+
+        current_name = address
+        current_coord = coord
+
+        textfield.placeholderText = address
+        currentLocationDone(address, coord)
+    }
+
     Timer {
         id: gpsTimer
+        running: isFrom
         onTriggered: getCurrentCoord()
+        triggeredOnStart: true
         interval: 200
         repeat: true
     }
@@ -104,8 +133,10 @@ Column {
         /* wait until position is accurate enough */
         if(positionValid(positionSource.position)) {
             gpsTimer.stop()
-            suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
-                                                                    positionSource.position.coordinate.longitude.toString())
+            previousCoord.latitude = positionSource.position.coordinate.latitude
+            previousCoord.longitude = positionSource.position.coordinate.longitude
+            currentLocationModel.source = Reittiopas.get_reverse_geocode(previousCoord.latitude.toString(),
+                                                                    previousCoord.longitude.toString())
         } else {
             /* poll again in 200ms */
             gpsTimer.start()
@@ -118,6 +149,34 @@ Column {
         id: positionSource
         updateInterval: 500
         active: platformWindow.active
+        onPositionChanged: {
+            /* if we have moved >250 meters from the previous place, update current location */
+            if(previousCoord.latitude != 0 && previousCoord.longitude != 0 &&
+                    position.coordinate.distanceTo(previousCoord) > 250) {
+                getCurrentCoord()
+            }
+        }
+    }
+
+    XmlListModel {
+        id: currentLocationModel
+        query: "/response/node"
+        XmlRole { name: "name"; query: "name/string()" }
+        XmlRole { name: "city"; query: "city/string()" }
+        XmlRole { name: "coord"; query: "coords/string()" }
+        XmlRole { name: "shortCode"; query: "shortCode/string()" }
+        XmlRole { name: "housenumber"; query: "details/houseNumber/string()" }
+
+        onStatusChanged: {
+            if(status == XmlListModel.Ready && source != "") {
+                /* if only result, take it into use */
+                if(currentLocationModel.count > 0) {
+                    updateCurrentLocation(currentLocationModel.get(0).name.split(',', 1).toString(),
+                                   currentLocationModel.get(0).housenumber,
+                                   currentLocationModel.get(0).coord)
+                }
+            }
+        }
     }
 
     XmlListModel {

@@ -26,18 +26,27 @@ Page {
 
     property date myTime
 
+    property variant currentCoord: ''
+    property variant currentName: ''
+
     property variant toCoord: ''
     property variant toName: ''
 
     property variant fromCoord: ''
     property variant fromName: ''
 
-    property bool endpointsValid : (toCoord && fromCoord)
+    property bool endpointsValid : (toCoord && (fromCoord || currentCoord))
 
     /* Connect dbus callback to function newRoute() */
     Connections {
         target: Route
         onNewRoute: newRoute(name, coord)
+    }
+
+    /* Connect dbus callback to function newCycling() */
+    Connections {
+        target: Route
+        onNewCycling: newCycling(name, coord)
     }
 
     function newRoute(name, coord) {
@@ -55,7 +64,22 @@ Page {
         from.updateLocation("", 0 , "")
         from.getCurrentCoord()
         to.updateLocation(name, 0, coord)
-        state = "waiting"
+        state = "waiting_route"
+    }
+
+    function newCycling(name, coord) {
+        /* clear all other pages from the stack */
+        while(pageStack.depth > 1)
+            pageStack.pop(null, true)
+
+        /* bring application to front */
+        QmlApplicationViewer.showFullScreen()
+
+        /* clear 'from' field, and enter new 'to' */
+        from.updateLocation("", 0 , "")
+        from.getCurrentCoord()
+        to.updateLocation(name, 0, coord)
+        state = "waiting_cycling"
     }
 
     function updateTime() {
@@ -64,19 +88,27 @@ Page {
         /* Set date for date picker */
         timePicker.hour = Qt.formatTime(mainPage.myTime, "hh")
         timePicker.minute = Qt.formatTime(mainPage.myTime, "mm")
+        timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
 
         /* Set date for date picker */
         datePicker.day = Qt.formatDate(mainPage.myTime, "dd")
         datePicker.month = Qt.formatDate(mainPage.myTime, "MM")
         datePicker.year = Qt.formatDate(mainPage.myTime, "yyyy")
+        dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
     }
 
     onEndpointsValidChanged: {
         /* if we receive coordinates we are waiting for, start route search */
-        if(state == "waiting" && endpointsValid) {
+        if(state == "waiting_route" && endpointsValid) {
             var parameters = {}
             setRouteParameters(parameters)
             pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+            state = "normal"
+        }
+        if(state == "waiting_cycling" && endpointsValid) {
+            var parameters = {}
+            setCyclingParameters(parameters)
+            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
             state = "normal"
         }
     }
@@ -99,7 +131,12 @@ Page {
             PropertyChanges { target: busyIndicator; opacity: 0.0 }
         },
         State {
-            name: "waiting"
+            name: "waiting_route"
+            PropertyChanges { target: waiting; opacity: 0.7 }
+            PropertyChanges { target: busyIndicator; opacity: 1.0 }
+        },
+        State {
+            name: "waiting_cycling"
             PropertyChanges { target: waiting; opacity: 0.7 }
             PropertyChanges { target: busyIndicator; opacity: 1.0 }
         }
@@ -116,8 +153,8 @@ Page {
         var optimize = Storage.getSetting("optimize")
         var change_margin = Storage.getSetting("change_margin")
 
-        parameters.from_name = fromName
-        parameters.from = fromCoord
+        parameters.from_name = fromName ? fromName : currentName
+        parameters.from = fromCoord ? fromCoord : currentCoord
         parameters.to_name = toName
         parameters.to = toCoord
 
@@ -143,8 +180,8 @@ Page {
     function setCyclingParameters(parameters) {
         var optimize_cycling = Storage.getSetting("optimize_cycling")
 
-        parameters.from_name = fromName
-        parameters.from = fromCoord
+        parameters.from_name = fromName ? fromName : currentName
+        parameters.from = fromCoord ? fromCoord : currentCoord
         parameters.to_name = toName
         parameters.to = toCoord
         parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
@@ -152,10 +189,7 @@ Page {
 
     ToolBarLayout {
         id: mainTools
-        ToolButton {
-            iconSource: "toolbar-back"
-            onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
-        }
+        ToolButton { iconSource: "toolbar-back"; onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop() }
         ToolButton {
             text: qsTr("Cycling")
             enabled: endpointsValid
@@ -215,7 +249,7 @@ Page {
         anchors.fill: parent
         MouseArea {
             anchors.fill: parent
-            enabled: mainPage.state == "waiting"
+            enabled: mainPage.state != "normal"
             onClicked: mainPage.state = "normal"
         }
     }
@@ -263,9 +297,14 @@ Page {
                 LocationEntry {
                     id: from
                     type: qsTr("From")
+                    isFrom: true
                     onLocationDone: {
                         fromName = name
                         fromCoord = coord
+                    }
+                    onCurrentLocationDone: {
+                        currentName = name
+                        currentCoord = coord
                     }
                     onLocationError: {
                         /* error in getting current position, cancel the wait */
@@ -273,7 +312,7 @@ Page {
                     }
                 }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 * appWindow.scaling_factor }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2
@@ -367,6 +406,7 @@ Page {
                 }
                 Text {
                     id: dateButton
+                    height: UIConstants.SIZE_BUTTON
                     font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
                     color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                     text: Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
