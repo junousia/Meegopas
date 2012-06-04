@@ -15,7 +15,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 QueryDialog {
-    titleText: "Meegopas v1.3.0"
+    titleText: "Meegopas v1.4.0"
     message: "(c) Jukka Nousiainen 2011-2012\n\n" + qsTr("This application is free sofware licenced under the GNU Public License version 3")
     rejectButtonText: qsTr("Close")
 }

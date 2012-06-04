@@ -324,7 +324,7 @@ Page {
                     }
                 }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 30 * appWindow.scaling_factor }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 * appWindow.scaling_factor }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2

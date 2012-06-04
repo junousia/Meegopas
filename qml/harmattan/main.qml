@@ -38,10 +38,7 @@ PageStackWindow {
     InfoBanner {
         id: banner
         property bool success : false
-        visible: true
         iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
-        z: 500
-        y: 40
     }
 
     ToolBarLayout {
