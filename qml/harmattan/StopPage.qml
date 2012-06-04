@@ -20,8 +20,8 @@ import "theme.js" as Theme
 
 Page {
     id: stop_page
-    property string leg_code
-    property int leg_index
+    property string leg_code : ""
+    property int leg_index : 0
     property alias position : position
     property alias list : routeList
     anchors.fill: parent
@@ -105,6 +105,7 @@ Page {
 
     ListView {
         id: routeList
+        cacheBuffer: 50 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT
         clip: true
         anchors.top: parent.top
         height: parent.height/2
@@ -153,7 +154,6 @@ Page {
 
                 // go to first stop
                 map.map_loader.item.first_station()
-                map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).stop_latitude,stopModel.get(0).stop_longitude)
             }
         }
     }

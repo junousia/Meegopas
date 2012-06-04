@@ -27,8 +27,8 @@ Component {
 
         Coordinate {
             id: coordinate
-            latitude: stop_latitude
-            longitude: stop_longitude
+            latitude: model.latitude
+            longitude: model.longitude
         }
 
         Component.onCompleted: ListItemAnimation { target: stop_item }
@@ -134,7 +134,7 @@ Component {
 
                 // follow mode disables panning to location
                 if(!appWindow.follow_mode)
-                    map.map_loader.item.flickable_map.panToLatLong(stop_latitude,stop_longitude)
+                    map.map_loader.item.flickable_map.panToLatLong(model.latitude,model.longitude)
             }
         }
     }

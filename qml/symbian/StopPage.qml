@@ -107,6 +107,7 @@ Page {
 
     ListView {
         id: routeList
+        cacheBuffer: 50 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT
         clip: true
         anchors.top: parent.top
         height: parent.height/2
@@ -157,7 +158,6 @@ Page {
 
                 // go to first stop
                 map.map_loader.item.first_station()
-                map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).stop_latitude,stopModel.get(0).stop_longitude)
             }
         }
     }
