@@ -13,6 +13,7 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import QtMobility.location 1.2
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
@@ -21,9 +22,19 @@ import "theme.js" as Theme
 Page {
     id: cyclingPage
     tools: mapTools
+
+    signal configChanged
+    signal positionChanged
+
     property variant search_parameters : 0
     property bool initDone : false
     property bool routeDone : (doneIndicator.done && map_loader.status == Loader.Ready)
+
+    PositionSource {
+        id: positionSource
+        updateInterval: 500
+        active: appWindow.positioning_active
+    }
 
     onRouteDoneChanged: {
         if(routeDone) {
@@ -39,6 +50,16 @@ Page {
         }
     }
 
+    onConfigChanged: {
+        map_loader.item.removeAll()
+        Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
+    }
+
+    onPositionChanged: {
+        map_loader.item.removeAll()
+        Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
+    }
+
     Connections {
         target: map_loader.item
         onNewCycling: length >= 1000?
@@ -46,20 +67,77 @@ Page {
                           title.title = qsTr("Route length: ") + length + " m"
     }
 
+    ListModel {
+        id: surfaceOptions
+        ListElement { name: QT_TR_NOOP("Default"); value: "kleroweighted" }
+        ListElement { name: QT_TR_NOOP("Tarmac"); value: "klerotarmac" }
+        ListElement { name: QT_TR_NOOP("Gravel"); value: "klerosand" }
+        ListElement { name: QT_TR_NOOP("Shortest"); value: "kleroshortest" }
+    }
+
+    SelectionDialog {
+        id: surfaceSelection
+        model: surfaceOptions
+        titleText: qsTr("Optimize route by")
+        onAccepted: {
+            var temp_parameters = search_parameters
+            temp_parameters.profile = surfaceOptions.get(selectedIndex).value
+            search_parameters = temp_parameters
+            configChanged()
+        }
+        Component.onCompleted: {
+            /* mark pre-configured value as selected */
+            var optimize = Storage.getSetting("optimize_cycling")
+            switch(optimize) {
+            case "kleroweighted":
+            case "Unknown":
+                surfaceSelection.selectedIndex = 0
+                break;
+            case "klerotarmac":
+                surfaceSelection.selectedIndex = 1
+                break;
+            case "klerosand":
+                surfaceSelection.selectedIndex = 2
+                break;
+            case "kleroshortest":
+                surfaceSelection.selectedIndex = 3
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    Column {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        height: surface.height + UIConstants.DEFAULT_MARGIN * 2
+        spacing: UIConstants.DEFAULT_MARGIN
+        z: 500
+        MapButton {
+            id: surface
+            source: "qrc:/images/surface.png"
+            z: 500
+            mouseArea.onClicked: {
+                surfaceSelection.open()
+            }
+        }
+        MapButton {
+            id: followMode
+            source: "qrc:/images/current.png"
+            z: 500
+            selected: appWindow.follow_mode
+            mouseArea.onClicked: {
+                appWindow.follow_mode = appWindow.follow_mode? false : true
+            }
+        }
+    }
+
     ToolBarLayout {
         id: mapTools
         ToolIcon {
             iconId: "toolbar-back"
             onClicked: { myMenu.close(); pageStack.pop(); }
-        }
-        ToolButton {
-            text: qsTr("Follow")
-            checkable: true
-            checked: appWindow.follow_mode
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode ? false : true
-            }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
@@ -72,20 +150,25 @@ Page {
         property bool done : false
     }
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
-    }
-
     ApplicationHeader {
         id: title
         title: qsTr("")
         color: Theme.theme[appWindow.colorscheme].COLOR_MAPHEADER_BACKGROUND
         title_color: Theme.theme[appWindow.colorscheme].COLOR_MAPHEADER_FOREGROUND
         anchors.top: parent.top
+        MyButton {
+            imageSize: 40
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: UIConstants.DEFAULT_MARGIN
+            image.source: 'qrc:/images/switch.png'
+            mouseArea.onClicked: {
+                var temp_parameters = search_parameters
+                temp_parameters.from = positionSource.position.coordinate.longitude + "," + positionSource.position.coordinate.latitude
+                search_parameters = temp_parameters
+                positionChanged()
+            }
+        }
     }
 
     Loader {

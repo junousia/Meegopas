@@ -64,5 +64,8 @@
         <file>images/home-mark-inverse.png</file>
         <file>images/home-unmark.png</file>
         <file>images/home-unmark-inverse.png</file>
+        <file alias="qml/MapButton.qml">qml/common/MapButton.qml</file>
+        <file>images/current.png</file>
+        <file>images/surface.png</file>
     </qresource>
 </RCC>

@@ -35,6 +35,10 @@ Item {
         flickable_map.panToCoordinate(Helper.first_station())
     }
 
+    function removeAll() {
+        flickable_map.map.removeMapObject(root_group)
+    }
+
     FlickableMap {
         id: flickable_map
         anchors.fill: parent

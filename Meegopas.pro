@@ -6,7 +6,8 @@ OTHER_FILES += \
         qml/common/* \
         qml/harmattan/* \
         qml/symbian/* \
-        qtc_packaging/debian_harmattan/postrm
+        qtc_packaging/debian_harmattan/postrm \
+    qml/common/MapButton.qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e

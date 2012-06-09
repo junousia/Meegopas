@@ -172,7 +172,7 @@ reittiopas.prototype.api_request = function() {
             query.push(p + "=" + this.parameters[p])
         }
     }
-    //console.debug( API + '?' + query.join('&'))
+    console.debug( API + '?' + query.join('&'))
     _http_request.open("GET", API + '?' + query.join('&'))
     _http_request.send()
 }
