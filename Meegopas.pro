@@ -7,7 +7,9 @@ OTHER_FILES += \
         qml/harmattan/* \
         qml/symbian/* \
         qtc_packaging/debian_harmattan/postrm \
-    qml/common/MapButton.qml
+    qml/common/MapButton.qml \
+    qml/harmattan/SelectionDialogDelegate.qml \
+    qml/common/translations.js
 
 symbian {
     TARGET.UID3 = 0x2004bf5e

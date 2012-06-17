@@ -79,6 +79,7 @@ Page {
         id: surfaceSelection
         model: surfaceOptions
         titleText: qsTr("Optimize route by")
+        delegate: SelectionDialogDelegate {}
         onAccepted: {
             var temp_parameters = search_parameters
             temp_parameters.profile = surfaceOptions.get(selectedIndex).value
@@ -108,14 +109,34 @@ Page {
         }
     }
 
+    ListModel {
+        id: mapTypeModel
+        ListElement { name: QT_TR_NOOP("Street"); value: Map.MobileTransitMap }
+        ListElement { name: QT_TR_NOOP("Satellite"); value: Map.SatelliteMapDay }
+        ListElement { name: QT_TR_NOOP("Hybrid"); value: Map.MobileHybridMap }
+        ListElement { name: QT_TR_NOOP("Terrain"); value: Map.MobileTerrainMap }
+    }
+
+    SelectionDialog {
+        id: mapTypeSelection
+        model: mapTypeModel
+        delegate: SelectionDialogDelegate {}
+        selectedIndex: 0
+        titleText: qsTr("Map type")
+        onAccepted: {
+            map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
+        }
+    }
+
     Column {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        height: surface.height + UIConstants.DEFAULT_MARGIN * 2
+        width: surface.width + UIConstants.DEFAULT_MARGIN * 2
         spacing: UIConstants.DEFAULT_MARGIN
         z: 500
         MapButton {
             id: surface
+            anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/surface.png"
             z: 500
             mouseArea.onClicked: {
@@ -124,11 +145,21 @@ Page {
         }
         MapButton {
             id: followMode
+            anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/current.png"
             z: 500
             selected: appWindow.follow_mode
             mouseArea.onClicked: {
                 appWindow.follow_mode = appWindow.follow_mode? false : true
+            }
+        }
+        MapButton {
+            id: mapMode
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "qrc:/images/maptype.png"
+            z: 500
+            mouseArea.onClicked: {
+                mapTypeSelection.open()
             }
         }
     }

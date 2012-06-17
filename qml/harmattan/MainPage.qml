@@ -60,11 +60,18 @@ Page {
         /* Update time */
         updateTime()
 
-        /* clear 'from' field, and enter new 'to' */
-        from.updateLocation("", 0 , "")
-        from.getCurrentCoord()
+        /* Update new destination to "to" */
         to.updateLocation(name, 0, coord)
-        state = "waiting_route"
+
+        /* use current location if available - otherwise wait for it */
+        if(currentCoord != "") {
+            var parameters = {}
+            setRouteParameters(parameters)
+            pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+        }
+        else {
+            state = "waiting_route"
+        }
     }
 
     function newCycling(name, coord) {
@@ -75,11 +82,16 @@ Page {
         /* bring application to front */
         QmlApplicationViewer.showFullScreen()
 
-        /* clear 'from' field, and enter new 'to' */
-        from.updateLocation("", 0 , "")
-        from.getCurrentCoord()
         to.updateLocation(name, 0, coord)
-        state = "waiting_cycling"
+
+        if(currentCoord != "") {
+            var parameters = {}
+            setCyclingParameters(parameters)
+            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+        }
+        else {
+            state = "waiting_cycling"
+        }
     }
 
     function updateTime() {

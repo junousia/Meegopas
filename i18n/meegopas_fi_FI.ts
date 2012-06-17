@@ -19,35 +19,88 @@
 <context>
     <name>CyclingPage</name>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="54"/>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="55"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="66"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="67"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="45"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="46"/>
         <source>Route length: </source>
         <translation>Reitin pituus: </translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="60"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="73"/>
         <source>Tarmac</source>
         <translation>Asfalttitie</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="61"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="72"/>
         <source>Default</source>
         <translation>Oletus</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="62"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="74"/>
         <source>Gravel</source>
         <translation>Soratie</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="63"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="75"/>
         <source>Shortest</source>
         <translation>Lyhin reitti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="99"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="81"/>
+        <source>Optimize route by</source>
+        <translation>Reitin optimointi</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="115"/>
+        <source>Satellite</source>
+        <translation>Satelliitti</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="114"/>
+        <source>Street</source>
+        <translation>Tiekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="117"/>
+        <source>Terrain</source>
+        <translation>Maastokartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="116"/>
+        <source>Hybrid</source>
+        <translation>Hybridi</translation>
+    </message>
+    <message>
+        <source>Transit</source>
+        <translation type="obsolete">Joukkoliikennekartta</translation>
+    </message>
+    <message>
+        <source>SatelliteMapDay</source>
+        <translation type="obsolete">Satelliitti</translation>
+    </message>
+    <message>
+        <source>MobileStreetMap</source>
+        <translation type="obsolete">Tiekartta</translation>
+    </message>
+    <message>
+        <source>MobileTerrainMap</source>
+        <translation type="obsolete">Maastokartta</translation>
+    </message>
+    <message>
+        <source>MobileHybridMap</source>
+        <translation type="obsolete">Hybridi</translation>
+    </message>
+    <message>
+        <source>MobileTransitMap</source>
+        <translation type="obsolete">Liikennekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="125"/>
+        <source>Map type</source>
+        <translation>Karttatyyppi</translation>
+    </message>
+    <message>
         <location filename="../qml/symbian/CyclingPage.qml" line="56"/>
         <source>Follow</source>
         <translation>Seuraa</translation>
@@ -58,7 +111,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="151"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="222"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="106"/>
         <source>No results</source>
         <translation>Ei tuloksia</translation>
@@ -398,76 +451,76 @@
         <translation type="obsolete">Reitti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="195"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="207"/>
         <location filename="../qml/symbian/MainPage.qml" line="194"/>
         <source>Cycling</source>
         <translation>Pyöräily</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="204"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="216"/>
         <location filename="../qml/symbian/MainPage.qml" line="203"/>
         <source>Route search</source>
         <translation>Reittihaku</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="218"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="230"/>
         <location filename="../qml/symbian/MainPage.qml" line="216"/>
         <source>Choose date</source>
         <translation>Valitse päivämäärä</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="227"/>
-        <location filename="../qml/harmattan/MainPage.qml" line="242"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="239"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="254"/>
         <location filename="../qml/symbian/MainPage.qml" line="225"/>
         <location filename="../qml/symbian/MainPage.qml" line="240"/>
         <source>Accept</source>
         <translation>Hyväksy</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="228"/>
-        <location filename="../qml/harmattan/MainPage.qml" line="243"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="240"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="255"/>
         <location filename="../qml/symbian/MainPage.qml" line="226"/>
         <location filename="../qml/symbian/MainPage.qml" line="241"/>
         <source>Reject</source>
         <translation>Hylkää</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="233"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="245"/>
         <location filename="../qml/symbian/MainPage.qml" line="231"/>
         <source>Choose time</source>
         <translation>Valitse aika</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="272"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="284"/>
         <source>Meegopas</source>
         <translation>Meegopas</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="311"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="323"/>
         <location filename="../qml/symbian/MainPage.qml" line="299"/>
         <source>From</source>
         <translation>Mistä</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="337"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="349"/>
         <location filename="../qml/symbian/MainPage.qml" line="325"/>
         <source>To</source>
         <translation>Mihin</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="398"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="410"/>
         <location filename="../qml/symbian/MainPage.qml" line="384"/>
         <source>arrival</source>
         <translation>perillä</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="398"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="410"/>
         <location filename="../qml/symbian/MainPage.qml" line="384"/>
         <source>departure</source>
         <translation>lähtöaika</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="442"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="454"/>
         <location filename="../qml/symbian/MainPage.qml" line="428"/>
         <source>Now</source>
         <translation>Nyt</translation>
@@ -535,7 +588,6 @@
 <context>
     <name>RouteMapPage</name>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="45"/>
         <location filename="../qml/symbian/RouteMapPage.qml" line="45"/>
         <source>Follow</source>
         <translation>Seuraa</translation>
@@ -549,6 +601,51 @@
         <location filename="../qml/symbian/RouteMapPage.qml" line="55"/>
         <source>Follow current location disabled</source>
         <translation>Seuraa nykyistä sijaintia pois päältä</translation>
+    </message>
+    <message>
+        <source>SatelliteMapDay</source>
+        <translation type="obsolete">Satelliittikartta</translation>
+    </message>
+    <message>
+        <source>MobileStreetMap</source>
+        <translation type="obsolete">Tiekartta</translation>
+    </message>
+    <message>
+        <source>MobileTerrainMap</source>
+        <translation type="obsolete">Maastokartta</translation>
+    </message>
+    <message>
+        <source>MobileHybridMap</source>
+        <translation type="obsolete">Hybridi</translation>
+    </message>
+    <message>
+        <source>MobileTransitMap</source>
+        <translation type="obsolete">Liikennekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="71"/>
+        <source>Street</source>
+        <translation type="unfinished">Tiekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="72"/>
+        <source>Satellite</source>
+        <translation type="unfinished">Satelliitti</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="73"/>
+        <source>Hybrid</source>
+        <translation type="unfinished">Hybridi</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="74"/>
+        <source>Terrain</source>
+        <translation type="unfinished">Maastokartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="82"/>
+        <source>Map type</source>
+        <translation>Karttatyyppi</translation>
     </message>
 </context>
 <context>
@@ -753,22 +850,66 @@
         <translation>Kartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="63"/>
         <location filename="../qml/symbian/StopPage.qml" line="62"/>
         <source>Follow</source>
         <translation>Seuraa</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="122"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="113"/>
         <location filename="../qml/symbian/StopPage.qml" line="126"/>
         <source>Stops for line </source>
         <translation>Pysäkit linjalle </translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="122"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="113"/>
         <location filename="../qml/symbian/StopPage.qml" line="126"/>
         <source>Walking route</source>
         <translation>Kävelyreitti</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="141"/>
+        <source>Street</source>
+        <translation type="unfinished">Tiekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="142"/>
+        <source>Satellite</source>
+        <translation type="unfinished">Satelliitti</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="143"/>
+        <source>Hybrid</source>
+        <translation type="unfinished">Hybridi</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="144"/>
+        <source>Terrain</source>
+        <translation type="unfinished">Maastokartta</translation>
+    </message>
+    <message>
+        <source>SatelliteMapDay</source>
+        <translation type="obsolete">Satelliitti</translation>
+    </message>
+    <message>
+        <source>MobileStreetMap</source>
+        <translation type="obsolete">Tiekartta</translation>
+    </message>
+    <message>
+        <source>MobileTerrainMap</source>
+        <translation type="obsolete">Maastokartta</translation>
+    </message>
+    <message>
+        <source>MobileHybridMap</source>
+        <translation type="obsolete">Hybridi</translation>
+    </message>
+    <message>
+        <source>MobileTransitMap</source>
+        <translation type="obsolete">Liikennekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="152"/>
+        <source>Map type</source>
+        <translation>Karttatyyppi</translation>
     </message>
     <message>
         <location filename="../qml/symbian/StopPage.qml" line="72"/>
@@ -814,6 +955,53 @@
     <message>
         <source>Exit</source>
         <translation type="obsolete">Poistu</translation>
+    </message>
+</context>
+<context>
+    <name>translations</name>
+    <message>
+        <location filename="../qml/common/translations.js" line="2"/>
+        <source>Tarmac</source>
+        <translation>Asfalttitie</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="3"/>
+        <source>Default</source>
+        <translation>Oletus</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="4"/>
+        <source>Gravel</source>
+        <translation>Soratie</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="5"/>
+        <source>Shortest</source>
+        <translation>Lyhin reitti</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="7"/>
+        <source>Satellite</source>
+        <translation>Satelliitti</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="8"/>
+        <source>Street</source>
+        <translation>Tiekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="9"/>
+        <source>Terrain</source>
+        <translation>Maastokartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="10"/>
+        <source>Hybrid</source>
+        <translation>Hybridi</translation>
+    </message>
+    <message>
+        <source>Transit</source>
+        <translation type="obsolete">Joukkoliikennekartta</translation>
     </message>
 </context>
 </TS>

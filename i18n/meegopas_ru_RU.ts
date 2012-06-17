@@ -19,35 +19,64 @@
 <context>
     <name>CyclingPage</name>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="54"/>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="55"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="66"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="67"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="45"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="46"/>
         <source>Route length: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="60"/>
-        <source>Tarmac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="61"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="72"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="62"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="73"/>
+        <source>Tarmac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="74"/>
         <source>Gravel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="63"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="75"/>
         <source>Shortest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="99"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="81"/>
+        <source>Optimize route by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="115"/>
+        <source>Satellite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="114"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="117"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="116"/>
+        <source>Hybrid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="125"/>
+        <source>Map type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/symbian/CyclingPage.qml" line="56"/>
         <source>Follow</source>
         <translation type="unfinished"></translation>
@@ -58,7 +87,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="151"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="222"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="106"/>
         <source>No results</source>
         <translation type="unfinished"></translation>
@@ -315,76 +344,76 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="195"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="207"/>
         <location filename="../qml/symbian/MainPage.qml" line="194"/>
         <source>Cycling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="204"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="216"/>
         <location filename="../qml/symbian/MainPage.qml" line="203"/>
         <source>Route search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="218"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="230"/>
         <location filename="../qml/symbian/MainPage.qml" line="216"/>
         <source>Choose date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="227"/>
-        <location filename="../qml/harmattan/MainPage.qml" line="242"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="239"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="254"/>
         <location filename="../qml/symbian/MainPage.qml" line="225"/>
         <location filename="../qml/symbian/MainPage.qml" line="240"/>
         <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="228"/>
-        <location filename="../qml/harmattan/MainPage.qml" line="243"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="240"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="255"/>
         <location filename="../qml/symbian/MainPage.qml" line="226"/>
         <location filename="../qml/symbian/MainPage.qml" line="241"/>
         <source>Reject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="233"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="245"/>
         <location filename="../qml/symbian/MainPage.qml" line="231"/>
         <source>Choose time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="272"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="284"/>
         <source>Meegopas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="311"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="323"/>
         <location filename="../qml/symbian/MainPage.qml" line="299"/>
         <source>From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="337"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="349"/>
         <location filename="../qml/symbian/MainPage.qml" line="325"/>
         <source>To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="398"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="410"/>
         <location filename="../qml/symbian/MainPage.qml" line="384"/>
         <source>arrival</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="398"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="410"/>
         <location filename="../qml/symbian/MainPage.qml" line="384"/>
         <source>departure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/MainPage.qml" line="442"/>
+        <location filename="../qml/harmattan/MainPage.qml" line="454"/>
         <location filename="../qml/symbian/MainPage.qml" line="428"/>
         <source>Now</source>
         <translation type="unfinished"></translation>
@@ -440,7 +469,6 @@
 <context>
     <name>RouteMapPage</name>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="45"/>
         <location filename="../qml/symbian/RouteMapPage.qml" line="45"/>
         <source>Follow</source>
         <translation type="unfinished"></translation>
@@ -453,6 +481,31 @@
     <message>
         <location filename="../qml/symbian/RouteMapPage.qml" line="55"/>
         <source>Follow current location disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="71"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="72"/>
+        <source>Satellite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="73"/>
+        <source>Hybrid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="74"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="82"/>
+        <source>Map type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -611,21 +664,45 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="63"/>
         <location filename="../qml/symbian/StopPage.qml" line="62"/>
         <source>Follow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="122"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="113"/>
         <location filename="../qml/symbian/StopPage.qml" line="126"/>
         <source>Stops for line </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="122"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="113"/>
         <location filename="../qml/symbian/StopPage.qml" line="126"/>
         <source>Walking route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="141"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="142"/>
+        <source>Satellite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="143"/>
+        <source>Hybrid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="144"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/StopPage.qml" line="152"/>
+        <source>Map type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -663,6 +740,49 @@
         <location filename="../qml/harmattan/main.qml" line="61"/>
         <location filename="../qml/symbian/main.qml" line="73"/>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>translations</name>
+    <message>
+        <location filename="../qml/common/translations.js" line="2"/>
+        <source>Tarmac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="3"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="4"/>
+        <source>Gravel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="5"/>
+        <source>Shortest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="7"/>
+        <source>Satellite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="8"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="9"/>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="10"/>
+        <source>Hybrid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

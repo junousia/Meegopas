@@ -61,5 +61,6 @@
         <file alias="qml/SettingsItem.qml">qml/common/SettingsItem.qml</file>
         <file alias="qml/SectionHeader.qml">qml/common/SectionHeader.qml</file>
         <file alias="qml/CyclingPage.qml">qml/symbian/CyclingPage.qml</file>
+        <file>images/maptype.png</file>
     </qresource>
 </RCC>

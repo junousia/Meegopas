@@ -13,6 +13,7 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import QtMobility.location 1.2
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 
@@ -41,22 +42,14 @@ Page {
                 pageStack.pop();
             }
         }
-        ToolButton {
-            text: qsTr("Follow")
-            checkable: true
-            checked: appWindow.follow_mode
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode ? false : true
-            }
+        ToolButtonRow {
+            ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
+            ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
         }
-
-        ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
-        ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
-//        ToolIcon { platformIconId: "toolbar-view-menu";
-//             anchors.right: parent===undefined ? undefined : parent.right
-//             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
-//        }
+        ToolIcon { platformIconId: "toolbar-view-menu";
+             anchors.right: parent===undefined ? undefined : parent.right
+             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+        }
     }
     Loader {
         id: map_loader
@@ -74,7 +67,51 @@ Page {
             anchors.fill: parent
         }
     }
+    ListModel {
+        id: mapTypeModel
+        ListElement { name: QT_TR_NOOP("Street"); value: Map.MobileTransitMap }
+        ListElement { name: QT_TR_NOOP("Satellite"); value: Map.SatelliteMapDay }
+        ListElement { name: QT_TR_NOOP("Hybrid"); value: Map.MobileHybridMap }
+        ListElement { name: QT_TR_NOOP("Terrain"); value: Map.MobileTerrainMap }
+    }
 
+    SelectionDialog {
+        id: mapTypeSelection
+        model: mapTypeModel
+        delegate: SelectionDialogDelegate {}
+        selectedIndex: 0
+        titleText: qsTr("Map type")
+        onAccepted: {
+            map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
+        }
+    }
+
+    Column {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        width: followMode.width + UIConstants.DEFAULT_MARGIN * 2
+        spacing: UIConstants.DEFAULT_MARGIN
+        z: 500
+        MapButton {
+            id: followMode
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "qrc:/images/current.png"
+            z: 500
+            selected: appWindow.follow_mode
+            mouseArea.onClicked: {
+                appWindow.follow_mode = appWindow.follow_mode? false : true
+            }
+        }
+        MapButton {
+            id: mapMode
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "qrc:/images/maptype.png"
+            z: 500
+            mouseArea.onClicked: {
+                mapTypeSelection.open()
+            }
+        }
+    }
     BusyIndicator {
         id: busyIndicator
         visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading

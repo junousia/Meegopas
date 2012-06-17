@@ -67,5 +67,8 @@
         <file alias="qml/MapButton.qml">qml/common/MapButton.qml</file>
         <file>images/current.png</file>
         <file>images/surface.png</file>
+        <file>images/maptype.png</file>
+        <file alias="qml/SelectionDialogDelegate.qml">qml/harmattan/SelectionDialogDelegate.qml</file>
+        <file alias="qml/translations.js">qml/common/translations.js</file>
     </qresource>
 </RCC>

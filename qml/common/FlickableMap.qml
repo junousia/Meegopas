@@ -80,8 +80,8 @@ Flickable {
                 }
             ]
         }
-        mapType: Map.StreetMap
-        connectivityMode: Map.OnlineMode
+        mapType: Map.MobileTransitMap
+        connectivityMode: Map.HybridMode
         center: Coordinate {
             latitude: defaultLatitude
             longitude:defaultLongitude
