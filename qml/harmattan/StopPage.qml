@@ -52,12 +52,13 @@ Page {
         ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
         ToolButtonRow {
             ToolButton {
+                id: mapButton
                 text: qsTr("Map")
                 checkable: true
-                checked: appWindow.map_visible
                 onClicked: {
                     appWindow.map_visible = appWindow.map_visible? false : true
                 }
+                Binding { target: mapButton; property: "checked"; value: appWindow.map_visible }
             }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
@@ -138,10 +139,11 @@ Page {
         color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
         ListModel {
             id: mapTypeModel
-            ListElement { name: QT_TR_NOOP("Street"); value: Map.MobileTransitMap }
-            ListElement { name: QT_TR_NOOP("Satellite"); value: Map.SatelliteMapDay }
-            ListElement { name: QT_TR_NOOP("Hybrid"); value: Map.MobileHybridMap }
-            ListElement { name: QT_TR_NOOP("Terrain"); value: Map.MobileTerrainMap }
+            ListElement { name: "Street"; value: Map.MobileStreetMap }
+            ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
+            ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
+            ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
+            ListElement { name: "Transit"; value: Map.MobileTransitMap }
         }
 
         SelectionDialog {

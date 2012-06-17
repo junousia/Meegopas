@@ -69,10 +69,11 @@ Page {
     }
     ListModel {
         id: mapTypeModel
-        ListElement { name: QT_TR_NOOP("Street"); value: Map.MobileTransitMap }
-        ListElement { name: QT_TR_NOOP("Satellite"); value: Map.SatelliteMapDay }
-        ListElement { name: QT_TR_NOOP("Hybrid"); value: Map.MobileHybridMap }
-        ListElement { name: QT_TR_NOOP("Terrain"); value: Map.MobileTerrainMap }
+        ListElement { name: "Street"; value: Map.MobileStreetMap }
+        ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
+        ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
+        ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
+        ListElement { name: "Transit"; value: Map.MobileTransitMap }
     }
 
     SelectionDialog {

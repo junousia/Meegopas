@@ -52,24 +52,20 @@
         <translation>Reitin optimointi</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="115"/>
         <source>Satellite</source>
-        <translation>Satelliitti</translation>
+        <translation type="obsolete">Satelliitti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="114"/>
         <source>Street</source>
-        <translation>Tiekartta</translation>
+        <translation type="obsolete">Tiekartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="117"/>
         <source>Terrain</source>
-        <translation>Maastokartta</translation>
+        <translation type="obsolete">Maastokartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="116"/>
         <source>Hybrid</source>
-        <translation>Hybridi</translation>
+        <translation type="obsolete">Hybridi</translation>
     </message>
     <message>
         <source>Transit</source>
@@ -96,7 +92,7 @@
         <translation type="obsolete">Liikennekartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="125"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="126"/>
         <source>Map type</source>
         <translation>Karttatyyppi</translation>
     </message>
@@ -111,7 +107,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="222"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="223"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="106"/>
         <source>No results</source>
         <translation>Ei tuloksia</translation>
@@ -623,27 +619,27 @@
         <translation type="obsolete">Liikennekartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="71"/>
         <source>Street</source>
-        <translation type="unfinished">Tiekartta</translation>
+        <translation type="obsolete">Tiekartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="72"/>
         <source>Satellite</source>
-        <translation type="unfinished">Satelliitti</translation>
+        <translation type="obsolete">Satelliitti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="73"/>
         <source>Hybrid</source>
-        <translation type="unfinished">Hybridi</translation>
+        <translation type="obsolete">Hybridi</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="74"/>
         <source>Terrain</source>
-        <translation type="unfinished">Maastokartta</translation>
+        <translation type="obsolete">Maastokartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="82"/>
+        <source>Transit</source>
+        <translation type="obsolete">Joukkoliikennekartta</translation>
+    </message>
+    <message>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="84"/>
         <source>Map type</source>
         <translation>Karttatyyppi</translation>
     </message>
@@ -867,24 +863,20 @@
         <translation>Kävelyreitti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="141"/>
         <source>Street</source>
-        <translation type="unfinished">Tiekartta</translation>
+        <translation type="obsolete">Tiekartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="142"/>
         <source>Satellite</source>
-        <translation type="unfinished">Satelliitti</translation>
+        <translation type="obsolete">Satelliitti</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="143"/>
         <source>Hybrid</source>
-        <translation type="unfinished">Hybridi</translation>
+        <translation type="obsolete">Hybridi</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="144"/>
         <source>Terrain</source>
-        <translation type="unfinished">Maastokartta</translation>
+        <translation type="obsolete">Maastokartta</translation>
     </message>
     <message>
         <source>SatelliteMapDay</source>
@@ -907,7 +899,7 @@
         <translation type="obsolete">Liikennekartta</translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="152"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="153"/>
         <source>Map type</source>
         <translation>Karttatyyppi</translation>
     </message>
@@ -1000,8 +992,9 @@
         <translation>Hybridi</translation>
     </message>
     <message>
+        <location filename="../qml/common/translations.js" line="11"/>
         <source>Transit</source>
-        <translation type="obsolete">Joukkoliikennekartta</translation>
+        <translation>Joukkoliikennekartta</translation>
     </message>
 </context>
 </TS>

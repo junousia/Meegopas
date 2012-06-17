@@ -80,7 +80,7 @@ Flickable {
                 }
             ]
         }
-        mapType: Map.MobileTransitMap
+        mapType: Map.MobileStreetMap
         connectivityMode: Map.HybridMode
         center: Coordinate {
             latitude: defaultLatitude

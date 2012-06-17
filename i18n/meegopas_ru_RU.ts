@@ -52,27 +52,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="115"/>
-        <source>Satellite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="114"/>
-        <source>Street</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="117"/>
-        <source>Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="116"/>
-        <source>Hybrid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="125"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="126"/>
         <source>Map type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -87,7 +67,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/CyclingPage.qml" line="222"/>
+        <location filename="../qml/harmattan/CyclingPage.qml" line="223"/>
         <location filename="../qml/symbian/CyclingPage.qml" line="106"/>
         <source>No results</source>
         <translation type="unfinished"></translation>
@@ -484,27 +464,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="71"/>
-        <source>Street</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="72"/>
-        <source>Satellite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="73"/>
-        <source>Hybrid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="74"/>
-        <source>Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/RouteMapPage.qml" line="82"/>
+        <location filename="../qml/harmattan/RouteMapPage.qml" line="84"/>
         <source>Map type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -681,27 +641,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="141"/>
-        <source>Street</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="142"/>
-        <source>Satellite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="143"/>
-        <source>Hybrid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="144"/>
-        <source>Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harmattan/StopPage.qml" line="152"/>
+        <location filename="../qml/harmattan/StopPage.qml" line="153"/>
         <source>Map type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -783,6 +723,11 @@
     <message>
         <location filename="../qml/common/translations.js" line="10"/>
         <source>Hybrid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/common/translations.js" line="11"/>
+        <source>Transit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
