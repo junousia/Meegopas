@@ -274,7 +274,6 @@ Column {
 
     Item {
         id: labelContainer
-        anchors.top: parent.top
         anchors.rightMargin: 5
         height: label.height
         width: label.width + count.width
@@ -393,7 +392,6 @@ Column {
                         !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-unmark.png':'qrc:/images/favorite-unmark-inverse.png' :
                         !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/favorite-mark.png':'qrc:/images/favorite-mark-inverse.png'
             anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
             mouseArea.onClicked: {
                 favoritesModel.clear()
                 Favorites.getFavorites(favoritesModel)

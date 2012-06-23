@@ -4,5 +4,5 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=Meegopas
-Exec=/usr/bin/invoker --single-instance --splash=/usr/share/Meegopas/splash-l.png --type=d /opt/Meegopas/bin/Meegopas
+Exec=/usr/bin/invoker --single-instance --splash=/usr/share/Meegopas/splash-l.png --type=d -s /opt/Meegopas/bin/Meegopas
 Icon=/usr/share/icons/hicolor/80x80/apps/Meegopas80.png

@@ -22,7 +22,7 @@ Rectangle {
     height: 50
     radius: 10
     opacity: 0.7
-    color: (mouseArea.pressed || selected) ? Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED : "white"
+    color: (mouseArea.pressed || selected) ? Theme.theme[appWindow.colorscheme].COLOR_MAPBUTTON_CLICKED : Theme.theme[appWindow.colorscheme].COLOR_MAPBUTTON
 
     property alias source : image.source
     property alias mouseArea : mouseArea

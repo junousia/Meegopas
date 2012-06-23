@@ -300,7 +300,6 @@ Page {
 
         anchors {
             margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
-            horizontalCenter: parent.horizontalCenter
         }
 
         interactive: true

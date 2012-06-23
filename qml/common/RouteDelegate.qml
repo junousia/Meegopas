@@ -22,7 +22,6 @@ Item {
     height: type != "walk"? UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scaling_factor :
                             UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
     width: parent.width
-    // do not show if from and to times or names match
     opacity: 0.0
 
     Component.onCompleted: ListItemAnimation { target: routeDelegate }

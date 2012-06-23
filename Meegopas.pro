@@ -42,6 +42,7 @@ symbian {
 contains(MEEGO_EDITION, harmattan) {
     # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
     CONFIG += qdeclarative-boostable
+    LIBS += -lmdeclarativecache
 
     # for MLocale
     CONFIG += meegotouch
@@ -114,7 +115,6 @@ OTHER_FILES += \
     com.juknousi.meegopas.xml \
     Meegopas_harmattan.desktop
 
-HEADERS +=
 
 
 

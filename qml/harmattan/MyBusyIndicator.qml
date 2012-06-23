@@ -15,7 +15,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 BusyIndicator {
-    property variant indicatorSize : "small"
+    property string indicatorSize : "small"
     platformStyle: BusyIndicatorStyle {
         size: indicatorSize
         spinnerFrames: "image://theme/spinner"
