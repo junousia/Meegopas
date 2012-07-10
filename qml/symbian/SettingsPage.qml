@@ -35,7 +35,7 @@ Page {
     Flickable {
         id: settingsContent
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         contentHeight: content_column.height + 2 * UIConstants.DEFAULT_MARGIN
         flickableDirection: Flickable.VerticalFlick
 
@@ -107,7 +107,7 @@ Page {
                 Button {
                     id: bus
                     text: qsTr("Bus")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     iconSource: "qrc:/images/bus.png"
                     checkable: true
                     checked: true
@@ -116,7 +116,7 @@ Page {
                 Button {
                     id: train
                     text: qsTr("Train")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     checkable: true
                     checked: true
                     iconSource: "qrc:/images/train.png"
@@ -125,7 +125,7 @@ Page {
                 Button {
                     id: metro
                     text: qsTr("Metro")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     checkable: true
                     checked: true
                     iconSource: "qrc:/images/metro.png"
@@ -134,7 +134,7 @@ Page {
                 Button {
                     id: tram
                     text: qsTr("Tram")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     checkable: true
                     checked: true
                     iconSource: "qrc:/images/tram.png"
@@ -154,7 +154,7 @@ Page {
                     id: min_change
                     anchors.left: parent.left
                     text: "0"
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -180,7 +180,7 @@ Page {
                 Text {
                     id: max_change
                     text: "10"
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -211,28 +211,28 @@ Page {
                     id: def
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Default")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('optimize', 'default')
                 }
                 Button {
                     id: fastest
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Fastest")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('optimize', 'fastest')
                 }
                 Button {
                     id: transfers
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Least transfers")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('optimize', 'least_transfers')
                 }
                 Button {
                     id: lwalking
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Least walking")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('optimize', 'least_walking')
                 }
             }
@@ -261,28 +261,28 @@ Page {
                     id: walking
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Walking")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('walking_speed', '70')
                 }
                 Button {
                     id: fwalking
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Fast walking")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('walking_speed', '100')
                 }
                 Button {
                     id: vfwalking
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Very fast walking")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('walking_speed', '120')
                 }
                 Button {
                     id: running
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
                     text: qsTr("Running")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     onClicked: Storage.setSetting('walking_speed', '150')
                 }
             }
@@ -307,28 +307,28 @@ Page {
                 Button {
                     id: cyclingDefault
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Default")
                     onClicked: Storage.setSetting('optimize_cycling', 'kleroweighted')
                 }
                 Button {
                     id: cyclingTarmac
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Tarmac")
                     onClicked: Storage.setSetting('optimize_cycling', 'klerotarmac')
                 }
                 Button {
                     id: cyclingGravel
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Gravel")
                     onClicked: Storage.setSetting('optimize_cycling', 'klerosand')
                 }
                 Button {
                     id: cyclingShortest
                     width: UIConstants.SYMBIAN_SETTINGS_BUTTON_WIDTH
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Shortest")
                     onClicked: Storage.setSetting('optimize_cycling', 'kleroshortest')
                 }

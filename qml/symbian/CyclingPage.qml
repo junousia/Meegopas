@@ -55,12 +55,12 @@ Page {
         ToolButton {
             text: qsTr("Follow")
             checkable: true
-            checked: appWindow.follow_mode
+            checked: appWindow.followMode
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode ? false : true
+                appWindow.followMode = appWindow.followMode ? false : true
                 appWindow.banner.success = true
-                appWindow.banner.text = appWindow.follow_mode?
+                appWindow.banner.text = appWindow.followMode?
                             qsTr("Follow current location enabled") :
                             qsTr("Follow current location disabled")
                 appWindow.banner.open()
@@ -107,7 +107,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 

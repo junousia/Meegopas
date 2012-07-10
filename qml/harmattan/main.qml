@@ -22,11 +22,11 @@ PageStackWindow {
     showStatusBar: appWindow.inPortrait
 
     property alias banner : banner
-    property variant scaling_factor : 1
-    property bool positioning_active : true
-    property bool follow_mode : false
-    property bool map_visible : false
-    property bool show_station_code : true
+    property variant scalingFactor : 1
+    property bool positioningActive : true
+    property bool followMode : false
+    property bool mapVisible : false
+    property bool showStationCode : true
     property string colorscheme : "default"
 
     platformStyle: PageStackWindowStyle {

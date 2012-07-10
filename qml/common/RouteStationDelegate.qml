@@ -19,7 +19,7 @@ import "theme.js" as Theme
 
 Item {
     id: stationDelegate
-    height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT / 2 * appWindow.scaling_factor
+    height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT / 2 * appWindow.scalingFactor
     opacity: 0.0
 
     Component.onCompleted: ListItemAnimation { target: stationDelegate }
@@ -32,7 +32,7 @@ Item {
 
         Text {
             text: Qt.formatTime(time, "hh:mm")
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.2
@@ -45,7 +45,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         layoutDirection: Qt.RightToLeft
 
-        spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+        spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scalingFactor
         clip: true
 
         Text {
@@ -53,19 +53,19 @@ Item {
             horizontalAlignment: Qt.AlignRight
             anchors.verticalCenter: parent.verticalCenter
             elide: Text.ElideRight
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.2
         }
         Text {
             id: station_code
-            visible: appWindow.show_station_code
+            visible: appWindow.showStationCode
             horizontalAlignment: Qt.AlignRight
             anchors.verticalCenter: parent.verticalCenter
             text: shortCode? "(" + shortCode + ")" : ""
             elide: Text.ElideRight
-            font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
             color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.2

@@ -19,7 +19,7 @@ Component {
     id: favoritesManageDelegate
     Item {
         width: parent.width
-        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
 
         Text {
             text: modelData
@@ -27,7 +27,7 @@ Component {
             anchors.right: remove_button.left
             anchors.verticalCenter: parent.verticalCenter
             color: !theme.inverted ? UIConstants.COLOR_FOREGROUND : UIConstants.COLOR_INVERTED_FOREGROUND
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
             elide: Text.ElideRight
         }
         Button {
@@ -35,8 +35,8 @@ Component {
             text: qsTr("Remove")
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-            width: 150 * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
+            width: 150 * appWindow.scalingFactor
             height: 40
             onClicked: {
                 list.currentIndex = index

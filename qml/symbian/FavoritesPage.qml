@@ -176,11 +176,11 @@ Page {
 
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
             fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
-        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
 
         Component.onCompleted: {
             Favorites.initialize()
@@ -189,7 +189,7 @@ Page {
         Column {
             id: content_column
             width: parent.width
-            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
             Header {
                 text: qsTr("Manage favorites")
             }
@@ -206,7 +206,7 @@ Page {
                 id: favoritesManageDelegate
                 Item {
                     width: parent.width
-                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
 
                     Text {
                         text: modelData
@@ -214,7 +214,7 @@ Page {
                         anchors.right: edit_button.left
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                         elide: Text.ElideRight
                         lineHeightMode: Text.FixedHeight
                         lineHeight: font.pixelSize * 1.2
@@ -262,7 +262,7 @@ Page {
         text: qsTr("No saved favorites")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 }

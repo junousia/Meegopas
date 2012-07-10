@@ -21,7 +21,7 @@ Component {
 
     Item {
         id: stop_item
-        height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
+        height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scalingFactor
         width: parent.width
         opacity: 1.0
 
@@ -70,14 +70,14 @@ Component {
             id: time_column
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: 100 * appWindow.scaling_factor
+            width: 100 * appWindow.scalingFactor
             Text {
                 id: diff
                 anchors.right: time.right
                 horizontalAlignment: Qt.AlignRight
                 text: "+" + time_diff + " min"
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
@@ -86,7 +86,7 @@ Component {
                 id: time
                 text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
@@ -97,7 +97,7 @@ Component {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             layoutDirection: Qt.RightToLeft
-            spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scaling_factor
+            spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scalingFactor
             clip: true
 
             Text {
@@ -105,19 +105,19 @@ Component {
                 horizontalAlignment: Qt.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
             }
             Text {
                 id: station_code
-                visible: appWindow.show_station_code
+                visible: appWindow.showStationCode
                 horizontalAlignment: Qt.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
                 text: shortCode? "(" + shortCode + ")" : ""
                 elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
@@ -129,11 +129,11 @@ Component {
 
             onClicked: {
                 // show map if currently hidden
-                if(appWindow.map_visible == false)
-                    appWindow.map_visible = true
+                if(appWindow.mapVisible == false)
+                    appWindow.mapVisible = true
 
                 // follow mode disables panning to location
-                if(!appWindow.follow_mode)
+                if(!appWindow.followMode)
                     map.map_loader.item.flickable_map.panToLatLong(model.latitude,model.longitude)
             }
         }

@@ -79,7 +79,7 @@ Dialog {
         Button {
             id: button_save
             text: qsTr("Add")
-            font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
             width: UIConstants.BUTTON_WIDTH
             height: UIConstants.BUTTON_HEIGHT
             onClicked: {
@@ -109,7 +109,7 @@ Dialog {
         Button {
             id: button_cancel
             text: qsTr("Cancel")
-            font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
             width: UIConstants.BUTTON_WIDTH
             height: UIConstants.BUTTON_HEIGHT
             onClicked: add_dialog.close()

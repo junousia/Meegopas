@@ -45,20 +45,20 @@ Page {
             text: qsTr("Follow")
             checkable: true
             enabled: stop_page.state == "map"
-            checked: appWindow.follow_mode
+            checked: appWindow.followMode
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode ? false : true
+                appWindow.followMode = appWindow.followMode ? false : true
                 appWindow.banner.success = true
-                appWindow.banner.text = appWindow.follow_mode?
+                appWindow.banner.text = appWindow.followMode?
                             qsTr("Follow current location enabled") :
                             qsTr("Follow current location disabled")
                 appWindow.banner.open()
             }
         }
 
-        ToolButton { iconSource: "toolbar-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
-        ToolButton { iconSource: "toolbar-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
+        ToolButton { iconSource: "toolbar-previous"; enabled: !appWindow.followMode; onClicked: { map_loader.item.previous_station(); } }
+        ToolButton { iconSource: "toolbar-next"; enabled: !appWindow.followMode; onClicked: { map_loader.item.next_station(); } }
 //        ToolIcon { platformIconId: "toolbar-view-menu";
 //             anchors.right: parent===undefined ? undefined : parent.right
 //             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()

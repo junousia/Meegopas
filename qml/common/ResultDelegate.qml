@@ -21,7 +21,7 @@ Component {
     Item {
         id: delegate_item
         width: parent.width
-        height: 110 * appWindow.scaling_factor
+        height: 110 * appWindow.scalingFactor
         opacity: 0.0
 
         Component.onCompleted: ListItemAnimation { target: delegate_item }
@@ -41,7 +41,7 @@ Component {
             Text {
                 text: "(" + Qt.formatTime(start, "hh:mm") + ")"
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
             }
@@ -49,7 +49,7 @@ Component {
             Text {
                 text: first_transport ? Qt.formatTime(first_transport, "hh:mm") : Qt.formatTime(start, "hh:mm")
                 width: 75
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
@@ -58,7 +58,7 @@ Component {
             Text {
                 text: duration + " min"
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
             }
@@ -76,13 +76,13 @@ Component {
                         id: transportIcon
                         source: "qrc:/images/" + type + ".png"
                         smooth: true
-                        height: 50 * appWindow.scaling_factor
+                        height: 50 * appWindow.scalingFactor
                         width: height
                     }
                     Text {
                         text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
                         visible: true
-                        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         anchors.horizontalCenter: transportIcon.horizontalCenter
                         lineHeightMode: Text.FixedHeight
@@ -98,14 +98,14 @@ Component {
                 text: "(" + Qt.formatTime(finish, "hh:mm") + ")"
                 anchors.right: parent.right
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
             }
             Text {
                 text: last_transport ? Qt.formatTime(last_transport, "hh:mm") : Qt.formatTime(finish, "hh:mm")
                 anchors.right: parent.right
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
@@ -114,7 +114,7 @@ Component {
                 text: qsTr("Walk ") + Math.floor(walk/100)/10 + ' km'
                 horizontalAlignment: Qt.AlignRight
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
             }

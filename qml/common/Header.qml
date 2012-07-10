@@ -21,14 +21,14 @@ Item {
 
     anchors.left: parent.left
     anchors.right: parent.right
-    anchors.bottomMargin: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+    anchors.bottomMargin: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
     height: headerText.height + headerDivider.height +
             (subheaderText.visible ? subheaderText.height : 0) +
-            UIConstants.DEFAULT_MARGIN * 2 * appWindow.scaling_factor
+            UIConstants.DEFAULT_MARGIN * 2 * appWindow.scalingFactor
     Text {
         id: headerText
         width: parent.width
-        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
         wrapMode: Text.WordWrap
         text: parent.text
@@ -40,7 +40,7 @@ Item {
         id: subheaderText
         anchors.top: headerText.bottom
         width: parent.width
-        font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
         text: subtext
         wrapMode: Text.WordWrap

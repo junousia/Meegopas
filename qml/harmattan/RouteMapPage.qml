@@ -43,8 +43,8 @@ Page {
             }
         }
         ToolButtonRow {
-            ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.previous_station(); } }
-            ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !appWindow.follow_mode; onClicked: { map_loader.item.next_station(); } }
+            ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !appWindow.followMode; onClicked: { map_loader.item.previous_station(); } }
+            ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !appWindow.followMode; onClicked: { map_loader.item.next_station(); } }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
@@ -107,9 +107,9 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/current.png"
             z: 500
-            selected: appWindow.follow_mode
+            selected: appWindow.followMode
             mouseArea.onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode? false : true
+                appWindow.followMode = appWindow.followMode? false : true
             }
         }
     }

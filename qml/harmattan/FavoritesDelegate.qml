@@ -68,7 +68,7 @@ Component {
             anchors.leftMargin: UIConstants.DEFAULT_MARGIN/2
             anchors.rightMargin: UIConstants.DEFAULT_MARGIN
             text: modelData
-            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
         }
     }
 }

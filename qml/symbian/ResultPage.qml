@@ -43,7 +43,7 @@ Page {
     Component {
         id: footer
         Item {
-            height: 35 * appWindow.scaling_factor
+            height: 35 * appWindow.scalingFactor
             width: parent.width
             visible: !busyIndicator.visible
             Label {
@@ -82,7 +82,7 @@ Page {
     ListView {
         id: list
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         model: routeModel
         footer: footer
         delegate: ResultDelegate {}
@@ -96,7 +96,7 @@ Page {
                              qsTr("Arrival time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm")
             }
             Item {
-                height: 35 * appWindow.scaling_factor
+                height: 35 * appWindow.scalingFactor
                 width: parent.width
                 visible: !busyIndicator.visible
                 Label {
@@ -138,7 +138,7 @@ Page {
         text: qsTr("No results")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 

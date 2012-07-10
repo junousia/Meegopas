@@ -27,7 +27,7 @@ Flickable {
     property double centeredContentX: map.size.width*0.75
     property double centeredContentY: map.size.height*0.75
 
-    interactive: !appWindow.follow_mode
+    interactive: !appWindow.followMode
 
     contentWidth: map.size.width * 2
     contentHeight: map.size.height * 2
@@ -69,16 +69,6 @@ Flickable {
 
         plugin: Plugin {
             name: "nokia"
-            parameters: [
-                PluginParameter {
-                    name: "mapping.token"
-                    value: "QYpeZ4z7gwhQr7iW0hOTUQ%3D%3D"
-                },
-                PluginParameter {
-                    name: "mapping.appid"
-                    value: "ETjZnV1eZZ5o0JmN320V"
-                }
-            ]
         }
         mapType: Map.MobileStreetMap
         connectivityMode: Map.HybridMode

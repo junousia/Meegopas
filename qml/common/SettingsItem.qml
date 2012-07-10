@@ -27,7 +27,7 @@ Item {
     property bool showDrillDown : false
     property bool showComboBox : false
 
-    height: UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scaling_factor
+    height: UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scalingFactor
     width: parent.width
     opacity: 0.0
 
@@ -70,7 +70,7 @@ Item {
         Text {
             id: setting
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.2
         }
@@ -78,7 +78,7 @@ Item {
             id: value
             width: parent.width
             color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.2
         }

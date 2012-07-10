@@ -25,7 +25,7 @@ Rectangle {
     Text {
         id: count_label
         text: count
-        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter

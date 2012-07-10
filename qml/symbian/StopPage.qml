@@ -26,7 +26,7 @@ Page {
     property alias list : routeList
     anchors.fill: parent
 
-    state: appWindow.map_visible? "map" : "normal"
+    state: appWindow.mapVisible? "map" : "normal"
 
     onStateChanged: {
         if(state == "map") {
@@ -38,7 +38,7 @@ Page {
         if(status == Component.Ready && !stopModel.count) {
             var route = Reittiopas.get_route_instance()
             route.dump_stops(leg_index, stopModel)
-            if(appWindow.map_visible)
+            if(appWindow.mapVisible)
                 map_loader.sourceComponent = map_component
         }
     }
@@ -52,23 +52,23 @@ Page {
         ToolButton {
             text: qsTr("Map")
             checkable: true
-            checked: appWindow.map_visible
+            checked: appWindow.mapVisible
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                appWindow.map_visible = appWindow.map_visible? false : true
+                appWindow.mapVisible = appWindow.mapVisible? false : true
             }
         }
         ToolButton {
             text: qsTr("Follow")
             checkable: true
             enabled: stop_page.state == "map"
-            checked: appWindow.follow_mode
+            checked: appWindow.followMode
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode ? false : true
+                appWindow.followMode = appWindow.followMode ? false : true
 
                 appWindow.banner.success = true
-                appWindow.banner.text = appWindow.follow_mode?
+                appWindow.banner.text = appWindow.followMode?
                             qsTr("Follow current position enabled") :
                             qsTr("Follow current position disabled")
                 appWindow.banner.open()
@@ -79,7 +79,7 @@ Page {
     PositionSource {
         id: position
         updateInterval: 500
-        active: appWindow.positioning_active
+        active: appWindow.positioningActive
     }
 
     ListModel {
@@ -113,7 +113,7 @@ Page {
         height: parent.height/2
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         anchors.horizontalCenter: parent.horizontalCenter
         z: 200
         model: stopModel

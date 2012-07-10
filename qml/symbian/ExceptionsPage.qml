@@ -51,7 +51,7 @@ Page {
     ListView {
         id: list
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         model: exceptionModel
         delegate: ExceptionDelegate {}
 
@@ -72,7 +72,7 @@ Page {
         text: qsTr("No current traffic exceptions")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
         lineHeightMode: Text.FixedHeight
         lineHeight: font.pixelSize * 1.2

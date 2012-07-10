@@ -36,7 +36,7 @@ Component {
                 text: Qt.formatDateTime(Helper.parse_disruption_time(time), "dd.MM.yyyy - hh:mm")
                 anchors.left: parent.left
                 horizontalAlignment: Qt.AlignLeft
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2
@@ -46,7 +46,7 @@ Component {
                 horizontalAlignment: Text.AlignLeft
                 width: parent.width
                 wrapMode: Text.WordWrap
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
                 color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                 lineHeightMode: Text.FixedHeight
                 lineHeight: font.pixelSize * 1.2

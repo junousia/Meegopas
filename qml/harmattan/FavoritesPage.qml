@@ -50,7 +50,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignCenter
                 elide: Text.ElideNone
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                 font.bold: true
                 font.family: UIConstants.FONT_FAMILY
                 color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
@@ -90,9 +90,9 @@ Page {
             Button {
                 id: button_save
                 text: qsTr("Save")
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: {
                     if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
 
@@ -125,9 +125,9 @@ Page {
             Button {
                 id: button_cancel
                 text: qsTr("Cancel")
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: edit_dialog.close()
             }
         }
@@ -140,7 +140,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Qt.AlignCenter
             elide: Text.ElideNone
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
             font.bold: true
             font.family: UIConstants.FONT_FAMILY
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
@@ -151,7 +151,7 @@ Page {
             anchors.centerIn: parent
             anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
             color: UIConstants.COLOR_INVERTED_FOREGROUND
-            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
             elide: Text.ElideRight
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.2
@@ -166,9 +166,9 @@ Page {
             Button {
                 id: delete_ok
                 text: qsTr("Delete")
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: {
                     Favorites.deleteFavorite(favoritesModel.get(list.currentIndex).coord, favoritesModel)
                     appWindow.banner.success = true
@@ -182,9 +182,9 @@ Page {
             Button {
                 id: delete_cancel
                 text: qsTr("Cancel")
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: delete_dialog.close()
             }
         }
@@ -196,7 +196,7 @@ Page {
         content: LocationEntry {
                 id: entry
                 anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                 font.bold: true
                 font.family: UIConstants.FONT_FAMILY
                 lineHeightMode: Text.FixedHeight
@@ -219,9 +219,9 @@ Page {
             Button {
                 text: qsTr("Next")
                 enabled: add_dialog.coord != ''
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: {
                     sheet.name = add_dialog.name
                     sheet.coord = add_dialog.coord
@@ -232,9 +232,9 @@ Page {
             }
             Button {
                 text: qsTr("Cancel")
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: {
                     add_dialog.close()
                     entry.clear()
@@ -254,7 +254,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Qt.AlignCenter
             elide: Text.ElideNone
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
             font.bold: true
             font.family: UIConstants.FONT_FAMILY
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
@@ -322,9 +322,9 @@ Page {
             Button {
                 id: shortcut_close
                 text: qsTr("Close")
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scaling_factor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scaling_factor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
+                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
+                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
                 onClicked: {
                     shortcut_dialog.close()
                 }
@@ -344,11 +344,11 @@ Page {
 
         anchors {
             topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
             fill: parent
         }
         flickableDirection: Flickable.VerticalFlick
-        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
 
         Component.onCompleted: {
             Favorites.initialize()
@@ -357,7 +357,7 @@ Page {
         Column {
             id: content_column
             width: parent.width
-            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
             Header {
                 text: qsTr("Manage favorites")
             }
@@ -374,7 +374,7 @@ Page {
                 id: favoritesManageDelegate
                 Item {
                     width: parent.width
-                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
 
                     Text {
                         text: modelData
@@ -382,7 +382,7 @@ Page {
                         anchors.right: shortcut_button.left
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
                         elide: Text.ElideRight
                         lineHeightMode: Text.FixedHeight
                         lineHeight: font.pixelSize * 1.2
@@ -454,7 +454,7 @@ Page {
         text: qsTr("No saved favorites")
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 }

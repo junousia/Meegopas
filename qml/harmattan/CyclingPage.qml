@@ -33,7 +33,7 @@ Page {
     PositionSource {
         id: positionSource
         updateInterval: 500
-        active: appWindow.positioning_active
+        active: appWindow.positioningActive
     }
 
     onRouteDoneChanged: {
@@ -158,9 +158,9 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/current.png"
             z: 500
-            selected: appWindow.follow_mode
+            selected: appWindow.followMode
             mouseArea.onClicked: {
-                appWindow.follow_mode = appWindow.follow_mode? false : true
+                appWindow.followMode = appWindow.followMode? false : true
             }
         }
     }
@@ -206,12 +206,12 @@ Page {
     Loader {
         id: map_loader
         anchors.fill: cyclingPage
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Component {
         id: map_component
         MapElement {
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.fill: cyclingPage
         }
     }
@@ -224,7 +224,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Qt.AlignHCenter
         wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 

@@ -20,7 +20,7 @@ import "theme.js" as Theme
 
 Item {
     id: map_element
-    property bool positioning_active : true
+    property bool positioningActive : true
     property alias flickable_map : flickable_map
 
     signal newCycling(int length)
@@ -47,9 +47,9 @@ Item {
     PositionSource {
         id: positionSource
         updateInterval: 200
-        active: appWindow.positioning_active
+        active: appWindow.positioningActive
         onPositionChanged: {
-            if(appWindow.follow_mode)
+            if(appWindow.followMode)
                 flickable_map.panToCoordinate(current_position.center)
         }
     }
@@ -59,10 +59,10 @@ Item {
         smooth: true
         source: "qrc:/images/position.png"
         visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid
-        width: 30 * appWindow.scaling_factor
-        height: 30 * appWindow.scaling_factor
-        offset.y: -30  * appWindow.scaling_factor / 2
-        offset.x: -30  * appWindow.scaling_factor / 2
+        width: 30 * appWindow.scalingFactor
+        height: 30 * appWindow.scalingFactor
+        offset.y: -30  * appWindow.scalingFactor / 2
+        offset.x: -30  * appWindow.scalingFactor / 2
         coordinate: positionSource.position.coordinate
         z: 49
     }
@@ -86,10 +86,10 @@ Item {
             id: stop_circle
             smooth: true
             source: "qrc:/images/station.png"
-            height: 20 * appWindow.scaling_factor
-            width: 20 * appWindow.scaling_factor
-            offset.y: -20 * appWindow.scaling_factor / 2
-            offset.x: -20 * appWindow.scaling_factor / 2
+            height: 20 * appWindow.scalingFactor
+            width: 20 * appWindow.scalingFactor
+            offset.y: -20 * appWindow.scalingFactor / 2
+            offset.x: -20 * appWindow.scalingFactor / 2
             z: 45
         }
     }
@@ -98,10 +98,10 @@ Item {
         id: endpoint
         MapImage {
             smooth: true
-            height: 50 * appWindow.scaling_factor
-            width: 50 * appWindow.scaling_factor
-            offset.y: -50 * appWindow.scaling_factor + 5
-            offset.x: -50 * appWindow.scaling_factor / 2
+            height: 50 * appWindow.scalingFactor
+            width: 50 * appWindow.scalingFactor
+            offset.y: -50 * appWindow.scalingFactor + 5
+            offset.x: -50 * appWindow.scalingFactor / 2
             z: 50
         }
     }
@@ -118,7 +118,7 @@ Item {
             MapText {
                 id: station_text
                 smooth: true
-                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
                 offset.x: -(width/2)
                 offset.y: 18
                 z: 48
@@ -127,16 +127,16 @@ Item {
                 id: station
                 smooth: true
                 source: "qrc:/images/stop.png"
-                height: 30 * appWindow.scaling_factor
-                width: 30 * appWindow.scaling_factor
-                offset.y: -30 * appWindow.scaling_factor / 2
-                offset.x: -30 * appWindow.scaling_factor / 2
+                height: 30 * appWindow.scalingFactor
+                width: 30 * appWindow.scalingFactor
+                offset.y: -30 * appWindow.scalingFactor / 2
+                offset.x: -30 * appWindow.scalingFactor / 2
                 z: 45
             }
             MapPolyline {
                 id: route
                 smooth: true
-                border.width: 8 * appWindow.scaling_factor
+                border.width: 8 * appWindow.scalingFactor
                 z: 30
             }
         }

@@ -19,8 +19,8 @@ import "theme.js" as Theme
 
 Item {
     id: routeDelegate
-    height: type != "walk"? UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scaling_factor :
-                            UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+    height: type != "walk"? UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scalingFactor :
+                            UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
     width: parent.width
     opacity: 0.0
 
@@ -37,9 +37,9 @@ Item {
 
     Text {
         id: length_text
-        width: 80 * appWindow.scaling_factor
+        width: 80 * appWindow.scalingFactor
         text: type == "walk"? Math.floor(length/100)/10 + " km": duration + " min"
-        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
         anchors.verticalCenter: parent.verticalCenter
         lineHeightMode: Text.FixedHeight
@@ -60,7 +60,7 @@ Item {
             anchors.right: parent.right
             width: 5
             height: (routeDelegate.height +
-                     UIConstants.DEFAULT_MARGIN) * appWindow.scaling_factor
+                     UIConstants.DEFAULT_MARGIN) * appWindow.scalingFactor
             color: Theme.theme['general'].TRANSPORT_COLORS[type]
         }
         Rectangle {
@@ -82,13 +82,13 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/" + type + ".png"
             smooth: true
-            height: 50 * appWindow.scaling_factor
+            height: 50 * appWindow.scalingFactor
             width: height
         }
         Text {
             visible: type != "walk"
             text: code
-            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             anchors.horizontalCenter: parent.horizontalCenter
             lineHeightMode: Text.FixedHeight

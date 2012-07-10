@@ -299,7 +299,7 @@ Page {
         anchors.bottom: parent.bottom
 
         anchors {
-            margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         }
 
         interactive: true
@@ -335,7 +335,7 @@ Page {
                     }
                 }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 * appWindow.scaling_factor }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 * appWindow.scalingFactor }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2
@@ -372,7 +372,7 @@ Page {
 
                     Text {
                         id: timeButton
-                        font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scalingFactor
                         color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
                         text: Qt.formatTime(mainPage.myTime, "hh:mm")
                         lineHeightMode: Text.FixedHeight
@@ -404,7 +404,7 @@ Page {
                         id: timeTypeText
                         anchors.top: timeType.bottom
                         anchors.horizontalCenter: timeType.horizontalCenter
-                        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+                        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
                         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                         text: timeType.checked? qsTr("arrival") : qsTr("departure")
                         lineHeightMode: Text.FixedHeight
@@ -432,7 +432,7 @@ Page {
                 Text {
                     id: dateButton
                     height: UIConstants.SIZE_BUTTON
-                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
+                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scalingFactor
                     color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
                     text: Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
                     lineHeightMode: Text.FixedHeight
@@ -451,7 +451,7 @@ Page {
             Button {
                 id: timedate_now
                 text: qsTr("Now")
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scaling_factor
+                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
                 height: 40

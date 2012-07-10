@@ -22,7 +22,7 @@ Component {
         id: delegateItem
         property bool selected: index == selectedIndex;
 
-        height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor
+        height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scalingFactor
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN
@@ -57,9 +57,9 @@ Component {
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.left: icon.right
             anchors.right: parent.right
-            anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
             text: modelData
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
         }
     }
 }

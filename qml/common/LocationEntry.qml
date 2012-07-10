@@ -237,7 +237,7 @@ Column {
         model: favoritesModel
         titleText: qsTr("Choose location")
         delegate: FavoritesDelegate {}
-        height: 5 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scaling_factor + UIConstants.DEFAULT_MARGIN
+        height: 5 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scalingFactor + UIConstants.DEFAULT_MARGIN
         onAccepted: {
             /* if positionsource used */
             if(selectedIndex == 0) {
@@ -286,7 +286,7 @@ Column {
         }
         Text {
             id: label
-            font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scalingFactor
             color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
             lineHeightMode: Text.FixedHeight
             lineHeight: font.pixelSize * 1.1

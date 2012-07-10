@@ -22,7 +22,7 @@ Component {
         id: delegateItem
         property bool selected: index == selectedIndex;
 
-        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scaling_factor
+        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: UIConstants.DEFAULT_MARGIN
@@ -43,7 +43,7 @@ Component {
             anchors.left: parent.left
             anchors.right: locType.left
             text: name + " " + housenumber
-            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
         }
         Text {
             id: locType
@@ -54,7 +54,7 @@ Component {
             anchors.verticalCenter: delegateItem.verticalCenter
             anchors.right: parent.right
             text: city
-            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scaling_factor
+            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
         }
     }
 }

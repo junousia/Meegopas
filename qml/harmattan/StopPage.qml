@@ -26,7 +26,7 @@ Page {
     property alias list : routeList
     anchors.fill: parent
 
-    state: (appWindow.map_visible && appWindow.inPortrait)? "map" : "normal"
+    state: (appWindow.mapVisible && appWindow.inPortrait)? "map" : "normal"
 
     onStateChanged: {
         if(state == "map") {
@@ -38,7 +38,7 @@ Page {
         if(status == Component.Ready && !stopModel.count) {
             var route = Reittiopas.get_route_instance()
             route.dump_stops(leg_index, stopModel)
-            if(appWindow.map_visible)
+            if(appWindow.mapVisible)
                 map_loader.sourceComponent = map_component
         }
     }
@@ -54,9 +54,9 @@ Page {
                 text: qsTr("Map")
                 checkable: true
                 onClicked: {
-                    appWindow.map_visible = appWindow.map_visible? false : true
+                    appWindow.mapVisible = appWindow.mapVisible? false : true
                 }
-                Binding { target: mapButton; property: "checked"; value: appWindow.map_visible }
+                Binding { target: mapButton; property: "checked"; value: appWindow.mapVisible }
             }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
@@ -153,7 +153,7 @@ Page {
 
         Column {
             anchors.left: parent.left
-            anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
+            anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
             anchors.verticalCenter: parent.verticalCenter
             width: followMode.width + UIConstants.DEFAULT_MARGIN * 2
             spacing: UIConstants.DEFAULT_MARGIN
@@ -163,9 +163,9 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: "qrc:/images/current.png"
                 z: 500
-                selected: appWindow.follow_mode
+                selected: appWindow.followMode
                 mouseArea.onClicked: {
-                    appWindow.follow_mode = appWindow.follow_mode? false : true
+                    appWindow.followMode = appWindow.followMode? false : true
                 }
             }
             MapButton {
