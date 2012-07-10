@@ -21,9 +21,9 @@ PageStackWindow {
 
     showStatusBar: appWindow.inPortrait
 
-    property alias banner : bannerLoader.item
     property alias about : aboutLoader.item
     property alias menu : menuLoader.item
+    property alias banner : banner
 
     property variant scalingFactor : 1
     property bool positioningActive : true
@@ -41,14 +41,11 @@ PageStackWindow {
         AboutDialog { id: about }
     }
 
-    Component {
-        id: bannerComponent
-        InfoBanner {
-            id: banner
-            property bool success : false
-            y: 40
-            iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
-        }
+    InfoBanner {
+        id: banner
+        property bool success : false
+        y: 40
+        iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
     }
 
     Component {
@@ -68,11 +65,6 @@ PageStackWindow {
         id: menuLoader
         anchors.fill: parent
         sourceComponent: menuComponent
-    }
-    Loader {
-        id: bannerLoader
-        anchors.fill: parent
-        sourceComponent: bannerComponent
     }
     Loader {
         id: aboutLoader
