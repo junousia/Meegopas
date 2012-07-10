@@ -19,7 +19,17 @@ import "storage.js" as Storage
 import "theme.js" as Theme
 
 Page {
-    tools: commonTools
+    tools: resultTools
+
+    ToolBarLayout {
+        id: resultTools
+        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
+        ToolIcon { platformIconId: "toolbar-view-menu";
+             anchors.right: parent===undefined ? undefined : parent.right
+             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
+        }
+    }
+
     property variant search_parameters : 0
 
     onStatusChanged: {
@@ -30,14 +40,6 @@ Page {
     ListModel {
         id: routeModel
         property bool done : false
-    }
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
     }
 
     Component {

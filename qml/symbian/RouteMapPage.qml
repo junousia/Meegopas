@@ -61,7 +61,7 @@ Page {
         ToolButton { iconSource: "toolbar-next"; enabled: !appWindow.followMode; onClicked: { map_loader.item.next_station(); } }
 //        ToolIcon { platformIconId: "toolbar-view-menu";
 //             anchors.right: parent===undefined ? undefined : parent.right
-//             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+//             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
 //        }
     }
     Loader {

@@ -169,11 +169,11 @@ Page {
         id: mapTools
         ToolIcon {
             iconId: "toolbar-back"
-            onClicked: { myMenu.close(); pageStack.pop(); }
+            onClicked: { menu.close(); pageStack.pop(); }
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
 

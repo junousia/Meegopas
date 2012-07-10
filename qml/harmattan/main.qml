@@ -21,7 +21,10 @@ PageStackWindow {
 
     showStatusBar: appWindow.inPortrait
 
-    property alias banner : banner
+    property alias banner : bannerLoader.item
+    property alias about : aboutLoader.item
+    property alias menu : menuLoader.item
+
     property variant scalingFactor : 1
     property bool positioningActive : true
     property bool followMode : false
@@ -33,33 +36,47 @@ PageStackWindow {
         id: defaultStyle
     }
 
-    AboutDialog { id: about }
-
-    InfoBanner {
-        id: banner
-        property bool success : false
-        y: 40
-        iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
+    Component {
+        id: aboutComponent
+        AboutDialog { id: about }
     }
 
-    ToolBarLayout {
-        id: commonTools
-        visible: false
-        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
-        ToolIcon { platformIconId: "toolbar-view-menu";
-             anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+    Component {
+        id: bannerComponent
+        InfoBanner {
+            id: banner
+            property bool success : false
+            y: 40
+            iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
         }
     }
 
-    Menu {
-        id: myMenu
-        visualParent: pageStack
-        MenuLayout {
-            MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
-            MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
-            MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
-            MenuItem { text: qsTr("About"); onClicked: about.open() }
+    Component {
+        id: menuComponent
+        Menu {
+            visualParent: pageStack
+            MenuLayout {
+                MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
+                MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
+                MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
+                MenuItem { text: qsTr("About"); onClicked: about.open() }
+            }
         }
+    }
+
+    Loader {
+        id: menuLoader
+        anchors.fill: parent
+        sourceComponent: menuComponent
+    }
+    Loader {
+        id: bannerLoader
+        anchors.fill: parent
+        sourceComponent: bannerComponent
+    }
+    Loader {
+        id: aboutLoader
+        anchors.fill: parent
+        sourceComponent: aboutComponent
     }
 }

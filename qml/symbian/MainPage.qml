@@ -208,7 +208,7 @@ Page {
                 pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             }
         }
-        ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }
+        ToolButton { iconSource: "toolbar-view-menu" ; onClicked: menu.open(); }
     }
 
     DatePickerDialog {

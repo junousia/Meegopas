@@ -18,7 +18,6 @@ import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 
 Page {
-    id: page
     tools: mapTools
     anchors.fill: parent
 
@@ -48,7 +47,7 @@ Page {
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
     Loader {

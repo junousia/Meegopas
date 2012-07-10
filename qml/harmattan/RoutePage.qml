@@ -37,7 +37,7 @@ Page {
     ToolBarLayout {
         id: routeTools
         visible: false
-        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
         ToolButton {
             text: qsTr("Map")
             anchors.verticalCenter: parent.verticalCenter
@@ -45,7 +45,7 @@ Page {
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
 
@@ -54,22 +54,14 @@ Page {
         property bool done : false
     }
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
-    }
-
     Component {
         id: delegate
         Loader {
             width: parent.width
             source: type == "station" ? "qrc:/qml/RouteStationDelegate.qml" : "qrc:/qml/RouteDelegate.qml"
         }
-
     }
+
     ListView {
         id: routeList
         anchors.fill: parent

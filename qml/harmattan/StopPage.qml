@@ -47,7 +47,7 @@ Page {
 
     ToolBarLayout {
         id: stopTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
+        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
         ToolButtonRow {
             ToolButton {
                 id: mapButton
@@ -61,7 +61,7 @@ Page {
         }
         ToolIcon { platformIconId: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
 
@@ -74,14 +74,6 @@ Page {
     ListModel {
         id: stopModel
         property bool done : false
-    }
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
     }
 
     Component {

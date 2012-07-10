@@ -143,8 +143,6 @@ Column {
         }
     }
 
-    FavoriteSheet { id: favorite_sheet }
-
     PositionSource {
         id: positionSource
         updateInterval: 500
@@ -253,8 +251,8 @@ Column {
                 }
             } else {
                 updateLocation(favoritesModel.get(selectedIndex).modelData,
-                                0,
-                                favoritesModel.get(selectedIndex).coord)
+                               0,
+                               favoritesModel.get(selectedIndex).coord)
             }
         }
         onRejected: {}

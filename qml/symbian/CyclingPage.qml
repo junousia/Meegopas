@@ -50,7 +50,7 @@ Page {
         id: mapTools
         ToolButton {
             iconSource: "toolbar-back"
-            onClicked: { myMenu.close(); pageStack.pop(); }
+            onClicked: { menu.close(); pageStack.pop(); }
         }
         ToolButton {
             text: qsTr("Follow")

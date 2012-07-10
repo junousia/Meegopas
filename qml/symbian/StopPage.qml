@@ -74,7 +74,7 @@ Page {
                 appWindow.banner.open()
             }
         }
-        ToolButton { iconSource: "toolbar-view-menu" ; onClicked: myMenu.open(); }
+        ToolButton { iconSource: "toolbar-view-menu" ; onClicked: menu.open(); }
     }
     PositionSource {
         id: position

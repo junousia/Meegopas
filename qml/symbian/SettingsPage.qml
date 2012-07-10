@@ -22,7 +22,7 @@ Page {
 
     ToolBarLayout {
         id: settingsTools
-        ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolButton { iconSource: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
     }
 
     Rectangle {

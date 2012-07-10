@@ -3,7 +3,6 @@
 #include <QtDebug>
 #include <QTranslator>
 #include <QLocale>
-#include <QFontDatabase>
 #include <QtDBus/QtDBus>
 #include "qmlapplicationviewer.h"
 #include "qplatformdefs.h"
@@ -33,9 +32,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     Shortcut sc;
     ctxt->setContextProperty("Shortcut", &sc);
 
-    viewer->addImportPath(QLatin1String("qrc:/images/"));
-    viewer->addImportPath(QLatin1String("qrc:/i18n/"));
-
     ctxt->setContextProperty("QmlApplicationViewer", &(*viewer));
     viewer->setSource(QUrl("qrc:/qml/main.qml"));
 
@@ -43,7 +39,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QDBusConnection bus = QDBusConnection::sessionBus();
     Route route;
     route.setContext(ctxt);
-    new MeegopasAdaptor(&route);
+    MeegopasAdaptor dbusAdaptor(&route);
 
     if(bus.registerService("com.juknousi.meegopas") == QDBusConnectionInterface::ServiceNotRegistered)
         qDebug() << "Registering DBus service failed";

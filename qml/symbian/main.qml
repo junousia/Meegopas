@@ -57,15 +57,15 @@ PageStackWindow {
     ToolBarLayout {
         id: commonTools
         visible: false
-        ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolButton { iconSource: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
         ToolButton { iconSource: "toolbar-view-menu";
              anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (myMenu.status == DialogStatus.Closed) ? myMenu.open() : myMenu.close()
+             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
 
     Menu {
-        id: myMenu
+        id: menu
         MenuLayout {
             MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }

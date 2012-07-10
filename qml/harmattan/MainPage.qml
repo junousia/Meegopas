@@ -24,6 +24,9 @@ Page {
     id: mainPage
     tools: mainTools
 
+    property alias timePicker : timeLoader.item
+    property alias datePicker : dateLoader.item
+
     property date myTime
 
     property variant currentCoord: ''
@@ -126,10 +129,6 @@ Page {
     }
 
     Component.onCompleted: {
-//        var saved_theme = Storage.getSetting("theme")
-//        if(saved_theme && saved_theme != "Unknown")
-//            appWindow.colorscheme = saved_theme
-
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
@@ -201,7 +200,7 @@ Page {
 
     ToolBarLayout {
         id: mainTools
-        ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { menu.close(); pageStack.pop(); } }
         ToolButtonRow {
             ToolButton {
                 text: qsTr("Cycling")
@@ -222,37 +221,50 @@ Page {
                 }
             }
         }
-        ToolIcon { iconId: "toolbar-view-menu" ; onClicked: myMenu.open(); }
+        ToolIcon { iconId: "toolbar-view-menu" ; onClicked: menu.open(); }
     }
+    Component {
+        id: dateComponent
+        DatePickerDialog {
+            titleText: qsTr("Choose date")
+            onAccepted: {
+                var tempTime = new Date(datePicker.year, datePicker.month-1, datePicker.day,
+                                        mainPage.myTime.getHours(), mainPage.myTime.getMinutes())
+                mainPage.myTime = tempTime
+                dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
+            }
+            minimumYear: 2012
 
-    DatePickerDialog {
-        id: datePicker
-        titleText: qsTr("Choose date")
-        onAccepted: {
-            var tempTime = new Date(datePicker.year, datePicker.month-1, datePicker.day,
-                                    mainPage.myTime.getHours(), mainPage.myTime.getMinutes())
-            mainPage.myTime = tempTime
-            dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
+            acceptButtonText: qsTr("Accept")
+            rejectButtonText: qsTr("Reject")
         }
-        minimumYear: 2012
-
-        acceptButtonText: qsTr("Accept")
-        rejectButtonText: qsTr("Reject")
     }
+    Component {
+        id: timeComponent
 
-    TimePickerDialog {
-        id: timePicker
-        titleText: qsTr("Choose time")
-        onAccepted: {
-            var tempTime = new Date(mainPage.myTime.getFullYear(), mainPage.myTime.getMonth(),
-                                    mainPage.myTime.getDate(), timePicker.hour, timePicker.minute)
-            mainPage.myTime = tempTime
-            timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
+        TimePickerDialog {
+            titleText: qsTr("Choose time")
+            onAccepted: {
+                var tempTime = new Date(mainPage.myTime.getFullYear(), mainPage.myTime.getMonth(),
+                                        mainPage.myTime.getDate(), timePicker.hour, timePicker.minute)
+                mainPage.myTime = tempTime
+                timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
+            }
+
+            fields: DateTime.Hours | DateTime.Minutes
+            acceptButtonText: qsTr("Accept")
+            rejectButtonText: qsTr("Reject")
         }
-
-        fields: DateTime.Hours | DateTime.Minutes
-        acceptButtonText: qsTr("Accept")
-        rejectButtonText: qsTr("Reject")
+    }
+    Loader {
+        id: dateLoader
+        anchors.fill: parent
+        sourceComponent: dateComponent
+    }
+    Loader {
+        id: timeLoader
+        anchors.fill: parent
+        sourceComponent: timeComponent
     }
 
     Rectangle {
@@ -283,13 +295,6 @@ Page {
         id: title
         title: qsTr("Meegopas")
         color: Theme.theme[appWindow.colorscheme].COLOR_APPHEADER_BACKGROUND
-    }
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
     }
 
     Flickable {

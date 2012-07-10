@@ -43,13 +43,6 @@ Page {
         XmlRole { name: "info_en"; query: "INFO/TEXT[3]/string()" }
     }
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
-    }
-
     ListView {
         id: list
         anchors.fill: parent

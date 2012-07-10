@@ -24,7 +24,7 @@ Page {
 
     ToolBarLayout {
         id: favoritesTools
-        ToolButton { iconSource: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
+        ToolButton { iconSource: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
     }
 
     FavoriteSheet { id: sheet }

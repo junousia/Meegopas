@@ -22,14 +22,7 @@ Page {
 
     ToolBarLayout {
         id: settingsTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { myMenu.close(); pageStack.pop(); } }
-    }
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: -50
+        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
     }
 
     Flickable {
