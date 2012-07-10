@@ -43,8 +43,6 @@ Page {
         }
     }
 
-    anchors.margins: UIConstants.DEFAULT_MARGIN
-
     tools: stopTools
 
     ToolBarLayout {
@@ -70,7 +68,7 @@ Page {
     PositionSource {
         id: position
         updateInterval: 500
-        active: appWindow.positioning_active
+        active: true
     }
 
     ListModel {
@@ -97,12 +95,11 @@ Page {
 
     ListView {
         id: routeList
-        cacheBuffer: 50 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT
+        cacheBuffer: 100 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT
         clip: true
         anchors.top: parent.top
         height: parent.height/2
         width: parent.width
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
         z: 200
         model: stopModel
         delegate: StopDelegate {}
@@ -113,9 +110,6 @@ Page {
         header: Header {
             text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }
-//        onCurrentIndexChanged: {
-//            positionViewAtIndex(currentIndex, ListView.Center)
-//        }
     }
 
     Rectangle {
@@ -159,6 +153,7 @@ Page {
 
         Column {
             anchors.left: parent.left
+            anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scaling_factor
             anchors.verticalCenter: parent.verticalCenter
             width: followMode.width + UIConstants.DEFAULT_MARGIN * 2
             spacing: UIConstants.DEFAULT_MARGIN

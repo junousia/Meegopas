@@ -46,7 +46,7 @@ Item {
 
     PositionSource {
         id: positionSource
-        updateInterval: 500
+        updateInterval: 200
         active: appWindow.positioning_active
         onPositionChanged: {
             if(appWindow.follow_mode)
@@ -54,14 +54,17 @@ Item {
         }
     }
 
-    MapCircle {
+    MapImage {
         id: current_position
         smooth: true
-        color: "red"
+        source: "qrc:/images/position.png"
         visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid
-        radius: 8 * appWindow.scaling_factor
-        width: 8 * appWindow.scaling_factor
-        center: positionSource.position.coordinate
+        width: 30 * appWindow.scaling_factor
+        height: 30 * appWindow.scaling_factor
+        offset.y: -30  * appWindow.scaling_factor / 2
+        offset.x: -30  * appWindow.scaling_factor / 2
+        coordinate: positionSource.position.coordinate
+        z: 49
     }
 
     MapGroup {
@@ -79,13 +82,27 @@ Item {
     Component {
         id: stop
 
-        MapCircle {
+        MapImage {
             id: stop_circle
             smooth: true
-            color: "yellow"
-            radius: 6 * appWindow.scaling_factor
-            width: 6 * appWindow.scaling_factor
-            z: 5
+            source: "qrc:/images/station.png"
+            height: 20 * appWindow.scaling_factor
+            width: 20 * appWindow.scaling_factor
+            offset.y: -20 * appWindow.scaling_factor / 2
+            offset.x: -20 * appWindow.scaling_factor / 2
+            z: 45
+        }
+    }
+
+    Component {
+        id: endpoint
+        MapImage {
+            smooth: true
+            height: 50 * appWindow.scaling_factor
+            width: 50 * appWindow.scaling_factor
+            offset.y: -50 * appWindow.scaling_factor + 5
+            offset.x: -50 * appWindow.scaling_factor / 2
+            z: 50
         }
     }
 
@@ -94,31 +111,33 @@ Item {
 
         MapGroup {
             id: stop_group
-            property alias stop_text : stop_text
-            property alias stop_circle : stop_circle
+            property alias station_text : station_text
+            property alias station : station
             property alias route : route
 
             MapText {
-                id: stop_text
+                id: station_text
                 smooth: true
                 font.pixelSize: UIConstants.FONT_LARGE * appWindow.scaling_factor
                 offset.x: -(width/2)
                 offset.y: 18
-                z: 0
+                z: 48
             }
-            MapCircle {
-                id: stop_circle
+            MapImage {
+                id: station
                 smooth: true
-                color: "yellow"
-                radius: 8 * appWindow.scaling_factor
-                width: 8 * appWindow.scaling_factor
-                z: -5
+                source: "qrc:/images/stop.png"
+                height: 30 * appWindow.scaling_factor
+                width: 30 * appWindow.scaling_factor
+                offset.y: -30 * appWindow.scaling_factor / 2
+                offset.x: -30 * appWindow.scaling_factor / 2
+                z: 45
             }
             MapPolyline {
                 id: route
                 smooth: true
                 border.width: 8 * appWindow.scaling_factor
-                z: -10
+                z: 30
             }
         }
     }
@@ -127,81 +146,58 @@ Item {
         flickable_map.map.addMapObject(current_position)
 
         Helper.clear_objects()
-
+        var coord
+        var endpoint_object
         var route_coord = []
         var current_route = Reittiopas.get_route_instance()
         current_route.dump_route(route_coord)
 
         for (var index in route_coord) {
             var map_group = group.createObject(appWindow)
-
-            if(!map_group) {
-                console.debug("creating object failed")
-                return
-            }
             var endpointdata = route_coord[index]
 
-            if(!endpointdata) {
-                console.debug("no data in result index " + index)
-                return
-            }
-
             if(index == 0) {
-                if(endpointdata.from.latitude && endpointdata.from.longitude) {
-                    var first_station = group.createObject(appWindow)
+                var first_station = group.createObject(appWindow)
 
-                    if(!first_station) {
-                        console.debug("creating object failed")
-                        return
-                    }
+                coord = coord_component.createObject(appWindow)
+                coord.latitude = endpointdata.from.latitude
+                coord.longitude = endpointdata.from.longitude
 
-                    var coord = coord_component.createObject(appWindow)
-                    coord.latitude = endpointdata.from.latitude
-                    coord.longitude = endpointdata.from.longitude
+                add_station(coord, endpointdata.from.name, first_station)
+                Helper.push_to_objects(first_station)
 
-                    add_station(endpointdata.from.latitude,endpointdata.from.longitude, endpointdata.from.name, first_station)
-                    Helper.push_to_objects(first_station)
-                }
-                else {
-                    console.debug("invalid coordinates for the first station")
-                }
+                endpoint_object = endpoint.createObject(appWindow)
+                endpoint_object.coordinate = coord
+                endpoint_object.source = "qrc:/images/start.png"
+                Helper.push_to_objects(endpoint_object)
             }
-            add_station(endpointdata.to.latitude,endpointdata.to.longitude, endpointdata.to.name, map_group)
+            coord = coord_component.createObject(appWindow)
+            coord.latitude = endpointdata.to.latitude
+            coord.longitude = endpointdata.to.longitude
+
+            add_station(coord, endpointdata.to.name, map_group)
+
+            if(index == route_coord.length - 1) {
+                endpoint_object = endpoint.createObject(appWindow)
+                endpoint_object.coordinate = coord
+                endpoint_object.source = "qrc:/images/finish.png"
+                Helper.push_to_objects(endpoint_object)
+            }
 
             map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]
 
             for(var shapeindex in endpointdata.shape) {
-
                 var shapedata = endpointdata.shape[shapeindex]
 
-                if(!shapedata) {
-                    console.debug("no data in shape index " + shapeindex)
-                    return
-                }
+                var shape_coord = coord_component.createObject(appWindow)
+                shape_coord.latitude = shapedata.y
+                shape_coord.longitude = shapedata.x
 
-                if(shapedata.y && shapedata.x) {
-                    var shape_coord = coord_component.createObject(appWindow)
-                    shape_coord.latitude = shapedata.y
-                    shape_coord.longitude = shapedata.x
-
-                    if(!shape_coord) {
-                        console.debug("creating object failed")
-                        return
-                    }
-                    map_group.route.addCoordinate(shape_coord)
-
-                }
-                else
-                    console.debug("invalid coordinates for polyline")
+                map_group.route.addCoordinate(shape_coord)
             }
             if(endpointdata.type != "walk") {
                 for(var stopindex in endpointdata.locs) {
                     var loc = endpointdata.locs[stopindex]
-
-                    if(!loc) {
-                        console.debug("no data in locs index " + stopindex)
-                        return
-                    }
 
                     if(stopindex != 0 && stopindex != endpointdata.locs.length - 1)
                         add_stop(loc.latitude, loc.longitude)
@@ -231,23 +227,36 @@ Item {
             var map_group = group.createObject(appWindow)
             map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[leg.type]
 
-            if(!map_group) {
-                console.debug("creating object failed")
-                return
-            }
             for(var pointindex in leg.points) {
                 var point = leg.points[pointindex]
                 if(point.y && point.x) {
                     var shape_coord = coord_component.createObject(appWindow)
                     shape_coord.latitude = point.y
                     shape_coord.longitude = point.x
-
-                    if(!shape_coord) {
-                        console.debug("creating object failed")
-                        return
-                    }
                     map_group.route.addCoordinate(shape_coord)
                     Helper.add_station(shape_coord)
+
+                    var endpoint_object
+                    var stop_object
+                    if(index == 0 && pointindex == 0) {
+                        endpoint_object = endpoint.createObject(appWindow)
+                        endpoint_object.coordinate = shape_coord
+                        endpoint_object.source = "qrc:/images/start.png"
+                        Helper.push_to_objects(endpoint_object)
+
+                        stop_object = stop.createObject(appWindow)
+                        stop_object.coordinate = shape_coord
+                        Helper.push_to_objects(stop_object)
+                    } else if(index == last_result.path.length - 1 && pointindex == leg.points.length - 1) {
+                        endpoint_object = endpoint.createObject(appWindow)
+                        endpoint_object.coordinate = shape_coord
+                        endpoint_object.source = "qrc:/images/finish.png"
+                        Helper.push_to_objects(endpoint_object)
+
+                        stop_object = stop.createObject(appWindow)
+                        stop_object.coordinate = shape_coord
+                        Helper.push_to_objects(stop_object)
+                    }
                 }
             }
 
@@ -259,41 +268,24 @@ Item {
         first_station()
     }
 
-    function add_station(latitude, longitude, name, map_group) {
-        if(latitude && longitude) {
-            var coord = coord_component.createObject(appWindow)
-            coord.latitude = latitude
-            coord.longitude = longitude
+    function add_station(coord, name, map_group) {
+        map_group.station_text.coordinate = coord
+        map_group.station_text.text = name?name:""
+        map_group.station.coordinate = coord
 
-            if(!coord) {
-                console.debug("creating object failed")
-                return
-            }
-
-            map_group.stop_text.coordinate = coord;
-            map_group.stop_text.text = name?name:""
-            map_group.stop_circle.center = coord
-            Helper.add_station(coord)
-        }
-        else
-            console.debug("invalid coordinates for a station")
+        Helper.add_station(coord)
     }
 
     function add_stop(latitude, longitude) {
-        if(latitude && longitude) {
-
-            var stop_object = stop.createObject(appWindow)
-            if(!stop_object) {
-                console.debug("creating object failed")
-                return
-            }
-            var coord = coord_component.createObject(appWindow)
-            coord.latitude = latitude
-            coord.longitude = longitude
-            stop_object.center = coord;
-            Helper.push_to_objects(stop_object)
+        var stop_object = stop.createObject(appWindow)
+        if(!stop_object) {
+            console.debug("creating object failed")
+            return
         }
-        else
-            console.debug("invalid coordinates for a stop")
+        var coord = coord_component.createObject(appWindow)
+        coord.latitude = latitude
+        coord.longitude = longitude
+        stop_object.coordinate = coord
+        Helper.push_to_objects(stop_object)
     }
 }

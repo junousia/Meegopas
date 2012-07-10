@@ -70,5 +70,10 @@
         <file>images/maptype.png</file>
         <file alias="qml/SelectionDialogDelegate.qml">qml/harmattan/SelectionDialogDelegate.qml</file>
         <file alias="qml/translations.js">qml/common/translations.js</file>
+        <file>images/finish.png</file>
+        <file>images/start.png</file>
+        <file>images/stop.png</file>
+        <file>images/position.png</file>
+        <file>images/station.png</file>
     </qresource>
 </RCC>

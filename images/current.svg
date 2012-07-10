@@ -16,8 +16,8 @@
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="current.svg"
    inkscape:export-filename="/home/jukka/workspace/Harmattan/Meegopas/images/current.png"
-   inkscape:export-xdpi="16.981133"
-   inkscape:export-ydpi="16.981133">
+   inkscape:export-xdpi="8.4899998"
+   inkscape:export-ydpi="8.4899998">
   <defs
      id="defs4">
     <marker
@@ -280,8 +280,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.48"
-     inkscape:cx="-684.6754"
-     inkscape:cy="312.22876"
+     inkscape:cx="-318.16616"
+     inkscape:cy="145.96546"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -308,12 +308,33 @@
      id="layer1"
      transform="translate(0,-522.36218)">
     <rect
-       style="fill:#ce3e3e;fill-opacity:1;stroke:#555555;stroke-width:56.31099999999999994;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#ce3e3e;fill-opacity:1;stroke:#555555;stroke-width:56.31100082;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2985"
-       width="323.10605"
-       height="323.10605"
-       x="103.44698"
-       y="625.80914"
-       rx="161.55302" />
+       width="258.689"
+       height="258.689"
+       x="135.6555"
+       y="658.0177"
+       rx="161.55302"
+       ry="161.55302" />
+    <path
+       style="fill:none;stroke:#555555;stroke-width:50;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 265,641.25858 c 0,-54.72973 0,-54.72973 0,-54.72973"
+       id="path3023"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3913"
+       d="m 265,985.25858 c 0,-54.72973 0,-54.72973 0,-54.72973"
+       style="fill:none;stroke:#555555;stroke-width:50;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="fill:none;stroke:#555555;stroke-width:50;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 456.36486,787.36218 c -54.72973,0 -54.72973,0 -54.72973,0"
+       id="path3915"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3917"
+       d="m 120.94819,787.36218 c -54.729727,0 -54.729727,0 -54.729727,0"
+       style="fill:none;stroke:#555555;stroke-width:50;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
 </svg>
