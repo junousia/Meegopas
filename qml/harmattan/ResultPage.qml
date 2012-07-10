@@ -61,7 +61,7 @@ Page {
                     /* workaround to modify qml array is to make a copy of it,
                        modify the copy and assign the copy back to the original */
                     var new_parameters = search_parameters
-                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 15)
+                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 30)
                     search_parameters = new_parameters
                     routeModel.clear()
                     Reittiopas.new_route_instance(search_parameters, routeModel)
@@ -105,7 +105,8 @@ Page {
                     text: qsTr("...")
                     lineHeightMode: Text.FixedHeight
                     lineHeight: font.pixelSize * 0.8
-                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND                }
+                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+                }
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
@@ -113,7 +114,7 @@ Page {
                         /* workaround to modify qml array is to make a copy of it,
                            modify the copy and assign the copy back to the original */
                         var new_parameters = search_parameters
-                        new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 15)
+                        new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 30)
                         search_parameters = new_parameters
                         routeModel.clear()
                         Reittiopas.new_route_instance(search_parameters, routeModel)

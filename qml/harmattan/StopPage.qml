@@ -26,7 +26,7 @@ Page {
     property alias list : routeList
     anchors.fill: parent
 
-    state: appWindow.map_visible? "map" : "normal"
+    state: (appWindow.map_visible && appWindow.inPortrait)? "map" : "normal"
 
     onStateChanged: {
         if(state == "map") {
