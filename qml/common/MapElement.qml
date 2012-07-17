@@ -58,13 +58,14 @@ Item {
         id: current_position
         smooth: true
         source: "qrc:/images/position.png"
-        visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid
+        visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid && appWindow.positioningActive
         width: 30 * appWindow.scalingFactor
         height: 30 * appWindow.scalingFactor
         offset.y: -30  * appWindow.scalingFactor / 2
         offset.x: -30  * appWindow.scalingFactor / 2
         coordinate: positionSource.position.coordinate
         z: 49
+
     }
 
     MapGroup {

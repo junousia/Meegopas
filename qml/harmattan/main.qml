@@ -14,6 +14,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.0
+import "storage.js" as Storage
 
 PageStackWindow {
     id: appWindow
@@ -26,11 +27,12 @@ PageStackWindow {
     property alias banner : banner
 
     property variant scalingFactor : 1
-    property bool positioningActive : true
+    property bool positioningActive : (platformWindow.active && gpsEnabled)
     property bool followMode : false
     property bool mapVisible : false
     property bool showStationCode : true
     property string colorscheme : "default"
+    property bool gpsEnabled : true
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
@@ -53,7 +55,7 @@ PageStackWindow {
         Menu {
             visualParent: pageStack
             MenuLayout {
-                MenuItem { text: qsTr("Settings"); onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) }
+                MenuItem { text: qsTr("Settings"); onClicked: { mapVisible = false; pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
                 MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
                 MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
                 MenuItem { text: qsTr("About"); onClicked: about.open() }

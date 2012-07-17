@@ -146,7 +146,7 @@ Column {
     PositionSource {
         id: positionSource
         updateInterval: 500
-        active: platformWindow.active
+        active: appWindow.positioningActive
         onPositionChanged: {
             /* if we have moved >250 meters from the previous place, update current location */
             if(previousCoord.latitude != 0 && previousCoord.longitude != 0 &&
@@ -246,7 +246,7 @@ Column {
                 else {
                     favoriteQuery.selectedIndex = -1
                     appWindow.banner.success = false
-                    appWindow.banner.text = qsTr("Position not yet available")
+                    appWindow.banner.text = qsTr("Positioning service disabled from application settings")
                     appWindow.banner.show()
                 }
             } else {

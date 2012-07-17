@@ -66,11 +66,19 @@ Page {
         /* Update new destination to "to" */
         to.updateLocation(name, 0, coord)
 
+        /* Remove user input location and use gps location */
+        from.clear()
+
         /* use current location if available - otherwise wait for it */
         if(currentCoord != "") {
             var parameters = {}
             setRouteParameters(parameters)
             pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+        }
+        else if(appWindow.gpsEnabled == false) {
+            appWindow.banner.success = false
+            appWindow.banner.text = qsTr("Positioning service disabled from application settings")
+            appWindow.banner.show()
         }
         else {
             state = "waiting_route"
@@ -91,6 +99,11 @@ Page {
             var parameters = {}
             setCyclingParameters(parameters)
             pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+        }
+        else if(appWindow.gpsEnabled == false) {
+            appWindow.banner.success = false
+            appWindow.banner.text = qsTr("Positioning service disabled from application settings")
+            appWindow.banner.show()
         }
         else {
             state = "waiting_cycling"
@@ -132,6 +145,9 @@ Page {
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
+        if(Storage.getSetting("gps") == "false")
+            appWindow.gpsEnabled = false
+        console.debug("gps enabled: " + Storage.getSetting("gps"))
         updateTime()
     }
 

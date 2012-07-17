@@ -79,7 +79,7 @@ Page {
     PositionSource {
         id: position
         updateInterval: 500
-        active: appWindow.positioningActive
+        active: true
     }
 
     ListModel {

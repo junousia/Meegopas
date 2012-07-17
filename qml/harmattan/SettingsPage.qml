@@ -34,26 +34,22 @@ Page {
 
         Component.onCompleted: {
             Storage.initialize()
-            //theme.set_value(Storage.getSetting("theme"))
+            gps.set_value(Storage.getSetting("gps"))
             optimize.set_value(Storage.getSetting("optimize"))
             walking_speed.set_value(Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
             optimize_cycling.set_value(Storage.getSetting("optimize_cycling"))
 
             if(Storage.getSetting("train_disabled") == "true") {
-                console.debug("train disabled")
                 transports.set_value("train")
             }
             if(Storage.getSetting("bus_disabled") == "true") {
-                console.debug("bus disabled")
                 transports.set_value("bus")
             }
             if(Storage.getSetting("metro_disabled") == "true") {
-                console.debug("metro disabled")
                 transports.set_value("metro")
             }
             if(Storage.getSetting("tram_disabled") == "true") {
-                console.debug("tram disabled")
                 transports.set_value("tram")
             }
         }
@@ -65,45 +61,41 @@ Page {
             Header {
                 text: qsTr("Settings")
             }
-//            Text {
-//                text: qsTr("Color scheme")
-//                font.pixelSize: UIConstants.FONT_XLARGE  * appWindow.scalingFactor
-//                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-//                anchors.left: parent.left
-//                lineHeightMode: Text.FixedHeight
-//                lineHeight: font.pixelSize * 1.2
-//            }
 
-//            ButtonColumn {
-//                id: theme
-//                function set_value(value) {
-//                    if(value == "default")
-//                        theme_default.checked = true
-//                    else if(value == "ligth")
-//                        theme_light.checked = true
-//                    else if(value == "warm")
-//                        theme_warm.checked = true
-//                }
+            SectionHeader {
+                text: qsTr("Application settings")
+            }
 
-//                anchors.right: parent.right
-//                Button {
-//                    id: theme_default
-//                    text: qsTr("Default")
-//                    onClicked: Storage.setSetting('theme', 'default')
-//                }
-//                Button {
-//                    id: theme_light
-//                    text: qsTr("Light")
-//                    onClicked: Storage.setSetting('theme', 'light')
-//                }
-//                Button {
-//                    id: theme_warm
-//                    text: qsTr("Warm")
-//                    onClicked: Storage.setSetting('theme', 'warm')
-//                }
-//            }
+            Row {
+                id: gps
+                anchors.right: parent.right
+                spacing: UIConstants.DEFAULT_MARGIN
 
-//            Separator {}
+                function set_value(value) {
+                    if(value == "true")
+                        gps_switch.checked = true
+                    else if(value == "false")
+                        gps_switch.checked = false
+                    else {
+                        console.log("unknown value for gps")
+                        gps_switch.checked = true
+                    }
+                }
+                Label {
+                    text: qsTr("Enable positioning service")
+                }
+
+                Switch {
+                    id: gps_switch
+                    onCheckedChanged: {
+                        Storage.setSetting('gps', gps_switch.checked.toString())
+                        if(gps_switch.checked == false)
+                            appWindow.gpsEnabled = false
+                        else
+                            appWindow.gpsEnabled = true
+                    }
+                }
+            }
 
             SectionHeader {
                 text: qsTr("Used transports")

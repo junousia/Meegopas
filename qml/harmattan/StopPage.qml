@@ -24,7 +24,6 @@ Page {
     property int leg_index : 0
     property alias position : position
     property alias list : routeList
-    anchors.fill: parent
 
     state: (appWindow.mapVisible && appWindow.inPortrait)? "map" : "normal"
 
@@ -47,7 +46,12 @@ Page {
 
     ToolBarLayout {
         id: stopTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
+        ToolIcon { iconId: "toolbar-back"; onClicked: {
+                menu.close()
+                appWindow.mapVisible = false
+                pageStack.pop()
+            }
+        }
         ToolButtonRow {
             ToolButton {
                 id: mapButton
@@ -68,7 +72,7 @@ Page {
     PositionSource {
         id: position
         updateInterval: 500
-        active: true
+        active: appWindow.gpsEnabled
     }
 
     ListModel {
@@ -177,7 +181,8 @@ Page {
                 map_loader.item.initialize()
 
                 // go to first stop
-                map.map_loader.item.first_station()
+                map.map_loader.item.flickable_map.panToLatLong(stopModel.get(0).latitude,
+                                                               stopModel.get(0).longitude)
             }
         }
     }

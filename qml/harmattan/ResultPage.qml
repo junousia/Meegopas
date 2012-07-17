@@ -42,6 +42,16 @@ Page {
         property bool done : false
     }
 
+    Timer {
+        id: newSearchTimer
+        triggeredOnStart: false
+        interval: 500
+        onTriggered: {
+            routeModel.clear()
+            Reittiopas.new_route_instance(search_parameters, routeModel)
+        }
+    }
+
     Component {
         id: footer
         Item {
@@ -63,10 +73,9 @@ Page {
                     /* workaround to modify qml array is to make a copy of it,
                        modify the copy and assign the copy back to the original */
                     var new_parameters = search_parameters
-                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 30)
+                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 15)
                     search_parameters = new_parameters
-                    routeModel.clear()
-                    Reittiopas.new_route_instance(search_parameters, routeModel)
+                    newSearchTimer.restart()
                 }
             }
             Rectangle {
@@ -116,10 +125,9 @@ Page {
                         /* workaround to modify qml array is to make a copy of it,
                            modify the copy and assign the copy back to the original */
                         var new_parameters = search_parameters
-                        new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 30)
+                        new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 15)
                         search_parameters = new_parameters
-                        routeModel.clear()
-                        Reittiopas.new_route_instance(search_parameters, routeModel)
+                        newSearchTimer.restart()
                     }
                 }
                 Rectangle {
