@@ -49,8 +49,16 @@ Item {
         updateInterval: 200
         active: appWindow.positioningActive
         onPositionChanged: {
-            if(appWindow.followMode)
-                flickable_map.panToCoordinate(current_position.center)
+            if(appWindow.followMode) {
+                flickable_map.panToCoordinate(current_position.coordinate)
+            }
+        }
+    }
+
+    Connections {
+        target: appWindow
+        onFollowModeEnabled: {
+            flickable_map.panToCoordinate(current_position.coordinate)
         }
     }
 

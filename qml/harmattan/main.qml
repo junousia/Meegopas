@@ -20,6 +20,8 @@ PageStackWindow {
     id: appWindow
     initialPage: MainPage {}
 
+    signal followModeEnabled
+
     showStatusBar: appWindow.inPortrait
 
     property alias about : aboutLoader.item
@@ -36,6 +38,11 @@ PageStackWindow {
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
+    }
+
+    onFollowModeChanged: {
+        if(followMode)
+            followModeEnabled()
     }
 
     Component {
