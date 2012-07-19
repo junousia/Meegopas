@@ -155,6 +155,15 @@ Page {
             spacing: UIConstants.DEFAULT_MARGIN
             z: 500
             MapButton {
+                id: mapMode
+                anchors.horizontalCenter: parent.horizontalCenter
+                source: "qrc:/images/maptype.png"
+                z: 500
+                mouseArea.onClicked: {
+                    mapTypeSelection.open()
+                }
+            }
+            MapButton {
                 id: followMode
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: "qrc:/images/current.png"
@@ -162,15 +171,6 @@ Page {
                 selected: appWindow.followMode
                 mouseArea.onClicked: {
                     appWindow.followMode = appWindow.followMode? false : true
-                }
-            }
-            MapButton {
-                id: mapMode
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/images/maptype.png"
-                z: 500
-                mouseArea.onClicked: {
-                    mapTypeSelection.open()
                 }
             }
         }
