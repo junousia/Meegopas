@@ -58,8 +58,14 @@ Item {
     Connections {
         target: appWindow
         onFollowModeEnabled: {
-            flickable_map.panToCoordinate(current_position.coordinate)
+            flickable_map.panToCoordinate(positionSource.position.coordinate)
         }
+    }
+
+    Binding {
+        target: current_position
+        property: "coordinate"
+        value: positionSource.position.coordinate
     }
 
     MapImage {
@@ -71,9 +77,7 @@ Item {
         height: 30 * appWindow.scalingFactor
         offset.y: -30  * appWindow.scalingFactor / 2
         offset.x: -30  * appWindow.scalingFactor / 2
-        coordinate: positionSource.position.coordinate
         z: 49
-
     }
 
     MapGroup {
