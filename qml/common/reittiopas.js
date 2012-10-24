@@ -13,9 +13,17 @@
 
 .pragma library
 
-var API = 'http://api.reittiopas.fi/hsl/prod/'
-var USER = 'junousia'
-var PASS = 'p3ndolino'
+var API = {}
+API['helsinki'] = {}
+API['helsinki'].URL = 'http://api.reittiopas.fi/hsl/prod/'
+API['helsinki'].USER = 'junousia'
+API['helsinki'].PASS = 'p3ndolino'
+
+API['tampere'] = {}
+API['tampere'].URL = 'http://api.publictransport.tampere.fi/prod/'
+API['tampere'].USER = 'meegopas'
+API['tampere'].PASS = 'abc123'
+
 var transType = {}
 transType[1] = "bus"
 transType[2] = "tram"
@@ -55,11 +63,14 @@ function trainCode(code) {
     return code[4]
 }
 
-function translate_typecode(type, code) {
+function translate_typecode(type, code, api_type) {
     if(type == "walk")
         return { type:"walk", code:""}
     else if(transType[type] == "bus")
-        return { type:transType[type], code:busCode(code) }
+        if(api_type == 'helsinki')
+            return { type:transType[type], code:busCode(code) }
+        else
+            return { type:transType[type], code:code }
     else if(transType[type] == "train")
         return { type:transType[type], code:trainCode(code) }
     else if(transType[type] == "tram")
@@ -105,14 +116,15 @@ function get_time_difference(earlierDate,laterDate)
 /****************************************************************************************************/
 /*                     address to location                                                          */
 /****************************************************************************************************/
-function get_geocode(term) {
+function get_geocode(term, api_type) {
+    api_type = api_type || 'helsinki'
     this.parameters = {}
     this.parameters.format = "xml"
     this.parameters.request = "geocode"
     this.parameters.key = term
     this.parameters.disable_unique_stop_names = 0
-    this.parameters.user = USER
-    this.parameters.pass = PASS
+    this.parameters.user = API[api_type].USER
+    this.parameters.pass = API[api_type].PASS
     this.parameters.epsg_in = "wgs84"
     this.parameters.epsg_out = "wgs84"
     var query = []
@@ -120,20 +132,21 @@ function get_geocode(term) {
         query.push(p + "=" + this.parameters[p])
     }
 
-    //console.debug( API + '?' + query.join('&'))
-    return API + '?' + query.join('&')
+    //console.debug( API[api_type].URL + '?' + query.join('&'))
+    return API[api_type].URL + '?' + query.join('&')
 }
 
 /****************************************************************************************************/
 /*                     location to address                                                          */
 /****************************************************************************************************/
-function get_reverse_geocode(latitude, longitude) {
+function get_reverse_geocode(latitude, longitude, api_type) {
+    api_type = api_type || 'helsinki'
     this.parameters = {}
     this.parameters.format = "xml"
     this.parameters.request = 'reverse_geocode'
     this.parameters.coordinate = longitude + ',' + latitude
-    this.parameters.user = USER
-    this.parameters.pass = PASS
+    this.parameters.user = API[api_type].USER
+    this.parameters.pass = API[api_type].PASS
     this.parameters.epsg_in = "wgs84"
     this.parameters.epsg_out = "wgs84"
 
@@ -142,8 +155,8 @@ function get_reverse_geocode(latitude, longitude) {
         query.push(p + "=" + this.parameters[p])
     }
 
-    //console.debug( API + '?' + query.join('&'))
-    return API + '?' + query.join('&')
+    //console.debug( API[api_type].URL + '?' + query.join('&'))
+    return API[api_type].URL + '?' + query.join('&')
 }
 
 /****************************************************************************************************/
@@ -159,8 +172,8 @@ reittiopas.prototype.api_request = function() {
     _request_parent = this
     _http_request.onreadystatechange = _request_parent.result_handler
 
-    this.parameters.user = USER
-    this.parameters.pass = PASS
+    this.parameters.user = API[this.api_type].USER
+    this.parameters.pass = API[this.api_type].PASS
     this.parameters.epsg_in = "wgs84"
     this.parameters.epsg_out = "wgs84"
 
@@ -172,8 +185,8 @@ reittiopas.prototype.api_request = function() {
             query.push(p + "=" + this.parameters[p])
         }
     }
-    //console.debug( API + '?' + query.join('&'))
-    _http_request.open("GET", API + '?' + query.join('&'))
+    //console.debug( API[this.api_type].URL + '?' + query.join('&'))
+    _http_request.open("GET", API[this.api_type].URL + '?' + query.join('&'))
     _http_request.send()
 }
 
@@ -181,11 +194,11 @@ reittiopas.prototype.api_request = function() {
 /*                                            Route search                                          */
 /****************************************************************************************************/
 
-function new_route_instance(parameters, route_model) {
+function new_route_instance(parameters, route_model, api_type) {
     if(_instance)
         delete _instance
 
-    _instance = new route_search(parameters, route_model);
+    _instance = new route_search(parameters, route_model, api_type);
     return _instance
 }
 
@@ -195,8 +208,10 @@ function get_route_instance() {
 
 route_search.prototype = new reittiopas()
 route_search.prototype.constructor = route_search
-function route_search(parameters, route_model) {
+function route_search(parameters, route_model, api_type) {
+    api_type = api_type || 'helsinki'
     this.last_result = []
+    this.api_type = api_type
     this.model = route_model
 
     this.time = parameters.time
@@ -238,8 +253,8 @@ route_search.prototype.parse_json = function(routes, parent) {
         for (var leg in route.legs) {
             var legdata = route.legs[leg]
             output.legs[leg] = {
-                "type":translate_typecode(legdata.type,legdata.code).type,
-                "code":translate_typecode(legdata.type,legdata.code).code,
+                "type":translate_typecode(legdata.type,legdata.code, this.api_type).type,
+                "code":translate_typecode(legdata.type,legdata.code, this.api_type).code,
                 "shortCode":legdata.shortCode,
                 "length":legdata.length,
                 "duration":Math.round(legdata.duration/60),
@@ -375,8 +390,10 @@ route_search.prototype.dump_legs = function(index, model) {
 
 location_to_address.prototype = new reittiopas
 location_to_address.prototype.constructor = location_to_address
-function location_to_address(latitude, longitude, model) {
+function location_to_address(latitude, longitude, model, api_type) {
+    api_type = api_type || 'helsinki'
     this.model = model
+    this.api_type = api_type
     this.parameters = {}
     this.parameters.request = "reverse_geocode"
     this.parameters.coordinate = longitude.replace(',','.') + ',' + latitude.replace(',','.')
@@ -415,11 +432,11 @@ location_to_address.prototype.positioning_handler = function() {
 /*                                            Cycling search                                        */
 /****************************************************************************************************/
 
-function new_cycling_instance(parameters, route_model) {
+function new_cycling_instance(parameters, route_model, api_type) {
     if(_cycling_instance)
         delete _cycling_instance
 
-    _cycling_instance = new cycling_search(parameters, route_model)
+    _cycling_instance = new cycling_search(parameters, route_model, api_type)
     return _cycling_instance
 }
 
@@ -429,10 +446,11 @@ function get_cycling_instance() {
 
 cycling_search.prototype = new reittiopas()
 cycling_search.prototype.constructor = cycling_search
-function cycling_search(parameters, route_model) {
+function cycling_search(parameters, route_model, api_type) {
+    api_type = api_type || 'helsinki'
     this.last_result = {}
     this.model = route_model
-
+    this.api_type = api_type
     this.from_name = parameters.from_name
     this.to_name = parameters.to_name
 

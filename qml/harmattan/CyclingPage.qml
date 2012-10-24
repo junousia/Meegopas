@@ -46,18 +46,18 @@ Page {
         if(status == Component.Ready && !initDone) {
             initDone = true
             map_loader.sourceComponent = map_component
-            Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
+            Reittiopas.new_cycling_instance(search_parameters, doneIndicator, Storage.getSetting('api'))
         }
     }
 
     onConfigChanged: {
         map_loader.item.removeAll()
-        Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
+        Reittiopas.new_cycling_instance(search_parameters, doneIndicator, Storage.getSetting('api'))
     }
 
     onPositionChanged: {
         map_loader.item.removeAll()
-        Reittiopas.new_cycling_instance(search_parameters, doneIndicator)
+        Reittiopas.new_cycling_instance(search_parameters, doneIndicator, Storage.getSetting('api'))
     }
 
     Connections {

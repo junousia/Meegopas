@@ -15,6 +15,7 @@ import QtQuick 1.1
 import QtMobility.location 1.2
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
+import "storage.js" as Storage
 import "favorites.js" as Favorites
 import "theme.js" as Theme
 
@@ -136,7 +137,8 @@ Column {
             previousCoord.latitude = positionSource.position.coordinate.latitude
             previousCoord.longitude = positionSource.position.coordinate.longitude
             currentLocationModel.source = Reittiopas.get_reverse_geocode(previousCoord.latitude.toString(),
-                                                                    previousCoord.longitude.toString())
+                                                                         previousCoord.longitude.toString(),
+                                                                         Storage.getSetting('api'))
         } else {
             /* poll again in 200ms */
             gpsTimer.start()
@@ -241,7 +243,8 @@ Column {
             if(selectedIndex == 0) {
                 if(positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
                     suggestionModel.source = Reittiopas.get_reverse_geocode(positionSource.position.coordinate.latitude.toString(),
-                                                                            positionSource.position.coordinate.longitude.toString())
+                                                                            positionSource.position.coordinate.longitude.toString(),
+                                                                            Storage.getSetting('api'))
                 }
                 else {
                     favoriteQuery.selectedIndex = -1
@@ -265,7 +268,7 @@ Column {
         triggeredOnStart: false
         onTriggered: {
             if(textfield.acceptableInput) {
-                suggestionModel.source = Reittiopas.get_geocode(textfield.text)
+                suggestionModel.source = Reittiopas.get_geocode(textfield.text, Storage.getSetting('api'))
             }
         }
     }

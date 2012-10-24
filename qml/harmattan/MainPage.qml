@@ -147,6 +147,10 @@ Page {
 
         if(Storage.getSetting("gps") == "false")
             appWindow.gpsEnabled = false
+
+        if(Storage.getSetting('api') == "Unknown")
+            Storage.setSetting('api', 'helsinki')
+
         console.debug("gps enabled: " + Storage.getSetting("gps"))
         updateTime()
     }

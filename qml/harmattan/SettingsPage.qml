@@ -39,6 +39,7 @@ Page {
             walking_speed.set_value(Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
             optimize_cycling.set_value(Storage.getSetting("optimize_cycling"))
+            api.set_value(Storage.getSetting("api"))
 
             if(Storage.getSetting("train_disabled") == "true") {
                 transports.set_value("train")
@@ -63,8 +64,38 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Application settings")
+                text: qsTr("City")
             }
+
+            ButtonColumn {
+                id: api
+                function set_value(value) {
+                    if(value == "helsinki")
+                        helsinki.checked = true
+                    else if(value == "tampere")
+                        tampere.checked = true
+                    else if(value == "Unknown") {
+                        helsinki.checked = true
+                        Storage.setSetting('api', 'helsinki')
+                    }
+                }
+
+                anchors.right: parent.right
+                Button {
+                    id: helsinki
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+                    text: qsTr("Helsinki")
+                    onClicked: Storage.setSetting('api', 'helsinki')
+                }
+                Button {
+                    id: tampere
+                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+                    text: qsTr("Tampere")
+                    onClicked: Storage.setSetting('api', 'tampere')
+                }
+            }
+
+            Separator {}
 
             Row {
                 id: gps

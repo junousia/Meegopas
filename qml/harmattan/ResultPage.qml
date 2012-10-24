@@ -34,7 +34,7 @@ Page {
 
     onStatusChanged: {
         if(status == Component.Ready && !routeModel.count)
-            Reittiopas.new_route_instance(search_parameters, routeModel)
+            Reittiopas.new_route_instance(search_parameters, routeModel, Storage.getSetting('api'))
     }
 
     ListModel {
@@ -48,7 +48,7 @@ Page {
         interval: 500
         onTriggered: {
             routeModel.clear()
-            Reittiopas.new_route_instance(search_parameters, routeModel)
+            Reittiopas.new_route_instance(search_parameters, routeModel, Storage.getSetting('api'))
         }
     }
 

@@ -1,3 +1,8 @@
+meegopas (1.5.0) unstable; urgency=low
+  * Support for Tampere
+
+ -- Jukka Nousiainen <nousiaisenjukka@gmail.com>  Wed, 24 Oct 2012 22:13:41 +0300
+
 meegopas (1.4.0) unstable; urgency=low
   * Cycling improvements
 
