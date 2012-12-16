@@ -64,7 +64,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("City")
+                text: qsTr("Region")
             }
 
             ButtonColumn {

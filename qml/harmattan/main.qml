@@ -24,6 +24,7 @@ PageStackWindow {
 
     showStatusBar: appWindow.inPortrait
 
+    property alias about : aboutLoader.item
     property alias menu : menuLoader.item
     property alias banner : banner
     property variant scalingFactor : 1
@@ -33,6 +34,7 @@ PageStackWindow {
     property bool showStationCode : true
     property string colorscheme : "default"
     property bool gpsEnabled : false
+    property string region
 
     platformStyle: PageStackWindowStyle {
         id: defaultStyle
@@ -43,10 +45,9 @@ PageStackWindow {
             followModeEnabled()
     }
 
-    function createAbout() {
-        var about = Qt.createComponent("About.qml")
-        var aboutDialog = about.createObject(pageStack)
-        aboutDialog.open()
+    Component {
+        id: aboutComponent
+            AboutDialog { id: about }
     }
 
     InfoBanner {
@@ -64,7 +65,7 @@ PageStackWindow {
                 MenuItem { text: qsTr("Settings"); onClicked: { mapVisible = false; pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
                 MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
                 MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
-                MenuItem { text: qsTr("About"); onClicked: appWindow.createAbout() }
+                MenuItem { text: qsTr("About"); onClicked: about.open() }
             }
         }
     }
@@ -74,4 +75,10 @@ PageStackWindow {
         anchors.fill: parent
         sourceComponent: menuComponent
     }
+    Loader {
+        id: aboutLoader
+        anchors.fill: parent
+        sourceComponent: aboutComponent
+    }
+
 }

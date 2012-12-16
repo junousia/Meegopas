@@ -10,7 +10,8 @@ OTHER_FILES += \
     qml/common/MapButton.qml \
     qml/harmattan/SelectionDialogDelegate.qml \
     qml/common/translations.js \
-    qml/harmattan/Agreement.qml
+    qml/harmattan/Agreement.qml \
+    qml/harmattan/ApiDialog.qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e

@@ -12,11 +12,26 @@
  */
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import "storage.js" as Storage
 
-QueryDialog {
+SelectionDialog {
+    id: apiDialog
     visualParent: pageStack
-    titleText: qsTr("Usage of location services")
-    message: qsTr("allow this application to use the phone location services to enhance the routing experience?\n\nThe setting can be later changed from the application preferences.")
-    acceptButtonText: qsTr("Accept")
-    rejectButtonText: qsTr("Reject")
+    titleText: qsTr("Choose region")
+
+    signal configurationChanged
+
+    model: ListModel {
+        ListElement { name: "Helsinki" }
+        ListElement { name: "Tampere" }
+    }
+
+    onAccepted: {
+        Storage.setSetting('api', apiDialog.selectedIndex == 0? "helsinki" : "tampere")
+        configurationChanged()
+    }
+    onRejected: {
+        Storage.setSetting('api', apiDialog.selectedIndex == 0? "helsinki" : "tampere")
+        configurationChanged()
+    }
 }
