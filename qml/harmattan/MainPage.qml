@@ -145,13 +145,34 @@ Page {
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
-        if(Storage.getSetting("gps") == "false")
+        function acceptCallback() {
+            console.debug("agreement accepted")
+            Storage.setSetting('gps', 'true')
+            appWindow.gpsEnabled = true
+            mainTools.enabled = true
+        }
+
+        function rejectCallback() {
+            console.debug("agreement rejected")
+            Storage.setSetting('gps', 'false')
+            appWindow.gpsEnabled = false
+        }
+
+        var allowGps = Storage.getSetting("gps")
+        if(allowGps == "Unknown") {
+            var agreement = Qt.createComponent("Agreement.qml")
+            var agreementDialog = agreement.createObject(mainPage)
+            agreementDialog.accepted.connect(acceptCallback)
+            agreementDialog.rejected.connect(rejectCallback)
+            mainTools.enabled = false
+            agreementDialog.open()
+        }
+        else if(allowGps == "false")
             appWindow.gpsEnabled = false
 
         if(Storage.getSetting('api') == "Unknown")
             Storage.setSetting('api', 'helsinki')
 
-        console.debug("gps enabled: " + Storage.getSetting("gps"))
         updateTime()
     }
 

@@ -75,5 +75,6 @@
         <file>images/stop.png</file>
         <file>images/position.png</file>
         <file>images/station.png</file>
+        <file alias="qml/Agreement.qml">qml/harmattan/Agreement.qml</file>
     </qresource>
 </RCC>

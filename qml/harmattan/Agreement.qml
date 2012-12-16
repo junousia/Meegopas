@@ -10,12 +10,13 @@
  *
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
-
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
 QueryDialog {
-    titleText: "Meegopas v1.5.0"
-    message: "(c) Jukka Nousiainen 2011-2012\n\n" + qsTr("This application is free sofware licenced under the GNU Public License version 3")
-    rejectButtonText: qsTr("Close")
+    visualParent: pageStack
+    titleText: "Agreement of the usage of location services"
+    message: qsTr("allow this application to use the phone location services to enhance the routing experience?\n\nThe setting can be later changed from the application preferences.")
+    acceptButtonText: qsTr("Accept")
+    rejectButtonText: qsTr("Reject")
 }
