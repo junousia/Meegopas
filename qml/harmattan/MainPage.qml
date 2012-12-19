@@ -52,10 +52,6 @@ Page {
         onNewCycling: newCycling(name, coord)
     }
 
-    signal configurationChanged
-
-    onConfigurationChanged:
-
     function newRoute(name, coord) {
         /* clear all other pages from the stack */
         while(pageStack.depth > 1)
@@ -172,12 +168,13 @@ Page {
             mainTools.enabled = false
             agreementDialog.open()
         }
-        else if(allowGps == "false") {
-            appWindow.gpsEnabled = false
+        else if(allowGps == "true") {
+            appWindow.gpsEnabled = true
         }
 
         var apiValue = Storage.getSetting("api")
         if(apiValue === "Unknown") {
+            Storage.setSetting("api", "helsinki")
             var apiComponent = Qt.createComponent("ApiDialog.qml")
             var apiDialog = apiComponent.createObject(mainPage)
             apiDialog.open()
