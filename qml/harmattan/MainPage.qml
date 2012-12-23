@@ -24,21 +24,39 @@ Page {
     id: mainPage
     tools: mainTools
 
-    property alias timePicker : timeLoader.item
-    property alias datePicker : dateLoader.item
-
     property date myTime
 
+    onMyTimeChanged: console.debug("Time changed: " + myTime)
+
+    /* Current location acquired with GPS */
     property variant currentCoord: ''
     property variant currentName: ''
 
+    /* Values entered in "To" field */
     property variant toCoord: ''
     property variant toName: ''
 
+    /* Values entered in "From" field */
     property variant fromCoord: ''
     property variant fromName: ''
 
     property bool endpointsValid : (toCoord && (fromCoord || currentCoord))
+
+    onEndpointsValidChanged: {
+        /* if we receive coordinates we are waiting for, start route search */
+        if(state == "waiting_route" && endpointsValid) {
+            var parameters = {}
+            setRouteParameters(parameters)
+            pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+            state = "normal"
+        }
+        if(state == "waiting_cycling" && endpointsValid) {
+            var parameters = {}
+            setCyclingParameters(parameters)
+            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+            state = "normal"
+        }
+    }
 
     /* Connect dbus callback to function newRoute() */
     Connections {
@@ -61,7 +79,8 @@ Page {
         QmlApplicationViewer.showFullScreen()
 
         /* Update time */
-        updateTime()
+        timeButton.updateTime()
+        dateButton.updateDate()
 
         /* Update new destination to "to" */
         to.updateLocation(name, 0, coord)
@@ -110,50 +129,17 @@ Page {
         }
     }
 
-    function updateTime() {
-        myTime = new Date()
-
-        /* Set date for date picker */
-        timePicker.hour = Qt.formatTime(mainPage.myTime, "hh")
-        timePicker.minute = Qt.formatTime(mainPage.myTime, "mm")
-        timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
-
-        /* Set date for date picker */
-        datePicker.day = Qt.formatDate(mainPage.myTime, "dd")
-        datePicker.month = Qt.formatDate(mainPage.myTime, "MM")
-        datePicker.year = Qt.formatDate(mainPage.myTime, "yyyy")
-        dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
-    }
-
-    onEndpointsValidChanged: {
-        /* if we receive coordinates we are waiting for, start route search */
-        if(state == "waiting_route" && endpointsValid) {
-            var parameters = {}
-            setRouteParameters(parameters)
-            pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
-            state = "normal"
-        }
-        if(state == "waiting_cycling" && endpointsValid) {
-            var parameters = {}
-            setCyclingParameters(parameters)
-            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-            state = "normal"
-        }
-    }
-
     Component.onCompleted: {
         theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
         function acceptCallback() {
-            console.debug("agreement accepted")
             Storage.setSetting('gps', 'true')
             appWindow.gpsEnabled = true
             mainTools.enabled = true
         }
 
         function rejectCallback() {
-            console.debug("agreement rejected")
             Storage.setSetting('gps', 'false')
             appWindow.gpsEnabled = false
             mainTools.enabled = true
@@ -180,7 +166,8 @@ Page {
             apiDialog.open()
         }
 
-        updateTime()
+        timeButton.updateTime()
+        dateButton.updateDate()
     }
 
     states: [
@@ -218,7 +205,7 @@ Page {
         parameters.to = toCoord
 
         parameters.time = mainPage.myTime
-        parameters.timetype = timeType.checked? "arrival" : "departure"
+        parameters.timetype = timeTypeSwitch.checked? "arrival" : "departure"
         parameters.walk_speed = walking_speed == "Unknown"?"70":walking_speed
         parameters.optimize = optimize == "Unknown"?"default":optimize
         parameters.change_margin = change_margin == "Unknown"?"3":Math.floor(change_margin)
@@ -271,49 +258,6 @@ Page {
         }
         ToolIcon { iconId: "toolbar-view-menu" ; onClicked: menu.open(); }
     }
-    Component {
-        id: dateComponent
-        DatePickerDialog {
-            titleText: qsTr("Choose date")
-            onAccepted: {
-                var tempTime = new Date(datePicker.year, datePicker.month-1, datePicker.day,
-                                        mainPage.myTime.getHours(), mainPage.myTime.getMinutes())
-                mainPage.myTime = tempTime
-                dateButton.text = Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
-            }
-            minimumYear: 2012
-
-            acceptButtonText: qsTr("Accept")
-            rejectButtonText: qsTr("Reject")
-        }
-    }
-    Component {
-        id: timeComponent
-
-        TimePickerDialog {
-            titleText: qsTr("Choose time")
-            onAccepted: {
-                var tempTime = new Date(mainPage.myTime.getFullYear(), mainPage.myTime.getMonth(),
-                                        mainPage.myTime.getDate(), timePicker.hour, timePicker.minute)
-                mainPage.myTime = tempTime
-                timeButton.text = Qt.formatTime(mainPage.myTime, "hh:mm")
-            }
-
-            fields: DateTime.Hours | DateTime.Minutes
-            acceptButtonText: qsTr("Accept")
-            rejectButtonText: qsTr("Reject")
-        }
-    }
-    Loader {
-        id: dateLoader
-        anchors.fill: parent
-        sourceComponent: dateComponent
-    }
-    Loader {
-        id: timeLoader
-        anchors.fill: parent
-        sourceComponent: timeComponent
-    }
 
     Rectangle {
         id: waiting
@@ -352,7 +296,7 @@ Page {
         anchors.bottom: parent.bottom
 
         anchors {
-            margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
+            margins: UIConstants.DEFAULT_MARGIN
         }
 
         interactive: true
@@ -388,7 +332,7 @@ Page {
                     }
                 }
 
-                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 * appWindow.scalingFactor }
+                Spacing { id: location_spacing; anchors.top: from.bottom; height: 20 }
 
                 SwitchLocation {
                     anchors.topMargin: UIConstants.DEFAULT_MARGIN/2
@@ -411,105 +355,50 @@ Page {
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                Item {
-                    id: timeContainer
-                    height: timeButton.height
-                    width: timeButton.width
 
-                    Rectangle {
-                        anchors.fill: parent
-                        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-                        z: -1
-                        visible: timeMouseArea.pressed
-                    }
+                TimeButton {
+                    id: timeButton
+                }
 
-                    Text {
-                        id: timeButton
-                        font.pixelSize: UIConstants.FONT_XXXXLARGE * appWindow.scalingFactor
-                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                        text: Qt.formatTime(mainPage.myTime, "hh:mm")
-                        lineHeightMode: Text.FixedHeight
-                        lineHeight: font.pixelSize * 1.2
-                    }
-
-                    MouseArea {
-                        id: timeMouseArea
-                        anchors.fill: parent
-                        onClicked: {
-                            timePicker.open()
-                        }
+                Connections {
+                    target: timeButton
+                    onTimeChanged: {
+                        mainPage.myTime = new Date(myTime.getFullYear()? myTime.getFullYear() : 0,
+                                                myTime.getMonth()? myTime.getMonth() : 0,
+                                                myTime.getDate()? myTime.getDate() : 0,
+                                                newTime.getHours(), newTime.getMinutes())
                     }
                 }
-                SwitchStyle {
-                    id: customswitch
-                    switchOn: customswitch.switchOff
-                }
-                Item {
-                    width: 150
-                    height: timeType.height + timeTypeText.height
-                    anchors.verticalCenter: timeContainer.verticalCenter
-                    Switch {
-                        id: timeType
-                        platformStyle: customswitch
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    Text {
-                        id: timeTypeText
-                        anchors.top: timeType.bottom
-                        anchors.horizontalCenter: timeType.horizontalCenter
-                        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
-                        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                        text: timeType.checked? qsTr("arrival") : qsTr("departure")
-                        lineHeightMode: Text.FixedHeight
-                        lineHeight: font.pixelSize * 1.2
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: timeType.checked = timeType.checked? false : true
-                        }
-                    }
+                TimeTypeSwitch {
+                    id: timeTypeSwitch
+                    anchors.verticalCenter: timeButton.verticalCenter
                 }
             }
-            Item {
-                id: dateContainer
-                width: dateButton.width
-                height: dateButton.height
-                anchors.horizontalCenter: parent.horizontalCenter
 
-                Rectangle {
-                    anchors.fill: parent
-                    color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-                    z: -1
-                    visible: dateMouseArea.pressed
-                }
-                Text {
-                    id: dateButton
-                    height: UIConstants.SIZE_BUTTON
-                    font.pixelSize: UIConstants.FONT_XXLARGE * appWindow.scalingFactor
-                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                    text: Qt.formatDate(mainPage.myTime, "dd. MMMM yyyy")
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.2
-                }
+            DateButton {
+                id: dateButton
+            }
 
-                MouseArea {
-                    id: dateMouseArea
-                    anchors.fill: parent
-                    onClicked: {
-                        datePicker.open()
-                    }
+            Connections {
+                target: dateButton
+                onDateChanged: {
+                    mainPage.myTime = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(),
+                                               myTime.getHours()? myTime.getHours() : 0,
+                                               myTime.getMinutes()? myTime.getMinutes() : 0)
                 }
             }
 
             Button {
-                id: timedate_now
+                id: timeDateNow
                 text: qsTr("Now")
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
+                font.pixelSize: UIConstants.FONT_SMALL
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
                 height: 40
                 onClicked: {
-                    updateTime()
+                    timeButton.updateTime()
+                    dateButton.updateDate()
                 }
             }
         }

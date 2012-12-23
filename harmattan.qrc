@@ -77,5 +77,8 @@
         <file>images/station.png</file>
         <file alias="qml/Agreement.qml">qml/harmattan/Agreement.qml</file>
         <file alias="qml/ApiDialog.qml">qml/harmattan/ApiDialog.qml</file>
+        <file alias="qml/DateButton.qml">qml/harmattan/DateButton.qml</file>
+        <file alias="qml/TimeButton.qml">qml/harmattan/TimeButton.qml</file>
+        <file alias="qml/TimeTypeSwitch.qml">qml/harmattan/TimeTypeSwitch.qml</file>
     </qresource>
 </RCC>

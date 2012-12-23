@@ -7,11 +7,6 @@ OTHER_FILES += \
         qml/harmattan/* \
         qml/symbian/* \
         qtc_packaging/debian_harmattan/postrm \
-    qml/common/MapButton.qml \
-    qml/harmattan/SelectionDialogDelegate.qml \
-    qml/common/translations.js \
-    qml/harmattan/Agreement.qml \
-    qml/harmattan/ApiDialog.qml
 
 symbian {
     TARGET.UID3 = 0x2004bf5e
@@ -23,7 +18,7 @@ symbian {
     # DEPLOYMENT.installer_header = 0x2002CCCF
     DEPLOYMENT.installer_header = 0x2002CCCF
 
-    VERSION = 1.4.0
+    VERSION = 1.5.1
 
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices Location
@@ -52,11 +47,9 @@ contains(MEEGO_EDITION, harmattan) {
     # D-Bus service
     dbusservice.path = /usr/share/dbus-1/services
     dbusservice.files = com.juknousi.meegopas.service
-    dbusinterface.path = /usr/share/dbus-1/interfaces
-    dbusinterface.files = com.juknousi.meegopas.xml
     icons.path = /usr/share/icons/hicolor/80x80/apps/
     icons.files = MeegopasCycling80.png MeegopasRoute80.png
-    INSTALLS += dbusservice dbusinterface icons
+    INSTALLS += dbusservice icons
 
     # splash screen
     splash.files = splash.png splash-l.png
